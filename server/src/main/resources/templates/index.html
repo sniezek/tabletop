@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head lang="en">
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
 </head>
@@ -9,6 +9,22 @@
     <div class="jumbotron">
         <h1>Tabletop</h1>
         <p>.</p>
+        <p sec:authorize="hasAuthority(T(tabletop.services.MongoUserDetailsService).USER_ROLE)">
+            <ul>
+                <li>
+                    GryWBibliotece  Magic  Biblioteka  22.07.2017
+                </li>
+                <li>
+                    WielkiTurniej  Osadnicy z Catana  Hex  22.04.2017
+                </li>
+                <li>
+                    Manewry  Carcassone  Vanaheim  12.05.2017
+                </li>
+                <li>
+                    Turniej  Gra o Tron  AGH  02.04.2017
+                </li>
+            </ul>
+        </p>
     </div>
 </div>
 </body>
