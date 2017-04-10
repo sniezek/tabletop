@@ -11,7 +11,7 @@
         <p>.</p>
         <p sec:authorize="hasAuthority(T(tabletop.services.MongoUserDetailsService).USER_ROLE)">
             <ul>
-                <li>
+                <!--<li>
                     GryWBibliotece  Magic  Biblioteka  22.07.2017
                 </li>
                 <li>
@@ -22,15 +22,13 @@
                 </li>
                 <li>
                     Turniej  Gra o Tron  AGH  02.04.2017
+                </li>-->
+            </ul>
+            <ul>
+                <li th:each="event : ${events}">
+                    <span th:text="${event.name}">name</span>, <span th:text="${event.location}">location</span>, <span th:text="${event.date}">date</span>
                 </li>
             </ul>
-            <!--<form th:action="@{/getevents}" th:object="${events}"
-                  th:method="get">
-                <div class="form-group">
-                    <option th:each="event : ${events}"
-                            th:value="${event.name}">My option</option>
-                </div>
-            </form>-->
         </p>
 
         <!--<form th:object="${event}" th:action="@{/addevent}" method="put"  >

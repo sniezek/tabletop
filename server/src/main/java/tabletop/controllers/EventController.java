@@ -1,8 +1,6 @@
 package tabletop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,10 +32,10 @@ public class EventController {
     }
 
     @RequestMapping(value = "/addevent", method = RequestMethod.POST)
-    public ResponseEntity<Event> addEvent(@RequestBody Event event) {
+    public String addEvent(@RequestBody Event event) {
         eventService.addEvent(event);
 
-        return new ResponseEntity<>(event, HttpStatus.OK);
+        return "index";
     }
 
     @RequestMapping(value = "/geteventbyname", method = RequestMethod.GET)

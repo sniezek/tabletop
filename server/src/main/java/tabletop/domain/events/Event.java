@@ -2,8 +2,6 @@ package tabletop.domain.events;
 
 import org.springframework.data.annotation.Id;
 
-import java.util.Date;
-
 /**
  * Created by Kuba on 2017-04-09.
  */
@@ -12,7 +10,7 @@ public class Event {
     @Id
     private String name;
 
-    private Date date;
+    private String date;
     private String location;
     private String game;
 
@@ -23,7 +21,7 @@ public class Event {
         return name;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -43,7 +41,7 @@ public class Event {
         this.game = game;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
