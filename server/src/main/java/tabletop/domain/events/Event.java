@@ -1,11 +1,8 @@
 package tabletop.domain.events;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Created by Kuba on 2017-04-09.
@@ -19,7 +16,9 @@ public class Event {
     private String location;
     private String game;
 
-    public Event() { }
+    public Event(String name) {
+        this.name = name;
+    }
 
     public String getName() {
         return name;
