@@ -24,16 +24,16 @@
                     Turniej  Gra o Tron  AGH  02.04.2017
                 </li>
             </ul>
-            <form th:action="@{/getevents}" th:object="${events}"
+            <!--<form th:action="@{/getevents}" th:object="${events}"
                   th:method="get">
                 <div class="form-group">
                     <option th:each="event : ${events}"
-                            th:value="${event.name}" th:text="${event.location}">My option</option>
+                            th:value="${event.name}">My option</option>
                 </div>
-            </form>
+            </form>-->
         </p>
 
-        <form th:object="${event}" th:action="@{/addevent}" method="put"  >
+        <!--<form th:object="${event}" th:action="@{/addevent}" method="put"  >
 
             <div class="form-group">
                 <label class="col-sm-2 control-label">Name:</label>
@@ -49,7 +49,7 @@
             </div>
 
             <button type="submit" class="btn btn-default">Submit</button>
-        </form>
+        </form>-->
 
     </div>
 </div>

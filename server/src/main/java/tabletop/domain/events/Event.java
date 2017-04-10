@@ -16,8 +16,7 @@ public class Event {
     private String location;
     private String game;
 
-    public Event(String name) {
-        this.name = name;
+    public Event() {
     }
 
     public String getName() {
