@@ -1,18 +1,12 @@
 import React from 'react'
-import { IndexLink, Link } from 'react-router'
 import './Header.scss'
 
 export const Header = () => (
-  <div>
-    <h1>React Redux Starter Kit</h1>
-    <IndexLink to='/' activeClassName='route--active'>
-      Home
-    </IndexLink>
-    {' · '}
-    <Link to='/counter' activeClassName='route--active'>
-      Counter
-    </Link>
-  </div>
+    <header className="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div className="mdl-layout__header-row">
+            <span className="mdl-layout-title">Home</span>
+        </div>
+    </header>
 )
 
 export default Header
