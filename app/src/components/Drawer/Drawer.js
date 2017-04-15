@@ -1,5 +1,5 @@
-import React from 'react'
-import './Drawer.scss'
+import React from "react";
+import "./Drawer.scss";
 
 export const Drawer = () => (
     <div className="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
@@ -21,6 +21,6 @@ export const Drawer = () => (
             <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
         </nav>
     </div>
-)
+);
 
-export default Drawer
+export default Drawer;

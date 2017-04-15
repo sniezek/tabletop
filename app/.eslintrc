@@ -1,8 +1,7 @@
 {
   "parser": "babel-eslint",
   "extends": [
-    "standard",
-    "standard-react"
+    "eslint-config-airbnb"
   ],
   "plugins": [
     "babel",
@@ -19,9 +18,19 @@
     "__COVERAGE__" : false
   },
   "rules": {
-    "key-spacing"          : 0,
-    "jsx-quotes"           : [2, "prefer-single"],
-    "max-len"              : [2, 120, 2],
-    "object-curly-spacing" : [2, "always"]
+    "indent": ["error", 4],
+    "quotes": ["error", "double"],
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    "no-underscore-dangle": "off",
+    "comma-dangle": ["error", "never"],
+    "import/extensions": "off",
+    "import/no-named-as-default": "off",
+    "class-methods-use-this": ["off"],
+    "max-len": ["error", 150],
+    "linebreak-style": ["off"],
+    "no-use-before-define": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/href-no-hash": "warn"
   }
 }
