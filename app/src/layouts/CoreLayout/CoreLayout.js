@@ -5,12 +5,37 @@ import './CoreLayout.scss'
 import '../../styles/core.scss'
 
 export const CoreLayout = ({ children }) => (
-  <div className='container text-center'>
-    <Header />
-    <div className='core-layout__viewport'>
-      {children}
+    <div className="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+        <header className="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+            <div className="mdl-layout__header-row">
+                <span className="mdl-layout-title">Home</span>
+            </div>
+        </header>
+        <div className="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+            <header className="demo-drawer-header">
+                <img src="images/user.jpg" className="demo-avatar" />
+                <div className="demo-avatar-dropdown">
+                    <span>hello@example.com</span>
+                </div>
+            </header>
+            <nav className="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Inbox</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Trash</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Spam</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">shopping_cart</i>Purchases</a>
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
+                <div className="mdl-layout-spacer" />
+                <a className="mdl-navigation__link" href=""><i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span className="visuallyhidden">Help</span></a>
+            </nav>
+        </div>
+        <main className="mdl-layout__content mdl-color--grey-100">
+            {children}
+        </main>
     </div>
-  </div>
 )
 
 CoreLayout.propTypes = {
