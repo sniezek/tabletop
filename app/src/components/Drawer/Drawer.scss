@@ -1,0 +1,18 @@
+.drawer {
+    border: none;
+
+    /* iOS Safari specific workaround */
+    .mdl-menu__container {
+        z-index: -1;
+    }
+
+    /* END iOS Safari specific workaround */
+    .mdl-menu .mdl-menu__item {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+    }
+}

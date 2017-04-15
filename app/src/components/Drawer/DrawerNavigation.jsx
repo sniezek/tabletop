@@ -11,7 +11,7 @@ const links = [{
 }];
 
 const DrawerNavigation = () => (
-    <nav className="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+    <nav className="navigation mdl-navigation mdl-color--blue-grey-800">
         {links.map(({ icon, label }) =>
             <DrawerNavigationItem
                 key={label}

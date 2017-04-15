@@ -9,7 +9,7 @@ const propTypes = {
 
 const DrawerNavigationItem = ({ icon, label }) => (
     <a className="mdl-navigation__link" href="">
-        <i className="mdl-color-text--blue-grey-400 material-icons" role="presentation">{icon}</i>
+        <i className="material-icons" role="presentation">{icon}</i>
         {label}
     </a>
 );
