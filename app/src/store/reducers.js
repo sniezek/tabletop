@@ -4,6 +4,7 @@ import locationReducer from './location'
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
     location: locationReducer,
+    user: (state = {}) => state,
     ...asyncReducers
   })
 }
