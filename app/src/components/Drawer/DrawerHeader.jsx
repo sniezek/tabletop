@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DrawerLogo from "./DrawerLogo.jsx";
 import DrawerProfile from "./DrawerProfile.jsx";
+import DrawerLogin from "./DrawerLogin.jsx";
 import "./DrawerHeader.scss";
 
 const propTypes = {
@@ -15,10 +16,14 @@ const defaultProps = {
 const DrawerHeader = ({ user }) => (
     <header className="drawer-header">
         <DrawerLogo />
-        <DrawerProfile
-            name={user.name}
-            avatar={user.avatar}
-        />
+        { (user && (
+            <DrawerProfile
+                name={user.name}
+                avatar={user.avatar}
+            />
+        )) || (
+            <DrawerLogin />
+        )}
     </header>
 );
 
