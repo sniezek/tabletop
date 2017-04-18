@@ -1,0 +1,22 @@
+.navigation.mdl-navigation {
+    z-index: -2;
+    flex-grow: 1;
+
+    .mdl-navigation__link {
+        display: flex !important;
+        flex-direction: row;
+        align-items: center;
+        color: rgba(255, 255, 255, 0.56);
+        font-weight: 500;
+
+        &:hover {
+            background-color: #00BCD4;
+            color: #fff;
+        }
+
+        .material-icons {
+            font-size: 24px;
+            margin-right: 16px;
+        }
+    }
+}
