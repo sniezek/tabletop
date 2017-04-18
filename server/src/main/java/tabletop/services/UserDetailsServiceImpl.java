@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import tabletop.domain.users.User;
 
+import java.util.Optional;
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     public static final String USER_ROLE = "user";
@@ -22,12 +24,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = usersService.getUserByUsername(username);
+        Optional<User> user = usersService.getUserByUsername(username);
 
-        if (user == null) {
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("Name not found!");
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), ImmutableList.of(new SimpleGrantedAuthority(USER_ROLE)));
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), ImmutableList.of(new SimpleGrantedAuthority(USER_ROLE)));
     }
 }

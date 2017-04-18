@@ -33,7 +33,7 @@ public class RegisterController {
     String doRegister(@ModelAttribute("user") @Valid User user, BindingResult result, Errors errors) {
         boolean correct = true;
 
-        if (usersService.getUserByUsername(user.getUsername()) != null) {
+        if (usersService.getUserByUsername(user.getUsername()).isPresent()) {
             correct = false;
             errors.reject("username.exists", "Username already exists");
         }
@@ -50,7 +50,7 @@ public class RegisterController {
             return "register";
         }
 
-        usersService.addUser(user);
+        usersService.createUser(user);
 
         return "redirect:/login";
     }

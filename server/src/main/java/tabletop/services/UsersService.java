@@ -2,8 +2,10 @@ package tabletop.services;
 
 import tabletop.domain.users.User;
 
-public interface UsersService {
-    void addUser(User user);
+import java.util.Optional;
 
-    User getUserByUsername(String username);
+public interface UsersService {
+    void createUser(User user);
+
+    Optional<User> getUserByUsername(String username);
 }

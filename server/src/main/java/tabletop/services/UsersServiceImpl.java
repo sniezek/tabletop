@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.users.User;
 import tabletop.repositories.UsersRepository;
 
+import java.util.Optional;
+
 @Service
 public class UsersServiceImpl implements UsersService {
     private final UsersRepository usersRepository;
@@ -18,12 +20,12 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public Optional<User> getUserByUsername(String username) {
         return usersRepository.findByUsername(username);
     }
 
     @Override
-    public void addUser(User user) {
+    public void createUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         usersRepository.save(user);
