@@ -23,11 +23,13 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('com.h2database:h2')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.thymeleaf.extras:thymeleaf-extras-springsecurity4')
+	compile('com.google.guava:guava:21.0')
 	compile('org.webjars:bootstrap:3.3.6')
 	compile('org.webjars:jquery:2.2.2')
 	compile('org.webjars:jquery-ui:1.11.4')

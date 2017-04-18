@@ -1,10 +1,8 @@
 package tabletop.repositories;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.repository.CrudRepository;
 import tabletop.domain.users.User;
 
-/**
- * @author Olaf Sniezek
- */
-public interface UsersRepository extends MongoRepository<User, String> {
+public interface UsersRepository extends CrudRepository<User, Long> {
+    User findByUsername(String username);
 }

@@ -6,33 +6,26 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.users.User;
 import tabletop.repositories.UsersRepository;
 
-/**
- * @author Olaf Sniezek
- */
 @Service
 public class UsersServiceImpl implements UsersService {
-
-    private UsersRepository usersRepository;
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final UsersRepository usersRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public void setUsersRepository(UsersRepository usersRepository) {
+    public UsersServiceImpl(UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User getUserByUsername(String username) {
-        return usersRepository.findOne(username);
+        return usersRepository.findByUsername(username);
     }
 
     @Override
     public void addUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         usersRepository.save(user);
     }
 }
