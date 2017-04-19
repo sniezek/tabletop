@@ -1,5 +1,6 @@
-package tabletop.configuration;
+package tabletop.configuration.security;
 
+import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeaderBindingFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,16 +12,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CsrfFilter;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private UserDetailsService userDetailsService;
-
     @Autowired
-    public void setUserDetailsService(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
+    private UserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -28,25 +28,31 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .headers().frameOptions().disable() // H2
-                .and()
-                .csrf().ignoringAntMatchers("/h2/**") // H2
-                .and()
-                .authorizeRequests()
-                .antMatchers("/").permitAll()
-                .and()
-                .formLogin().loginPage("/login")
-                .permitAll()
-                .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/login")
-                .permitAll();
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(authProvider());
     }
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authProvider());
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .headers().frameOptions().disable() // to make H2 work
+                .and()
+                .csrf().disable() // to make H2 and Postman work
+                .formLogin()
+                .loginPage("/login")
+                .successHandler(new RESTAuthenticationSuccessHandler())
+                .failureHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint((request, response, authException) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                .accessDeniedHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_FORBIDDEN))
+                .and()
+                .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
+
     }
 
     private DaoAuthenticationProvider authProvider() {

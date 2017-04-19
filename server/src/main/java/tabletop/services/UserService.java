@@ -1,11 +1,11 @@
 package tabletop.services;
 
-import tabletop.domain.users.User;
+import tabletop.domain.user.User;
 
 import java.util.Optional;
 
-public interface UsersService {
-    void createUser(User user);
+public interface UserService {
+    User createUser(User user);
 
     Optional<User> getUserByUsername(String username);
 }

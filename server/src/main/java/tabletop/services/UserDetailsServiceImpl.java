@@ -7,20 +7,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import tabletop.domain.users.User;
+import tabletop.domain.user.User;
 
 import java.util.Optional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    public static final String USER_ROLE = "user";
-
-    private final UsersService usersService;
+    private static final String USER_ROLE = "user";
 
     @Autowired
-    public UserDetailsServiceImpl(UsersService usersService) {
-        this.usersService = usersService;
-    }
+    private UserService usersService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
