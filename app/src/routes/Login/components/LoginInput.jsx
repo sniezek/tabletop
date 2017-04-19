@@ -7,15 +7,17 @@ const propTypes = {
     icon: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
     onChange: PropTypes.func,
-    type: PropTypes.string
+    type: PropTypes.string,
+    value: PropTypes.string
 };
 
 const defaultProps = {
     type: "text",
+    value: "",
     onChange: () => {}
 };
 
-const LoginInput = ({ icon, label, type, onChange }) => (
+const LoginInput = ({ icon, label, type, onChange, value }) => (
     <div className="login__input">
         <Icon
             name={icon}
@@ -26,6 +28,7 @@ const LoginInput = ({ icon, label, type, onChange }) => (
             label={label}
             floatingLabel
             type={type}
+            value={value}
             className="login__textfield"
         />
     </div>
