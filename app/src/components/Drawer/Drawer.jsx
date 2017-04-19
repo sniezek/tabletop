@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
 import DrawerHeader from "./DrawerHeader.jsx";
 import DrawerNavigation from "./DrawerNavigation.jsx";
 import "./Drawer.scss";
@@ -16,10 +15,6 @@ const defaultProps = {
     user: null
 };
 
-const mapStateToProps = ({ user }) => ({
-    user
-});
-
 export const Drawer = ({ user }) => (
     <div className="drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <DrawerHeader
@@ -32,4 +27,4 @@ export const Drawer = ({ user }) => (
 Drawer.propTypes = propTypes;
 Drawer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps)(Drawer);
+export default Drawer;
