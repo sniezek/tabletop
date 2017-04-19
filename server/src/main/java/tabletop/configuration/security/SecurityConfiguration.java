@@ -35,21 +35,23 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                .authorizeRequests().antMatchers("/restricted").authenticated()
+                .and()
                 .headers().frameOptions().disable() // to make H2 work
                 .and()
                 .csrf().disable() // to make H2 and Postman work
                 .formLogin()
-                .loginPage("/login")
-                .successHandler(new RESTAuthenticationSuccessHandler())
-                .failureHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                    .loginPage("/login")
+                    .successHandler(new RESTAuthenticationSuccessHandler())
+                    .failureHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
+                    .logoutUrl("/logout")
+                    .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint((request, response, authException) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
-                .accessDeniedHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_FORBIDDEN))
+                    .authenticationEntryPoint((request, response, authException) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
+                    .accessDeniedHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 .and()
                 .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
 
