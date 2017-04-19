@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Icon from "../Icon";
 import "./DrawerNavigationItem.scss";
 
 const propTypes = {
@@ -9,7 +10,7 @@ const propTypes = {
 
 const DrawerNavigationItem = ({ icon, label }) => (
     <a className="mdl-navigation__link" href="">
-        <i className="material-icons" role="presentation">{icon}</i>
+        <Icon name={icon} />
         {label}
     </a>
 );
