@@ -1,24 +1,8 @@
 .login {
-    width: 500px;
-
     &__form {
         margin: 16px 0 0;
         display: flex;
         align-items: center;
-    }
-
-    &__header {
-        padding: 32px;
-    }
-
-    &__content {
-        padding: 0 32px;
-        width: auto;
-    }
-
-    &__actions {
-        padding: 16px;
-        text-align: right;
     }
 
     &__icon {
@@ -28,6 +12,10 @@
     &__textfield {
         width: auto;
         flex: 1;
+    }
+
+    &__content {
+        padding: 0 32px;
     }
 
     &__input {

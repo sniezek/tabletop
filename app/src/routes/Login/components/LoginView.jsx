@@ -1,14 +1,23 @@
 import React from "react";
-import { Card, CardTitle, CardText, CardActions } from "react-mdl/lib/Card";
-import Button from "react-mdl/lib/Button";
 import { Link } from "react-router";
+import CardForm from "../../../components/CardForm";
 import LoginInput from "./LoginInput.jsx";
 import "./LoginView.scss";
 
-export const LoginView = () => (
-    <Card shadow={0} className="login">
-        <CardTitle className="login__header">Log in</CardTitle>
-        <CardText className="login__content">
+const actions = [{
+    label: "Remind password"
+}, {
+    label: "Login",
+    colored: true
+}];
+
+const LoginView = () => (
+    <CardForm
+        title="Log in"
+        loading={false}
+        actions={actions}
+    >
+        <div className="login__content">
             Don&#39;t have an account yet? <Link to="/register" className="login__link">Click here to register!</Link>
             <div className="login__form">
                 <LoginInput
@@ -21,12 +30,8 @@ export const LoginView = () => (
                     type="password"
                 />
             </div>
-        </CardText>
-        <CardActions className="login__actions">
-            <Button>Remind password</Button>
-            <Button colored>Login</Button>
-        </CardActions>
-    </Card>
+        </div>
+    </CardForm>
 );
 
 export default LoginView;
