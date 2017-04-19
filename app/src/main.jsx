@@ -7,10 +7,7 @@ import AppContainer from "./containers/AppContainer";
 // Store Instantiation
 // ========================================================
 const initialState = Object.assign({
-    user: {
-        name: "John Doe",
-        avatar: "https://getmdl.io/templates/dashboard/images/user.jpg"
-    }
+    user: null
 }, window.__INITIAL_STATE__);
 const store = createStore(initialState);
 
