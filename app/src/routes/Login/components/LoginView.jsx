@@ -1,9 +1,8 @@
 import React from "react";
 import { Card, CardTitle, CardText, CardActions } from "react-mdl/lib/Card";
 import Button from "react-mdl/lib/Button";
-import Icon from "react-mdl/lib/Icon";
-import Textfield from "react-mdl/lib/Textfield";
 import { Link } from "react-router";
+import LoginInput from "./LoginInput.jsx";
 import "./LoginView.scss";
 
 export const LoginView = () => (
@@ -12,23 +11,13 @@ export const LoginView = () => (
         <CardText className="login__content">
             Don&#39;t have an account yet? <Link to="/register" className="login__link">Click here to register!</Link>
             <div className="login__form">
-                <Icon
-                    name="face"
-                    className="login__icon"
-                />
-                <Textfield
-                    onChange={() => {}}
+                <LoginInput
+                    icon="face"
                     label="Username"
-                    floatingLabel
                 />
-                <Icon
-                    name="lock"
-                    className="login__icon"
-                />
-                <Textfield
-                    onChange={() => {}}
+                <LoginInput
+                    icon="lock"
                     label="Password"
-                    floatingLabel
                     type="password"
                 />
             </div>
