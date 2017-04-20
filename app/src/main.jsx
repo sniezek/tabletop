@@ -6,9 +6,7 @@ import AppContainer from "./containers/AppContainer";
 // ========================================================
 // Store Instantiation
 // ========================================================
-const initialState = Object.assign({
-    user: null
-}, window.__INITIAL_STATE__);
+const initialState = Object.assign({}, window.__INITIAL_STATE__);
 const store = createStore(initialState);
 
 // ========================================================

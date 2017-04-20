@@ -1,15 +1,30 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { login } from "../modules/Login";
 import Login from "../components/Login.jsx";
+
+const propTypes = {
+    login: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = {
+    login
+};
+
+const mapStateToProps = () => ({});
+
+const initialState = {
+    username: "",
+    password: "",
+    loading: false
+};
 
 class LoginContainer extends Component {
     constructor() {
         super();
 
-        this.state = {
-            username: "",
-            password: "",
-            loading: false
-        };
+        this.state = Object.assign({}, initialState);
 
         this.login = this.login.bind(this);
         this.remind = this.remind.bind(this);
@@ -17,24 +32,33 @@ class LoginContainer extends Component {
         this.setPassword = this.setPassword.bind(this);
     }
 
-    setUsername(ev) {
+    setUsername({ target }) {
+        /* eslint-disable no-param-reassign */
         this.setState({
-            username: ev.target.value
+            username: target.value
         });
     }
 
-    setPassword(ev) {
+    setPassword({ target }) {
+        /* eslint-disable no-param-reassign */
         this.setState({
-            password: ev.target.value
+            password: target.value
         });
     }
 
     login() {
+        const { username, password } = this.state;
+
         this.setState({
             loading: true
         });
 
-        alert(JSON.stringify(this.state));
+        this.props.login({
+            username,
+            password
+        }, () => {
+            this.setState(Object.assign({}, initialState));
+        });
     }
 
     remind() {
@@ -42,7 +66,7 @@ class LoginContainer extends Component {
             loading: true
         });
 
-        alert(JSON.stringify(this.state));
+        console.log(JSON.stringify(this.state));
     }
 
     render() {
@@ -62,4 +86,6 @@ class LoginContainer extends Component {
     }
 }
 
-export default LoginContainer;
+LoginContainer.propTypes = propTypes;
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);

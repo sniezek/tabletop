@@ -8,7 +8,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-    user: {}
+    user: null
 };
 
 const mapStateToProps = ({ user }) => ({

@@ -17,6 +17,14 @@ const defaultProps = {
     onChange: () => {}
 };
 
+const markAsRequired = ({ target }) => {
+    /* eslint-disable no-param-reassign */
+    if (!target.required) {
+        target.required = true;
+        target.dispatchEvent(new Event("input", { bubbles: true }));
+    }
+};
+
 const LoginInput = ({ icon, label, type, onChange, value }) => (
     <div className="login__input">
         <Icon
@@ -29,6 +37,7 @@ const LoginInput = ({ icon, label, type, onChange, value }) => (
             floatingLabel
             type={type}
             value={value}
+            onBlur={markAsRequired}
             className="login__textfield"
         />
     </div>
