@@ -5,14 +5,20 @@ import { login } from "../modules/Login";
 import Login from "../components/Login.jsx";
 
 const propTypes = {
-    login: PropTypes.func.isRequired
+    login: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    router: PropTypes.object.isRequired
+};
+
+const defaultProps = {
+    user: null
 };
 
 const mapDispatchToProps = {
     login
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = ({ user }) => ({ user });
 
 const initialState = {
     username: "",
@@ -71,6 +77,12 @@ class LoginContainer extends Component {
 
     render() {
         const { loading, username, password } = this.state;
+        const { user, router } = this.props;
+
+        if (user) {
+            router.push("/");
+            return null;
+        }
 
         return (
             <Login
@@ -87,5 +99,6 @@ class LoginContainer extends Component {
 }
 
 LoginContainer.propTypes = propTypes;
+LoginContainer.defaultProps = defaultProps;
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
