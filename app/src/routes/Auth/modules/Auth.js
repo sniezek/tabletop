@@ -2,6 +2,7 @@
 // Constants
 // ------------------------------------
 export const USER_LOGIN = "USER_LOGIN";
+export const USER_LOGOUT = "USER_LOGOUT";
 
 // ------------------------------------
 // Actions
@@ -22,8 +23,6 @@ export const login = ({ username, password }, callback) => dispatch => fetch("ht
         password
     })
 }).then((response) => {
-    // TODO: fix setState warning
-
     if (response.ok) {
         dispatch({
             type: USER_LOGIN,
@@ -36,20 +35,36 @@ export const login = ({ username, password }, callback) => dispatch => fetch("ht
     callback(response);
 });
 
+export const logout = callback => dispatch => fetch("http://localhost:8080/logout", {
+    method: "POST",
+    mode: "cors"
+}).then((response) => {
+    if (response.ok) {
+        dispatch({
+            type: USER_LOGOUT
+        });
+    }
+
+    callback(response);
+});
+
 export const actions = {
-    login
+    login,
+    logout
 };
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function loginReducer(state = null, { type, payload }) {
+export default function authReducer(state = null, { type, payload }) {
     if (type === USER_LOGIN) {
         state = {
             name: payload.username,
             avatar: "https://getmdl.io/templates/dashboard/images/user.jpg"
         };
+    } else if (type === USER_LOGOUT) {
+        state = null;
     }
 
     return state;
