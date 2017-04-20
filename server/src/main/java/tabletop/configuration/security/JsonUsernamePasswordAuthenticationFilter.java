@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonUsernamePasswordAuthenticationFilter.class);
 
     private final AuthenticationSuccessHandler successHandler;
@@ -36,17 +36,8 @@ public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
 
-        JsonObject object = parseJson(request);
-
-        String username = null;
-        String password = null;
-
-        if (object != null) {
-            username = getJsonParameterValueAsString(object, "username");
-            password = getJsonParameterValueAsString(object, "password");
-        }
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        JsonObject usernamePasswordJson = parseJson(request);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(getJsonParameterValueAsString(usernamePasswordJson, "username"), getJsonParameterValueAsString(usernamePasswordJson, "password"));
 
         return this.getAuthenticationManager().authenticate(token);
     }
@@ -74,6 +65,10 @@ public class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAu
     }
 
     private static String getJsonParameterValueAsString(JsonObject object, String parameter) {
+        if (object == null) {
+            return null;
+        }
+
         JsonElement element = object.get(parameter);
 
         return element != null ? element.getAsString() : null;
