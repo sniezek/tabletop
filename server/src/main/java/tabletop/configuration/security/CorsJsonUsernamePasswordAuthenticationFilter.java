@@ -12,6 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import tabletop.configuration.web.WebConfiguration;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,13 +20,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JsonUsernamePasswordAuthenticationFilter.class);
+class CorsJsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CorsJsonUsernamePasswordAuthenticationFilter.class);
 
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
 
-    JsonUsernamePasswordAuthenticationFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
+    CorsJsonUsernamePasswordAuthenticationFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler, AuthenticationFailureHandler failureHandler) {
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
     }
@@ -34,6 +35,10 @@ class JsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthentic
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         if (!request.getMethod().equals("POST")) {
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
+
+        if (WebConfiguration.CLIENT_ADDRESS.equals(request.getHeader("Origin"))) {
+            response.addHeader("Access-Control-Allow-Origin", WebConfiguration.CLIENT_ADDRESS);
         }
 
         JsonObject usernamePasswordJson = parseJson(request);
