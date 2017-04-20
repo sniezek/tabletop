@@ -1,4 +1,6 @@
-package tabletop.domain.users;
+package tabletop.domain.user;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,9 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    @NotEmpty
     private String username;
+    @NotEmpty
     private String password;
 
     public User() {

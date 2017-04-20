@@ -1,0 +1,38 @@
+.login {
+    &__form {
+        margin: 16px 0 0;
+        display: flex;
+        align-items: center;
+    }
+
+    &__icon {
+        margin-right: 8px;
+    }
+
+    &__textfield {
+        width: auto;
+        flex: 1;
+    }
+
+    &__content {
+        padding: 0 32px;
+    }
+
+    &__input {
+        display: flex;
+        align-items: center;
+
+        &:first-child {
+            margin-right: 16px;
+        }
+    }
+
+    &__link {
+        text-decoration: none;
+        font-weight: normal;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

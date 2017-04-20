@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 import Drawer from "../components/Drawer";
 
 const propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object
+};
+
+const defaultProps = {
+    user: null
 };
 
 const mapStateToProps = ({ user }) => ({
@@ -18,5 +22,6 @@ const DrawerContainer = ({ user }) => (
 );
 
 DrawerContainer.propTypes = propTypes;
+DrawerContainer.defaultProps = defaultProps;
 
 export default connect(mapStateToProps)(DrawerContainer);
