@@ -11,18 +11,26 @@ export const USER_LOGIN = "USER_LOGIN";
  returns a function for lazy evaluation. It is incredibly useful for
  creating async actions, especially when combined with redux-thunk! */
 
-export const login = ({ username, password }, callback) => dispatch => new Promise((resolve) => {
-    setTimeout(() => {
-        dispatch({
-            type: USER_LOGIN,
-            payload: {
-                username
-            }
-        });
+export const login = ({ username, password }, callback) => dispatch => fetch("http://localhost:8080/login", {
+    method: "POST",
+    mode: "cors",
+    headers: new Headers({
+        "Content-Type": "application/json"
+    }),
+    body: JSON.stringify({
+        username,
+        password
+    })
+}).then(() => {
+    // TODO: fix setState warning
+    dispatch({
+        type: USER_LOGIN,
+        payload: {
+            username
+        }
+    });
 
-        callback();
-        resolve();
-    }, 3000);
+    callback();
 });
 
 export const actions = {
