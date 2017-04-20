@@ -64,7 +64,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
+                .logoutSuccessHandler((request, response, authentication) -> {
+                    CorsHeaderAppender.append(request, response);
+                    response.setStatus(HttpServletResponse.SC_OK);
+                })
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))

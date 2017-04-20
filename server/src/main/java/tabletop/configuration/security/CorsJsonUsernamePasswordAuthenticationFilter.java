@@ -12,7 +12,6 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import tabletop.configuration.web.WebConfiguration;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -37,9 +36,7 @@ class CorsJsonUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthe
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
 
-        if (WebConfiguration.CLIENT_ADDRESS.equals(request.getHeader("Origin"))) {
-            response.addHeader("Access-Control-Allow-Origin", WebConfiguration.CLIENT_ADDRESS);
-        }
+        CorsHeaderAppender.append(request, response);
 
         JsonObject usernamePasswordJson = parseJson(request);
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(getJsonParameterValueAsString(usernamePasswordJson, "username"), getJsonParameterValueAsString(usernamePasswordJson, "password"));
