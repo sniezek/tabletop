@@ -27,8 +27,8 @@ const initialState = {
 };
 
 class LoginContainer extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = Object.assign({}, initialState);
 
@@ -36,6 +36,13 @@ class LoginContainer extends Component {
         this.remind = this.remind.bind(this);
         this.setUsername = this.setUsername.bind(this);
         this.setPassword = this.setPassword.bind(this);
+        this.redirect = this.redirect.bind(this);
+    }
+
+    componentWillReceiveProps({ user }) {
+        if (user) {
+            this.redirect();
+        }
     }
 
     setUsername({ target }) {
@@ -52,6 +59,11 @@ class LoginContainer extends Component {
         });
     }
 
+    redirect() {
+        const { router } = this.props;
+        router.push("/");
+    }
+
     login() {
         const { username, password } = this.state;
 
@@ -62,8 +74,13 @@ class LoginContainer extends Component {
         this.props.login({
             username,
             password
-        }, () => {
-            this.setState(Object.assign({}, initialState));
+        }, ({ ok }) => {
+            if (!ok) {
+                this.setState({
+                    password: "",
+                    loading: false
+                });
+            }
         });
     }
 
@@ -77,12 +94,6 @@ class LoginContainer extends Component {
 
     render() {
         const { loading, username, password } = this.state;
-        const { user, router } = this.props;
-
-        if (user) {
-            router.push("/");
-            return null;
-        }
 
         return (
             <Login

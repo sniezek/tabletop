@@ -21,16 +21,19 @@ export const login = ({ username, password }, callback) => dispatch => fetch("ht
         username,
         password
     })
-}).then(() => {
+}).then((response) => {
     // TODO: fix setState warning
-    dispatch({
-        type: USER_LOGIN,
-        payload: {
-            username
-        }
-    });
 
-    callback();
+    if (response.ok) {
+        dispatch({
+            type: USER_LOGIN,
+            payload: {
+                username
+            }
+        });
+    }
+
+    callback(response);
 });
 
 export const actions = {
