@@ -1,12 +1,3 @@
-/**
- * Copyright (C) 2017 Sabre Polska, All rights reserved.
- * <p>
- * This software is the confidential and proprietary product of Sabre Polska.
- * Any unauthorized use, reproduction, or transfer of this software is
- * strictly prohibited.
- * <p>
- * creation date: Apr 20, 2017
- */
 package tabletop.configuration.security;
 
 import org.springframework.security.core.AuthenticationException;
