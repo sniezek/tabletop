@@ -1,4 +1,4 @@
-import Api from "../../../api";
+import Api from "../api";
 
 // ------------------------------------
 // Constants
@@ -39,9 +39,26 @@ export const logout = callback => dispatch =>
         callback(response);
     });
 
+export const data = callback => dispatch =>
+    Api.user().then((response) => {
+        if (response.ok) {
+            response.json().then(({ username }) => {
+                dispatch({
+                    type: USER_LOGIN,
+                    payload: {
+                        username
+                    }
+                });
+            });
+        }
+
+        callback(response);
+    });
+
 export const actions = {
     login,
-    logout
+    logout,
+    data
 };
 
 // ------------------------------------

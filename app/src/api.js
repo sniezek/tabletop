@@ -4,6 +4,14 @@ class Api {
     constructor() {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
+        this.user = this.user.bind(this);
+    }
+
+    user() {
+        return fetch(`${API_SERVER}/user`, {
+            method: "POST",
+            credentials: "include"
+        });
     }
 
     login({ username, password }) {

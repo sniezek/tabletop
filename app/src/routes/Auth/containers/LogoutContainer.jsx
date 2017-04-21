@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { logout } from "../modules/Auth";
+import { logout } from "../../../store/auth";
 import Logout from "../components/Logout.jsx";
 
 const propTypes = {
