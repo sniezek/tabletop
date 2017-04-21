@@ -3,6 +3,7 @@
         margin: 16px 0 0;
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     &__icon {
@@ -21,9 +22,12 @@
     &__input {
         display: flex;
         align-items: center;
+        flex: 1 1 auto;
 
-        &:first-child {
-            margin-right: 16px;
+        @media (min-width: 570px) {
+            &:first-child {
+                margin-right: 16px;
+            }
         }
     }
 
