@@ -1,0 +1,21 @@
+.events-header {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+
+    &__count {
+        display: inline-block;
+        margin-left: 8px;
+        font-size: 20px;
+        color: #999;
+    }
+
+    &__title {
+        margin: 0;
+        font-size: 24px;
+        line-height: 37px;
+        font-weight: 300;
+    }
+}

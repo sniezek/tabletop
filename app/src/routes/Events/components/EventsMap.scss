@@ -1,0 +1,16 @@
+.events-map {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__map {
+        align-self: stretch;
+        flex: 1 1 auto;
+    }
+
+    &__spinner {
+        width: 80px;
+        height: 80px;
+    }
+}
