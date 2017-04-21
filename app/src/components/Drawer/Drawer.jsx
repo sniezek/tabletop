@@ -8,19 +8,23 @@ const propTypes = {
     user: PropTypes.shape({
         name: PropTypes.string.isRequired,
         avatar: PropTypes.string.isRequired
-    })
+    }),
+    links: PropTypes.array
 };
 
 const defaultProps = {
-    user: null
+    user: null,
+    links: []
 };
 
-export const Drawer = ({ user }) => (
+export const Drawer = ({ user, links }) => (
     <div className="drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <DrawerHeader
             user={user}
         />
-        <DrawerNavigation />
+        <DrawerNavigation
+            links={links}
+        />
     </div>
 );
 
