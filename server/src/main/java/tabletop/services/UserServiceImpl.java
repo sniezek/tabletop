@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.user.User;
 import tabletop.repositories.UserRepository;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -18,7 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getUserByUsername(String username) {
-        return usersRepository.findByUsername(username);
+        return Optional.ofNullable(usersRepository.findByUsername(username));
+    }
+
+    @Override
+    public Optional<User> getUserFromPrincipal(Principal principal) {
+        return principal == null ? Optional.empty() : Optional.ofNullable(usersRepository.findByUsername(principal.getName()));
     }
 
     @Override

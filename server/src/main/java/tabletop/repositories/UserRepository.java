@@ -1,12 +1,8 @@
 package tabletop.repositories;
 
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.CrudRepository;
 import tabletop.domain.user.User;
 
-import java.util.Optional;
-
-public interface UserRepository extends Repository<User, Long> {
-    Optional<User> findByUsername(String username);
-
-    User save(User user);
+public interface UserRepository extends CrudRepository<User, Long> {
+    User findByUsername(String username);
 }

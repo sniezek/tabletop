@@ -11,6 +11,8 @@ import tabletop.domain.user.User;
 import tabletop.services.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -20,5 +22,12 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public ResponseEntity createUser(@Valid @RequestBody User user) {
         return userService.getUserByUsername(user.getUsername()).isPresent() ? new ResponseEntity<>(HttpStatus.CONFLICT) : ResponseEntity.ok(userService.createUser(user));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    public ResponseEntity getAuthenticatedUser(Principal principal) {
+        Optional<User> user = userService.getUserFromPrincipal(principal);
+
+        return user.isPresent() ? ResponseEntity.ok(user.get()) : new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
 }

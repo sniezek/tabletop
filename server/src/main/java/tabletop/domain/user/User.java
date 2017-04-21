@@ -1,5 +1,6 @@
 package tabletop.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ public class User {
     @NotEmpty
     private String username;
     @NotEmpty
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     public User() {
