@@ -24,7 +24,7 @@ public abstract class Match {
     private int minPlayers;
     private int maxPlayers;
     @Enumerated(EnumType.STRING)
-    private MatchResultStatus resultStatus;
+    private MatchEndStatus endStatus;
 
     public Date getStartDate() {
         return startDate;
@@ -62,12 +62,28 @@ public abstract class Match {
         this.users = users;
     }
 
-    public MatchResultStatus getResultStatus() {
-        return resultStatus;
+    public MatchEndStatus getEndStatus() {
+        return endStatus;
     }
 
-    public void setResultStatus(MatchResultStatus resultStatus) {
-        this.resultStatus = resultStatus;
+    public void setEndStatus(MatchEndStatus endStatus) {
+        this.endStatus = endStatus;
+    }
+
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    public void setMinPlayers(int minPlayers) {
+        this.minPlayers = minPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
     }
 
     public abstract String getGameName();

@@ -1,6 +1,6 @@
 package tabletop.domain.match;
 
-public enum MatchResultStatus {
+public enum MatchEndStatus {
     CORRECT,
     INCORRECT;
 }
