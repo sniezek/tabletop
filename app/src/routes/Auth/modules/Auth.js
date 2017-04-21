@@ -12,26 +12,26 @@ export const USER_LOGOUT = "USER_LOGOUT";
  returns a function for lazy evaluation. It is incredibly useful for
  creating async actions, especially when combined with redux-thunk! */
 
-export const login = ({ username, password }, callback) => dispatch => {
-    var form = new FormData();
-    form.append('username', username);
-    form.append('password', password);
+export const login = ({ username, password }, callback) => (dispatch) => {
+    const form = new FormData();
+    form.append("username", username);
+    form.append("password", password);
     fetch("http://localhost:8080/login", {
-      method: "POST",
-      credentials: "include",
-      body: form
-  }).then((response) => {
-      if (response.ok) {
-          dispatch({
-              type: USER_LOGIN,
-              payload: {
-                  username
-              }
-          });
-      }
+        method: "POST",
+        credentials: "include",
+        body: form
+    }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: USER_LOGIN,
+                payload: {
+                    username
+                }
+            });
+        }
 
-      callback(response);
-  })
+        callback(response);
+    });
 };
 
 export const logout = callback => dispatch => fetch("http://localhost:8080/logout", {
