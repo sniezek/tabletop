@@ -1,11 +1,3 @@
-import { injectReducer } from "../../store/reducers";
-
-const injectAuthReducer = (store) => {
-    /* eslint-disable global-require */
-    const reducer = require("./modules/Auth").default;
-    injectReducer(store, { key: "user", reducer });
-};
-
 const LoginRoute = store => ({
     path: "login",
     onEnter: (nextState, replace) => {
@@ -18,7 +10,6 @@ const LoginRoute = store => ({
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
             const LoginView = require("./components/LoginView").default;
-            injectAuthReducer(store);
             cb(null, LoginView);
         }, "login");
     }
@@ -36,7 +27,6 @@ const LogoutRoute = store => ({
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
             const LoginView = require("./components/LogoutView").default;
-            injectAuthReducer(store);
             cb(null, LoginView);
         }, "logout");
     }
@@ -54,7 +44,6 @@ const RegisterRoute = store => ({
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
             const RegisterView = require("./components/RegisterView").default;
-            injectAuthReducer(store);
             cb(null, RegisterView);
         }, "logout");
     }
@@ -72,7 +61,6 @@ const RemindRoute = store => ({
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
             const RemindView = require("./components/RemindView").default;
-            injectAuthReducer(store);
             cb(null, RemindView);
         }, "logout");
     }
