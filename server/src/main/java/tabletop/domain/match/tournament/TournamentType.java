@@ -5,12 +5,14 @@ import tabletop.domain.game.Game;
 
 import java.util.Set;
 
+import static tabletop.domain.game.Game.CHESS;
+
 public enum TournamentType {
-    SWISS(Game.CHESS);
+    SWISS(CHESS);
 
     private final Set<Game> allowedGames;
 
-    TournamentType(Game... chess) {
-        this.allowedGames = Sets.newHashSet(chess);
+    TournamentType(Game... allowedGames) {
+        this.allowedGames = Sets.newHashSet(allowedGames);
     }
 }

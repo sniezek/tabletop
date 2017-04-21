@@ -15,7 +15,8 @@ public class Tournament extends Match {
     public Tournament() {
     }
 
-    public String getCustomGameName() {
+    @Override
+    public String getGameName() {
         return getGame().getName();
     }
 

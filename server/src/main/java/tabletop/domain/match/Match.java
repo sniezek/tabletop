@@ -86,5 +86,5 @@ public abstract class Match {
         this.maxPlayers = maxPlayers;
     }
 
-    public abstract String getCustomGameName();
+    public abstract String getGameName();
 }

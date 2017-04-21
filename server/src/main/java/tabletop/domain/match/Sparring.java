@@ -9,7 +9,8 @@ public class Sparring extends Match {
     public Sparring() {
     }
 
-    public String getCustomGameName() {
+    @Override
+    public String getGameName() {
         return isRegisteredGame() ? getGame().getName() : customGameName;
     }
 
