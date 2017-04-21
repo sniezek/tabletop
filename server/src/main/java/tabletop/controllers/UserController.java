@@ -24,7 +24,7 @@ public class UserController {
         return userService.getUserByUsername(user.getUsername()).isPresent() ? new ResponseEntity<>(HttpStatus.CONFLICT) : ResponseEntity.ok(userService.createUser(user));
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/user")
+    @RequestMapping(method = RequestMethod.POST, value = "/user")
     public ResponseEntity getAuthenticatedUser(Principal principal) {
         Optional<User> user = userService.getUserFromPrincipal(principal);
 
