@@ -19,7 +19,7 @@ public abstract class Match {
     private Date endDate;
     @OneToMany
     private Set<User> users;
-    @ManyToOne
+    @Enumerated(EnumType.STRING)
     private Game game;
     private int minPlayers;
     private int maxPlayers;
@@ -86,5 +86,5 @@ public abstract class Match {
         this.maxPlayers = maxPlayers;
     }
 
-    public abstract String getGameName();
+    public abstract String getCustomGameName();
 }
