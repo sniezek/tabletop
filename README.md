@@ -5,9 +5,9 @@
 $ cd server
 $ gradlew bootRun
 ```
-Server will be available at 'localhost:8080'.
+Server will be available at `localhost:8080`.
 
-Currently, an in-memory SQL H2 database is used. Its state is saved to file and automatically loaded on the next server startup. A console for the database is available at 'localhost:8080/h2' with these credentials:
+Currently, an in-memory SQL H2 database is used. Its state is saved to file and automatically loaded on the next server startup. A console for the database is available at `localhost:8080/h2` with these credentials:
 ```
 Driver Class: org.h2.Driver
 JDBC URL: jdbc:h2:file:./db
@@ -15,10 +15,10 @@ User Name: sa
 Password: (blank)
 ```
 ### Stack
-* [Spring Boot]
-* [Spring Security]
-* [Spring Data JPA]
-* [Spring Data REST]
+* Spring Boot
+* Spring Security
+* Spring Data JPA
+* Spring Data REST
 ## App
 ```
 $ cd app
