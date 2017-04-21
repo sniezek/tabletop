@@ -17,12 +17,14 @@ public abstract class Match {
     private Date startDate;
     @NotNull
     private Date endDate;
-
     @OneToMany
     private Set<User> users;
-
     @ManyToOne
     private Game game;
+    private int minPlayers;
+    private int maxPlayers;
+    @Enumerated(EnumType.STRING)
+    private MatchResultStatus resultStatus;
 
     public Date getStartDate() {
         return startDate;
@@ -58,6 +60,14 @@ public abstract class Match {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public MatchResultStatus getResultStatus() {
+        return resultStatus;
+    }
+
+    public void setResultStatus(MatchResultStatus resultStatus) {
+        this.resultStatus = resultStatus;
     }
 
     public abstract String getGameName();
