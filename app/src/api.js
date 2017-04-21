@@ -9,7 +9,7 @@ class Api {
 
     user() {
         return fetch(`${API_SERVER}/user`, {
-            method: "GET",
+            method: "POST",
             credentials: "include"
         });
     }
