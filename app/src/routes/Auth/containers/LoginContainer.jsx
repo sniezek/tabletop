@@ -59,9 +59,9 @@ class LoginContainer extends Component {
         });
     }
 
-    redirect() {
+    redirect(path = "/") {
         const { router } = this.props;
-        router.push("/");
+        router.push(path);
     }
 
     login() {
@@ -85,11 +85,7 @@ class LoginContainer extends Component {
     }
 
     remind() {
-        this.setState({
-            loading: true
-        });
-
-        console.log(JSON.stringify(this.state));
+        this.redirect("/remind-password");
     }
 
     render() {

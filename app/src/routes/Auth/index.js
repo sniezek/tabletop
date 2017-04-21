@@ -1,5 +1,11 @@
 import { injectReducer } from "../../store/reducers";
 
+const injectAuthReducer = (store) => {
+    /* eslint-disable global-require */
+    const reducer = require("./modules/Auth").default;
+    injectReducer(store, { key: "user", reducer });
+};
+
 const LoginRoute = store => ({
     path: "login",
     onEnter: (nextState, replace) => {
@@ -9,23 +15,11 @@ const LoginRoute = store => ({
             });
         }
     },
-    /*  Async getComponent is only invoked when route matches   */
     getComponent(nextState, cb) {
-        /*  Webpack - use 'require.ensure' to create a split point
-         and embed an async module loader (jsonp) when bundling   */
         require.ensure([], (require) => {
-            /*  Webpack - use require callback to define
-             dependencies for bundling   */
             const LoginView = require("./components/LoginView").default;
-            const reducer = require("./modules/Auth").default;
-
-            /*  Add the reducer to the store on key 'counter'  */
-            injectReducer(store, { key: "user", reducer });
-
-            /*  Return getComponent   */
+            injectAuthReducer(store);
             cb(null, LoginView);
-
-            /* Webpack named bundle   */
         }, "login");
     }
 });
@@ -39,25 +33,49 @@ const LogoutRoute = store => ({
             });
         }
     },
-    /*  Async getComponent is only invoked when route matches   */
     getComponent(nextState, cb) {
-        /*  Webpack - use 'require.ensure' to create a split point
-         and embed an async module loader (jsonp) when bundling   */
         require.ensure([], (require) => {
-            /*  Webpack - use require callback to define
-             dependencies for bundling   */
             const LoginView = require("./components/LogoutView").default;
-            const reducer = require("./modules/Auth").default;
-
-            /*  Add the reducer to the store on key 'counter'  */
-            injectReducer(store, { key: "user", reducer });
-
-            /*  Return getComponent   */
+            injectAuthReducer(store);
             cb(null, LoginView);
-
-            /* Webpack named bundle   */
         }, "logout");
     }
 });
 
-export { LoginRoute, LogoutRoute };
+const RegisterRoute = store => ({
+    path: "register",
+    onEnter: (nextState, replace) => {
+        if (store.getState().user) {
+            replace({
+                pathname: "/"
+            });
+        }
+    },
+    getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+            const RegisterView = require("./components/RegisterView").default;
+            injectAuthReducer(store);
+            cb(null, RegisterView);
+        }, "logout");
+    }
+});
+
+const RemindRoute = store => ({
+    path: "remind-password",
+    onEnter: (nextState, replace) => {
+        if (store.getState().user) {
+            replace({
+                pathname: "/"
+            });
+        }
+    },
+    getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+            const RemindView = require("./components/RemindView").default;
+            injectAuthReducer(store);
+            cb(null, RemindView);
+        }, "logout");
+    }
+});
+
+export { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute };
