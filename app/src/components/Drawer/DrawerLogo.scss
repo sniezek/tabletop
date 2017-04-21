@@ -1,4 +1,9 @@
 .drawer-logo {
     margin: 0 0 16px;
-    font-weight: 300;
+
+    &__link {
+        font-weight: 300;
+        text-decoration: none;
+        color: #fff;
+    }
 }

@@ -3,6 +3,16 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Drawer from "../components/Drawer";
 
+const links = [{
+    icon: "home",
+    label: "Home",
+    path: "/"
+}, {
+    icon: "event",
+    label: "Events",
+    path: "/events"
+}];
+
 const propTypes = {
     user: PropTypes.object
 };
@@ -18,6 +28,7 @@ const mapStateToProps = ({ user }) => ({
 const DrawerContainer = ({ user }) => (
     <Drawer
         user={user}
+        links={links}
     />
 );
 

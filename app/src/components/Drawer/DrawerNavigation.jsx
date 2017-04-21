@@ -1,25 +1,34 @@
 import React from "react";
+import PropTypes from "prop-types";
 import DrawerNavigationItem from "./DrawerNavigationItem.jsx";
 import "./DrawerNavigation.scss";
 
-const links = [{
-    icon: "home",
-    label: "Home"
-}, {
-    icon: "event",
-    label: "Events"
-}];
+const propTypes = {
+    links: PropTypes.arrayOf(PropTypes.shape({
+        icon: PropTypes.string.isRequired,
+        label: PropTypes.string.isRequired,
+        path: PropTypes.string.isRequired
+    }))
+};
 
-const DrawerNavigation = () => (
+const defaultProps = {
+    links: []
+};
+
+const DrawerNavigation = ({ links }) => (
     <nav className="navigation mdl-navigation mdl-color--blue-grey-800">
-        {links.map(({ icon, label }) =>
+        {links.map(({ icon, label, path }) =>
             <DrawerNavigationItem
                 key={label}
                 icon={icon}
                 label={label}
+                path={path}
             />
         )}
     </nav>
 );
+
+DrawerNavigation.propTypes = propTypes;
+DrawerNavigation.defaultProps = defaultProps;
 
 export default DrawerNavigation;
