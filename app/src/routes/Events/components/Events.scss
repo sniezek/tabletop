@@ -1,4 +1,16 @@
 .events {
+    width: 100%;
     flex: 1 1 auto;
     align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+}
+
+.events-map {
+    flex: 1 1 auto;
+    display: flex;
+
+    &__map {
+        flex: 1 1 auto;
+    }
 }
