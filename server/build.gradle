@@ -30,6 +30,5 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('com.allanditzel:spring-security-csrf-token-filter:1.1')
 	compile('com.google.guava:guava:21.0')
-	compile('com.google.code.gson:gson')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
