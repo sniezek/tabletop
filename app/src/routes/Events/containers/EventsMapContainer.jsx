@@ -21,7 +21,9 @@ const mapElement = (
 );
 
 const loadingElement = (
-    <Spinner className="events-map__spinner" />
+    <div className="events-map">
+        <Spinner className="events-map__spinner" />
+    </div>
 );
 
 const EventsMapContainer = () => (

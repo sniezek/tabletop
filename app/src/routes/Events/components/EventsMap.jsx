@@ -1,5 +1,6 @@
 import React from "react";
 import { GoogleMap } from "react-google-maps";
+import "./EventsMap.scss";
 
 const EventsMap = () => (
     <GoogleMap
