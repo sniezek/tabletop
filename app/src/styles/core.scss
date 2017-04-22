@@ -1,5 +1,6 @@
-@import 'base';
 @import '~normalize.css/normalize';
+@import "~dialog-polyfill/dialog-polyfill.css";
+@import "dialog";
 
 * {
     box-sizing: border-box;
