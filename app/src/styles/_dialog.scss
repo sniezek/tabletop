@@ -1,0 +1,16 @@
+dialog {
+    &::backdrop,
+    & + .backdrop {
+        background: rgba(0, 0, 0, 0.5);
+    }
+}
+
+.mdl-dialog {
+    width: auto;
+    max-width: calc(100% - 64px);
+
+    &__title {
+        font-size: 24px;
+        font-weight: 300;
+    }
+}
