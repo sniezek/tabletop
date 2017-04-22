@@ -11,10 +11,12 @@ class EventsContainer extends Component {
         super(props);
 
         this.state = {
-            mapView: true
+            mapView: true,
+            displayFilters: false
         };
 
         this.toggleMapView = this.toggleMapView.bind(this);
+        this.toggleFilters = this.toggleFilters.bind(this);
     }
 
     toggleMapView(mapView) {
@@ -23,13 +25,21 @@ class EventsContainer extends Component {
         });
     }
 
+    toggleFilters(displayFilters) {
+        this.setState({
+            displayFilters
+        });
+    }
+
     render() {
-        const { mapView } = this.state;
+        const { mapView, displayFilters } = this.state;
 
         return (
             <Events
                 mapView={mapView}
                 toggleMapView={this.toggleMapView}
+                toggleFilters={this.toggleFilters}
+                displayFilters={displayFilters}
             />
         );
     }

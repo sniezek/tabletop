@@ -5,15 +5,17 @@ import "./EventsHeader.scss";
 
 const propTypes = {
     mapView: PropTypes.bool,
-    toggleMapView: PropTypes.func
+    toggleMapView: PropTypes.func,
+    toggleFilters: PropTypes.func
 };
 
 const defaultProps = {
     mapView: true,
-    toggleMapView: () => {}
+    toggleMapView: () => {},
+    toggleFilters: () => {}
 };
 
-export const EventsHeader = ({ mapView, toggleMapView }) => (
+export const EventsHeader = ({ mapView, toggleMapView, toggleFilters }) => (
     <div className="events-header mdl-shadow--2dp">
         <h2 className="events-header__title">
             Browse available events
@@ -22,6 +24,7 @@ export const EventsHeader = ({ mapView, toggleMapView }) => (
         <EventsHeaderOptions
             mapView={mapView}
             toggleMapView={toggleMapView}
+            toggleFilters={toggleFilters}
         />
     </div>
 );

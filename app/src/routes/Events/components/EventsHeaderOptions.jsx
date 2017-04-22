@@ -4,17 +4,19 @@ import Button from "react-mdl/lib/Button";
 
 const propTypes = {
     mapView: PropTypes.bool,
-    toggleMapView: PropTypes.func
+    toggleMapView: PropTypes.func,
+    toggleFilters: PropTypes.func
 };
 
 const defaultProps = {
     mapView: true,
-    toggleMapView: () => {}
+    toggleMapView: () => {},
+    toggleFilters: () => {}
 };
 
-export const EventsHeaderOptions = ({ mapView, toggleMapView }) => (
+export const EventsHeaderOptions = ({ mapView, toggleMapView, toggleFilters }) => (
     <div className="events-header__options">
-        <Button>Filters</Button>
+        <Button onClick={() => toggleFilters(true)}>Filters</Button>
         <Button onClick={() => toggleMapView(!mapView)}>
             { mapView ? "Toggle list view" : "Toggle map view" }
         </Button>
