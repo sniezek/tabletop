@@ -1,11 +1,27 @@
 import React from "react";
-import { GoogleMap } from "react-google-maps";
+import Spinner from "react-mdl/lib/Spinner";
+import Map from "../../../components/Map";
 import "./EventsMap.scss";
 
+const containerElement = (
+    <div className="events-map" />
+);
+
+const mapElement = (
+    <div className="events-map__map" />
+);
+
+const loadingElement = (
+    <div className="events-map">
+        <Spinner className="events-map__spinner" />
+    </div>
+);
+
 const EventsMap = () => (
-    <GoogleMap
-        defaultZoom={6}
-        defaultCenter={{ lat: 51.8335556, lng: 18.6491471 }}
+    <Map
+        containerElement={containerElement}
+        loadingElement={loadingElement}
+        mapElement={mapElement}
     />
 );
 
