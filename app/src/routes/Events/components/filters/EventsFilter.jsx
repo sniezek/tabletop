@@ -10,7 +10,7 @@ const propTypes = {
 };
 
 const EventsFilter = ({ name, id, children }) => (
-    <div className={`events-filter events-filter--${id}`}>
+    <div className={`events-filter ${id}-filter`}>
         <Switch
             id={`filter-${id}`}
             className="events-filter__toggle"

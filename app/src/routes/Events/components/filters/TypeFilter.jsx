@@ -1,6 +1,7 @@
 import React from "react";
 import Checkbox from "react-mdl/lib/Checkbox";
 import EventsFilter from "./EventsFilter.jsx";
+import "./TypeFilter.scss";
 
 const TypeFilter = () => (
     <EventsFilter

@@ -1,0 +1,14 @@
+.location-filter {
+    &__input {
+        display: flex;
+    }
+
+    &__input-label,
+    &__input-element {
+        flex: 1 1 0%;
+    }
+
+    .mdl-slider__container {
+        margin: 0 -20px;
+    }
+}
