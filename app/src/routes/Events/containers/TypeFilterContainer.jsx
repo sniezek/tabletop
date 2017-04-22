@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { SET_TYPE, SET_ACTIVE } from "../modules/Filters";
 import TypeFilter from "../components/filters/TypeFilter.jsx";
 
-const mapStateToProps = ({ eventsFilters }) => eventsFilters.type;
+const mapStateToProps = ({ typeFilter }) => typeFilter;
 const mapDispatchToProps = dispatch => ({
     toggleTournament: ev => dispatch({
         type: SET_TYPE,

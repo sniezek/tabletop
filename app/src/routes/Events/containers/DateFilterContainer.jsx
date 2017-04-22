@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { SET_DATE, SET_ACTIVE, getCurrentDate } from "../modules/Filters";
 import DateFilter from "../components/filters/DateFilter.jsx";
 
-const mapStateToProps = ({ eventsFilters }) => eventsFilters.date;
+const mapStateToProps = ({ dateFilter }) => dateFilter;
 const mapDispatchToProps = dispatch => ({
     setFrom: ev => dispatch({
         type: SET_DATE,
