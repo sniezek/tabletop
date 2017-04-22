@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { SET_LOCATION, SET_ACTIVE } from "../modules/Filters";
 import LocationFilter from "../components/filters/LocationFilter.jsx";
 
-const mapStateToProps = ({ eventsFilters }) => eventsFilters.location;
+const mapStateToProps = ({ locationFilter }) => locationFilter;
 const mapDispatchToProps = dispatch => ({
     setRadius: ev => dispatch({
         type: SET_LOCATION,
