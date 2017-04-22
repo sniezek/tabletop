@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DrawerContainer from "../../containers/DrawerContainer.jsx";
+import DrawerContainer from "./containers/DrawerContainer.jsx";
 import "./CoreLayout.scss";
 import "../../styles/core.scss";
 

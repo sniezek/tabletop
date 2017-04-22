@@ -1,19 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router";
-import Icon from "../Icon";
+import Icon from "../../../../components/Icon";
 import "./DrawerLogin.scss";
 
-const actions = [{
-    label: "Login",
-    icon: "lock_outline",
-    url: "/login"
-}, {
-    label: "Create account",
-    icon: "person_add",
-    url: "/register"
-}];
+const propTypes = {
+    actions: PropTypes.arrayOf(PropTypes.shape({
+        label: PropTypes.string.isRequired,
+        icon: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired
+    }))
+};
 
-const DrawerLogin = () => (
+const defaultProps = {
+    actions: []
+};
+
+const DrawerLogin = ({ actions }) => (
     <div className="drawer-login">
         <ul className="drawer-login__actions">
             { actions.map(({ label, icon, url }) => (
@@ -27,5 +30,8 @@ const DrawerLogin = () => (
         </ul>
     </div>
 );
+
+DrawerLogin.propTypes = propTypes;
+DrawerLogin.defaultProps = defaultProps;
 
 export default DrawerLogin;
