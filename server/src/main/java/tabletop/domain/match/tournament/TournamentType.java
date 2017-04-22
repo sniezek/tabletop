@@ -1,18 +1,27 @@
 package tabletop.domain.match.tournament;
 
-import com.google.common.collect.Sets;
-import tabletop.domain.game.Game;
-
-import java.util.Set;
-
-import static tabletop.domain.game.Game.CHESS;
-
 public enum TournamentType {
-    SWISS(CHESS);
+    SWISS("Swiss", 2, 1024);
 
-    private final Set<Game> allowedGames;
+    private final String name;
+    private final int minPlayers;
+    private final int maxPlayers;
 
-    TournamentType(Game... allowedGames) {
-        this.allowedGames = Sets.newHashSet(allowedGames);
+    TournamentType(String name, int minPlayers, int maxPlayers) {
+        this.name = name;
+        this.minPlayers = minPlayers;
+        this.maxPlayers = maxPlayers;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
     }
 }

@@ -2,7 +2,6 @@ package tabletop.domain.game.wininformation;
 
 import tabletop.domain.user.User;
 
-import java.util.Collection;
 import java.util.Set;
 
 public class BasicWinInformation implements WinInformation {
@@ -12,8 +11,11 @@ public class BasicWinInformation implements WinInformation {
     }
 
     @Override
-    public Collection<User> getWinners() {
+    public Set<User> getWinners() {
         return winners;
     }
 
+    public void setWinners(Set<User> winners) {
+        this.winners = winners;
+    }
 }
