@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "react-mdl/lib/Button";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "react-mdl/lib/Dialog";
-import EventsFilter from "./EventsFilter.jsx";
+import { LocationFilter, GamesFilter, TypeFilter, DateFilter } from "./filters";
 import "./EventsFilters.scss";
 
 const propTypes = {
@@ -22,15 +22,10 @@ const EventsFilters = ({ displayFilters, toggleFilters }) => (
     >
         <DialogTitle>Filters</DialogTitle>
         <DialogContent>
-            <EventsFilter name="Location">
-                ...
-            </EventsFilter>
-            <EventsFilter name="Games">
-                ...
-            </EventsFilter>
-            <EventsFilter name="Type">
-                ...
-            </EventsFilter>
+            <LocationFilter />
+            <GamesFilter />
+            <TypeFilter />
+            <DateFilter />
         </DialogContent>
         <DialogActions>
             <Button colored onClick={() => toggleFilters(false)}>Apply filters</Button>
