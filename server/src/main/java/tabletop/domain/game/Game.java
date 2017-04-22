@@ -1,5 +1,7 @@
 package tabletop.domain.game;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Sets;
 import tabletop.domain.game.wininformation.ChessWinInformation;
 import tabletop.domain.game.wininformation.WinInformation;
@@ -9,6 +11,7 @@ import java.util.Set;
 
 import static tabletop.domain.match.tournament.TournamentType.SWISS;
 
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Game {
     CHESS("Chess",
             2,
