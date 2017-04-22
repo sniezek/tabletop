@@ -1,0 +1,9 @@
+.type-filter {
+    .events-filter__options {
+        display: flex;
+
+        .mdl-checkbox:first-child {
+            margin-right: 16px;
+        }
+    }
+}

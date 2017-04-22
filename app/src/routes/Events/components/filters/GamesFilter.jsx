@@ -1,5 +1,6 @@
 import React from "react";
 import EventsFilter from "./EventsFilter.jsx";
+import "./GamesFilter.scss";
 
 const GamesFilter = () => (
     <EventsFilter

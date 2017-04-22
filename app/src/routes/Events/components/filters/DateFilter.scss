@@ -1,0 +1,14 @@
+.date-filter {
+    &__range {
+        display: flex;
+
+        .mdl-textfield:first-child {
+            margin-right: 16px;
+        }
+    }
+
+    &__actions {
+        display: inline-block;
+        margin-right: 8px;
+    }
+}
