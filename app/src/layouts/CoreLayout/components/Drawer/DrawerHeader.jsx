@@ -6,14 +6,16 @@ import DrawerLogin from "./DrawerLogin.jsx";
 import "./DrawerHeader.scss";
 
 const propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    actions: PropTypes.array
 };
 
 const defaultProps = {
-    user: null
+    user: null,
+    actions: []
 };
 
-const DrawerHeader = ({ user }) => (
+const DrawerHeader = ({ user, actions }) => (
     <header className="drawer-header">
         <DrawerLogo />
         { (user && (
@@ -22,7 +24,9 @@ const DrawerHeader = ({ user }) => (
                 avatar={user.avatar}
             />
         )) || (
-            <DrawerLogin />
+            <DrawerLogin
+                actions={actions}
+            />
         )}
     </header>
 );

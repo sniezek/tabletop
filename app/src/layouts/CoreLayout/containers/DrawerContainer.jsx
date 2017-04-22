@@ -13,6 +13,16 @@ const links = [{
     path: "/events"
 }];
 
+const actions = [{
+    label: "Login",
+    icon: "lock_outline",
+    url: "/login"
+}, {
+    label: "Create account",
+    icon: "person_add",
+    url: "/register"
+}];
+
 const propTypes = {
     user: PropTypes.object
 };
@@ -29,6 +39,7 @@ const DrawerContainer = ({ user }) => (
     <Drawer
         user={user}
         links={links}
+        actions={actions}
     />
 );
 
