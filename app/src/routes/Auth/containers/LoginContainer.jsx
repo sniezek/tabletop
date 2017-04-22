@@ -20,17 +20,15 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-const initialState = {
-    username: "",
-    password: "",
-    loading: false
-};
-
 class LoginContainer extends Component {
     constructor(props) {
         super(props);
 
-        this.state = Object.assign({}, initialState);
+        this.state = {
+            username: "",
+            password: "",
+            loading: false
+        };
 
         this.login = this.login.bind(this);
         this.remind = this.remind.bind(this);

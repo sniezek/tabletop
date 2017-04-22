@@ -1,9 +1,9 @@
 import React from "react";
-import Events from "./Events.jsx";
+import EventsContainer from "../containers/EventsContainer.jsx";
 import "./EventsView.scss";
 
 export const EventsView = () => (
-    <Events />
+    <EventsContainer />
 );
 
 export default EventsView;
