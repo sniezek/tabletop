@@ -11,13 +11,26 @@ class EventsContainer extends Component {
         super(props);
 
         this.state = {
-
+            mapView: true
         };
+
+        this.toggleMapView = this.toggleMapView.bind(this);
+    }
+
+    toggleMapView(mapView) {
+        this.setState({
+            mapView
+        });
     }
 
     render() {
+        const { mapView } = this.state;
+
         return (
-            <Events />
+            <Events
+                mapView={mapView}
+                toggleMapView={this.toggleMapView}
+            />
         );
     }
 }
