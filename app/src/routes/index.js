@@ -16,7 +16,7 @@ export const createRoutes = store => ({
         LogoutRoute(store),
         RegisterRoute(store),
         RemindRoute(store),
-        EventsRoute
+        EventsRoute(store)
     ]
 });
 

@@ -2,7 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "react-mdl/lib/Button";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "react-mdl/lib/Dialog";
-import { LocationFilter, GamesFilter, TypeFilter, DateFilter } from "./filters";
+import LocationFilterContainer from "../containers/LocationFilterContainer.jsx";
+import GamesFilterContainer from "../containers/GamesFilterContainer.jsx";
+import TypeFilterContainer from "../containers/TypeFilterContainer.jsx";
+import DateFilterContainer from "../containers/DateFilterContainer.jsx";
 import "./EventsFilters.scss";
 
 const propTypes = {
@@ -15,6 +18,7 @@ const defaultProps = {
     toggleFilters: () => {}
 };
 
+/* eslint-disable jsx-a11y/anchor-has-content */
 const EventsFilters = ({ displayFilters, toggleFilters }) => (
     <Dialog
         className="events-filters"
@@ -22,10 +26,11 @@ const EventsFilters = ({ displayFilters, toggleFilters }) => (
     >
         <DialogTitle>Filters</DialogTitle>
         <DialogContent>
-            <LocationFilter />
-            <GamesFilter />
-            <TypeFilter />
-            <DateFilter />
+            <a tabIndex={0} className="events-filters__focus-trap" />
+            <LocationFilterContainer />
+            <GamesFilterContainer />
+            <TypeFilterContainer />
+            <DateFilterContainer />
         </DialogContent>
         <DialogActions>
             <Button colored onClick={() => toggleFilters(false)}>Apply filters</Button>
