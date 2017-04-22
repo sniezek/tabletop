@@ -6,14 +6,23 @@ import "./EventsFilter.scss";
 const propTypes = {
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
-    children: PropTypes.node.isRequired
+    children: PropTypes.node.isRequired,
+    active: PropTypes.bool,
+    setActive: PropTypes.func
 };
 
-const EventsFilter = ({ name, id, children }) => (
+const defaultProps = {
+    active: false,
+    setActive: () => {}
+};
+
+const EventsFilter = ({ name, id, children, active, setActive }) => (
     <div className={`events-filter ${id}-filter`}>
         <Switch
             id={`filter-${id}`}
             className="events-filter__toggle"
+            checked={active}
+            onChange={setActive}
         >
             {name}
         </Switch>
@@ -24,5 +33,6 @@ const EventsFilter = ({ name, id, children }) => (
 );
 
 EventsFilter.propTypes = propTypes;
+EventsFilter.defaultProps = defaultProps;
 
 export default EventsFilter;

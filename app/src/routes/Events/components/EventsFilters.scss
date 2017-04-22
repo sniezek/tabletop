@@ -4,4 +4,8 @@
     .mdl-dialog__content {
         padding-bottom: 0;
     }
+
+    &__focus-trap {
+        outline: 0;
+    }
 }
