@@ -1,0 +1,14 @@
+.icon-textfield {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+
+    &__icon {
+        margin-right: 8px;
+    }
+
+    &__textfield {
+        width: auto;
+        flex: 1;
+    }
+}
