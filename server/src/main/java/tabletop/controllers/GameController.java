@@ -8,6 +8,7 @@ import tabletop.domain.game.Game;
 import tabletop.services.TournamentRankingService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,7 +23,7 @@ public class GameController {
     @RequestMapping(method = RequestMethod.GET, value = "/games")
     public List<Game> getGamesList() {
         List<Game> games = new ArrayList<>();
-        games.add(Game.CHESS);
+        games.addAll(Arrays.asList(Game.values()));
         return games;
     }
 }
