@@ -1,43 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
-import { SET_DATE, SET_ACTIVE, getCurrentDate } from "../modules/Filters";
+import { setFilterActive, setFilterDateRange } from "../modules/FilterActions";
+import getCurrentDate from "../modules/FilterUtils";
 import DateFilter from "../components/filters/DateFilter.jsx";
 
 const mapStateToProps = ({ dateFilter }) => dateFilter;
 const mapDispatchToProps = dispatch => ({
-    setFrom: ev => dispatch({
-        type: SET_DATE,
-        payload: {
-            from: ev.target.value
-        }
-    }),
-    setTo: ev => dispatch({
-        type: SET_DATE,
-        payload: {
-            to: ev.target.value
-        }
-    }),
-    setPastDate: () => dispatch({
-        type: SET_DATE,
-        payload: {
-            from: undefined,
-            to: getCurrentDate()
-        }
-    }),
-    setFutureDate: () => dispatch({
-        type: SET_DATE,
-        payload: {
-            from: getCurrentDate(),
-            to: undefined
-        }
-    }),
-    setActive: ev => dispatch({
-        type: SET_ACTIVE,
-        payload: {
-            id: "date",
-            active: ev.target.checked
-        }
-    })
+    setFrom: ev => dispatch(setFilterDateRange(ev.target.value, null)),
+    setTo: ev => dispatch(setFilterDateRange(null, ev.target.value)),
+    setPastDate: () => dispatch(setFilterDateRange(undefined, getCurrentDate())),
+    setFutureDate: () => dispatch(setFilterDateRange(getCurrentDate(), undefined)),
+    setActive: ev => dispatch(setFilterActive("date", ev.target.checked))
 });
 
 const DateFilterContainer = props => (

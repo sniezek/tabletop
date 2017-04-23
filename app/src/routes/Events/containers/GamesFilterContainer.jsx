@@ -1,17 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import { SET_ACTIVE } from "../modules/Filters";
+import { setFilterActive } from "../modules/FilterActions";
 import GamesFilter from "../components/filters/GamesFilter.jsx";
 
 const mapStateToProps = ({ gamesFilter }) => gamesFilter;
 const mapDispatchToProps = dispatch => ({
-    setActive: ev => dispatch({
-        type: SET_ACTIVE,
-        payload: {
-            id: "games",
-            active: ev.target.checked
-        }
-    })
+    setActive: ev => dispatch(setFilterActive("games", ev.target.checked))
 });
 
 const GamesFilterContainer = props => (

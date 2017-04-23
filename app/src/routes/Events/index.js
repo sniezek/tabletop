@@ -5,7 +5,7 @@ export default store => ({
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
             const EventsView = require("./components/EventsView.jsx").default;
-            const { locationReducer, typeReducer, gamesReducer, dateReducer } = require("./modules/Filters");
+            const { locationReducer, typeReducer, gamesReducer, dateReducer } = require("./modules/FilterReducers");
             injectReducer(store, { key: "locationFilter", reducer: locationReducer });
             injectReducer(store, { key: "typeFilter", reducer: typeReducer });
             injectReducer(store, { key: "gamesFilter", reducer: gamesReducer });
