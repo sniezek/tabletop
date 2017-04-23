@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import { Card, CardTitle } from "react-mdl/lib/Card";
 import Spinner from "react-mdl/lib/Spinner";
 import CardFormActions from "./CardFormActions.jsx";
@@ -17,6 +18,8 @@ const defaultProps = {
     actions: []
 };
 
+const enhance = pure;
+
 const CardForm = ({ title, loading, children, actions }) => (
     <Card shadow={0} className="card-form">
         <CardTitle className="card-form__header">{title}</CardTitle>
@@ -33,4 +36,4 @@ const CardForm = ({ title, loading, children, actions }) => (
 CardForm.propTypes = propTypes;
 CardForm.defaultProps = defaultProps;
 
-export default CardForm;
+export default enhance(CardForm);

@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 
 const propTypes = {
     label: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired
 };
+
+const enhance = pure;
 
 const LocationInput = ({ label, children }) => (
     <div className="location-filter__input">
@@ -19,4 +22,4 @@ const LocationInput = ({ label, children }) => (
 
 LocationInput.propTypes = propTypes;
 
-export default LocationInput;
+export default enhance(LocationInput);

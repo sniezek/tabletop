@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Button from "react-mdl/lib/Button";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "react-mdl/lib/Dialog";
 import LocationFilterContainer from "../containers/LocationFilterContainer.jsx";
@@ -17,6 +18,8 @@ const defaultProps = {
     displayFilters: false,
     toggleFilters: () => {}
 };
+
+const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
 const EventsFilters = ({ displayFilters, toggleFilters }) => (
@@ -42,4 +45,4 @@ const EventsFilters = ({ displayFilters, toggleFilters }) => (
 EventsFilters.propTypes = propTypes;
 EventsFilters.defaultProps = defaultProps;
 
-export default EventsFilters;
+export default enhance(EventsFilters);

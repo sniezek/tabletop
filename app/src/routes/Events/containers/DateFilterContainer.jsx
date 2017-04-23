@@ -1,4 +1,6 @@
 import React from "react";
+import pure from "recompose/pure";
+import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { setFilterActive, setFilterDateRange } from "../modules/FilterActions";
 import getCurrentDate from "../modules/FilterUtils";
@@ -13,8 +15,13 @@ const mapDispatchToProps = dispatch => ({
     setActive: ev => dispatch(setFilterActive("date", ev.target.checked))
 });
 
+const enhance = compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    pure
+);
+
 const DateFilterContainer = props => (
     <DateFilter {...props} />
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(DateFilterContainer);
+export default enhance(DateFilterContainer);

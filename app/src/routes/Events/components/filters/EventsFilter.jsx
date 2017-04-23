@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Switch from "react-mdl/lib/Switch";
 import "./EventsFilter.scss";
 
@@ -15,6 +16,8 @@ const defaultProps = {
     active: false,
     setActive: () => {}
 };
+
+const enhance = pure;
 
 const EventsFilter = ({ name, id, children, active, setActive }) => (
     <div className={`events-filter ${id}-filter`}>
@@ -35,4 +38,4 @@ const EventsFilter = ({ name, id, children, active, setActive }) => (
 EventsFilter.propTypes = propTypes;
 EventsFilter.defaultProps = defaultProps;
 
-export default EventsFilter;
+export default enhance(EventsFilter);

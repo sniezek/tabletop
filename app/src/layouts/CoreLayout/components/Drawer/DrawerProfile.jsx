@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import { Link } from "react-router";
 import Icon from "../../../../components/Icon";
 import "./DrawerProfile.scss";
@@ -8,6 +9,8 @@ const propTypes = {
     avatar: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
 };
+
+const enhance = pure;
 
 const DrawerProfile = ({ avatar, name }) => (
     <div className="drawer-profile">
@@ -24,4 +27,4 @@ const DrawerProfile = ({ avatar, name }) => (
 
 DrawerProfile.propTypes = propTypes;
 
-export default DrawerProfile;
+export default enhance(DrawerProfile);

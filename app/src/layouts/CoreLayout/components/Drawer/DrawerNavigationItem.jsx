@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import { Link } from "react-router";
 import Icon from "../../../../components/Icon";
 import "./DrawerNavigationItem.scss";
@@ -9,6 +10,8 @@ const propTypes = {
     label: PropTypes.string.isRequired,
     path: PropTypes.string.isRequired
 };
+
+const enhance = pure;
 
 const DrawerNavigationItem = ({ icon, label, path }) => (
     <Link
@@ -22,4 +25,4 @@ const DrawerNavigationItem = ({ icon, label, path }) => (
 
 DrawerNavigationItem.propTypes = propTypes;
 
-export default DrawerNavigationItem;
+export default enhance(DrawerNavigationItem);

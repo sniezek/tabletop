@@ -1,8 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+import compose from "recompose/compose";
+import setDisplayName from "recompose/setDisplayName";
+import pure from "recompose/pure";
 import DrawerContainer from "./containers/DrawerContainer.jsx";
 import "./CoreLayout.scss";
 import "../../styles/core.scss";
+
+const propTypes = {
+    children: PropTypes.element.isRequired
+};
+
+const enhance = pure;
 
 const CoreLayout = ({ children }) => (
     <div className="mdl-layout mdl-js-layout mdl-layout--fixed-drawer">
@@ -13,8 +22,6 @@ const CoreLayout = ({ children }) => (
     </div>
 );
 
-CoreLayout.propTypes = {
-    children: PropTypes.element.isRequired
-};
+CoreLayout.propTypes = propTypes;
 
-export default CoreLayout;
+export default enhance(CoreLayout);

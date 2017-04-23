@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Checkbox from "react-mdl/lib/Checkbox";
 import EventsFilter from "./EventsFilter.jsx";
 import "./TypeFilter.scss";
@@ -21,6 +22,8 @@ const defaultProps = {
     toggleSparing: () => {},
     toggleTournament: () => {}
 };
+
+const enhance = pure;
 
 const TypeFilter = ({ active, setActive, sparing, tournament, toggleSparing, toggleTournament }) => (
     <EventsFilter
@@ -47,4 +50,4 @@ const TypeFilter = ({ active, setActive, sparing, tournament, toggleSparing, tog
 TypeFilter.propTypes = propTypes;
 TypeFilter.defaultProps = defaultProps;
 
-export default TypeFilter;
+export default enhance(TypeFilter);

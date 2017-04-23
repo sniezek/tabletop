@@ -46,7 +46,7 @@ export function typeReducer(state = {}, { type, payload }) {
         return {
             ...state,
             sparing: payload
-        }
+        };
     } else if (type === SET_FILTER_ACTIVE && payload.id === "type") {
         return {
             ...state,

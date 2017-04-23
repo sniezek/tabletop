@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 
 const propTypes = {
     name: PropTypes.string.isRequired,
@@ -10,6 +11,8 @@ const defaultProps = {
     className: ""
 };
 
+const enhance = pure;
+
 const Icon = ({ name, className }) => (
     <i className={`material-icons ${className}`} role="presentation">{name}</i>
 );
@@ -17,4 +20,4 @@ const Icon = ({ name, className }) => (
 Icon.propTypes = propTypes;
 Icon.defaultProps = defaultProps;
 
-export default Icon;
+export default enhance(Icon);

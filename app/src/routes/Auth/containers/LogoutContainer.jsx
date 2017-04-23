@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logout } from "../../../store/auth";
@@ -20,7 +20,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-class LogoutContainer extends Component {
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+class LogoutContainer extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -76,4 +78,4 @@ class LogoutContainer extends Component {
 LogoutContainer.propTypes = propTypes;
 LogoutContainer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogoutContainer);
+export default enhance(LogoutContainer);

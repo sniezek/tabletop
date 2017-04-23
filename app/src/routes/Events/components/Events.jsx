@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import EventsHeader from "./EventsHeader.jsx";
 import EventsMap from "./EventsMap.jsx";
 import EventsList from "./EventsList.jsx";
@@ -24,7 +25,9 @@ const defaultProps = {
     loggedIn: false
 };
 
-export const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn }) => (
+const enhance = pure;
+
+const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn }) => (
     <div className="events">
         <EventsHeader
             mapView={mapView}
@@ -48,4 +51,4 @@ export const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, 
 Events.propTypes = propTypes;
 Events.defaultProps = defaultProps;
 
-export default Events;
+export default enhance(Events);

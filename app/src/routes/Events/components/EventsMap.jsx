@@ -1,7 +1,10 @@
 import React from "react";
+import pure from "recompose/pure";
 import Spinner from "react-mdl/lib/Spinner";
 import Map from "../../../components/Map";
 import "./EventsMap.scss";
+
+const enhance = pure;
 
 const containerElement = (
     <div className="events-map" />
@@ -25,4 +28,4 @@ const EventsMap = () => (
     />
 );
 
-export default EventsMap;
+export default enhance(EventsMap);

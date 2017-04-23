@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { login } from "../../../store/auth";
@@ -20,7 +20,9 @@ const mapDispatchToProps = {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-class LoginContainer extends Component {
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+class LoginContainer extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -44,14 +46,12 @@ class LoginContainer extends Component {
     }
 
     setUsername({ target }) {
-        /* eslint-disable no-param-reassign */
         this.setState({
             username: target.value
         });
     }
 
     setPassword({ target }) {
-        /* eslint-disable no-param-reassign */
         this.setState({
             password: target.value
         });
@@ -106,4 +106,4 @@ class LoginContainer extends Component {
 LoginContainer.propTypes = propTypes;
 LoginContainer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer);
+export default enhance(LoginContainer);

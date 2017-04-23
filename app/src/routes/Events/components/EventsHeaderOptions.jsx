@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Button from "react-mdl/lib/Button";
 
 const propTypes = {
@@ -16,7 +17,9 @@ const defaultProps = {
     toggleFilters: () => {}
 };
 
-export const EventsHeaderOptions = ({ mapView, toggleMapView, toggleFilters, loggedIn }) => (
+const enhance = pure;
+
+const EventsHeaderOptions = ({ mapView, toggleMapView, toggleFilters, loggedIn }) => (
     <div className="events-header__options">
         {loggedIn && <Button colored>Add new event</Button>}
         <Button onClick={() => toggleFilters(true)}>Filters</Button>
@@ -29,4 +32,4 @@ export const EventsHeaderOptions = ({ mapView, toggleMapView, toggleFilters, log
 EventsHeaderOptions.propTypes = propTypes;
 EventsHeaderOptions.defaultProps = defaultProps;
 
-export default EventsHeaderOptions;
+export default enhance(EventsHeaderOptions);

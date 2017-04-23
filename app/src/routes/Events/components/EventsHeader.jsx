@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import EventsHeaderOptions from "./EventsHeaderOptions.jsx";
 import "./EventsHeader.scss";
 
@@ -19,7 +20,9 @@ const defaultProps = {
     loggedIn: false
 };
 
-export const EventsHeader = ({ mapView, toggleMapView, toggleFilters, count, loggedIn }) => (
+const enhance = pure;
+
+const EventsHeader = ({ mapView, toggleMapView, toggleFilters, count, loggedIn }) => (
     <div className="events-header mdl-shadow--2dp">
         <h2 className="events-header__title">
             Browse events
@@ -37,4 +40,4 @@ export const EventsHeader = ({ mapView, toggleMapView, toggleFilters, count, log
 EventsHeader.propTypes = propTypes;
 EventsHeader.defaultProps = defaultProps;
 
-export default EventsHeader;
+export default enhance(EventsHeader);
