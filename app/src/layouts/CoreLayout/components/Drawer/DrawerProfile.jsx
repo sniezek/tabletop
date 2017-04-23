@@ -2,19 +2,27 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import { Link } from "react-router";
+import Gravatar from "react-gravatar";
 import Icon from "../../../../components/Icon";
 import "./DrawerProfile.scss";
 
 const propTypes = {
-    avatar: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
 };
 
 const enhance = pure;
 
-const DrawerProfile = ({ avatar, name }) => (
+const DrawerProfile = ({ email, name }) => (
     <div className="drawer-profile">
-        <img src={avatar} className="drawer-profile__avatar" alt={`${name}'s avatar`} />
+        <Gravatar
+            email={email}
+            size={48}
+            rating="pg"
+            default="identicon"
+            className="drawer-profile__avatar"
+            alt={`${name}'s avatar`}
+        />
         <div className="drawer-profile__links">
             <Link to={`/users/${name}`} className="drawer-profile__name">{name}</Link>
             <Link to="/logout" className="drawer-profile__logout">
