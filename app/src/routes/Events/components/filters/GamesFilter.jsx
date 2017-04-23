@@ -9,19 +9,21 @@ const propTypes = {
     setActive: PropTypes.func,
     active: PropTypes.bool,
     selected: PropTypes.array,
-    addGame: PropTypes.func
+    addGame: PropTypes.func,
+    deleteGame: PropTypes.func
 };
 
 const defaultProps = {
     setActive: () => {},
     active: false,
     selected: [],
-    addGame: () => {}
+    addGame: () => {},
+    deleteGame: () => {}
 };
 
 const enhance = pure;
 
-const GamesFilter = ({ setActive, active, selected, addGame }) => (
+const GamesFilter = ({ setActive, active, selected, addGame, deleteGame }) => (
     <EventsFilter
         name="Games"
         id="games"
@@ -31,6 +33,7 @@ const GamesFilter = ({ setActive, active, selected, addGame }) => (
         <Tags
             tags={selected}
             onAdd={addGame}
+            onDelete={deleteGame}
             placeholder="Enter game name..."
         />
     </EventsFilter>
