@@ -30,6 +30,10 @@ const links = [{
     icon: "event",
     label: "Events",
     path: "/events"
+}, {
+    icon: "people",
+    label: "Tournaments",
+    path: "/tournament"
 }];
 
 const actions = [{
