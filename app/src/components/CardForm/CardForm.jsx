@@ -10,18 +10,20 @@ const propTypes = {
     title: PropTypes.string.isRequired,
     loading: PropTypes.bool,
     children: PropTypes.node.isRequired,
-    actions: PropTypes.array
+    actions: PropTypes.array,
+    className: PropTypes.string
 };
 
 const defaultProps = {
     loading: false,
-    actions: []
+    actions: [],
+    className: ""
 };
 
 const enhance = pure;
 
-const CardForm = ({ title, loading, children, actions }) => (
-    <Card shadow={0} className="card-form">
+const CardForm = ({ title, loading, children, actions, className }) => (
+    <Card shadow={0} className={`card-form ${className}`}>
         <CardTitle className="card-form__header">{title}</CardTitle>
         {loading && <Spinner className="card-form__spinner" />}
         {!loading && children}

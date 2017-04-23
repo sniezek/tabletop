@@ -1,4 +1,4 @@
-.login {
+.register {
     &__form {
         margin: 16px 0 0;
         display: flex;
@@ -20,7 +20,7 @@
     }
 
     @media (min-width: 570px) {
-        & .icon-textfield:first-child {
+        & .icon-textfield:nth-child(odd) {
             margin-right: 16px;
         }
     }
