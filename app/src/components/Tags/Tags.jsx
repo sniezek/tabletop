@@ -8,12 +8,14 @@ import "./Tags.scss";
 const propTypes = {
     tags: PropTypes.array,
     onAdd: PropTypes.func,
+    onDelete: PropTypes.func,
     placeholder: PropTypes.string
 };
 
 const defaultProps = {
     tags: [],
     onAdd: () => {},
+    onDelete: () => {},
     placeholder: ""
 };
 
@@ -30,12 +32,13 @@ const classNames = {
     activeSuggestion: "tags__active-suggestion"
 };
 
-const Tags = ({ tags, onAdd, placeholder }) => (
+const Tags = ({ tags, onAdd, placeholder, onDelete }) => (
     <ReactTags
         classNames={classNames}
         labelField="id"
         tags={tags}
         handleAddition={onAdd}
+        handleDelete={onDelete}
         removeComponent={TagAction}
         placeholder={placeholder}
     />
