@@ -1,12 +1,18 @@
 import React from "react";
 import "./TournamentView.scss";
-import { Link } from 'react-router';
+import PropTypes from "prop-types";
+import TournamentContainer from "../containers/TournamentContainer.jsx";
 
-export const TournamentView = () => (
-    <div>
-      <h1>Tournament view</h1>
-      <h1><Link to="/tournament-results">Finish tournament</Link></h1>
-    </div>
+const propTypes = {
+  router: PropTypes.object.isRequired
+};
+
+const TournamentView = ({router}) => (
+    <TournamentContainer
+      router={router}
+    />
 );
+
+TournamentView.propTypes = propTypes;
 
 export default TournamentView;
