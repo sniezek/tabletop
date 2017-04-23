@@ -5,6 +5,7 @@ class Api {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.user = this.user.bind(this);
+        this.getGames = this.getGames.bind(this);
     }
 
     user() {
@@ -31,6 +32,13 @@ class Api {
             method: "POST",
             credentials: "include"
         });
+    }
+
+    getGames() {
+      return fetch(`${API_SERVER}/games`, {
+          method: "GET",
+          credentials: "include"
+      });
     }
 }
 
