@@ -5,6 +5,7 @@ class Api {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.user = this.user.bind(this);
+        this.register = this.register.bind(this);
     }
 
     user() {
@@ -30,6 +31,24 @@ class Api {
         return fetch(`${API_SERVER}/logout`, {
             method: "POST",
             credentials: "include"
+        });
+    }
+
+    register({ username, password }) {
+        const body = JSON.stringify({
+            username,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/users`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body
         });
     }
 }
