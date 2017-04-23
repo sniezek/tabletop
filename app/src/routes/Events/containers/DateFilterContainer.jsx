@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setFilterActive, setFilterDateRange, getCurrentDate } from "../modules/Filters";
+import { setFilterActive, setFilterDateRange } from "../modules/FilterActions";
+import getCurrentDate from "../modules/FilterUtils";
 import DateFilter from "../components/filters/DateFilter.jsx";
 
 const mapStateToProps = ({ dateFilter }) => dateFilter;

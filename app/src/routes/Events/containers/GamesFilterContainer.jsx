@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setFilterActive } from "../modules/Filters";
+import { setFilterActive } from "../modules/FilterActions";
 import GamesFilter from "../components/filters/GamesFilter.jsx";
 
 const mapStateToProps = ({ gamesFilter }) => gamesFilter;
