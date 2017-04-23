@@ -5,7 +5,8 @@ import {
     SET_FILTER_SPARING_ACTIVE,
     SET_FILTER_DATE,
     SET_FILTER_DATE_FROM,
-    SET_FILTER_DATE_TO
+    SET_FILTER_DATE_TO,
+    ADD_FILTER_GAME
 } from "./FilterConstants";
 
 export const setFilterActive = (id, active) => ({
@@ -18,6 +19,11 @@ export const setFilterActive = (id, active) => ({
 
 export const setFilterLocationRadius = payload => ({
     type: SET_FILTER_LOCATION_RADIUS,
+    payload
+});
+
+export const addFilterGame = payload => ({
+    type: ADD_FILTER_GAME,
     payload
 });
 
