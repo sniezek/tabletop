@@ -1,7 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
+import compose from "recompose/compose";
+import pure from "recompose/pure";
 import { connect } from "react-redux";
 import Drawer from "../components/Drawer";
+
+const propTypes = {
+    user: PropTypes.object
+};
+
+const defaultProps = {
+    user: null
+};
+
+const mapStateToProps = ({ user }) => ({
+    user
+});
+
+const enhance = compose(
+    connect(mapStateToProps),
+    pure
+);
 
 const links = [{
     icon: "home",
@@ -23,18 +42,6 @@ const actions = [{
     url: "/register"
 }];
 
-const propTypes = {
-    user: PropTypes.object
-};
-
-const defaultProps = {
-    user: null
-};
-
-const mapStateToProps = ({ user }) => ({
-    user
-});
-
 const DrawerContainer = ({ user }) => (
     <Drawer
         user={user}
@@ -46,4 +53,4 @@ const DrawerContainer = ({ user }) => (
 DrawerContainer.propTypes = propTypes;
 DrawerContainer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps)(DrawerContainer);
+export default enhance(DrawerContainer);

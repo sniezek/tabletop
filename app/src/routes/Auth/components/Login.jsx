@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import { Link } from "react-router";
 import CardForm from "../../../components/CardForm";
 import LoginInput from "./LoginInput.jsx";
@@ -24,6 +25,8 @@ const defaultProps = {
     setUsername: () => {},
     setPassword: () => {}
 };
+
+const enhance = pure;
 
 const bindActions = (login, remind) => [{
     label: "Remind password",
@@ -64,4 +67,4 @@ const Login = ({ loading, username, password, login, remind, setUsername, setPas
 Login.propTypes = propTypes;
 Login.defaultProps = defaultProps;
 
-export default Login;
+export default enhance(Login);

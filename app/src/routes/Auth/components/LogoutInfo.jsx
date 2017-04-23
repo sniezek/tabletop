@@ -1,6 +1,9 @@
 import React from "react";
+import pure from "recompose/pure";
 import { Link } from "react-router";
 import { Card } from "react-mdl/lib/Card";
+
+const enhance = pure;
 
 const LogoutInfo = () => (
     <Card shadow={0} className="logout__info">
@@ -9,4 +12,4 @@ const LogoutInfo = () => (
     </Card>
 );
 
-export default LogoutInfo;
+export default enhance(LogoutInfo);

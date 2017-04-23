@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Slider from "react-mdl/lib/Slider";
 import EventsFilter from "./EventsFilter.jsx";
 import LocationInput from "./LocationInput.jsx";
@@ -18,6 +19,8 @@ const defaultProps = {
     setActive: () => {},
     active: false
 };
+
+const enhance = pure;
 
 const LocationFilter = ({ radius, setRadius, setActive, active }) => (
     <EventsFilter
@@ -41,4 +44,4 @@ const LocationFilter = ({ radius, setRadius, setActive, active }) => (
 LocationFilter.propTypes = propTypes;
 LocationFilter.defaultProps = defaultProps;
 
-export default LocationFilter;
+export default enhance(LocationFilter);

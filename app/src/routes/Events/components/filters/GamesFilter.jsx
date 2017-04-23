@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import EventsFilter from "./EventsFilter.jsx";
 import "./GamesFilter.scss";
 
@@ -12,6 +13,8 @@ const defaultProps = {
     setActive: () => {},
     active: false
 };
+
+const enhance = pure;
 
 const GamesFilter = ({ setActive, active }) => (
     <EventsFilter
@@ -27,4 +30,4 @@ const GamesFilter = ({ setActive, active }) => (
 GamesFilter.propTypes = propTypes;
 GamesFilter.defaultProps = defaultProps;
 
-export default GamesFilter;
+export default enhance(GamesFilter);

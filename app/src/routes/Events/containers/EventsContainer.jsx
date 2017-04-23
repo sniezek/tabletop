@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setMapViewActive } from "../../../store/config";
@@ -6,11 +6,13 @@ import Events from "../components/Events.jsx";
 
 const propTypes = {
     mapView: PropTypes.bool,
-    toggleMapView: PropTypes.func
+    toggleMapView: PropTypes.func,
+    user: PropTypes.object
 };
 
 const defaultProps = {
     mapView: true,
+    user: null,
     toggleMapView: () => {}
 };
 
@@ -23,7 +25,9 @@ const mapStateToProps = ({ user, config }) => ({
     mapView: config.mapView
 });
 
-class EventsContainer extends Component {
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
+class EventsContainer extends PureComponent {
     constructor(props) {
         super(props);
 
@@ -61,4 +65,4 @@ class EventsContainer extends Component {
 EventsContainer.propTypes = propTypes;
 EventsContainer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(EventsContainer);
+export default enhance(EventsContainer);

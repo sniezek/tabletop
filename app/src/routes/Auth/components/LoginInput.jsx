@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Icon from "react-mdl/lib/Icon";
 import Textfield from "react-mdl/lib/Textfield";
 
@@ -16,6 +17,8 @@ const defaultProps = {
     value: "",
     onChange: () => {}
 };
+
+const enhance = pure;
 
 const markAsRequired = ({ target }) => {
     /* eslint-disable no-param-reassign */
@@ -46,4 +49,4 @@ const LoginInput = ({ icon, label, type, onChange, value }) => (
 LoginInput.defaultProps = defaultProps;
 LoginInput.propTypes = propTypes;
 
-export default LoginInput;
+export default enhance(LoginInput);

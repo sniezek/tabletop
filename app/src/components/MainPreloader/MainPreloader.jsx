@@ -1,6 +1,9 @@
 import React from "react";
+import pure from "recompose/pure";
 import Spinner from "react-mdl/lib/Spinner";
 import "./MainPreloader.scss";
+
+const enhance = pure;
 
 const MainPreloader = () => (
     <div className="main-preloader mdl-color--blue-grey-900">
@@ -11,4 +14,4 @@ const MainPreloader = () => (
     </div>
 );
 
-export default MainPreloader;
+export default enhance(MainPreloader);

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import { Link } from "react-router";
 import Icon from "../../../../components/Icon";
 import "./DrawerLogin.scss";
@@ -15,6 +16,8 @@ const propTypes = {
 const defaultProps = {
     actions: []
 };
+
+const enhance = pure;
 
 const DrawerLogin = ({ actions }) => (
     <div className="drawer-login">
@@ -34,4 +37,4 @@ const DrawerLogin = ({ actions }) => (
 DrawerLogin.propTypes = propTypes;
 DrawerLogin.defaultProps = defaultProps;
 
-export default DrawerLogin;
+export default enhance(DrawerLogin);

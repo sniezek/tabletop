@@ -1,10 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import LogoutContainer from "../containers/LogoutContainer.jsx";
 
 const propTypes = {
     router: PropTypes.object.isRequired
 };
+
+const enhance = pure;
 
 const LogoutView = ({ router }) => (
     <LogoutContainer
@@ -14,4 +17,4 @@ const LogoutView = ({ router }) => (
 
 LogoutView.propTypes = propTypes;
 
-export default LogoutView;
+export default enhance(LogoutView);

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Spinner from "react-mdl/lib/Spinner";
 import LogoutInfo from "./LogoutInfo.jsx";
 import "./Logout.scss";
@@ -11,6 +12,8 @@ const propTypes = {
 const defaultProps = {
     loading: true
 };
+
+const enhance = pure;
 
 const Logout = ({ loading }) => (
     <div className="logout">
@@ -25,4 +28,4 @@ const Logout = ({ loading }) => (
 Logout.propTypes = propTypes;
 Logout.defaultProps = defaultProps;
 
-export default Logout;
+export default enhance(Logout);

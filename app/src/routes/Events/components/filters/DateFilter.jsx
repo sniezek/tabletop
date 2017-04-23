@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Textfield from "react-mdl/lib/Textfield";
 import Button from "react-mdl/lib/Button";
 import EventsFilter from "./EventsFilter.jsx";
@@ -26,6 +27,8 @@ const defaultProps = {
     setPastDate: () => {},
     setFutureDate: () => {}
 };
+
+const enhance = pure;
 
 const pattern = "[0-9]{2}-[0-9]{2}-[0-9]{4}";
 
@@ -63,4 +66,4 @@ const DateFilter = ({ active, setActive, from, to, setFrom, setTo, setPastDate, 
 DateFilter.propTypes = propTypes;
 DateFilter.defaultProps = defaultProps;
 
-export default DateFilter;
+export default enhance(DateFilter);
