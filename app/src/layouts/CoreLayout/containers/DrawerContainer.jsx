@@ -11,6 +11,10 @@ const links = [{
     icon: "event",
     label: "Events",
     path: "/events"
+}, {
+    icon: "casino",
+    label: "Games",
+    path: "/games"
 }];
 
 const actions = [{
