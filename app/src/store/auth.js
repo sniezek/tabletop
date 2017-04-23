@@ -28,8 +28,8 @@ export const logout = callback => dispatch =>
         callback(response);
     });
 
-export const register = ({ username, password }, callback) => dispatch =>
-    Api.register({ username, password }).then((response) => {
+export const register = ({ username, password, email }, callback) => dispatch =>
+    Api.register({ username, password, email }).then((response) => {
         if (response.ok) {
             login({ username, password }, callback)(dispatch);
         } else {
