@@ -10,6 +10,7 @@ import java.util.Set;
 
 @MappedSuperclass
 public abstract class Match {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -25,6 +26,8 @@ public abstract class Match {
     private int maxPlayers;
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
+
+    public Long getId() { return id; }
 
     public Date getStartDate() {
         return startDate;
