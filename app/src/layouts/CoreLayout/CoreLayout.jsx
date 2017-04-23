@@ -1,7 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import compose from "recompose/compose";
-import setDisplayName from "recompose/setDisplayName";
 import pure from "recompose/pure";
 import DrawerContainer from "./containers/DrawerContainer.jsx";
 import "./CoreLayout.scss";

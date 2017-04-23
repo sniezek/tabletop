@@ -22,7 +22,7 @@ const defaultProps = {
 
 const enhance = pure;
 
-export const Drawer = ({ user, links, actions }) => (
+const Drawer = ({ user, links, actions }) => (
     <div className="drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <DrawerHeader
             user={user}
