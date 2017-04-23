@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import Icon from "react-mdl/lib/Icon";
 import Textfield from "react-mdl/lib/Textfield";
+import "./IconTextfield.scss";
 
 const propTypes = {
     icon: PropTypes.string.isRequired,
@@ -28,11 +29,11 @@ const markAsRequired = ({ target }) => {
     }
 };
 
-const RegisterInput = ({ icon, label, type, onChange, value }) => (
-    <div className="register__input">
+const IconTextfield = ({ icon, label, type, onChange, value }) => (
+    <div className="icon-textfield">
         <Icon
             name={icon}
-            className="register__icon"
+            className="icon-textfield__icon"
         />
         <Textfield
             onChange={onChange}
@@ -41,12 +42,12 @@ const RegisterInput = ({ icon, label, type, onChange, value }) => (
             type={type}
             value={value}
             onBlur={markAsRequired}
-            className="register__textfield"
+            className="icon-textfield__textfield"
         />
     </div>
 );
 
-RegisterInput.defaultProps = defaultProps;
-RegisterInput.propTypes = propTypes;
+IconTextfield.defaultProps = defaultProps;
+IconTextfield.propTypes = propTypes;
 
-export default enhance(RegisterInput);
+export default enhance(IconTextfield);
