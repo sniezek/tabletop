@@ -10,22 +10,28 @@ const propTypes = {
     mapView: PropTypes.bool,
     toggleMapView: PropTypes.func,
     toggleFilters: PropTypes.func,
-    displayFilters: PropTypes.bool
+    displayFilters: PropTypes.bool,
+    events: PropTypes.array,
+    loggedIn: PropTypes.bool
 };
 
 const defaultProps = {
     mapView: true,
     toggleMapView: () => {},
     toggleFilters: () => {},
-    displayFilters: false
+    displayFilters: false,
+    events: [],
+    loggedIn: false
 };
 
-export const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters }) => (
+export const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn }) => (
     <div className="events">
         <EventsHeader
             mapView={mapView}
             toggleMapView={toggleMapView}
             toggleFilters={toggleFilters}
+            count={events.length}
+            loggedIn={loggedIn}
         />
         <EventsFilters
             displayFilters={displayFilters}

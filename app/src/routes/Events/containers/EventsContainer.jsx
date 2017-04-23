@@ -42,7 +42,8 @@ class EventsContainer extends Component {
 
     render() {
         const { displayFilters } = this.state;
-        const { mapView, toggleMapView } = this.props;
+        const { mapView, toggleMapView, user } = this.props;
+        const loggedIn = user !== null;
 
         return (
             <Events
@@ -50,6 +51,8 @@ class EventsContainer extends Component {
                 toggleMapView={toggleMapView}
                 toggleFilters={this.toggleFilters}
                 displayFilters={displayFilters}
+                loggedIn={loggedIn}
+                events={[]}
             />
         );
     }
