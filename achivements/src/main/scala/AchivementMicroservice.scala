@@ -35,7 +35,8 @@ trait Service extends Protocols {
       case Some(s) =>
         s match {
           case 0 => Future.successful(Right(Achievement(s, Some(List(1, 2, 3)))))
-          case _ => Future.successful(Right(Achievement(s, Some(List()))))
+          case 1 => Future.successful(Right(Achievement(s, Some(List()))))
+          case _ => Future.successful(Left("User not found"))
         }
     }
   }

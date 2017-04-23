@@ -33,7 +33,13 @@ class ServiceSpec extends FlatSpec with Matchers with ScalatestRouteTest with Se
   it should "respond with bad request on incorrect user ID" in {
     Get("/achi/asdfg") ~> routes ~> check {
       status shouldBe BadRequest
-      responseAs[String].length should be > 0
+      (responseAs[String] contains "Wrong Id") shouldEqual true
+    }
+
+    Get("/achi/3") ~> routes ~> check {
+      status shouldBe BadRequest
+      println(response.entity.contentType)
+      (responseAs[String] contains "User not found") shouldEqual true
     }
   }
 }
