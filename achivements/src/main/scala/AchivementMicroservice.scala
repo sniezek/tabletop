@@ -12,10 +12,12 @@ import spray.json.DefaultJsonProtocol
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
 case class Achievement(userId: Int, achievements: Option[List[Int]])
-
+case class Feed(map: Map[String,String])
 
 trait Protocols extends DefaultJsonProtocol {
+  implicit val updateDBFormat = jsonFormat1(Feed.apply)
   implicit val achivemenetFormat = jsonFormat2(Achievement.apply)
+
 }
 
 trait Service extends Protocols {
@@ -41,6 +43,11 @@ trait Service extends Protocols {
     }
   }
 
+  def update(feed: Feed): Future[Either[String, Feed]] = {
+    println(feed.map)
+    Future.successful(Left("OK"))
+  }
+
   val routes = {
     import StringUtils._
     logRequestResult("AchivementMicroservice") {
@@ -49,10 +56,20 @@ trait Service extends Protocols {
           id =>
             complete {
               getAchivements(id.toIntOpt).map[ToResponseMarshallable] {
-                case Right(ipInfo) => ipInfo
+                case Right(achievement) => achievement
                 case Left(errorMessage) => BadRequest -> errorMessage
               }
             }
+        }
+      } ~
+      pathPrefix("updateDB") {
+        (post & entity(as[Feed])) { feed =>
+          complete {
+            update(feed).map[ToResponseMarshallable] {
+              case Left("OK") => "OK"
+              case Left(errorMessage) => BadRequest -> errorMessage
+            }
+          }
         }
       }
     }
