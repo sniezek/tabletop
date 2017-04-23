@@ -1,11 +1,13 @@
-// ------------------------------------
-// Constants
-// ------------------------------------
-export const SET_DATE = "SET_DATE";
-export const SET_ACTIVE = "SET_ACTIVE";
-export const SET_TYPE = "SET_TYPE";
-export const SET_GAMES = "SET_GAMES";
-export const SET_LOCATION = "SET_LOCATION";
+export const SET_FILTER_ACTIVE = "SET_FILTER_ACTIVE";
+
+export const SET_FILTER_LOCATION_RADIUS = "SET_FILTER_LOCATION_RADIUS";
+
+export const SET_FILTER_DATE = "SET_FILTER_DATE";
+export const SET_FILTER_DATE_FROM = "SET_FILTER_DATE_FROM";
+export const SET_FILTER_DATE_TO = "SET_FILTER_DATE_TO";
+
+export const SET_FILTER_TOURNAMENT_ACTIVE = "SET_FILTER_TOURNAMENT_ACTIVE";
+export const SET_FILTER_SPARING_ACTIVE = "SET_FILTER_SPARING_ACTIVE";
 
 export function getCurrentDate() {
     const date = new Date();
@@ -25,12 +27,12 @@ export function getCurrentDate() {
 }
 
 export function locationReducer(state = {}, { type, payload }) {
-    if (type === SET_LOCATION) {
+    if (type === SET_FILTER_LOCATION_RADIUS) {
         return {
             ...state,
-            ...payload
+            radius: payload
         };
-    } else if (type === SET_ACTIVE && payload.id === "location") {
+    } else if (type === SET_FILTER_ACTIVE && payload.id === "location") {
         return {
             ...state,
             active: payload.active
@@ -41,12 +43,7 @@ export function locationReducer(state = {}, { type, payload }) {
 }
 
 export function gamesReducer(state = {}, { type, payload }) {
-    if (type === SET_GAMES) {
-        return {
-            ...state,
-            ...payload
-        };
-    } else if (type === SET_ACTIVE && payload.id === "games") {
+    if (type === SET_FILTER_ACTIVE && payload.id === "games") {
         return {
             ...state,
             active: payload.active
@@ -57,12 +54,17 @@ export function gamesReducer(state = {}, { type, payload }) {
 }
 
 export function typeReducer(state = {}, { type, payload }) {
-    if (type === SET_TYPE) {
+    if (type === SET_FILTER_TOURNAMENT_ACTIVE) {
         return {
             ...state,
-            ...payload
+            tournament: payload
         };
-    } else if (type === SET_ACTIVE && payload.id === "type") {
+    } else if (type === SET_FILTER_SPARING_ACTIVE) {
+        return {
+            ...state,
+            sparing: payload
+        }
+    } else if (type === SET_FILTER_ACTIVE && payload.id === "type") {
         return {
             ...state,
             active: payload.active
@@ -73,12 +75,23 @@ export function typeReducer(state = {}, { type, payload }) {
 }
 
 export function dateReducer(state = { from: getCurrentDate() }, { type, payload }) {
-    if (type === SET_DATE) {
+    if (type === SET_FILTER_DATE) {
         return {
             ...state,
-            ...payload
+            from: payload.from,
+            to: payload.to
         };
-    } else if (type === SET_ACTIVE && payload.id === "date") {
+    } else if (type === SET_FILTER_DATE_FROM) {
+        return {
+            ...state,
+            from: payload
+        };
+    } else if (type === SET_FILTER_DATE_TO) {
+        return {
+            ...state,
+            to: payload
+        };
+    } else if (type === SET_FILTER_ACTIVE && payload.id === "date") {
         return {
             ...state,
             active: payload.active

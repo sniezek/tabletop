@@ -1,24 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { SET_TYPE, SET_ACTIVE } from "../modules/Filters";
+import { SET_FILTER_SPARING_ACTIVE, SET_FILTER_TOURNAMENT_ACTIVE, SET_FILTER_ACTIVE } from "../modules/Filters";
 import TypeFilter from "../components/filters/TypeFilter.jsx";
 
 const mapStateToProps = ({ typeFilter }) => typeFilter;
 const mapDispatchToProps = dispatch => ({
     toggleTournament: ev => dispatch({
-        type: SET_TYPE,
-        payload: {
-            tournament: ev.target.checked
-        }
+        type: SET_FILTER_TOURNAMENT_ACTIVE,
+        payload: ev.target.checked
     }),
     toggleSparing: ev => dispatch({
-        type: SET_TYPE,
-        payload: {
-            sparing: ev.target.checked
-        }
+        type: SET_FILTER_SPARING_ACTIVE,
+        payload: ev.target.checked
     }),
     setActive: ev => dispatch({
-        type: SET_ACTIVE,
+        type: SET_FILTER_ACTIVE,
         payload: {
             id: "type",
             active: ev.target.checked
