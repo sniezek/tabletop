@@ -29,12 +29,16 @@ class RegisterContainer extends PureComponent {
         this.state = {
             username: "",
             password: "",
+            email: "",
+            passwordConfirm: "",
             loading: false
         };
 
         this.register = this.register.bind(this);
         this.setUsername = this.setUsername.bind(this);
         this.setPassword = this.setPassword.bind(this);
+        this.setEmail = this.setEmail.bind(this);
+        this.setPasswordConfirm = this.setPasswordConfirm.bind(this);
         this.redirect = this.redirect.bind(this);
     }
 
@@ -56,16 +60,25 @@ class RegisterContainer extends PureComponent {
         });
     }
 
+    setPasswordConfirm({ target }) {
+        this.setState({
+            passwordConfirm: target.value
+        });
+    }
+
+    setEmail({ target }) {
+        this.setState({
+            email: target.value
+        });
+    }
+
     redirect(path = "/") {
         const { router } = this.props;
         router.push(path);
     }
 
     register() {
-        const { username, password } = this.state;
-
-        console.log(username);
-        console.log(password);
+        const { username, password, email, passwordConfirm } = this.state;
 
         this.setState({
             loading: true
@@ -73,11 +86,13 @@ class RegisterContainer extends PureComponent {
 
         this.props.register({
             username,
-            password
+            password,
+            email
         }, ({ ok }) => {
             if (!ok) {
                 this.setState({
                     password: "",
+                    passwordConfirm: "",
                     loading: false
                 });
             }
@@ -85,16 +100,20 @@ class RegisterContainer extends PureComponent {
     }
 
     render() {
-        const { loading, username, password } = this.state;
+        const { loading, username, password, email, passwordConfirm } = this.state;
 
         return (
             <Register
                 loading={loading}
                 username={username}
                 password={password}
+                email={email}
+                passwordConfirm={passwordConfirm}
                 register={this.register}
                 setUsername={this.setUsername}
                 setPassword={this.setPassword}
+                setEmail={this.setEmail}
+                setPasswordConfirm={this.setPasswordConfirm}
             />
         );
     }

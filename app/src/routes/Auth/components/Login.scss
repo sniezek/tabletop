@@ -6,29 +6,8 @@
         flex-wrap: wrap;
     }
 
-    &__icon {
-        margin-right: 8px;
-    }
-
-    &__textfield {
-        width: auto;
-        flex: 1;
-    }
-
     &__content {
         padding: 0 32px;
-    }
-
-    &__input {
-        display: flex;
-        align-items: center;
-        flex: 1 1 auto;
-
-        @media (min-width: 570px) {
-            &:first-child {
-                margin-right: 16px;
-            }
-        }
     }
 
     &__link {
@@ -37,6 +16,12 @@
 
         &:hover {
             text-decoration: underline;
+        }
+    }
+
+    @media (min-width: 570px) {
+        & .icon-textfield:first-child {
+            margin-right: 16px;
         }
     }
 }

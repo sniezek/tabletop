@@ -35,10 +35,11 @@ class Api {
         });
     }
 
-    register({ username, password }) {
+    register({ username, password, email }) {
         const body = JSON.stringify({
             username,
-            password
+            password,
+            email
         });
 
         const headers = new Headers({
