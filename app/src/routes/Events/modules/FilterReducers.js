@@ -1,8 +1,7 @@
 import {
     SET_FILTER_ACTIVE,
     SET_FILTER_LOCATION_RADIUS,
-    SET_FILTER_TOURNAMENT_ACTIVE,
-    SET_FILTER_SPARING_ACTIVE,
+    SET_FILTER_SELECTED_TYPE,
     SET_FILTER_DATE,
     SET_FILTER_DATE_FROM,
     SET_FILTER_DATE_TO,
@@ -62,16 +61,11 @@ export function gamesReducer(state = { selected: [] }, { type, payload }) {
     return state;
 }
 
-export function typeReducer(state = {}, { type, payload }) {
-    if (type === SET_FILTER_TOURNAMENT_ACTIVE) {
+export function typeReducer(state = { type: "sparing" }, { type, payload }) {
+    if (type === SET_FILTER_SELECTED_TYPE) {
         return {
             ...state,
-            tournament: payload
-        };
-    } else if (type === SET_FILTER_SPARING_ACTIVE) {
-        return {
-            ...state,
-            sparing: payload
+            type: payload
         };
     } else if (type === SET_FILTER_ACTIVE && payload.id === "type") {
         return {

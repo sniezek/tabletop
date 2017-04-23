@@ -1,9 +1,15 @@
 .type-filter {
     .events-filter__options {
-        display: flex;
+        & > div {
+            display: flex;
+        }
 
-        .mdl-checkbox:first-child {
-            margin-right: 16px;
+        .mdl-radio {
+            flex: 1 1 0%;
+
+            &:first-child {
+                margin-right: 16px;
+            }
         }
     }
 }
