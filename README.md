@@ -50,4 +50,12 @@ Extracted from [React Redux starter kit](https://github.com/davezuko/react-redux
 |`lint:fix`|Lint and fix all `.js` files. [Read more on this](http://eslint.org/docs/user-guide/command-line-interface.html#fix).|
 
 ## Achievements
-TODO
+You need:
+* [Sbt](http://www.scala-sbt.org/)
+
+### Setup
+If you want run it type:
+```
+$ sbt run
+```
+Service will be available at `localhost:9000`
