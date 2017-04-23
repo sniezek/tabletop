@@ -28,6 +28,20 @@ export const logout = callback => dispatch =>
         callback(response);
     });
 
+export const register = ({ username, password }, callback) => dispatch =>
+    Api.register({ username, password }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: USER_LOGIN,
+                payload: {
+                    username
+                }
+            });
+        }
+
+        callback(response);
+    });
+
 export const data = callback => dispatch =>
     Api.user().then((response) => {
         if (response.ok) {
