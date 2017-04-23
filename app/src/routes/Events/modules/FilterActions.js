@@ -1,8 +1,7 @@
 import {
     SET_FILTER_ACTIVE,
     SET_FILTER_LOCATION_RADIUS,
-    SET_FILTER_TOURNAMENT_ACTIVE,
-    SET_FILTER_SPARING_ACTIVE,
+    SET_FILTER_SELECTED_TYPE,
     SET_FILTER_DATE,
     SET_FILTER_DATE_FROM,
     SET_FILTER_DATE_TO,
@@ -33,13 +32,8 @@ export const deleteFilterGame = payload => ({
     payload
 });
 
-export const setFilterTournamentActive = payload => ({
-    type: SET_FILTER_TOURNAMENT_ACTIVE,
-    payload
-});
-
-export const setFilterSparingActive = payload => ({
-    type: SET_FILTER_SPARING_ACTIVE,
+export const setFilterSelectedType = payload => ({
+    type: SET_FILTER_SELECTED_TYPE,
     payload
 });
 
