@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import Icon from "../../../components/Icon";
 import ListEventTime from "./ListEventTime.jsx";
+import ListEventGames from "./ListEventGames.jsx";
 
 const propTypes = {
     joined: PropTypes.bool,
@@ -37,15 +38,7 @@ const ListEvent = ({ joined, name, location, players, from, to }) => (
             </p>
             <p className="list-event__count">{players} Players going</p>
         </div>
-        <div className="list-event__games">
-            <ul className="list-event__games-list">
-                <li>Warhammer 40k <span>(tournament, sparing)</span></li>
-                <li>Dixit <span>(sparing)</span></li>
-                <li>Chess <span>(tournament)</span></li>
-                <li>Poker <span>(tournament, sparing)</span></li>
-            </ul>
-            <a className="list-event__games-more" href="#">...and 3 more</a>
-        </div>
+        <ListEventGames />
     </div>
 );
 
