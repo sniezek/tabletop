@@ -1,31 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
+import moment from "moment";
 import Icon from "../../../components/Icon";
 
 const propTypes = {
-    joined: PropTypes.bool
+    joined: PropTypes.bool,
+    name: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+    players: PropTypes.number,
+    from: PropTypes.number.isRequired,
+    to: PropTypes.number.isRequired
+};
+
+const defaultProps = {
+    joined: false,
+    players: 0
 };
 
 const enhance = pure;
 
-const ListEvent = ({ joined }) => (
+const ListEvent = ({ joined, name, location, players, from, to }) => (
     <div className={joined ? "list-event list-event--joined" : "list-event"}>
         <div className="list-event__time">
-            <time className="list-event__time-from">5:00 PM</time>
+            <time className="list-event__time-from">{moment(from).format("h:mm A")}</time>
             <span className="list-event__time-delemiter" />
-            <time className="list-event__time-to">9:00 PM</time>
+            <time className="list-event__time-to">{moment(to).format("h:mm A")}</time>
         </div>
         <div className="list-event__details">
-            <h4 className="list-event__name">Event name</h4>
+            <h4 className="list-event__name">{name}</h4>
             <p className="list-event__location">
                 <Icon
                     name="room"
                     className="list-event__location-icon"
                 />
-                Event location
+                {location}
             </p>
-            <p className="list-event__count">0 Players going</p>
+            <p className="list-event__count">{players} Players going</p>
         </div>
         <div className="list-event__games">
             <ul className="list-event__games-list">
@@ -40,5 +51,6 @@ const ListEvent = ({ joined }) => (
 );
 
 ListEvent.propTypes = propTypes;
+ListEvent.defaultProps = defaultProps;
 
 export default enhance(ListEvent);
