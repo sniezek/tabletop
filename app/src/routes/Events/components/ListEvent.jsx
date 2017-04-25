@@ -11,7 +11,8 @@ const propTypes = {
     location: PropTypes.string.isRequired,
     players: PropTypes.number,
     from: PropTypes.number.isRequired,
-    to: PropTypes.number.isRequired
+    to: PropTypes.number.isRequired,
+    games: PropTypes.array.isRequired
 };
 
 const defaultProps = {
@@ -21,7 +22,7 @@ const defaultProps = {
 
 const enhance = pure;
 
-const ListEvent = ({ joined, name, location, players, from, to }) => (
+const ListEvent = ({ joined, name, location, players, from, to, games }) => (
     <div className={joined ? "list-event list-event--joined" : "list-event"}>
         <ListEventTime
             from={from}
@@ -38,7 +39,9 @@ const ListEvent = ({ joined, name, location, players, from, to }) => (
             </p>
             <p className="list-event__count">{players} Players going</p>
         </div>
-        <ListEventGames />
+        <ListEventGames
+            games={games}
+        />
     </div>
 );
 

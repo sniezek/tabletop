@@ -14,7 +14,28 @@ const events = [{
     location: "Cracow",
     players: 15,
     from: now,
-    to: now
+    to: now,
+    games: [{
+        name: "Warhammer 40K",
+        tournament: true,
+        sparing: true
+    }, {
+        name: "Chess",
+        sparing: true
+    }, {
+        name: "Dixit",
+        tournament: true
+    }, {
+        name: "Poker",
+        tournament: true
+    }, {
+        name: "Makao",
+        sparing: true
+    }, {
+        name: "Blackjack",
+        sparing: true,
+        torunament: true
+    }]
 }];
 
 const EventsList = () => (
