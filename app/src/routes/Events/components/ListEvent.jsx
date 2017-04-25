@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import Icon from "../../../components/Icon";
 import ListEventTime from "./ListEventTime.jsx";
+import ListEventDetails from "./ListEventDetails.jsx";
 import ListEventGames from "./ListEventGames.jsx";
+import "./ListEvent.scss";
 
 const propTypes = {
+    id: PropTypes.number.isRequired,
     joined: PropTypes.bool,
     name: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
@@ -22,23 +24,18 @@ const defaultProps = {
 
 const enhance = pure;
 
-const ListEvent = ({ joined, name, location, players, from, to, games }) => (
+const ListEvent = ({ id, joined, name, location, players, from, to, games }) => (
     <div className={joined ? "list-event list-event--joined" : "list-event"}>
         <ListEventTime
             from={from}
             to={to}
         />
-        <div className="list-event__details">
-            <h4 className="list-event__name">{name}</h4>
-            <p className="list-event__location">
-                <Icon
-                    name="room"
-                    className="list-event__location-icon"
-                />
-                {location}
-            </p>
-            <p className="list-event__count">{players} Players going</p>
-        </div>
+        <ListEventDetails
+            id={id}
+            name={name}
+            location={location}
+            players={players}
+        />
         <ListEventGames
             games={games}
         />
