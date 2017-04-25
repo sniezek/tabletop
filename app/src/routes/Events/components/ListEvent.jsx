@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import moment from "moment";
 import Icon from "../../../components/Icon";
+import ListEventTime from "./ListEventTime.jsx";
 
 const propTypes = {
     joined: PropTypes.bool,
@@ -22,11 +22,10 @@ const enhance = pure;
 
 const ListEvent = ({ joined, name, location, players, from, to }) => (
     <div className={joined ? "list-event list-event--joined" : "list-event"}>
-        <div className="list-event__time">
-            <time className="list-event__time-from">{moment(from).format("h:mm A")}</time>
-            <span className="list-event__time-delemiter" />
-            <time className="list-event__time-to">{moment(to).format("h:mm A")}</time>
-        </div>
+        <ListEventTime
+            from={from}
+            to={to}
+        />
         <div className="list-event__details">
             <h4 className="list-event__name">{name}</h4>
             <p className="list-event__location">
