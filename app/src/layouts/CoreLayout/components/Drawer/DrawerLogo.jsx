@@ -1,6 +1,9 @@
 import React from "react";
+import pure from "recompose/pure";
 import { IndexLink } from "react-router";
 import "./DrawerLogo.scss";
+
+const enhance = pure;
 
 const DrawerLogo = () => (
     <h1 className="drawer-logo">
@@ -8,4 +11,4 @@ const DrawerLogo = () => (
     </h1>
 );
 
-export default DrawerLogo;
+export default enhance(DrawerLogo);

@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import Icon from "react-mdl/lib/Icon";
 import Textfield from "react-mdl/lib/Textfield";
+import "./IconTextfield.scss";
 
 const propTypes = {
     icon: PropTypes.string.isRequired,
@@ -17,6 +19,8 @@ const defaultProps = {
     onChange: () => {}
 };
 
+const enhance = pure;
+
 const markAsRequired = ({ target }) => {
     /* eslint-disable no-param-reassign */
     if (!target.required) {
@@ -25,11 +29,11 @@ const markAsRequired = ({ target }) => {
     }
 };
 
-const LoginInput = ({ icon, label, type, onChange, value }) => (
-    <div className="login__input">
+const IconTextfield = ({ icon, label, type, onChange, value }) => (
+    <div className="icon-textfield">
         <Icon
             name={icon}
-            className="login__icon"
+            className="icon-textfield__icon"
         />
         <Textfield
             onChange={onChange}
@@ -38,12 +42,12 @@ const LoginInput = ({ icon, label, type, onChange, value }) => (
             type={type}
             value={value}
             onBlur={markAsRequired}
-            className="login__textfield"
+            className="icon-textfield__textfield"
         />
     </div>
 );
 
-LoginInput.defaultProps = defaultProps;
-LoginInput.propTypes = propTypes;
+IconTextfield.defaultProps = defaultProps;
+IconTextfield.propTypes = propTypes;
 
-export default LoginInput;
+export default enhance(IconTextfield);

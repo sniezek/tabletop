@@ -17,6 +17,8 @@ const mapDispatchToProps = {
 
 const mapStateToProps = () => ({});
 
+const enhance = connect(mapStateToProps, mapDispatchToProps);
+
 class AppContainer extends PureComponent {
     constructor(props) {
         super(props);
@@ -52,4 +54,4 @@ class AppContainer extends PureComponent {
 
 AppContainer.propTypes = propTypes;
 
-export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);
+export default enhance(AppContainer);

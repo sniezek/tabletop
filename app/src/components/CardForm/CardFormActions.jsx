@@ -1,11 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import { CardActions } from "react-mdl/lib/Card";
 import Button from "react-mdl/lib/Button";
 
 const propTypes = {
     actions: PropTypes.array.isRequired
 };
+
+const enhance = pure;
 
 const CardFormActions = ({ actions }) => (
     <CardActions className="card-form__actions">
@@ -17,4 +20,4 @@ const CardFormActions = ({ actions }) => (
 
 CardFormActions.propTypes = propTypes;
 
-export default CardFormActions;
+export default enhance(CardFormActions);

@@ -1,28 +1,23 @@
 import Api from "../api";
 
-// ------------------------------------
-// Constants
-// ------------------------------------
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 
-// ------------------------------------
-// Actions
-// ------------------------------------
-
-/*  This is a thunk, meaning it is a function that immediately
- returns a function for lazy evaluation. It is incredibly useful for
- creating async actions, especially when combined with redux-thunk! */
+const dispatchLogin = (response, dispatch) =>
+    response.json().then(({ username, email }) => {
+        dispatch({
+            type: USER_LOGIN,
+            payload: {
+                username,
+                email
+            }
+        });
+    });
 
 export const login = ({ username, password }, callback) => dispatch =>
     Api.login({ username, password }).then((response) => {
         if (response.ok) {
-            dispatch({
-                type: USER_LOGIN,
-                payload: {
-                    username
-                }
-            });
+            dispatchLogin(response, dispatch);
         }
 
         callback(response);
@@ -39,40 +34,33 @@ export const logout = callback => dispatch =>
         callback(response);
     });
 
+export const register = ({ username, password, email }, callback) => dispatch =>
+    Api.register({ username, password, email }).then((response) => {
+        if (response.ok) {
+            login({ username, password }, callback)(dispatch);
+        } else {
+            callback(response);
+        }
+    });
+
 export const data = callback => dispatch =>
     Api.user().then((response) => {
         if (response.ok) {
-            response.json().then(({ username }) => {
-                dispatch({
-                    type: USER_LOGIN,
-                    payload: {
-                        username
-                    }
-                });
-            });
+            dispatchLogin(response, dispatch);
         }
 
         callback(response);
     });
 
-export const actions = {
-    login,
-    logout,
-    data
-};
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
-/* eslint-disable no-param-reassign */
-export default function authReducer(state = null, { type, payload }) {
+const initialState = null;
+export default function authReducer(state = initialState, { type, payload }) {
     if (type === USER_LOGIN) {
-        state = {
+        return {
             name: payload.username,
-            avatar: "https://getmdl.io/templates/dashboard/images/user.jpg"
+            email: payload.email
         };
     } else if (type === USER_LOGOUT) {
-        state = null;
+        return null;
     }
 
     return state;

@@ -1,0 +1,15 @@
+.type-filter {
+    .events-filter__options {
+        & > div {
+            display: flex;
+        }
+
+        .mdl-radio {
+            flex: 1 1 0%;
+
+            &:first-child {
+                margin-right: 16px;
+            }
+        }
+    }
+}

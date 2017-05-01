@@ -1,5 +1,5 @@
 .events-filter {
-    margin-top: 10px;
+    margin-top: 15px;
 
     &:first-child {
         margin: 0;
@@ -75,12 +75,14 @@
     }
 
     &__options {
-        display: none !important;
-    }
+        padding: 10px 0;
+        opacity: .3;
+        transition: opacity 0.28s;
+        pointer-events: none;
 
-    &--type {
-        .events-filter__options {
-            display: flex;
+        .is-checked + & {
+            opacity: 1;
+            pointer-events: auto;
         }
     }
 }

@@ -1,12 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
+import pure from "recompose/pure";
 import DrawerLogo from "./DrawerLogo.jsx";
 import DrawerProfile from "./DrawerProfile.jsx";
 import DrawerLogin from "./DrawerLogin.jsx";
 import "./DrawerHeader.scss";
 
 const propTypes = {
-    user: PropTypes.object,
+    user: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired
+    }),
     actions: PropTypes.array
 };
 
@@ -15,13 +19,15 @@ const defaultProps = {
     actions: []
 };
 
+const enhance = pure;
+
 const DrawerHeader = ({ user, actions }) => (
     <header className="drawer-header">
         <DrawerLogo />
         { (user && (
             <DrawerProfile
                 name={user.name}
-                avatar={user.avatar}
+                email={user.email}
             />
         )) || (
             <DrawerLogin
@@ -34,4 +40,4 @@ const DrawerHeader = ({ user, actions }) => (
 DrawerHeader.propTypes = propTypes;
 DrawerHeader.defaultProps = defaultProps;
 
-export default DrawerHeader;
+export default enhance(DrawerHeader);

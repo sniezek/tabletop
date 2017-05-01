@@ -1,9 +1,12 @@
 import React from "react";
+import pure from "recompose/pure";
 import EventsContainer from "../containers/EventsContainer.jsx";
 import "./EventsView.scss";
 
-export const EventsView = () => (
+const enhance = pure;
+
+const EventsView = () => (
     <EventsContainer />
 );
 
-export default EventsView;
+export default enhance(EventsView);
