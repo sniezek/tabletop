@@ -12,4 +12,5 @@ import java.util.List;
 public interface TournamentRankingService {
 
     List<TournamentRanking> getRankingForGame(List<User> users, Game game);
+    void updateGameRanking(Game game, List<User> usersByResult);
 }

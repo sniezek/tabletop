@@ -22,4 +22,9 @@ public class TournamentRankingServiceImpl implements TournamentRankingService {
         return tournamentRankingRepository.getRankingForGame(users, game);
     }
 
+    @Override
+    public void updateGameRanking(Game game, List<User> usersByResult) {
+        tournamentRankingRepository.updateGameRanking(game, usersByResult);
+    }
+
 }
