@@ -1,10 +1,12 @@
 # tabletop
 ## Description
 Tabletop is a website where users can organise and join tabletop games events.
+
 Matches can be either sparrings or tournaments.
+
 Tournament scores are submitted by events' organisers, therefore each registered game has a ranking of players.
+
 Users have a variety of statistics and they can get achievements for being active players.
-Users 
 ## Team
 * [sniezek](https://github.com/sniezek) (project idea, Server architecture, Events)
 * [pwolaq](https://github.com/pwolaq) (App architecture, Events)
