@@ -65,12 +65,23 @@ public class TournamentRankingRepositoryImpl implements TournamentRankingReposit
 
 
     private List<TournamentRanking> getRankingsForUsers(Game game, List<User> users) {
-        List<Long> ids = users.stream().map(User::getId).collect(Collectors.toList());
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<TournamentRanking> critQuery = builder.createQuery(TournamentRanking.class);
-        Root<TournamentRanking> rankingRoot = critQuery.from(TournamentRanking.class);
-        critQuery.select(rankingRoot);
-        critQuery.where(builder.and(rankingRoot.get("userId").in(ids), rankingRoot.get("gameName").in(game.getName())));
-        return entityManager.createQuery(critQuery).getResultList();
+        if (users != null) {
+            List<Long> ids = users.stream().map(User::getId).collect(Collectors.toList());
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<TournamentRanking> critQuery = builder.createQuery(TournamentRanking.class);
+            Root<TournamentRanking> rankingRoot = critQuery.from(TournamentRanking.class);
+            critQuery.select(rankingRoot);
+            critQuery.where(builder.and(rankingRoot.get("userId").in(ids), rankingRoot.get("gameName").in(game.getName())));
+            return entityManager.createQuery(critQuery).getResultList();
+        } else {
+            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+            CriteriaQuery<TournamentRanking> critQuery = builder.createQuery(TournamentRanking.class);
+            Root<TournamentRanking> rankingRoot = critQuery.from(TournamentRanking.class);
+            critQuery.select(rankingRoot);
+            critQuery.where(rankingRoot.get("gameName").in(game.getName()));
+            critQuery.orderBy(builder.desc(rankingRoot.get("points")));
+            return entityManager.createQuery(critQuery).setMaxResults(20).getResultList();
+        }
+
     }
 }
