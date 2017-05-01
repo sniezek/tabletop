@@ -16,4 +16,6 @@ public interface TournamentRankingRepository{
     TournamentRanking save(TournamentRanking tournamentRanking);
 
     void delete(TournamentRanking id);
+
+    void updateGameRanking(Game game, List<User> usersByResult);
 }
