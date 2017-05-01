@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
         };
     } else {
         return {
-            gamesList: state.gamesList
+            gamesList: []
         };
     }
 };
@@ -50,8 +50,9 @@ class GamesContainer extends Component {
         return (
             <div className="gamesList">
               {this.props.gamesList.map(game =>
-                <section key={game.name}  className="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                      <header className="tileImage section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--blue-grey-50 mdl-color-text--white">
+                <section key={game.name}  className="gameSection section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+                      <header className="imageSection section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--blue-grey-50 mdl-color-text--white">
+                        <img className="tileImage" src={game.imageUrl}/>
                       </header>
                         <div className="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
                           <div className="mdl-card__supporting-text">

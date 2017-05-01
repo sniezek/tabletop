@@ -16,7 +16,8 @@ public enum Game {
     CHESS("Chess",
             2,
             2,
-            "Chess description",
+            "Chess description chess description chess description chess description",
+            "http://www.pngall.com/wp-content/uploads/2016/03/Chess-PNG-Picture.png",
             ChessWinInformation.class,
             SWISS);
 
@@ -24,14 +25,16 @@ public enum Game {
     private final int minPlayers;
     private final int maxPlayers;
     private final String description;
+    private final String imageUrl;
     private final Class<? extends WinInformation> winInformation;
     private final Set<TournamentType> allowedTournamentTypes;
 
-    Game(String name, int minPlayers, int maxPlayers, String description, Class<? extends WinInformation> winInformation, TournamentType... allowedTournamentTypes) {
+    Game(String name, int minPlayers, int maxPlayers, String description, String imageUrl, Class<? extends WinInformation> winInformation, TournamentType... allowedTournamentTypes) {
         this.name = name;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.description = description;
+        this.imageUrl = imageUrl;
         this.winInformation = winInformation;
         this.allowedTournamentTypes = Sets.newHashSet(allowedTournamentTypes);
     }
@@ -51,6 +54,8 @@ public enum Game {
     public String getDescription() {
         return description;
     }
+
+    public String getImageUrl() { return imageUrl; }
 
     public Class<? extends WinInformation> getWinInformation() {
         return winInformation;

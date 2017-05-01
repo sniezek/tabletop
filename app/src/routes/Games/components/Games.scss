@@ -80,5 +80,14 @@
 }
 
 .tileImage {
-  background: url("../images/chess.png") center no-repeat;
+  max-height: 180px;
+}
+
+.imageSection {
+  align-content: center;
+  padding: 20px;
+}
+
+.gameSection {
+  margin-bottom: 15px;
 }
