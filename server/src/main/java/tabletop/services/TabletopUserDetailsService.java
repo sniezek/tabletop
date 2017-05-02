@@ -12,7 +12,7 @@ import tabletop.domain.user.User;
 import java.util.Optional;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class TabletopUserDetailsService implements UserDetailsService {
     private static final String USER_ROLE = "user";
 
     @Autowired

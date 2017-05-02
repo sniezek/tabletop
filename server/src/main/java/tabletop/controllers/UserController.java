@@ -21,7 +21,7 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
     public ResponseEntity createUser(@Valid @RequestBody User user) {
-        return userService.getUserByUsername(user.getUsername()).isPresent() ? new ResponseEntity<>(HttpStatus.CONFLICT) : ResponseEntity.ok(userService.createUser(user));
+        return userService.getUserByUsername(user.getUsername()).isPresent() ? new ResponseEntity<>(HttpStatus.CONFLICT) : new ResponseEntity<>(userService.addUser(user), HttpStatus.CREATED);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/user")

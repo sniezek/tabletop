@@ -5,6 +5,7 @@ class Api {
         this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
         this.user = this.user.bind(this);
+        this.games = this.games.bind(this);
         this.register = this.register.bind(this);
     }
 
@@ -35,6 +36,13 @@ class Api {
         });
     }
 
+    games() {
+        return fetch(`${API_SERVER}/games`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+  
     register({ username, password, email }) {
         const body = JSON.stringify({
             username,
