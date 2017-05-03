@@ -1,49 +1,44 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import pure from "recompose/pure";
 import "./Tournament.scss";
-import Match from "./Match";
-import {Link} from "react-router";
-
+import "../../Games/components/Games.scss";
+import PropTypes from "prop-types";
+import TournamentTypes from "./TournamentTypes";
+import TournamentTypesHeader from "./TournamentHeader";
+import TournamentProcessContainer from "../containers/TournamentProcessContainer";
 
 const propTypes = {
-  tournamentId: PropTypes.string,
-  tournamentName: PropTypes.string,
-  pairs: PropTypes.arrayOf(PropTypes.shape({
-    host: PropTypes.string.isRequired,
-    guest: PropTypes.string.isRequired,
-    winner: PropTypes.string.isRequired
-  })),
+    router: PropTypes.object.isRequired,
+    tournamentTypesView: PropTypes.bool,
+    loggedIn: PropTypes.bool,
+    toggleTournamentTypesView: PropTypes.func
 };
 
 const defaultProps = {
+    tournamentTypesView: true,
+    loggedIn: false,
+    toggleTournamentTypesView: () => {}
 };
 
-class Tournament extends Component{
-  constructor(props) {
-    super(props)
-  }
+const enhance = pure;
 
-  render() {
-    return (
-      <div className="tournament-results-list">
-        <h1>Tournament matches </h1>
-        <ol>
-          {this.props.pairs.map((pair, i) => <li key={i}>
-            <Match
-              host={pair.host}
-              guest={pair.guest}
-              winner={pair.winner}/>
-          </li>)}
-        </ol>
-        <div>
-          <h1><Link to="/tournament-results">Finish tournament</Link></h1>
-        </div>
-      </div>
-    )
-  }
-};
+const Tournament = ({ router, tournamentTypesView, loggedIn, toggleFinishedTournamentsView }) => (
+    <div className="tournamentTypes">
+        <TournamentTypesHeader
+            tournamentTypesView={tournamentTypesView}
+            loggedIn={loggedIn}
+            toggleFinishedTournamentsView={toggleFinishedTournamentsView}
+        />
+        {/*<TournamentProcessContainer*/}
+            {/*router={router}*/}
+        {/*/>*/}
+
+         <TournamentTypes />
+    </div>
+);
 
 Tournament.propTypes = propTypes;
 Tournament.defaultProps = defaultProps;
 
-export default Tournament;
+export default enhance(Tournament);
+

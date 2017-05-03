@@ -1,5 +1,4 @@
 import React from "react";
-import "./TournamentResultsView.scss";
 
 const FakeObjectData = require("./helpers/FakeObjectData");
 

@@ -1,83 +1,50 @@
-import React, {Component} from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
-import {nextRound, setWinner} from "../../../store/tournament";
+import pure from "recompose/pure";
+import { connect } from "react-redux";
 import Tournament from "../components/Tournament.jsx";
 
+
 const propTypes = {
-  pairs: PropTypes.arrayOf(PropTypes.shape({
-    host: PropTypes.string.isRequired,
-    guest: PropTypes.string.isRequired,
-    winner: PropTypes.string.isRequired
-  })),
-  tournamentId: PropTypes.string.isRequired,
-  tournamentName: PropTypes.string.isRequired,
-  router: PropTypes.object.isRequired,
-  nextRound: PropTypes.func.isRequired,
-  setWinner: PropTypes.func.isRequired
+    loggedIn: PropTypes.bool
 };
 
 const defaultProps = {
-  pairs: [
-    {host: "Player1", guest: "Player2", winner: "1"},
-    {host: "Player3", guest: "Player4", winner: "2"},
-    {host: "Player5", guest: "Player6", winner: "0"}
-  ],
-  tournamentId: "21",
-  tournamentName: "MyTournament"
+    loggedIn: false
 };
 
-const mapDispatchToProps = {
-  nextRound,
-  setWinner
-};
+const enhance = pure;
 
-const mapStateToProps = ({}) => ({});
+class TournamentContainer extends PureComponent {
+    constructor(props) {
+        super(props);
 
-const initialState = {};
+        this.state = {
+            tournamentTypesView: true
+        };
 
-class TournamentContainer extends Component {
-  constructor(props) {
-    super(props);
+        this.toggleTournamentTypesView = this.toggleTournamentTypesView.bind(this);
+    }
 
-    this.state = Object.assign({}, initialState);
+    toggleTournamentTypesView(tournamentTypesView) {
+        this.setState({
+            tournamentTypesView
+        });
+    }
 
-    this.nextRound = this.nextRound.bind(this);
-    this.setWinner = this.setWinner.bind(this);
-  }
+    render() {
+        const { tournamentTypesView } = this.state;
+        return (
+            <Tournament
+                tournamentTypesView={tournamentTypesView}
+                toggleTournamentTypesView={toggleTournamentTypesView}
+            />
+        );
+    }
 
-  nextRound() {
-    const tournamentId = this.state.tournamentId;
-
-    this.props.nextRound({tournamentId}, ({ok}) => {
-      if (!ok) {
-        console.log("Passing To Next Round failed")
-      }
-    });
-  }
-
-  setWinner({player}) {
-    const tournamentId = this.state.tournamentId;
-    /* eslint-disable no-param-reassign */
-    this.props.setWinner({tournamentId, player}, ({ok}) => {
-      if (!ok) {
-        console.log("Winner setting failed")
-      }
-    });
-  }
-
-  render() {
-    return (
-      <Tournament
-        tournamentName={this.props.tournamentName}
-        tournamentId={this.props.tournamentId}
-        pairs={this.props.pairs}
-      />
-    );
-  }
 }
 
 TournamentContainer.propTypes = propTypes;
 TournamentContainer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(TournamentContainer);
+export default enhance(TournamentContainer);

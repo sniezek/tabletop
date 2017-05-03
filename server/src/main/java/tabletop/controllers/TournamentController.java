@@ -4,7 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.match.tournament.TournamentType;
 import tabletop.services.TournamentService;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping(value="/tournament")
@@ -16,6 +21,13 @@ public class TournamentController {
 
     public TournamentController(TournamentService tournamentService){
         this.tournamentService = tournamentService;
+    }
+
+    @RequestMapping(value = "/types", method = RequestMethod.GET)
+    public List<TournamentType> getTournamentTypesList() {
+        List<TournamentType> tournamentTypes = new ArrayList<>();
+        tournamentTypes.addAll(Arrays.asList(TournamentType.values()));
+        return tournamentTypes;
     }
 
     @GetMapping(value = "/show/{tournamentid}")
