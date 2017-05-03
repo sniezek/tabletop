@@ -1,4 +1,4 @@
-package tabletop.repositories;
+package tabletop.repositories.event;
 
 import org.springframework.data.repository.CrudRepository;
 import tabletop.domain.event.Event;

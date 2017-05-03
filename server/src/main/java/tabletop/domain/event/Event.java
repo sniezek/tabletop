@@ -1,9 +1,14 @@
 package tabletop.domain.event;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Sets;
+import org.hibernate.validator.constraints.NotEmpty;
+import tabletop.domain.match.Match;
 import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
@@ -13,14 +18,27 @@ public class Event {
     @Id
     @GeneratedValue
     private Long id;
-    @NotNull
+    @NotEmpty(message = "{event.name}")
     private String name;
-    @OneToMany
+    @NotNull(message ="{event.description")
+    private String description;
+    @NotNull(message = "{event.location}")
+    @ManyToOne
+    private Location location;
+    @Valid
+    @NotNull(message = "{event.sparrings}")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Sparring> sparrings;
-    @OneToMany
+    @Valid
+    @NotNull(message = "{event.tournaments}")
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Tournament> tournaments;
 
     public Event() {
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -29,6 +47,22 @@ public class Event {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Set<Sparring> getSparrings() {
@@ -47,11 +81,16 @@ public class Event {
         this.tournaments = tournaments;
     }
 
+    @JsonIgnore
+    public Set<Match> getMatches() {
+        return Sets.union(sparrings, tournaments);
+    }
+
     public Date getStartDate() {
-        return null; // iterate sparrings and tournaments and get the earliest start date
+        return getMatches().stream().map(Match::getStartDate).min(Date::compareTo).get();
     }
 
     public Date getEndDate() {
-        return null; // iterate sparrings and tournaments and get the latest end date
+        return getMatches().stream().map(Match::getEndDate).max(Date::compareTo).get();
     }
 }

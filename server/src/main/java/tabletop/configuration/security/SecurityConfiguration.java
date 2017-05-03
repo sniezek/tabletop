@@ -63,6 +63,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 .and()
                 .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
+//                .authorizeRequests() // commented out for easier testing
+//                .antMatchers(HttpMethod.POST, "/events").hasAnyAuthority(); // commented out for easier testing
 
     }
 

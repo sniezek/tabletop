@@ -13,16 +13,18 @@ public abstract class Match {
     @Id
     @GeneratedValue
     private Long id;
-    @NotNull
+    @NotNull(message = "{match.startDate}")
     private Date startDate;
-    @NotNull
+    @NotNull(message = "{match.endDate}")
     private Date endDate;
     @OneToMany
     private Set<User> users;
     @Enumerated(EnumType.STRING)
     private Game game;
-    private int minPlayers;
-    private int maxPlayers;
+    @NotNull(message = "{match.minPlayers}")
+    private Integer minPlayers;
+    @NotNull(message = "{match.maxPlayers}")
+    private Integer maxPlayers;
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
 
