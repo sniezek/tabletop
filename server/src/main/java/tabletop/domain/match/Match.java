@@ -1,5 +1,6 @@
 package tabletop.domain.match;
 
+import org.hibernate.validator.constraints.Range;
 import tabletop.domain.game.Game;
 import tabletop.domain.user.User;
 
@@ -21,9 +22,11 @@ public abstract class Match {
     private Set<User> users;
     @Enumerated(EnumType.STRING)
     private Game game;
-    @NotNull(message = "{match.minPlayers}")
+    @NotNull(message = "{match.minPlayers.not_null}")
+    @Range(min = 2L, message= "{match.minPlayers.min}")
     private Integer minPlayers;
-    @NotNull(message = "{match.maxPlayers}")
+    @NotNull(message = "{match.maxPlayers.not_null}")
+    @Range(min = 2L, message = "{match.maxPlayers.min}")
     private Integer maxPlayers;
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;

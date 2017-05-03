@@ -23,6 +23,7 @@ import tabletop.services.event.LocationService;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class EventController {
@@ -64,25 +65,26 @@ public class EventController {
             }
         }
 
-        validateEventHasAtLeastOneMatch(event, errors);
-        validateMatchDates(event, errors);
+        validateMatches(event, errors);
         validateSparringsGameInformation(event, errors);
         validateTournaments(event, errors);
 
         return errors.hasErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(eventService.addEvent(event));
     }
 
-    private void validateEventHasAtLeastOneMatch(Event event, Errors errors) {
-        if (event.getMatches().isEmpty()) {
+    private void validateMatches(Event event, Errors errors) {
+        Set<Match> matches = event.getMatches();
+
+        if (matches.isEmpty()) {
             errorHandler.addError(errors, "event.no_matches");
         }
-    }
 
-    private void validateMatchDates(Event event, Errors errors) {
         for (Match match : event.getMatches()) {
             if (match.getStartDate().after(match.getEndDate())) {
                 errorHandler.addError(errors, "match.incorrect_dates");
-                return;
+            }
+            if (match.getMinPlayers() > match.getMaxPlayers()) {
+                errorHandler.addError(errors, "match.incorrect_min_max_players");
             }
         }
     }
