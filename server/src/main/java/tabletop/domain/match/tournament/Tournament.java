@@ -10,8 +10,8 @@ public class Tournament extends Match {
     private TournamentType tournamentType;
 
     private String results;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private TournamentProcess tournamentProcess;
+//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    private TournamentProcess tournamentProcess;
 
     public Tournament() {
     }
@@ -37,11 +37,11 @@ public class Tournament extends Match {
         this.results = results;
     }
 
-    public TournamentProcess getTournamentProcess() {
-        return tournamentProcess;
-    }
-
-    public void setTournamentProcess(TournamentProcess tournamentProcess) {
-        this.tournamentProcess = tournamentProcess;
-    }
+//    public TournamentProcess getTournamentProcess() {
+//        return tournamentProcess;
+//    }
+//
+//    public void setTournamentProcess(TournamentProcess tournamentProcess) {
+//        this.tournamentProcess = tournamentProcess;
+//    }
 }
