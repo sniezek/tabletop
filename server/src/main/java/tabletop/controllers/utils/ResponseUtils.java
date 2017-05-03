@@ -22,4 +22,8 @@ public class ResponseUtils {
     public static <T> ResponseEntity<T> created(T entity) {
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
+
+    public static ResponseEntity<String> conflict(String message) {
+        return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+    }
 }

@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import tabletop.domain.match.Match;
 import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.user.User;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -20,7 +21,7 @@ public class Event {
     private Long id;
     @NotEmpty(message = "{event.name}")
     private String name;
-    @NotNull(message ="{event.description")
+    @NotNull(message ="{event.description}")
     private String description;
     @NotNull(message = "{event.location}")
     @ManyToOne
@@ -33,6 +34,8 @@ public class Event {
     @NotNull(message = "{event.tournaments}")
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Tournament> tournaments;
+    @ManyToOne
+    private User organiser;
 
     public Event() {
     }
@@ -79,6 +82,14 @@ public class Event {
 
     public void setTournaments(Set<Tournament> tournaments) {
         this.tournaments = tournaments;
+    }
+
+    public User getOrganiser() {
+        return organiser;
+    }
+
+    public void setOrganiser(User organiser) {
+        this.organiser = organiser;
     }
 
     @JsonIgnore

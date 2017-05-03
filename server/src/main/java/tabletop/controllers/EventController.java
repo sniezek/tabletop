@@ -16,6 +16,7 @@ import tabletop.domain.event.Location;
 import tabletop.domain.match.Match;
 import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
+import tabletop.services.UserService;
 import tabletop.services.event.EventService;
 import tabletop.services.event.LocationService;
 
@@ -33,6 +34,8 @@ public class EventController {
     private EventService eventService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/events")
     public List<Event> getEvents() {
