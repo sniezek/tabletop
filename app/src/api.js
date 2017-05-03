@@ -7,6 +7,7 @@ class Api {
         this.user = this.user.bind(this);
         this.games = this.games.bind(this);
         this.tournamentypes = this.tournamentypes.bind(this);
+        this.finishedtournaments = this.finishedtournaments.bind(this);
         this.register = this.register.bind(this);
     }
 
@@ -45,6 +46,13 @@ class Api {
 
     tournamentypes() {
         return fetch(`${API_SERVER}/tournament/types`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    finishedtournaments() {
+        return fetch(`${API_SERVER}/tournament/finished`, {
             method: "GET",
             credentials: "include"
         });

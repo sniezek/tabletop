@@ -4,6 +4,7 @@ import "./Tournament.scss";
 import "../../Games/components/Games.scss";
 import PropTypes from "prop-types";
 import TournamentTypes from "./TournamentTypes";
+import TournamentsFinishedList from "./TournamentsFinishedList";
 import TournamentTypesHeader from "./TournamentHeader";
 import TournamentProcessContainer from "../containers/TournamentProcessContainer";
 
@@ -29,11 +30,17 @@ const Tournament = ({ router, tournamentTypesView, loggedIn, toggleFinishedTourn
             loggedIn={loggedIn}
             toggleFinishedTournamentsView={toggleFinishedTournamentsView}
         />
-        {/*<TournamentProcessContainer*/}
-            {/*router={router}*/}
-        {/*/>*/}
+        {/* <TournamentProcessContainer*/}
+        {/* router={router}*/}
+        {/* />*/}
 
-         <TournamentTypes />
+      <TournamentsFinishedList />
+
+        {/*{ tournamentTypesView ? (*/}
+            {/*<TournamentTypes />*/}
+         {/*) : (*/}
+             {/*<TournamentsFinishedList />*/}
+         {/*)}*/}
     </div>
 );
 

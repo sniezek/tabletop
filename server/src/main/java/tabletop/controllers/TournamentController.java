@@ -9,6 +9,7 @@ import tabletop.services.TournamentService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,12 @@ public class TournamentController {
         return tournamentTypes;
     }
 
-    @GetMapping(value = "/show/{tournamentid}")
+    @RequestMapping(value = "/finished", method = RequestMethod.GET)
+    public Collection<Tournament> getFinishedTournaments() {
+        return tournamentService.getFinishedTournaments();
+    }
+
+    @RequestMapping(value = "/show/{tournamentid}", method = RequestMethod.GET)
     public Tournament getTournamentById(@PathVariable("tournamentid") Long tournamentid){
         LOGGER.debug("Return tournament with id: {}", tournamentid);
         return tournamentService.getTournamentById(tournamentid);

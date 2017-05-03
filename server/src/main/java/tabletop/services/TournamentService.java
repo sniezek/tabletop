@@ -6,6 +6,8 @@ import tabletop.domain.exceptions.ErrorInfo;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.repositories.TournamentRepository;
 
+import java.util.Collection;
+
 @Service
 public class TournamentService {
 
@@ -30,4 +32,9 @@ public class TournamentService {
             tournamentRepository.delete(u);
         });
     }
+
+    public Collection<Tournament> getFinishedTournaments() {
+        return tournamentRepository.findTournamentsByFinishedIsTrue();
+    }
+
 }

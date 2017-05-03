@@ -10,6 +10,9 @@ public class Tournament extends Match {
     private TournamentType tournamentType;
 
     private String results;
+
+    private boolean finished;
+
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private TournamentProcess tournamentProcess;
 
@@ -35,6 +38,14 @@ public class Tournament extends Match {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
 //    public TournamentProcess getTournamentProcess() {

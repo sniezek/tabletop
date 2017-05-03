@@ -5,6 +5,7 @@ import Api from "../api";
 // ------------------------------------
 export const GET_TOURNAMENT = "GET_TOURNAMENT";
 export const GET_TOURNAMENT_TYPES = "GET_TOURNAMENT_TYPES";
+export const GET_FINISHED_TOURNAMENTS = "GET_FINISHED_TOURNAMENTS";
 export const NEXT_ROUND = "NEXT_ROUND";
 export const SET_WINNER = "SET_WINNER";
 // ------------------------------------
@@ -39,6 +40,20 @@ export const getTournamentTypes = dispatch =>
                   type: GET_TOURNAMENT_TYPES,
                   payload: {
                       tournamentTypesList
+                  }
+              });
+          });
+      }
+  });
+
+export const getFinishedTournaments = dispatch =>
+  Api.finishedtournaments().then((response) => {
+      if (response.ok) {
+          response.json().then((finishedTournamentsList) => {
+              dispatch({
+                  type: GET_FINISHED_TOURNAMENTS,
+                  payload: {
+                      finishedTournamentsList
                   }
               });
           });
@@ -94,6 +109,10 @@ export default function tournamentReducer(state = null, { type, payload }) {
     } else if (type === NEXT_ROUND) {
         state = {
             pairs: payload.pairs
+        };
+    } else if (type === GET_FINISHED_TOURNAMENTS) {
+        state = {
+            finishedTournamentsList: payload.finishedTournamentsList
         };
     }
     return state;
