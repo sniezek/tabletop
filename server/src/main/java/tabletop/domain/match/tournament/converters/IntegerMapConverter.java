@@ -1,4 +1,4 @@
-package tabletop.domain.match.tournament;
+package tabletop.domain.match.tournament.converters;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

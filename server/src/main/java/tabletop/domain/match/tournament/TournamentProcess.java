@@ -1,5 +1,7 @@
 package tabletop.domain.match.tournament;
 
+import tabletop.domain.match.tournament.converters.IntegerListConverter;
+
 import javax.persistence.*;
 import java.util.List;
 

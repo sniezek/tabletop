@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.match.tournament.TournamentFinalResult;
 import tabletop.domain.match.tournament.TournamentType;
 import tabletop.services.TournamentService;
 
@@ -62,5 +63,10 @@ public class TournamentController {
     public void deleteTournament(@PathVariable("tournamentid") Long tournamentid){
         LOGGER.debug("Request to delete tournament: {}", tournamentid);
         tournamentService.deleteById(tournamentid);
+    }
+
+    @RequestMapping(value = "/finalresults/{tournamentid}", method = RequestMethod.GET)
+    public Collection<TournamentFinalResult> getFinalResultsForTournament(@PathVariable("tournamentid") Long tournamentid){
+        return tournamentService.getFinalResultsForTournament(tournamentid);
     }
 }

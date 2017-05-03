@@ -1,12 +1,13 @@
 package tabletop.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import tabletop.domain.match.tournament.TournamentFinalResult;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -21,6 +22,9 @@ public class User {
     @Email
     @NotEmpty
     private String email;
+    @OneToMany(mappedBy = "user", fetch= FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JsonIgnore
+    private List<TournamentFinalResult> tournamentFinalResults;
 
     public User() {
     }
@@ -51,6 +55,14 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    public List<TournamentFinalResult> getTournamentFinalResults() {
+        return tournamentFinalResults;
+    }
+
+    public void setTournamentFinalResults(List<TournamentFinalResult> tournamentFinalResults) {
+        this.tournamentFinalResults = tournamentFinalResults;
     }
 
     @Override

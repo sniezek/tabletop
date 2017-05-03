@@ -1,8 +1,10 @@
 package tabletop.domain.match.tournament;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import tabletop.domain.match.Match;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Tournament extends Match {
@@ -15,6 +17,10 @@ public class Tournament extends Match {
 
 //    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private TournamentProcess tournamentProcess;
+
+    @OneToMany(mappedBy = "user", fetch= FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JsonIgnore
+    private List<TournamentFinalResult> tournamentFinalResults;
 
     public Tournament() {
     }
@@ -55,4 +61,13 @@ public class Tournament extends Match {
 //    public void setTournamentProcess(TournamentProcess tournamentProcess) {
 //        this.tournamentProcess = tournamentProcess;
 //    }
+
+
+    public List<TournamentFinalResult> getTournamentFinalResults() {
+        return tournamentFinalResults;
+    }
+
+    public void setTournamentFinalResults(List<TournamentFinalResult> tournamentFinalResults) {
+        this.tournamentFinalResults = tournamentFinalResults;
+    }
 }
