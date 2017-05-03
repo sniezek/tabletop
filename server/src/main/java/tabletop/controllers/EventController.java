@@ -86,6 +86,9 @@ public class EventController {
             if (match.getMinPlayers() > match.getMaxPlayers()) {
                 errorHandler.addError(errors, "match.incorrect_min_max_players");
             }
+            if (match.getEndStatus() != null) {
+                errorHandler.addError(errors, "match.endstatus");
+            }
         }
     }
 
