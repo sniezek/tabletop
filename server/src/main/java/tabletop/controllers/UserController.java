@@ -30,7 +30,7 @@ public class UserController {
 
         Optional<User> alreadyExistingUser = userService.getUserByUsername(user.getUsername());
 
-        return alreadyExistingUser.isPresent() ? ResponseUtils.conflict(handler.getMessage("user.already_exists")) : ResponseUtils.created(userService.addUser(user));
+        return alreadyExistingUser.isPresent() ? ResponseUtils.conflict(handler.getErrorMessage("user.already_exists")) : ResponseUtils.created(userService.addUser(user));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/user")
