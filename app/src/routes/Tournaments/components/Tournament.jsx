@@ -30,17 +30,15 @@ const Tournament = ({ router, tournamentTypesView, loggedIn, toggleFinishedTourn
             loggedIn={loggedIn}
             toggleFinishedTournamentsView={toggleFinishedTournamentsView}
         />
-        {/* <TournamentProcessContainer*/}
-        {/* router={router}*/}
-        {/* />*/}
+        <TournamentProcessContainer
+            router={router}
+        />
 
-      <TournamentsFinishedList />
-
-        {/*{ tournamentTypesView ? (*/}
-            {/*<TournamentTypes />*/}
-         {/*) : (*/}
-             {/*<TournamentsFinishedList />*/}
-         {/*)}*/}
+        {/* { tournamentTypesView ? (*/}
+        {/* <TournamentTypes />*/}
+        {/* ) : (*/}
+        {/* <TournamentsFinishedList />*/}
+        {/* )}*/}
     </div>
 );
 
