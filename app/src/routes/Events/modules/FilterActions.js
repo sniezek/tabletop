@@ -1,11 +1,12 @@
 import {
     SET_FILTER_ACTIVE,
     SET_FILTER_LOCATION_RADIUS,
-    SET_FILTER_TOURNAMENT_ACTIVE,
-    SET_FILTER_SPARING_ACTIVE,
+    SET_FILTER_SELECTED_TYPE,
     SET_FILTER_DATE,
     SET_FILTER_DATE_FROM,
-    SET_FILTER_DATE_TO
+    SET_FILTER_DATE_TO,
+    ADD_FILTER_GAME,
+    DELETE_FILTER_GAME
 } from "./FilterConstants";
 
 export const setFilterActive = (id, active) => ({
@@ -21,13 +22,18 @@ export const setFilterLocationRadius = payload => ({
     payload
 });
 
-export const setFilterTournamentActive = payload => ({
-    type: SET_FILTER_TOURNAMENT_ACTIVE,
+export const addFilterGame = payload => ({
+    type: ADD_FILTER_GAME,
     payload
 });
 
-export const setFilterSparingActive = payload => ({
-    type: SET_FILTER_SPARING_ACTIVE,
+export const deleteFilterGame = payload => ({
+    type: DELETE_FILTER_GAME,
+    payload
+});
+
+export const setFilterSelectedType = payload => ({
+    type: SET_FILTER_SELECTED_TYPE,
     payload
 });
 
