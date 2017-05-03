@@ -16,7 +16,6 @@ import tabletop.domain.event.Location;
 import tabletop.domain.match.Match;
 import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
-import tabletop.services.UserService;
 import tabletop.services.event.EventService;
 import tabletop.services.event.LocationService;
 
@@ -35,8 +34,6 @@ public class EventController {
     private EventService eventService;
     @Autowired
     private LocationService locationService;
-    @Autowired
-    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/events")
     public List<Event> getEvents() {
@@ -70,6 +67,16 @@ public class EventController {
         validateTournaments(event, errors);
 
         return errors.hasErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(eventService.addEvent(event));
+    }
+
+    private boolean isNewLocation(Location location) {
+        return location.getId() == null;
+    }
+
+    private boolean isLocationValid(Location location, Errors errors) {
+        validator.validate(location, errors);
+
+        return !errors.hasErrors();
     }
 
     private void validateMatches(Event event, Errors errors) {
@@ -110,15 +117,5 @@ public class EventController {
                 errorHandler.addError(errors, "tournament.results");
             }
         }
-    }
-
-    private boolean isNewLocation(Location location) {
-        return location.getId() == null;
-    }
-
-    private boolean isLocationValid(Location location, Errors errors) {
-        validator.validate(location, errors);
-
-        return !errors.hasErrors();
     }
 }
