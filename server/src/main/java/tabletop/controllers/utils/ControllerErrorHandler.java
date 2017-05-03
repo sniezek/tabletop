@@ -13,4 +13,8 @@ public class ControllerErrorHandler {
     public void addError(Errors errors, String errorCode) {
         errors.reject(errorCode, messages.getMessage(errorCode));
     }
+
+    public String getMessage(String errorCode) {
+        return messages.getMessage(errorCode);
+    }
 }
