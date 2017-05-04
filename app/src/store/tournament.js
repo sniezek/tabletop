@@ -8,6 +8,7 @@ export const GET_TOURNAMENT_TYPES = "GET_TOURNAMENT_TYPES";
 export const GET_FINISHED_TOURNAMENTS = "GET_FINISHED_TOURNAMENTS";
 export const NEXT_ROUND = "NEXT_ROUND";
 export const SET_WINNER = "SET_WINNER";
+export const INITIAL_ROUND = "INITIAL_ROUND";
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -63,7 +64,7 @@ export const getFinishedTournaments = dispatch =>
 export const nextRound = ({ id }, callback) => dispatch =>
   Api.nextRound({ id }).then((response) => {
       if (response.ok) {
-          response.json().then(({ pairs }) => {
+          response.json().then(( pairs ) => {
               dispatch({
                   type: NEXT_ROUND,
                   payload: {
@@ -87,9 +88,34 @@ export const setWinner = ({ winner }, callback) => dispatch =>
       callback(response);
   });
 
+export const initialRound = ( id , callback) => dispatch =>
+  Api.initialRound( id ).then((response) => {
+    if (response.ok) {
+      response.json().then(( pairs ) => {
+        let pairsFormatted = pairs.map(pair => {
+          return {
+            host: pair["a"]["username"],
+            guest: pair["b"]["username"],
+            winner: "1"
+          }
+        });
+        dispatch({
+          type: INITIAL_ROUND,
+          payload: {
+            pairsFormatted
+          }
+        });
+      });
+    }
+
+    callback(response);
+  });
+
+
 export const actions = {
     getTournament,
     nextRound,
+    initialRound,
     setWinner
 };
 
@@ -113,6 +139,10 @@ export default function tournamentReducer(state = null, { type, payload }) {
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {
             finishedTournamentsList: payload.finishedTournamentsList
+        };
+    } else if (type === INITIAL_ROUND) {
+        state = {
+            pairs: payload.pairsFormatted
         };
     }
     return state;

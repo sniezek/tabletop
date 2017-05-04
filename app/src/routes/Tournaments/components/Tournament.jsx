@@ -33,7 +33,7 @@ const Tournament = ({ router, tournamentTypesView, loggedIn, toggleFinishedTourn
         <TournamentProcessContainer
             router={router}
         />
-
+      {/*<TournamentTypes />*/}
         {/* { tournamentTypesView ? (*/}
         {/* <TournamentTypes />*/}
         {/* ) : (*/}

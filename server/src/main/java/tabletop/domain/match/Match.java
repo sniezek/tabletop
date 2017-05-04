@@ -18,7 +18,10 @@ public abstract class Match {
     private Date startDate;
     @NotNull
     private Date endDate;
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tournament_users",
+            joinColumns = @JoinColumn(name = "tournament_id"),
+            inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> users;
     @Enumerated(EnumType.STRING)
     private Game game;
@@ -27,7 +30,9 @@ public abstract class Match {
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
 
-    public Long getId() { return id; }
+    public Long getId() {
+        return id;
+    }
 
     public Date getStartDate() {
         return startDate;

@@ -1,48 +1,43 @@
 package tabletop.domain.match.tournament;
 
-import tabletop.domain.match.tournament.converters.IntegerListConverter;
+import tabletop.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class TournamentProcess {
 
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @PrimaryKeyJoinColumn
-//    private Tournament tournament;
-
-    @Convert(converter = IntegerListConverter.class)
-    private List<Integer> results;
+    @OneToOne(mappedBy = "tournamentProcess")
+    protected Tournament tournament;
 
     public TournamentProcess() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-//    public Tournament getTournament() {
-//        return tournament;
-//    }
-//
-//    public void setTournament(Tournament tournament) {
-//        this.tournament = tournament;
-//    }
-
-    public List<Integer> getResults() {
-        return results;
+    public Tournament getTournament() {
+        return tournament;
     }
 
-    public void setResults(List<Integer> results) {
-        this.results = results;
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
+    @Transient
+    public List<User> getUsers() {
+        return tournament.getUsers().stream().collect(Collectors.toList());
     }
 }

@@ -1,6 +1,11 @@
 DELETE FROM tournament_final_result;
+DELETE FROM tournament_users;
+DELETE FROM swiss_users_played;
+DELETE FROM swiss_player_result;
 DELETE FROM user;
 DELETE FROM tournament;
+DELETE FROM swiss_tournament_process;
+DELETE FROM tournament_process;
 
 INSERT INTO user (id, username, password, email)
 VALUES (0, 'user0', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
@@ -32,3 +37,51 @@ INSERT INTO tournament_final_result(id, tournament, user, points, place)
 VALUES (4, 0, 4, 5, 4);
 INSERT INTO tournament_final_result(id, tournament, user, points, place)
 VALUES (5, 0, 4, 3, 5);
+
+INSERT INTO tournament_process(id)
+VALUES (0);
+INSERT INTO tournament_process(id)
+VALUES (1);
+
+INSERT INTO swiss_tournament_process(id, ranked, bye_user)
+VALUES (0, true, null);
+INSERT INTO swiss_tournament_process(id, ranked, bye_user)
+VALUES (1, false, null);
+
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 1);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 2);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 3);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 4);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 5);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 0);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 1);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 2);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 3);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 4);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 5);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 0);
+
+INSERT INTO swiss_player_result(user_id, tournament_id, result)
+VALUES (1, 1, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result)
+VALUES (2, 1, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result)
+VALUES (3, 1, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result)
+VALUES (4, 1, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result)
+VALUES (5, 1, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result)
+VALUES (0, 1, 0);

@@ -5,7 +5,7 @@ import {Link} from "react-router";
 
 
 const propTypes = {
-  tournamentId: PropTypes.string,
+  tournamentId: PropTypes.number,
   tournamentName: PropTypes.string,
   pairs: PropTypes.arrayOf(PropTypes.shape({
     host: PropTypes.string.isRequired,

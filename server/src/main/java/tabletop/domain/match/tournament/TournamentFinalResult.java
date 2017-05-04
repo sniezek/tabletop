@@ -5,12 +5,11 @@ import tabletop.domain.user.User;
 import javax.persistence.*;
 
 /**
-TournamentFinalResult stores final results of tournaments for each user separately,
-records are saved after finishing the tournament.
-
+ * TournamentFinalResult stores final results of tournaments for each user separately,
+ * records are saved after finishing the tournament.
+ * <p>
  * points:int - all points earned by the user during the tournament
  * place:int - the place that the user won in the tournament
-
  */
 
 @Entity

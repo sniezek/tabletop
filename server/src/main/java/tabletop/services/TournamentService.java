@@ -3,28 +3,36 @@ package tabletop.services;
 import org.springframework.stereotype.Service;
 import tabletop.domain.exceptions.BadRequestException;
 import tabletop.domain.exceptions.ErrorInfo;
+import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentFinalResult;
+import tabletop.domain.match.tournament.TournamentType;
+import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
+import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
 import tabletop.repositories.TournamentRepository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Service
 public class TournamentService {
 
     private TournamentRepository tournamentRepository;
     private TournamentFinalResultRepository tournamentFinalResultRepository;
+    private SwissTournamentService swissTournamentService;
 
     public TournamentService(
             TournamentRepository tournamentRepository,
-            TournamentFinalResultRepository tournamentFinalResultRepository
-    ){
+            TournamentFinalResultRepository tournamentFinalResultRepository,
+            SwissTournamentService swissTournamentService
+    ) {
         this.tournamentRepository = tournamentRepository;
         this.tournamentFinalResultRepository = tournamentFinalResultRepository;
+        this.swissTournamentService = swissTournamentService;
     }
 
-    public Tournament getTournamentById(Long tournamentId){
+    public Tournament getTournamentById(Long tournamentId) {
         return tournamentRepository
                 .findOneById(tournamentId)
                 .orElseThrow(() -> new BadRequestException(ErrorInfo.TOURNAMENT_NOT_FOUND));
@@ -35,7 +43,7 @@ public class TournamentService {
     }
 
     public void deleteById(Long tournamentId) {
-        tournamentRepository.findOneById(tournamentId).ifPresent( u -> {
+        tournamentRepository.findOneById(tournamentId).ifPresent(u -> {
             tournamentRepository.delete(u);
         });
     }
@@ -53,4 +61,17 @@ public class TournamentService {
 
     }
 
+    public List<Pair<User>> getInitialRound(Tournament tournament) {
+        if (tournament.getTournamentType() == TournamentType.SWISS) {
+            return swissTournamentService.getInitialPairs(((SwissTournamentProcess) tournament.getTournamentProcess()));
+        }
+        return null;
+    }
+
+    public List<Pair<User>> getNextRound(Tournament tournament, Collection<User> winners) {
+        if (tournament.getTournamentType() == TournamentType.SWISS) {
+            return swissTournamentService.getNextPair(((SwissTournamentProcess) tournament.getTournamentProcess()), winners);
+        }
+        return null;
+    }
 }

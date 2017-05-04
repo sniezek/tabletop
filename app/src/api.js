@@ -9,6 +9,7 @@ class Api {
         this.tournamentypes = this.tournamentypes.bind(this);
         this.finishedtournaments = this.finishedtournaments.bind(this);
         this.register = this.register.bind(this);
+        this.initialRound = this.initialRound.bind(this);
     }
 
     user() {
@@ -56,6 +57,12 @@ class Api {
             method: "GET",
             credentials: "include"
         });
+    }
+
+    initialRound(id) {
+      return fetch(`${API_SERVER}/tournament/init/${id}`, {
+            method: "GET"
+      });
     }
 
     register({ username, password, email }) {

@@ -3,9 +3,12 @@ package tabletop.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
+import tabletop.domain.game.wininformation.BasicWinInformation;
+import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentFinalResult;
 import tabletop.domain.match.tournament.TournamentType;
+import tabletop.domain.user.User;
 import tabletop.services.TournamentService;
 
 import java.util.ArrayList;
@@ -14,14 +17,14 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping(value="/tournament")
+@RequestMapping(value = "/tournament")
 public class TournamentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TournamentController.class);
 
     private TournamentService tournamentService;
 
-    public TournamentController(TournamentService tournamentService){
+    public TournamentController(TournamentService tournamentService) {
         this.tournamentService = tournamentService;
     }
 
@@ -38,19 +41,19 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/show/{tournamentid}", method = RequestMethod.GET)
-    public Tournament getTournamentById(@PathVariable("tournamentid") Long tournamentid){
+    public Tournament getTournamentById(@PathVariable("tournamentid") Long tournamentid) {
         LOGGER.debug("Return tournament with id: {}", tournamentid);
         return tournamentService.getTournamentById(tournamentid);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
-    public void createTournament(@RequestBody Tournament tournament){
+    public void createTournament(@RequestBody Tournament tournament) {
         LOGGER.debug("Request to create tournament for game: {}", tournament.getGameName());
         tournamentService.addTournament(tournament);
     }
 
     @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = "application/json")
-    public void updateTournament(@RequestBody Tournament tournament){
+    public void updateTournament(@RequestBody Tournament tournament) {
         if (tournament.getId() == null) {
             createTournament(tournament);
         } else {
@@ -60,13 +63,36 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/delete/{tournamentid}", method = RequestMethod.DELETE)
-    public void deleteTournament(@PathVariable("tournamentid") Long tournamentid){
+    public void deleteTournament(@PathVariable("tournamentid") Long tournamentid) {
         LOGGER.debug("Request to delete tournament: {}", tournamentid);
         tournamentService.deleteById(tournamentid);
     }
 
     @RequestMapping(value = "/finalresults/{tournamentid}", method = RequestMethod.GET)
-    public Collection<TournamentFinalResult> getFinalResultsForTournament(@PathVariable("tournamentid") Long tournamentid){
+    public Collection<TournamentFinalResult> getFinalResultsForTournament(@PathVariable("tournamentid") Long tournamentid) {
         return tournamentService.getFinalResultsForTournament(tournamentid);
+    }
+
+    @RequestMapping(value = "/init/{tournamentid}", method = RequestMethod.GET)
+    public Collection<Pair<User>> getInitialRound(@PathVariable("tournamentid") Long tournamentid) {
+        Tournament tournament = tournamentService.getTournamentById(tournamentid);
+        if (tournament == null) {
+            return null;
+        } else {
+            return tournamentService.getInitialRound(tournament);
+        }
+    }
+
+    @RequestMapping(value = "/next/{tournamentid}", method = RequestMethod.POST, consumes = "application/json")
+    public Collection<Pair<User>> getNextRound(@PathVariable("tournamentid") Long tournamentid,
+                                               @RequestBody BasicWinInformation winInformation) {
+        Tournament tournament = tournamentService.getTournamentById(tournamentid);
+        if (tournament == null || winInformation == null) {
+            return null;
+        } else {
+            Collection<Pair<User>> nextRound = tournamentService.getNextRound(tournament, winInformation.getWinners());
+            tournamentService.addTournament(tournament);
+            return nextRound;
+        }
     }
 }

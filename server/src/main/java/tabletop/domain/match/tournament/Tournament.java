@@ -15,8 +15,9 @@ public class Tournament extends Match {
 
     private boolean finished;
 
-//    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private TournamentProcess tournamentProcess;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private TournamentProcess tournamentProcess;
 
     @OneToMany(mappedBy = "user", fetch= FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnore
@@ -54,14 +55,13 @@ public class Tournament extends Match {
         this.finished = finished;
     }
 
-//    public TournamentProcess getTournamentProcess() {
-//        return tournamentProcess;
-//    }
-//
-//    public void setTournamentProcess(TournamentProcess tournamentProcess) {
-//        this.tournamentProcess = tournamentProcess;
-//    }
+    public TournamentProcess getTournamentProcess() {
+        return tournamentProcess;
+    }
 
+    public void setTournamentProcess(TournamentProcess tournamentProcess) {
+        this.tournamentProcess = tournamentProcess;
+    }
 
     public List<TournamentFinalResult> getTournamentFinalResults() {
         return tournamentFinalResults;
