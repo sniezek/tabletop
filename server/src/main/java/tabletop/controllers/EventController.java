@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tabletop.controllers.utils.ControllerErrorHandler;
 import tabletop.controllers.utils.ResponseUtils;
 import tabletop.domain.event.Event;
@@ -65,6 +62,7 @@ public class EventController {
         validateMatches(event, errors);
         validateSparringsGameInformation(event, errors);
         validateTournaments(event, errors);
+        validateOrganiserIsNotSet(event, errors);
 
         return errors.hasErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(eventService.addEvent(event));
     }
@@ -94,7 +92,7 @@ public class EventController {
                 errorHandler.addError(errors, "match.incorrect_min_max_players");
             }
             if (match.getEndStatus() != null) {
-                errorHandler.addError(errors, "match.endstatus");
+                errorHandler.addIncorrectRequestError(errors);
             }
         }
     }
@@ -114,8 +112,14 @@ public class EventController {
                 errorHandler.addError(errors, "tournament.unregistered_game");
             }
             if (tournament.getResults() != null) {
-                errorHandler.addError(errors, "tournament.results");
+                errorHandler.addIncorrectRequestError(errors);
             }
+        }
+    }
+
+    private void validateOrganiserIsNotSet(Event event, Errors errors) {
+        if (event.getOrganiser() != null) {
+            errorHandler.addError(errors, "request.incorrect");
         }
     }
 }

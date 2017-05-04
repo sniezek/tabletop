@@ -14,6 +14,11 @@ public class ControllerErrorHandler {
         errors.reject(errorCode, messages.getMessage(errorCode));
     }
 
+    public void addIncorrectRequestError(Errors errors) {
+        String requestIncorrect = "request.incorrect";
+        errors.reject(requestIncorrect, messages.getMessage(requestIncorrect));
+    }
+
     public String getErrorMessage(String errorCode) {
         return messages.getMessage(errorCode);
     }

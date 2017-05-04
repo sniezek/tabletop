@@ -8,6 +8,7 @@ import tabletop.repositories.event.EventRepository;
 import tabletop.services.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -24,5 +25,9 @@ public class EventService {
         event.setOrganiser(userService.getAuthenticatedUser().get());
 
         return eventRepository.save(event);
+    }
+
+    public Optional<Event> getEventById(Long id) {
+        return Optional.ofNullable(eventRepository.findOne(id));
     }
 }
