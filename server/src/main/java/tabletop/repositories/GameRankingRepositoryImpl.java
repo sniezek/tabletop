@@ -14,13 +14,9 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Katarzyna on 22.04.2017.
- */
-
 @Repository
 @Transactional
-public class TournamentRankingRepositoryImpl implements TournamentRankingRepository{
+public class GameRankingRepositoryImpl implements GameRankingRepository {
     @Autowired
     private EntityManager entityManager;
 

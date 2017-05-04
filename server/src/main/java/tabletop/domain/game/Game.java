@@ -1,7 +1,6 @@
 package tabletop.domain.game;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.google.common.collect.Sets;
 import tabletop.domain.game.wininformation.ChessWinInformation;
 import tabletop.domain.game.wininformation.WinInformation;
@@ -19,8 +18,14 @@ public enum Game {
             "Chess description chess description chess description chess description",
             "http://www.pngall.com/wp-content/uploads/2016/03/Chess-PNG-Picture.png",
             ChessWinInformation.class,
-            SWISS);
-
+            SWISS),
+    MONOPOLY("Monopoly",
+                  2,
+                  10,
+                  "Chess description chess description chess description chess description",
+                  "http://www.pngall.com/wp-content/uploads/2016/03/Chess-PNG-Picture.png",
+          ChessWinInformation.class,
+          SWISS);
     private final String name;
     private final int minPlayers;
     private final int maxPlayers;

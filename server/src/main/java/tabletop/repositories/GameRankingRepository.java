@@ -6,10 +6,7 @@ import tabletop.domain.user.User;
 
 import java.util.List;
 
-/**
- * Created by Katarzyna on 22.04.2017.
- */
-public interface TournamentRankingRepository{
+public interface GameRankingRepository {
 
     List<TournamentRanking> getRankingForGame(List<User> users, Game game);
 

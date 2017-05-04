@@ -5,24 +5,21 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.game.Game;
 import tabletop.domain.ranking.TournamentRanking;
 import tabletop.domain.user.User;
-import tabletop.repositories.TournamentRankingRepository;
+import tabletop.repositories.GameRankingRepository;
 
 import java.util.List;
 
-/**
- * Created by Katarzyna on 22.04.2017.
- */
 @Service
-public class TournamentRankingService {
+public class GameRankingService {
     @Autowired
-    private TournamentRankingRepository tournamentRankingRepository;
+    private GameRankingRepository gameRankingRepository;
 
     public List<TournamentRanking> getRankingForGame(List<User> users, Game game) {
-        return tournamentRankingRepository.getRankingForGame(users, game);
+        return gameRankingRepository.getRankingForGame(users, game);
     }
 
     public void updateGameRanking(Game game, List<User> usersByResult) {
-        tournamentRankingRepository.updateGameRanking(game, usersByResult);
+        gameRankingRepository.updateGameRanking(game, usersByResult);
     }
 
 }
