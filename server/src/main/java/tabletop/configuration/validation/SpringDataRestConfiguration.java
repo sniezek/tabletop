@@ -8,7 +8,6 @@ import org.springframework.data.rest.core.event.ValidatingRepositoryEventListene
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-import tabletop.domain.user.User;
 
 @Configuration
 public class SpringDataRestConfiguration extends RepositoryRestConfigurerAdapter {
@@ -29,6 +28,6 @@ public class SpringDataRestConfiguration extends RepositoryRestConfigurerAdapter
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(User.class);
+//        config.exposeIdsFor(SomeClassName.class); // needed for entities without a custom controller, handled by Spring Data REST
     }
 }

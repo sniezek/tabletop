@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 public class TabletopUserDetailsService implements UserDetailsService {
-    private static final String USER_ROLE = "user";
+    public static final String ROLE_USER = "ROLE_USER";
 
     @Autowired
     private UserService usersService;
@@ -26,6 +26,6 @@ public class TabletopUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("Name not found!");
         }
 
-        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), ImmutableList.of(new SimpleGrantedAuthority(USER_ROLE)));
+        return new org.springframework.security.core.userdetails.User(user.get().getUsername(), user.get().getPassword(), ImmutableList.of(new SimpleGrantedAuthority(ROLE_USER)));
     }
 }

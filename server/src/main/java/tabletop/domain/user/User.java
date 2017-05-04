@@ -13,13 +13,13 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "{user.username}")
     private String username;
-    @NotEmpty
+    @NotEmpty(message = "{user.password}")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Email
-    @NotEmpty
+    @NotEmpty(message = "{user.email}")
     private String email;
 
     public User() {
