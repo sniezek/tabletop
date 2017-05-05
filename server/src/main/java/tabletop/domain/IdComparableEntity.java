@@ -22,7 +22,7 @@ public abstract class IdComparableEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, getClass());
     }
 
     @Override
@@ -34,7 +34,7 @@ public abstract class IdComparableEntity {
         if (obj instanceof IdComparableEntity) {
             IdComparableEntity entity = (IdComparableEntity) obj;
 
-            return Objects.equals(id, entity.getId());
+            return Objects.equals(getClass(), entity.getClass()) && Objects.equals(id, entity.getId());
         }
 
         return false;
