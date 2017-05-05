@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 public class PathVariableValidator extends ControllerValidator {
     public void validatePathVariableIsId(String pathVariable, Errors errors) {
         try {
-            Long id = Long.valueOf(pathVariable);
+            Long.valueOf(pathVariable);
         } catch (NumberFormatException e) {
             errorHandler.addInvalidPathVariableError(errors);
         }
