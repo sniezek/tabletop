@@ -1,50 +1,44 @@
 import React from "react";
 import pure from "recompose/pure";
+import moment from "moment";
 import EventsListDay from "./EventsListDay.jsx";
 import "./EventsList.scss";
 
 const enhance = pure;
 
-const now = Date.now();
+const groupedEvents = (events) => {
+    const map = events.reduce((days, event) => {
+        const day = moment(event.startDate).format("dddd, D MMMM");
 
-const events = [{
-    id: 1,
-    name: "Event A",
-    joined: false,
-    location: "Cracow",
-    players: 15,
-    from: now,
-    to: now,
-    games: [{
-        name: "Warhammer 40K",
-        tournament: true,
-        sparring: true
-    }, {
-        name: "Chess",
-        sparring: true
-    }, {
-        name: "Dixit",
-        tournament: true
-    }, {
-        name: "Poker",
-        tournament: true
-    }, {
-        name: "Makao",
-        sparring: true
-    }, {
-        name: "Blackjack",
-        sparring: true,
-        torunament: true
-    }]
-}];
+        if (days.has(day)) {
+            days.get(day).push(event);
+        } else {
+            days.set(day, [event]);
+        }
 
-const EventsList = () => (
+        return days;
+    }, new Map());
+
+    const output = [];
+
+    /* eslint-disable */
+    for (const [date, list] of map) {
+        output.push(
+            <EventsListDay
+                key={date}
+                date={date}
+                events={list}
+            />
+        );
+    }
+
+    return output;
+};
+
+const EventsList = ({ events }) => (
     <div className="events-list">
         <div className="events-list__wrapper">
-            <EventsListDay
-                date={now}
-                events={events}
-            />
+            { groupedEvents(events) }
         </div>
     </div>
 );

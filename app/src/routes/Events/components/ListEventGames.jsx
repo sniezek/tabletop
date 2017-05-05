@@ -4,15 +4,13 @@ import pure from "recompose/pure";
 import Reveal from "../../../components/Reveal";
 
 const propTypes = {
-    games: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        tournament: PropTypes.bool,
-        sparring: PropTypes.bool
-    }))
+    tournaments: PropTypes.array,
+    sparrings: PropTypes.array
 };
 
 const defaultProps = {
-    games: []
+    tournaments: [],
+    sparrings: []
 };
 
 /* eslint-disable react/prop-types */
@@ -25,17 +23,31 @@ const mapFn = ({ name, sparring, tournament }) => (
     </li>
 );
 
+const group = (tournaments, sparrings) => {
+    const map = new Map();
+
+    /* eslint-disable no-return-assign */
+    tournaments.forEach(({ gameName }) => map.set(gameName, { name: gameName, tournament: true, sparring: false }));
+    sparrings.forEach(({ gameName }) => (
+        map.has(gameName) ?
+        map.get(gameName).sparring = true :
+        map.set(gameName, { name: gameName, tournament: false, sparring: true })
+    ));
+
+    return Array.from(map.values());
+};
+
 const limit = 4;
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-const ListEventGames = ({ games }) => (
+const ListEventGames = ({ tournaments, sparrings }) => (
     <Reveal
-        items={games}
+        items={group(tournaments, sparrings)}
         limit={limit}
     >
-        {(revealed, reveal, items) => (
+        {({ revealed, reveal, items, left }) => (
             <div className="list-event__games">
                 <ul className="list-event__games-list">
                     {items.map(mapFn)}
@@ -45,7 +57,7 @@ const ListEventGames = ({ games }) => (
                         onClick={reveal}
                         className="list-event__games-more mdl-color-text--light-blue-A200"
                     >
-                        ...and {games.length - limit} more
+                        ...and {left} more
                     </span>
                 )}
             </div>

@@ -43,7 +43,9 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
         { mapView ? (
             <EventsMap />
         ) : (
-            <EventsList />
+            <EventsList
+                events={events}
+            />
         )}
     </div>
 );

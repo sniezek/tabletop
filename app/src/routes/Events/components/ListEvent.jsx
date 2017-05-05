@@ -10,11 +10,12 @@ const propTypes = {
     id: PropTypes.number.isRequired,
     joined: PropTypes.bool,
     name: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
     players: PropTypes.number,
-    from: PropTypes.number.isRequired,
-    to: PropTypes.number.isRequired,
-    games: PropTypes.array.isRequired
+    startDate: PropTypes.number.isRequired,
+    endDate: PropTypes.number.isRequired,
+    sparrings: PropTypes.array.isRequired,
+    tournaments: PropTypes.array.isRequired
 };
 
 const defaultProps = {
@@ -24,11 +25,11 @@ const defaultProps = {
 
 const enhance = pure;
 
-const ListEvent = ({ id, joined, name, location, players, from, to, games }) => (
+const ListEvent = ({ id, joined, name, location, players, startDate, endDate, sparrings, tournaments }) => (
     <div className={joined ? "list-event list-event--joined" : "list-event"}>
         <ListEventTime
-            from={from}
-            to={to}
+            from={startDate}
+            to={endDate}
         />
         <ListEventDetails
             id={id}
@@ -37,7 +38,8 @@ const ListEvent = ({ id, joined, name, location, players, from, to, games }) => 
             players={players}
         />
         <ListEventGames
-            games={games}
+            sparrings={sparrings}
+            tournaments={tournaments}
         />
     </div>
 );

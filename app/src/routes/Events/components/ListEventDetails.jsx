@@ -7,7 +7,12 @@ import Icon from "../../../components/Icon";
 const propTypes = {
     id: PropTypes.number.isRequired,
     name: PropTypes.string.isRequired,
-    location: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+        lat: PropTypes.number.isRequired,
+        lng: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        address: PropTypes.string
+    }).isRequired,
     players: PropTypes.number.isRequired
 };
 
@@ -28,7 +33,7 @@ const ListEventTime = ({ id, name, location, players }) => (
                 name="room"
                 className="list-event__location-icon"
             />
-            {location}
+            {location.address ? `${location.name} ${location.address}` : location.name}
         </p>
         <p className="list-event__count">{players} Players going</p>
     </div>

@@ -23,8 +23,18 @@ const enhance = compose(
 
 const Reveal = ({ children, revealed, reveal, items, limit }) => (
     revealed || (items.length <= limit + 1)
-    ? children(true, () => reveal(true), items)
-    : children(false, () => reveal(true), items.slice(0, limit))
+    ? children({
+        revealed: true,
+        reveal: () => reveal(true),
+        items,
+        left: 0
+    })
+    : children({
+        revealed: false,
+        reveal: () => reveal(true),
+        items: items.slice(0, limit),
+        left: items.length - limit
+    })
 );
 
 Reveal.propTypes = propTypes;
