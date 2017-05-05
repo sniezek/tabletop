@@ -24,9 +24,10 @@ const mapDispatchToProps = dispatch => ({
     loadEvents: callback => loadEvents(callback)(dispatch)
 });
 
-const mapStateToProps = ({ user, config }) => ({
+const mapStateToProps = ({ user, config, events }) => ({
     user,
-    mapView: config.mapView
+    mapView: config.mapView,
+    events
 });
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
@@ -54,7 +55,7 @@ class EventsContainer extends PureComponent {
 
     render() {
         const { displayFilters } = this.state;
-        const { mapView, toggleMapView, user } = this.props;
+        const { mapView, toggleMapView, user, events } = this.props;
         const loggedIn = user !== null;
 
         return (
@@ -64,7 +65,7 @@ class EventsContainer extends PureComponent {
                 toggleFilters={this.toggleFilters}
                 displayFilters={displayFilters}
                 loggedIn={loggedIn}
-                events={[]}
+                events={events}
             />
         );
     }
