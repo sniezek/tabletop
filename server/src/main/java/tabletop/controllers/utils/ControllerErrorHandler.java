@@ -26,7 +26,7 @@ public class ControllerErrorHandler {
     }
 
     public void accessDenied() {
-        throw new AccessDeniedException(messages.getMessage("access.denied"));
+        throw new AccessDeniedException(messages.getMessage("access_denied"));
     }
 
     public String getErrorMessage(String errorCode) {

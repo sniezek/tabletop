@@ -5,7 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.Objects;
 
-/* Note that equals and hashCode will only work if id is already assigned (either manually or after entity persistence */
+/* Note that equals and hashCode will only work if id is already assigned (either manually or after entity persistence) */
 @MappedSuperclass
 public abstract class IdComparableEntity {
     @Id
@@ -22,7 +22,7 @@ public abstract class IdComparableEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(id);
     }
 
     @Override
@@ -34,7 +34,7 @@ public abstract class IdComparableEntity {
         if (obj instanceof IdComparableEntity) {
             IdComparableEntity entity = (IdComparableEntity) obj;
 
-            return Objects.equals(getId(), entity.getId());
+            return Objects.equals(id, entity.getId());
         }
 
         return false;
