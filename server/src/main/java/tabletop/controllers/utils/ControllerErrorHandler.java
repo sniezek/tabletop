@@ -19,7 +19,7 @@ public class ControllerErrorHandler {
         errors.reject(requestIncorrect, messages.getMessage(requestIncorrect));
     }
 
-    public void addInvalidPathVariable(Errors errors) {
+    public void addInvalidPathVariableError(Errors errors) {
         String requestInvalidPathVariable = "request.invalid_path_variable";
         errors.reject(requestInvalidPathVariable, messages.getMessage(requestInvalidPathVariable));
     }
