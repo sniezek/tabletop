@@ -1,6 +1,7 @@
 package tabletop.controllers.event;
 
 import com.google.common.base.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import tabletop.controllers.utils.PathVariableValidator;
@@ -9,12 +10,17 @@ import tabletop.domain.event.Location;
 import tabletop.domain.match.Match;
 import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.user.User;
+import tabletop.services.UserService;
 
 import java.util.Optional;
 import java.util.Set;
 
 @Component
 class EventValidator extends PathVariableValidator {
+    @Autowired
+    private UserService userService;
+
     void validateNewLocation(Location location, Errors errors) {
         validator.validate(location, errors);
     }
@@ -72,8 +78,18 @@ class EventValidator extends PathVariableValidator {
     }
 
     void validateExistingEvent(Optional<Event> event, Errors errors) {
-        if (!event.isPresent()) {
+        if (event.isPresent()) {
+            validateUserIsOrganiser(event.get());
+        } else {
             errorHandler.addError(errors, "event.not_exists");
+        }
+    }
+
+    private void validateUserIsOrganiser(Event event) {
+        User user = userService.getAuthenticatedUser().get();
+
+        if (!event.getOrganiser().equals(user)) {
+            errorHandler.accessDenied();
         }
     }
 }

@@ -1,6 +1,7 @@
 package tabletop.controllers.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import tabletop.configuration.validation.messages.ValidationMessages;
@@ -22,6 +23,10 @@ public class ControllerErrorHandler {
     public void addInvalidPathVariableError(Errors errors) {
         String requestInvalidPathVariable = "request.invalid_path_variable";
         errors.reject(requestInvalidPathVariable, messages.getMessage(requestInvalidPathVariable));
+    }
+
+    public void accessDenied() {
+        throw new AccessDeniedException(messages.getMessage("access.denied"));
     }
 
     public String getErrorMessage(String errorCode) {

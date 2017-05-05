@@ -3,25 +3,26 @@ package tabletop.domain.event;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Sets;
 import org.hibernate.validator.constraints.NotEmpty;
+import tabletop.domain.IdComparableEntity;
 import tabletop.domain.match.Match;
 import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.user.User;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
 @Entity
-public class Event {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Event extends IdComparableEntity {
     @NotEmpty(message = "{event.name}")
     private String name;
-    @NotNull(message ="{event.description}")
+    @NotNull(message = "{event.description}")
     private String description;
     @NotNull(message = "{event.location}")
     @ManyToOne
@@ -38,14 +39,6 @@ public class Event {
     private User organiser;
 
     public Event() {
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getName() {

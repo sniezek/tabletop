@@ -1,17 +1,13 @@
 package tabletop.domain.event;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import tabletop.domain.IdComparableEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Location {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class Location extends IdComparableEntity {
     @NotNull(message = "{location.lat}")
     private Double lat;
     @NotNull(message = "{location.lng}")
@@ -23,10 +19,6 @@ public class Location {
 //    private Set<Event> events;
 
     public Location() {
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public Double getLat() {
