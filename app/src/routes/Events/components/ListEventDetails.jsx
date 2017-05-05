@@ -28,13 +28,19 @@ const ListEventTime = ({ id, name, location, players }) => (
                 {name}
             </Link>
         </h4>
-        <p className="list-event__location">
+        <a
+            href={`https://www.google.com/maps/preview/@${location.lat},${location.lng},14z`}
+            className="list-event__location"
+            rel="noopener noreferrer"
+            target="_blank"
+            title="Open in Google Maps"
+        >
             <Icon
                 name="room"
                 className="list-event__location-icon"
             />
             {location.address ? `${location.name} – ${location.address}` : location.name}
-        </p>
+        </a>
         <p className="list-event__count">{players} Players going</p>
     </div>
 );
