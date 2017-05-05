@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 @Table(
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "gameName"})}
 )
-public class TournamentRanking {
+public class GameRanking {
 
     @Id
     @GeneratedValue

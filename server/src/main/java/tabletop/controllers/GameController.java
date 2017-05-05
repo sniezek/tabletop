@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import tabletop.controllers.utils.ResourceNotFoundException;
 import tabletop.domain.game.Game;
-import tabletop.domain.ranking.TournamentRanking;
+import tabletop.domain.ranking.GameRanking;
 import tabletop.services.GameRankingService;
 
 import java.util.Arrays;
@@ -24,7 +24,7 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/rankings/{gameName}")
-    public List<TournamentRanking> getRanking(@PathVariable String gameName) {
+    public List<GameRanking> getRanking(@PathVariable String gameName) {
         try {
             Game game = Game.valueOf(gameName);
             return gameRankingService.getRankingForGame(null, game);
