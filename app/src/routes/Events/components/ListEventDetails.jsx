@@ -33,7 +33,7 @@ const ListEventTime = ({ id, name, location, players }) => (
                 name="room"
                 className="list-event__location-icon"
             />
-            {location.address ? `${location.name} ${location.address}` : location.name}
+            {location.address ? `${location.name} – ${location.address}` : location.name}
         </p>
         <p className="list-event__count">{players} Players going</p>
     </div>
