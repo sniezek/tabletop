@@ -2,22 +2,26 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setMapViewActive } from "../../../store/config";
+import { loadEvents } from "../modules/EventActions";
 import Events from "../components/Events.jsx";
 
 const propTypes = {
     mapView: PropTypes.bool,
     toggleMapView: PropTypes.func,
-    user: PropTypes.object
+    user: PropTypes.object,
+    loadEvents: PropTypes.func
 };
 
 const defaultProps = {
     mapView: true,
     user: null,
-    toggleMapView: () => {}
+    toggleMapView: () => {},
+    loadEvents: () => {}
 };
 
 const mapDispatchToProps = dispatch => ({
-    toggleMapView: active => dispatch(setMapViewActive(active))
+    toggleMapView: active => dispatch(setMapViewActive(active)),
+    loadEvents: callback => loadEvents(callback)(dispatch)
 });
 
 const mapStateToProps = ({ user, config }) => ({
@@ -36,6 +40,10 @@ class EventsContainer extends PureComponent {
         };
 
         this.toggleFilters = this.toggleFilters.bind(this);
+    }
+
+    componentDidMount() {
+        this.props.loadEvents(() => {});
     }
 
     toggleFilters(displayFilters) {

@@ -1,7 +1,7 @@
 import Api from "../../../api";
 import {
     SET_EVENTS
-} from "./FilterConstants";
+} from "./EventConstants";
 
 export const loadEvents = callback => dispatch =>
     Api.events().then((response) => {

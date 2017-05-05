@@ -40,7 +40,7 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
             displayFilters={displayFilters}
             toggleFilters={toggleFilters}
         />
-        { !mapView ? (
+        { mapView ? (
             <EventsMap />
         ) : (
             <EventsList />
