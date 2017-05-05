@@ -6,5 +6,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class PropertiesConfiguration {
     @Value("${client.url}")
-    public String CLIENT_URL;
+    private String clientUrl;
+
+    public String getClientUrl() {
+        return clientUrl;
+    }
 }

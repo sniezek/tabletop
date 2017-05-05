@@ -3,23 +3,19 @@ package tabletop.domain.user;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import tabletop.domain.IdComparableEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
-    @NotEmpty
+public class User extends IdComparableEntity {
+    @NotEmpty(message = "{user.username}")
     private String username;
-    @NotEmpty
+    @NotEmpty(message = "{user.password}")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Email
-    @NotEmpty
+    @NotEmpty(message = "{user.email}")
     private String email;
 
     public User() {
@@ -47,10 +43,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     @Override

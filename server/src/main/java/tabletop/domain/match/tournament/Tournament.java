@@ -1,31 +1,39 @@
 package tabletop.domain.match.tournament;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import tabletop.domain.match.Match;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Tournament extends Match {
+    @NotEmpty(message = "{tournament.name}")
+    private String name;
+    @NotNull(message = "{tournament.type}")
     @Enumerated(EnumType.STRING)
-    private TournamentType tournamentType;
+    private TournamentType type;
     private String results;
 
     public Tournament() {
     }
 
-    @Override
-    public String getGameName() {
-        return getGame().getName();
+    public String getName() {
+        return name;
     }
 
-    public TournamentType getTournamentType() {
-        return tournamentType;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setTournamentType(TournamentType tournamentType) {
-        this.tournamentType = tournamentType;
+    public TournamentType getType() {
+        return type;
+    }
+
+    public void setType(TournamentType type) {
+        this.type = type;
     }
 
     public String getResults() {
@@ -34,5 +42,10 @@ public class Tournament extends Match {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    @Override
+    public String getGameName() {
+        return getGame().getName();
     }
 }
