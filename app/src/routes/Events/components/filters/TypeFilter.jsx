@@ -16,7 +16,7 @@ const propTypes = {
 const defaultProps = {
     setActive: () => {},
     active: false,
-    type: "sparing",
+    type: "sparring",
     setType: () => {}
 };
 
@@ -36,7 +36,7 @@ const TypeFilter = ({ active, setActive, type, setType }) => (
             className="type-filter__group"
         >
             <Radio
-                value="sparing"
+                value="sparring"
                 ripple
             >
                 Sparing

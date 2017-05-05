@@ -18,10 +18,10 @@ const events = [{
     games: [{
         name: "Warhammer 40K",
         tournament: true,
-        sparing: true
+        sparring: true
     }, {
         name: "Chess",
-        sparing: true
+        sparring: true
     }, {
         name: "Dixit",
         tournament: true
@@ -30,10 +30,10 @@ const events = [{
         tournament: true
     }, {
         name: "Makao",
-        sparing: true
+        sparring: true
     }, {
         name: "Blackjack",
-        sparing: true,
+        sparring: true,
         torunament: true
     }]
 }];

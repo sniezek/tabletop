@@ -7,7 +7,7 @@ const propTypes = {
     games: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         tournament: PropTypes.bool,
-        sparing: PropTypes.bool
+        sparring: PropTypes.bool
     }))
 };
 
@@ -16,11 +16,11 @@ const defaultProps = {
 };
 
 /* eslint-disable react/prop-types */
-const mapFn = ({ name, sparing, tournament }) => (
+const mapFn = ({ name, sparring, tournament }) => (
     <li key={name}>
         {name} <span>(
             {tournament && <strong>tournament</strong>}
-            {sparing && <span>sparing</span>}
+            {sparring && <span>sparring</span>}
         )</span>
     </li>
 );
