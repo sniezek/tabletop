@@ -21,9 +21,22 @@ public class EventService {
         return Lists.newArrayList(eventRepository.findAll());
     }
 
-    public Event addEvent(Event event) {
+    public Event createEvent(Event event) {
         event.setOrganiser(userService.getAuthenticatedUser().get());
 
+        return saveEvent(event);
+    }
+
+    public Event updateEvent(Long id, Event newEvent) {
+        Event oldEvent = getEventById(id).get();
+
+        newEvent.setId(id);
+        newEvent.setOrganiser(oldEvent.getOrganiser());
+
+        return saveEvent(newEvent);
+    }
+
+    public Event saveEvent(Event event) {
         return eventRepository.save(event);
     }
 
