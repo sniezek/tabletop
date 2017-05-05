@@ -11,9 +11,6 @@ import tabletop.domain.ranking.QGameRanking;
 import tabletop.domain.user.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -56,27 +53,6 @@ public class GameRankingRepositoryImpl implements GameRankingRepositoryCustom {
     }
 
     private List<GameRanking> getRankingsForUsers(Game game, List<User> users) {
-        if (users != null) {
-            List<Long> ids = users.stream().map(User::getId).collect(Collectors.toList());
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<GameRanking> critQuery = builder.createQuery(GameRanking.class);
-            Root<GameRanking> rankingRoot = critQuery.from(GameRanking.class);
-            critQuery.select(rankingRoot);
-            critQuery.where(builder.and(rankingRoot.get("userId").in(ids), rankingRoot.get("gameName").in(game.getName())));
-            return entityManager.createQuery(critQuery).getResultList();
-        } else {
-            CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-            CriteriaQuery<GameRanking> critQuery = builder.createQuery(GameRanking.class);
-            Root<GameRanking> rankingRoot = critQuery.from(GameRanking.class);
-            critQuery.select(rankingRoot);
-            critQuery.where(rankingRoot.get("gameName").in(game.getName()));
-            critQuery.orderBy(builder.desc(rankingRoot.get("points")));
-            return entityManager.createQuery(critQuery).setMaxResults(20).getResultList();
-        }
-
-    }
-
-    private List<GameRanking> getRankingsForUsers2(Game game, List<User> users) {
         if (users != null) {
             List<Long> ids = users.stream().map(User::getId).collect(Collectors.toList());
             QGameRanking gameRanking = QGameRanking.gameRanking;
