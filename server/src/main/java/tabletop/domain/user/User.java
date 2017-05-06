@@ -5,22 +5,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import tabletop.domain.match.tournament.TournamentFinalResult;
+import tabletop.domain.IdComparableEntity;
 
 import javax.persistence.*;
 import java.util.List;
+import javax.persistence.Entity;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
-    @NotEmpty
+public class User extends IdComparableEntity {
+    @NotEmpty(message = "{user.username}")
     private String username;
-    @NotEmpty
+    @NotEmpty(message = "{user.password}")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Email
-    @NotEmpty
+    @NotEmpty(message = "{user.email}")
     private String email;
     @OneToMany(mappedBy = "user", fetch= FetchType.LAZY, cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnore

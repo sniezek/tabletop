@@ -4,6 +4,7 @@ import com.allanditzel.springframework.security.web.csrf.CsrfTokenResponseHeader
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
+import tabletop.services.TabletopUserDetailsService;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,7 +64,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint((request, response, authException) -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED))
                 .accessDeniedHandler((request, response, authentication) -> response.setStatus(HttpServletResponse.SC_FORBIDDEN))
                 .and()
-                .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class);
+                .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/user").hasAuthority(TabletopUserDetailsService.ROLE_USER)
+                .antMatchers(HttpMethod.POST, "/events").hasAuthority(TabletopUserDetailsService.ROLE_USER)
+                .antMatchers(HttpMethod.PUT, "/event/**").hasAuthority(TabletopUserDetailsService.ROLE_USER);
 
     }
 
