@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import Button from "react-mdl/lib/Button";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "react-mdl/lib/Dialog";
-import LocationFilterContainer from "../containers/LocationFilterContainer.jsx";
-import GamesFilterContainer from "../containers/GamesFilterContainer.jsx";
-import TypeFilterContainer from "../containers/TypeFilterContainer.jsx";
-import DateFilterContainer from "../containers/DateFilterContainer.jsx";
+import LocationFilterContainer from "../../containers/LocationFilterContainer.jsx";
+import GamesFilterContainer from "../../containers/GamesFilterContainer.jsx";
+import TypeFilterContainer from "../../containers/TypeFilterContainer.jsx";
+import DateFilterContainer from "../../containers/DateFilterContainer.jsx";
 import "./EventsFilters.scss";
 
 const propTypes = {

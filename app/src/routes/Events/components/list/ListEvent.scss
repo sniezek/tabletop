@@ -1,0 +1,122 @@
+.list-event {
+    border-top: 1px solid #ddd;
+    padding: 24px 32px;
+    display: flex;
+
+    &:first-child {
+        border-top: 0;
+    }
+
+    &--joined {
+        box-shadow: 4px 0 0 0 #5c940d inset;
+    }
+
+    &__time {
+        display: flex;
+        flex-shrink: 0;
+        flex-direction: column;
+        margin-right: 32px;
+    }
+
+    &__time-from,
+    &__time-to {
+        font-size: 12px;
+    }
+
+    &__time-delemiter {
+        margin: 4px 0;
+        flex: 1 1 auto;
+        border-left: 1px dashed #aaa;
+        width: 1px;
+        align-self: center;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: inherit;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    &__name {
+        margin: 0;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    &__location {
+        flex: 1 0 auto;
+        display: block;
+        margin: 0 0 16px;
+        font-size: 14px;
+        line-height: 24px;
+        letter-spacing: 0;
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.5);
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    &__location-icon {
+        margin-right: 4px;
+        font-size: 14px;
+        line-height: 22px;
+        vertical-align: top;
+    }
+
+    &__count {
+        margin: 0;
+        line-height: 18px;
+    }
+
+    &__games {
+        max-width: 300px;
+        flex: 1 0 auto;
+        line-height: 18px;
+        white-space: nowrap;
+    }
+
+    &__games-list {
+        line-height: 18px;
+
+        & > li {
+            display: block;
+
+            &:before {
+                display: inline-block;
+                margin-right: 4px;
+                content: "–";
+            }
+
+            & > span {
+                text-transform: uppercase;
+                font-size: 10px;
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            strong + span:before {
+                content: ", ";
+            }
+        }
+    }
+
+    &__games-more {
+        font-weight: normal;
+        text-decoration: none;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}

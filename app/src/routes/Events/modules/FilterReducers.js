@@ -61,7 +61,7 @@ export function gamesReducer(state = { selected: [] }, { type, payload }) {
     return state;
 }
 
-export function typeReducer(state = { type: "sparing" }, { type, payload }) {
+export function typeReducer(state = { type: "sparring" }, { type, payload }) {
     if (type === SET_FILTER_SELECTED_TYPE) {
         return {
             ...state,
