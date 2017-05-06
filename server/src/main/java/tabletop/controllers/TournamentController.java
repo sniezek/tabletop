@@ -86,6 +86,7 @@ public class TournamentController {
         Tournament tournament = tournamentService.getTournamentById(singleWinInformation.getTournamentId());
         if (tournament != null) {
             tournamentService.setWinner(tournament, singleWinInformation.getWinner());
+            tournamentService.addTournament(tournament);
         }
     }
 
@@ -98,11 +99,10 @@ public class TournamentController {
         return null;
     }
 
-    @RequestMapping(value = "/next/{tournamentid}", method = RequestMethod.POST, consumes = "application/json")
-    public Collection<Pair<User>> getNextRound(@PathVariable("tournamentid") Long tournamentid,
-                                               @RequestBody BasicWinInformation winInformation) {
+    @RequestMapping(value = "/next/{tournamentid}", method = RequestMethod.GET)
+    public Collection<Pair<User>> getNextRound(@PathVariable("tournamentid") Long tournamentid) {
         Tournament tournament = tournamentService.getTournamentById(tournamentid);
-        if (tournament == null || winInformation == null) {
+        if (tournament == null) {
             return null;
         } else {
             Collection<Pair<User>> nextRound = tournamentService.getNextRound(tournament);

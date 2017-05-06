@@ -62,8 +62,8 @@ class Api {
 
     setWinner(id, winner) {
       const body = JSON.stringify({
-        id,
-        winner
+          "tournamentId": id,
+          winner,
       });
 
       const headers = new Headers({
@@ -81,6 +81,12 @@ class Api {
     initialRound(id) {
       return fetch(`${API_SERVER}/tournament/init/${id}`, {
             method: "GET"
+      });
+    }
+
+    nextRound(id) {
+      return fetch(`${API_SERVER}/tournament/next/${id}`, {
+        method: "GET"
       });
     }
 

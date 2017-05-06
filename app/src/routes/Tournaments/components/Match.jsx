@@ -5,8 +5,8 @@ import {List, ListItem, ListItemAction, ListItemContent} from "react-mdl/lib/Lis
 import {Checkbox} from "react-mdl/lib";
 
 const propTypes = {
-  host: PropTypes.string.isRequired,
-  guest: PropTypes.string.isRequired,
+  host: PropTypes.object.isRequired,
+  guest: PropTypes.object.isRequired,
   winner: PropTypes.string.isRequired,
   setWinner: PropTypes.func.isRequired
 };
@@ -18,8 +18,8 @@ class Match extends Component {
     super(props);
     this.state = {
       radiosDisabled: this.props.winner != "0",
-      hostRadioValue: this.props.winner == "1" ? 1 : 0,
-      guestRadioValue: this.props.winner == "-1" ? 1 : 0
+      hostCheckboxValue: this.props.winner == "1" ? 1 : 0,
+      guestCheckboxValue: this.props.winner == "-1" ? 1 : 0
     };
     this.winCallback = this.winCallback.bind(this)
     this.winNokCallback = this.winNokCallback.bind(this)
@@ -27,19 +27,21 @@ class Match extends Component {
   }
 
   win = (winner) => {
-    this.props.setWinner({winner}, this.winCallback, this.winNokCallback)
+    this.props.setWinner(winner, () => this.winCallback(winner === this.props.host), this.winNokCallback)
   };
 
-  winCallback() {
+  winCallback(hostWon) {
     this.setState({
+      hostCheckboxValue: hostWon ? 1 : 0,
+      guestCheckboxValue: hostWon ? 0 : 1,
       radiosDisabled: true
     });
   }
 
   winNokCallback() {
     this.setState({
-      hostRadioValue: 0,
-      guestRadioValue: 0
+      hostCheckboxValue: 0,
+      guestCheckboxValue: 0
     });
   }
 
@@ -48,19 +50,19 @@ class Match extends Component {
       <div>
         <List style={{width: '300px'}}>
           <ListItem>
-            <ListItemContent avatar="person">{this.props.host}</ListItemContent>
+            <ListItemContent avatar="person">{this.props.host["username"]}</ListItemContent>
             <ListItemAction>
               <Checkbox
-                checked={this.state.hostRadioValue == 1}
+                checked={this.state.hostCheckboxValue == 1}
                 onChange={(e) => this.win(this.props.host)}
                 disabled={this.state.radiosDisabled}/>
             </ListItemAction>
           </ListItem>
           <ListItem>
-            <ListItemContent avatar="person">{this.props.guest}</ListItemContent>
+            <ListItemContent avatar="person">{this.props.guest["username"]}</ListItemContent>
             <ListItemAction>
               <Checkbox
-                checked={this.state.guestRadioValue == 1}
+                checked={this.state.guestCheckboxValue == 1}
                 onChange={(e) => this.win(this.props.guest)}
                 disabled={this.state.radiosDisabled}/>
             </ListItemAction>

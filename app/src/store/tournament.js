@@ -61,14 +61,21 @@ export const getFinishedTournaments = dispatch =>
       }
   });
 
-export const nextRound = ({ id }, callback) => dispatch =>
-  Api.nextRound({ id }).then((response) => {
+export const nextRound = ( id , callback) => dispatch =>
+  Api.nextRound( id ).then((response) => {
       if (response.ok) {
           response.json().then(( pairs ) => {
+            let pairsFormatted = pairs.map(pair => {
+              return {
+                host: pair["a"],
+                guest: pair["b"],
+                winner: "0"
+              }
+            });
               dispatch({
                   type: NEXT_ROUND,
                   payload: {
-                      pairs
+                    pairsFormatted
                   }
               });
           });
@@ -79,12 +86,14 @@ export const nextRound = ({ id }, callback) => dispatch =>
 
 export const setWinner = (id, winner , callback) => dispatch =>
   Api.setWinner( id, winner ).then((response) => {
+      console.log("setWinner1")
       if (response.ok) {
+        console.log("setWinner2")
           dispatch({
               type: SET_WINNER
           });
       }
-
+    console.log("setWinner3")
       callback(response);
   });
 
@@ -94,8 +103,8 @@ export const initialRound = ( id , callback) => dispatch =>
       response.json().then(( pairs ) => {
         let pairsFormatted = pairs.map(pair => {
           return {
-            host: pair["a"]["username"],
-            guest: pair["b"]["username"],
+            host: pair["a"],
+            guest: pair["b"],
             winner: "0"
           }
         });
@@ -134,7 +143,7 @@ export default function tournamentReducer(state = null, { type, payload }) {
         };
     } else if (type === NEXT_ROUND) {
         state = {
-            pairs: payload.pairs
+            pairs: payload.pairsFormatted
         };
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {

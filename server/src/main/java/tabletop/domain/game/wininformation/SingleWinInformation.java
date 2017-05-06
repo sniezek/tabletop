@@ -5,8 +5,8 @@ import tabletop.domain.user.User;
 import java.util.Set;
 
 public class SingleWinInformation {
-    private User winner;
     private Long tournamentId;
+    private User winner;
 
     public SingleWinInformation() {
     }

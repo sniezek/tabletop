@@ -6,8 +6,8 @@ import TournamentProcess from "../components/TournamentProcess.jsx";
 
 const propTypes = {
   pairs: PropTypes.arrayOf(PropTypes.shape({
-    host: PropTypes.string.isRequired,
-    guest: PropTypes.string.isRequired,
+    host: PropTypes.object.isRequired,
+    guest: PropTypes.object.isRequired,
     winner: PropTypes.string.isRequired
   })),
   tournamentId: PropTypes.number.isRequired,
@@ -29,10 +29,12 @@ const mapDispatchToProps = dispatch => {
     initialRound: (id) => {
       dispatch(initialRound(id));
     },
-    setWinner: (id, winner) => {
-      dispatch(setWinner(id, winner));
+    setWinner: (id, winner, callback) => {
+      dispatch(setWinner(id, winner, callback));
     },
-    nextRound
+    nextRound: (id, callback) => {
+      dispatch(nextRound(id, callback));
+    },
   };
 };
 const mapStateToProps = (state) => {
@@ -65,9 +67,9 @@ class TournamentProcessContainer extends Component {
   }
 
   nextRound() {
-    const tournamentId = this.state.tournamentId;
+    const tournamentId = this.props.tournamentId;
 
-    this.props.nextRound({tournamentId}, ({ok}) => {
+    this.props.nextRound(tournamentId, ({ok}) => {
       if (!ok) {
         console.log("Passing To Next Round failed!")
       }
@@ -101,6 +103,7 @@ class TournamentProcessContainer extends Component {
         tournamentId={this.props.tournamentId}
         pairs={this.props.pairs}
         setWinner={this.setWinner}
+        nextRound={this.nextRound}
       />
     );
   }

@@ -2,17 +2,19 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Match from "./Match";
 import {Link} from "react-router";
+import {Button} from "react-mdl/lib";
 
 
 const propTypes = {
   tournamentId: PropTypes.number,
   tournamentName: PropTypes.string,
   pairs: PropTypes.arrayOf(PropTypes.shape({
-    host: PropTypes.string.isRequired,
-    guest: PropTypes.string.isRequired,
+    host: PropTypes.object.isRequired,
+    guest: PropTypes.object.isRequired,
     winner: PropTypes.string.isRequired
   })),
-  setWinner: PropTypes.func.isRequired
+  setWinner: PropTypes.func.isRequired,
+  nextRound: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -21,7 +23,12 @@ const defaultProps = {
 class TournamentProcess extends Component {
   constructor(props) {
     super(props)
+    this.nextRound = this.nextRound.bind(this)
   }
+
+  nextRound = () => {
+    this.props.nextRound()
+  };
 
   render() {
     return (
@@ -37,6 +44,7 @@ class TournamentProcess extends Component {
               tournamentId={this.props.tournamentId}/>
           </li>)}
         </ol>
+        <Button colored onClick={() => this.nextRound()}>Next round</Button>
         <div>
           <h1><Link to="/tournament-results">Finish tournament</Link></h1>
         </div>
