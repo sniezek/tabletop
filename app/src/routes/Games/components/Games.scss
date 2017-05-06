@@ -65,29 +65,14 @@
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.gameSettings {
-  display: inline-block;
-  margin-bottom: 5px;
-}
-
-.gameDescription {
-  margin-top: 10px;
-  display: block;
-}
-
 .gameSettings span i.material-icons {
   vertical-align: middle;
 }
 
-.tileImage {
-  max-height: 180px;
-}
-
-.imageSection {
-  align-content: center;
-  padding: 20px;
-}
-
 .gameSection {
   margin-bottom: 15px;
+}
+
+.gameSettings {
+  padding-left: 40px;
 }

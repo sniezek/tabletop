@@ -21,11 +21,9 @@ export const getGames = dispatch =>
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function gamesReducer(state = null, { type, payload }) {
+export default function gamesReducer(state = [], { type, payload }) {
     if (type === GET_GAMES) {
-        state = {
-            gamesList: payload.gamesList
-        };
+        state = payload.gamesList;
     }
     return state;
 }
