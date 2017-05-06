@@ -1,0 +1,22 @@
+.events-list {
+    flex: 1 1 auto;
+    padding: 8px 32px 32px;
+
+    &__wrapper {
+        margin: auto;
+        max-width: 1000px;
+    }
+}
+
+.events-list-day {
+    &__date {
+        margin: 16px 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    &__events {
+        background: #fff;
+    }
+}

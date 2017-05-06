@@ -7,6 +7,7 @@ class Api {
         this.user = this.user.bind(this);
         this.games = this.games.bind(this);
         this.register = this.register.bind(this);
+        this.events = this.events.bind(this);
     }
 
     user() {
@@ -42,7 +43,7 @@ class Api {
             credentials: "include"
         });
     }
-  
+
     register({ username, password, email }) {
         const body = JSON.stringify({
             username,
@@ -59,6 +60,13 @@ class Api {
             credentials: "include",
             headers,
             body
+        });
+    }
+
+    events() {
+        return fetch(`${API_SERVER}/events`, {
+            method: "GET",
+            credentials: "include"
         });
     }
 }

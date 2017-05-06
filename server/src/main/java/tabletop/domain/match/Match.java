@@ -1,19 +1,20 @@
 package tabletop.domain.match;
 
 import org.hibernate.validator.constraints.Range;
+import tabletop.domain.IdComparableEntity;
 import tabletop.domain.game.Game;
 import tabletop.domain.user.User;
 
-import javax.persistence.*;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
 @MappedSuperclass
-public abstract class Match {
-    @Id
-    @GeneratedValue
-    private Long id;
+public abstract class Match extends IdComparableEntity {
     @NotNull(message = "{match.startDate}")
     private Date startDate;
     @NotNull(message = "{match.endDate}")
@@ -23,7 +24,7 @@ public abstract class Match {
     @Enumerated(EnumType.STRING)
     private Game game;
     @NotNull(message = "{match.minPlayers.not_null}")
-    @Range(min = 2L, message= "{match.minPlayers.min}")
+    @Range(min = 2L, message = "{match.minPlayers.min}")
     private Integer minPlayers;
     @NotNull(message = "{match.maxPlayers.not_null}")
     @Range(min = 2L, message = "{match.maxPlayers.min}")
