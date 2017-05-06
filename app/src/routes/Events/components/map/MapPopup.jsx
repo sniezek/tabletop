@@ -6,9 +6,12 @@ import compose from "recompose/compose";
 import branch from "recompose/branch";
 import renderNothing from "recompose/renderNothing";
 import { InfoWindow } from "react-google-maps";
+import MapPopupContent from "./MapPopupContent.jsx";
 
 const propTypes = {
-    event: PropTypes.object.isRequired
+    event: PropTypes.shape({
+        location: PropTypes.object.isRequired
+    }).isRequired
 };
 
 const hideIfNoData = hasNoData =>
@@ -24,15 +27,17 @@ const enhance = compose(
     )
 );
 
-const EventsMapPopup = ({ event: { location } }) => (
+const MapPopup = ({ event }) => (
     <InfoWindow
-        position={location}
+        position={event.location}
         options={{ pixelOffset: new google.maps.Size(0, -40) }}
     >
-        <div>Example</div>
+        <MapPopupContent
+            {...event}
+        />
     </InfoWindow>
 );
 
-EventsMapPopup.propTypes = propTypes;
+MapPopup.propTypes = propTypes;
 
-export default enhance(EventsMapPopup);
+export default enhance(MapPopup);
