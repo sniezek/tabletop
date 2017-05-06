@@ -1,13 +1,11 @@
 package tabletop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tabletop.controllers.utils.ResourceNotFoundException;
 import tabletop.domain.game.Game;
 import tabletop.domain.ranking.GameRanking;
+import tabletop.domain.user.User;
 import tabletop.services.GameRankingService;
 
 import java.util.Arrays;
@@ -23,11 +21,30 @@ public class GameController {
         return Arrays.asList(Game.values());
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/games/{gameName}")
+    public Game getGame(@PathVariable String gameName) {
+        try {
+            return Game.valueOf(gameName.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new ResourceNotFoundException();
+        }
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/rankings/{gameName}")
     public List<GameRanking> getRanking(@PathVariable String gameName) {
         try {
             Game game = Game.valueOf(gameName);
             return gameRankingService.getRankingForGame(null, game);
+        } catch (IllegalArgumentException e) {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/rankings/{gameName}")
+    public List<GameRanking> getRanking(@PathVariable String gameName, @RequestBody List<User> users) {
+        try {
+            Game game = Game.valueOf(gameName);
+            return gameRankingService.getRankingForGame(users, game);
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException();
         }
