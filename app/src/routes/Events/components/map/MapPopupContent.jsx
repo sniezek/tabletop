@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import moment from "moment";
+import Icon from "../../../../components/Icon";
 
 const propTypes = {
     location: PropTypes.object.isRequired,
@@ -44,10 +45,22 @@ const getDate = (startDate, endDate) => {
 };
 
 const MapPopupContent = ({ location, name, startDate, endDate }) => (
-    <div className="events-map-popup">
-        <h3 className="events-map-popup__name">{name}</h3>
-        <p className="events-map-popup__location">{location.address ? `${location.name} – ${location.address}` : location.name}</p>
-        <p className="events-map-popup__date">{getDate(startDate, endDate)}</p>
+    <div className="map-popup">
+        <h3 className="map-popup__name">{name}</h3>
+        <p className="map-popup__location">
+            <Icon
+                name="room"
+                className="map-popup__location-icon"
+            />
+            {location.address ? `${location.name} – ${location.address}` : location.name}
+        </p>
+        <p className="map-popup__date">
+            <Icon
+                name="event"
+                className="map-popup__date-icon"
+            />
+            {getDate(startDate, endDate)}
+        </p>
     </div>
 );
 

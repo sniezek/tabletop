@@ -7,6 +7,7 @@ import branch from "recompose/branch";
 import renderNothing from "recompose/renderNothing";
 import { InfoWindow } from "react-google-maps";
 import MapPopupContent from "./MapPopupContent.jsx";
+import "./MapPopup.scss";
 
 const propTypes = {
     event: PropTypes.shape({
