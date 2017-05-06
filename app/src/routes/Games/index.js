@@ -9,5 +9,14 @@ const GamesRoute = () => ({
     }
 });
 
+const GameDetailsRoute = () => ({
+    path: "/games/:name",
+    getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+            const GameDetailsView = require("./components/GameDetailsView").default;
+            cb(null, GameDetailsView);
+        }, "games");
+    }
+});
 
-export default GamesRoute;
+export { GamesRoute, GameDetailsRoute };

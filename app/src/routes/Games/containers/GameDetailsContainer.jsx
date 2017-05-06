@@ -22,20 +22,14 @@ const mapStateToProps = state => ({
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-class GamesContainer extends PureComponent {
+class GameDetailsContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.getGames = this.getGames.bind(this);
     }
 
-    getGames() {
-    /*        this.props.getGames(({ ok }) => {
-     console.log("getGames w GamesContainer");
-     if (!ok) {
-     console.log("Getting list of games failed");
-     }
-     });*/
-    }
+    getGames() {}
+
     buildHrefLink(name) {
         return `/games/${name}`;
     }
@@ -81,7 +75,7 @@ class GamesContainer extends PureComponent {
     }
 }
 
-GamesContainer.propTypes = propTypes;
-GamesContainer.defaultProps = defaultProps;
+GameDetailsContainer.propTypes = propTypes;
+GameDetailsContainer.defaultProps = defaultProps;
 
-export default enhance(GamesContainer);
+export default enhance(GameDetailsContainer);

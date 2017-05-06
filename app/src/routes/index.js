@@ -3,7 +3,7 @@ import CoreLayout from "../layouts/CoreLayout";
 import Home from "./Home";
 import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute } from "./Auth";
 import EventsRoute from "./Events";
-import GamesRoute from "./Games";
+import { GamesRoute, GameDetailsRoute } from "./Games";
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -18,7 +18,8 @@ export const createRoutes = store => ({
         RegisterRoute(store),
         RemindRoute(store),
         EventsRoute(store),
-        GamesRoute(store)
+        GamesRoute(store),
+        GameDetailsRoute(store)
 
     ]
 });
