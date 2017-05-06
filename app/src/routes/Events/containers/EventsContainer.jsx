@@ -12,7 +12,8 @@ const propTypes = {
     loadEvents: PropTypes.func,
     lat: PropTypes.number,
     lng: PropTypes.number,
-    events: PropTypes.array
+    events: PropTypes.array,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -53,12 +54,16 @@ class EventsContainer extends PureComponent {
         this.props.loadEvents(() => {});
     }
 
-    componentWillReceiveProps({ lat, lng }) {
-        const positionDefined = lat !== null && lng !== null;
+    componentWillReceiveProps({ lat, lng, mapView }) {
+        const { router } = this.props;
+        const positionDefined = lat !== undefined && lng !== undefined;
         const positionChanged = this.props.lat !== lat || this.props.lng !== lng;
+        const viewSwitchedToList = !mapView && this.props.mapView;
 
         if (positionDefined && positionChanged) {
             this.props.toggleMapView(true);
+        } else if (viewSwitchedToList && router.location.search !== "") {
+            router.push("/events");
         }
     }
 

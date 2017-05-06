@@ -5,15 +5,17 @@ import EventsContainer from "../containers/EventsContainer.jsx";
 import "./EventsView.scss";
 
 const propTypes = {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 const enhance = pure;
 
-const EventsView = ({ location: { query: { lat, lng }} }) => (
+const EventsView = ({ router, location: { query: { lat, lng } } }) => (
     <EventsContainer
         lat={lat}
         lng={lng}
+        router={router}
     />
 );
 
