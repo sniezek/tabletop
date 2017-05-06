@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { Marker } from "react-google-maps";
+import { Marker, InfoWindow } from "react-google-maps";
 import Spinner from "react-mdl/lib/Spinner";
 import Map from "../../../components/Map";
+import EventsMapPopup from "./EventsMapPopup.jsx";
 import "./EventsMap.scss";
 
 const propTypes = {
@@ -39,9 +40,13 @@ const EventsMap = ({ events }) => (
         { events.map(({ id, location }) => (
             <Marker
                 key={id}
+                defaultAnimation={2}
                 position={location}
             />
         ))}
+        <EventsMapPopup
+            event={events[0]}
+        />
     </Map>
 );
 
