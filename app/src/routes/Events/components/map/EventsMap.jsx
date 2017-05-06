@@ -1,18 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { Marker } from "react-google-maps";
 import Spinner from "react-mdl/lib/Spinner";
 import Map from "../../../../components/Map";
-import EventsMapPopup from "./EventsMapPopup.jsx";
+import MapPopup from "./MapPopup.jsx";
+import MapMarker from "./MapMarker.jsx";
 import "./EventsMap.scss";
 
 const propTypes = {
-    events: PropTypes.array
+    events: PropTypes.array,
+    currentEvent: PropTypes.object,
+    showPopup: PropTypes.func,
+    hidePopup: PropTypes.func
 };
 
 const defaultProps = {
-    events: []
+    events: [],
+    currentEvent: null,
+    showPopup: () => {},
+    hidePopup: () => {}
 };
 
 const enhance = pure;
@@ -31,21 +37,22 @@ const loadingElement = (
     </div>
 );
 
-const EventsMap = ({ events }) => (
+const EventsMap = ({ events, currentEvent, showPopup, hidePopup }) => (
     <Map
         containerElement={containerElement}
         loadingElement={loadingElement}
         mapElement={mapElement}
     >
-        { events.map(({ id, location }) => (
-            <Marker
-                key={id}
-                defaultAnimation={2}
-                position={location}
+        { events.map(event => (
+            <MapMarker
+                key={event.id}
+                event={event}
+                showPopup={showPopup}
+                hidePopup={hidePopup}
             />
         ))}
-        <EventsMapPopup
-            event={events[0]}
+        <MapPopup
+            event={currentEvent}
         />
     </Map>
 );
