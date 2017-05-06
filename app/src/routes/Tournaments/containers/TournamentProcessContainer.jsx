@@ -19,11 +19,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-  pairs: [
-    {host: "Player1", guest: "Player2", winner: "1"},
-    {host: "Player3", guest: "Player4", winner: "2"},
-    {host: "Player5", guest: "Player6", winner: "0"}
-  ],
+  pairs: [],
   tournamentId: 1,
   tournamentName: "MyTournament"
 };
@@ -33,7 +29,9 @@ const mapDispatchToProps = dispatch => {
     initialRound: (id) => {
       dispatch(initialRound(id));
     },
-    setWinner,
+    setWinner: (id, winner) => {
+      dispatch(setWinner(id, winner));
+    },
     nextRound
   };
 };
@@ -71,7 +69,7 @@ class TournamentProcessContainer extends Component {
 
     this.props.nextRound({tournamentId}, ({ok}) => {
       if (!ok) {
-        console.log("Passing To Next Round failed")
+        console.log("Passing To Next Round failed!")
       }
     });
   }
@@ -85,12 +83,13 @@ class TournamentProcessContainer extends Component {
     });
   }
 
-  setWinner({player}) {
-    const tournamentId = this.state.tournamentId;
-    /* eslint-disable no-param-reassign */
-    this.props.setWinner({tournamentId, player}, ({ok}) => {
-      if (!ok) {
-        console.log("Winner setting failed!")
+  setWinner(player, okCallback, nokCallback) {
+    const tournamentId = this.props.tournamentId;
+    this.props.setWinner(tournamentId, player, ({ok}) => {
+      if (ok) {
+        okCallback()
+      } else {
+        nokCallback()
       }
     });
   }
@@ -101,6 +100,7 @@ class TournamentProcessContainer extends Component {
         tournamentName={this.props.tournamentName}
         tournamentId={this.props.tournamentId}
         pairs={this.props.pairs}
+        setWinner={this.setWinner}
       />
     );
   }

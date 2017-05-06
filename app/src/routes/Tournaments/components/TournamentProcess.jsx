@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import PropTypes from "prop-types";
 import Match from "./Match";
 import {Link} from "react-router";
@@ -12,12 +12,13 @@ const propTypes = {
     guest: PropTypes.string.isRequired,
     winner: PropTypes.string.isRequired
   })),
+  setWinner: PropTypes.func.isRequired
 };
 
 const defaultProps = {
 };
 
-class TournamentProcess extends Component{
+class TournamentProcess extends Component {
   constructor(props) {
     super(props)
   }
@@ -31,7 +32,9 @@ class TournamentProcess extends Component{
             <Match
               host={pair.host}
               guest={pair.guest}
-              winner={pair.winner}/>
+              winner={pair.winner}
+              setWinner={this.props.setWinner}
+              tournamentId={this.props.tournamentId}/>
           </li>)}
         </ol>
         <div>
@@ -40,7 +43,7 @@ class TournamentProcess extends Component{
       </div>
     )
   }
-};
+}
 
 TournamentProcess.propTypes = propTypes;
 TournamentProcess.defaultProps = defaultProps;

@@ -10,6 +10,7 @@ class Api {
         this.finishedtournaments = this.finishedtournaments.bind(this);
         this.register = this.register.bind(this);
         this.initialRound = this.initialRound.bind(this);
+        this.setWinner = this.setWinner.bind(this);
     }
 
     user() {
@@ -57,6 +58,24 @@ class Api {
             method: "GET",
             credentials: "include"
         });
+    }
+
+    setWinner(id, winner) {
+      const body = JSON.stringify({
+        id,
+        winner
+      });
+
+      const headers = new Headers({
+        "Content-Type": "application/json"
+      });
+
+      return fetch(`${API_SERVER}/tournament/winner/`, {
+        method: "POST",
+        credentials: "include",
+        headers,
+        body
+      });
     }
 
     initialRound(id) {

@@ -77,8 +77,8 @@ export const nextRound = ({ id }, callback) => dispatch =>
       callback(response);
   });
 
-export const setWinner = ({ winner }, callback) => dispatch =>
-  Api.setWinner({ winner }).then((response) => {
+export const setWinner = (id, winner , callback) => dispatch =>
+  Api.setWinner( id, winner ).then((response) => {
       if (response.ok) {
           dispatch({
               type: SET_WINNER
@@ -96,7 +96,7 @@ export const initialRound = ( id , callback) => dispatch =>
           return {
             host: pair["a"]["username"],
             guest: pair["b"]["username"],
-            winner: "1"
+            winner: "0"
           }
         });
         dispatch({
