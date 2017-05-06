@@ -2,7 +2,6 @@ package tabletop.services;
 
 import org.springframework.stereotype.Service;
 import tabletop.domain.match.tournament.Pair;
-import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
@@ -28,13 +27,19 @@ public class SwissTournamentService {
                 User user2 = swissTournamentProcess.getUsers().get(i + 1);
                 Pair<User> pair = new Pair<>(user1, user2);
                 pairs.add(pair);
-                swissTournamentProcess.getResultByUser(user1).ifPresent(result -> result.getUsersPlayed().add(user2));
-                swissTournamentProcess.getResultByUser(user2).ifPresent(result -> result.getUsersPlayed().add(user1));
+                swissTournamentProcess.getResultByUser(user1).ifPresent(result -> setInitialResult(user2, result));
+                swissTournamentProcess.getResultByUser(user2).ifPresent(result -> setInitialResult(user1, result));
             } else {
                 swissTournamentProcess.setByeUser(swissTournamentProcess.getUsers().get(i));
             }
         }
         return pairs;
+    }
+
+    private void setInitialResult(User user1, SwissPlayerResult result) {
+        result.getUsersPlayed().add(user1);
+        result.setCurrentOpponent(user1);
+        result.setCurrentScore(0);
     }
 
     public void setWinner(SwissTournamentProcess swissTournamentProcess, User winner) {
@@ -69,14 +74,26 @@ public class SwissTournamentService {
                     Pair<User> pair = new Pair<>(player, playerToMatch);
                     pairs.add(pair);
                     orderedPlayers.remove(playerToMatch);
-                    swissTournamentProcess.getResultByUser(player).ifPresent(result2 -> result2.getUsersPlayed().add(playerToMatch));
-                    swissTournamentProcess.getResultByUser(playerToMatch).ifPresent(result2 -> result2.getUsersPlayed().add(player));
+                    swissTournamentProcess.getResultByUser(player).ifPresent(result2 -> setInitialResult(playerToMatch, result2));
+                    swissTournamentProcess.getResultByUser(playerToMatch).ifPresent(result2 -> setInitialResult(player, result2));
                     break;
                 }
             }
         }
 
         return pairs;
+    }
+
+    public Map<Pair<User>, Integer> getCurentState(SwissTournamentProcess swissTournamentProcess) {
+        Map<Pair<User>, Integer> state = new HashMap<>();
+        Set<User> hosts = new HashSet<>();
+        swissTournamentProcess.getPlayerResults().forEach(result -> {
+            if (!hosts.contains(result.getCurrentOpponent())) {
+                state.put(new Pair<>(result.getId().getUser(), result.getCurrentOpponent()), result.getCurrentScore());
+                hosts.add(result.getId().getUser());
+            }
+        });
+        return state;
     }
 
 }

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import tabletop.domain.game.wininformation.BasicWinInformation;
+import tabletop.domain.game.wininformation.SingleWinInformation;
 import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentFinalResult;
@@ -11,10 +12,7 @@ import tabletop.domain.match.tournament.TournamentType;
 import tabletop.domain.user.User;
 import tabletop.services.TournamentService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/tournament")
@@ -81,6 +79,23 @@ public class TournamentController {
         } else {
             return tournamentService.getInitialRound(tournament);
         }
+    }
+
+    @RequestMapping(value = "/winner", method = RequestMethod.POST, consumes = "application/json")
+    public void setWinner(@RequestBody SingleWinInformation singleWinInformation) {
+        Tournament tournament = tournamentService.getTournamentById(singleWinInformation.getTournamentId());
+        if (tournament != null) {
+            tournamentService.setWinner(tournament, singleWinInformation.getWinner());
+        }
+    }
+
+    @RequestMapping(value = "/state/{tournamentid}", method = RequestMethod.GET)
+    public Map<Pair<User>, Integer> getState(@PathVariable("tournamentid") Long tournamentid) {
+        Tournament tournament = tournamentService.getTournamentById(tournamentid);
+        if (tournament != null) {
+            return tournamentService.getCurentState(tournament);
+        }
+        return null;
     }
 
     @RequestMapping(value = "/next/{tournamentid}", method = RequestMethod.POST, consumes = "application/json")

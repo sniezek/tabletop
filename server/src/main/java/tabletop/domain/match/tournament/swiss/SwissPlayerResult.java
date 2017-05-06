@@ -23,6 +23,11 @@ public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
     private List<User> usersPlayed;
     @NotNull
     private Integer result = 0;
+    @ManyToOne
+    @JoinColumn(name = "current_opponent_id")
+    private User currentOpponent;
+    @NotNull
+    private Integer currentScore;
 
     public SwissResultId getId() {
         return id;
@@ -50,6 +55,22 @@ public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
 
     public void win() {
         result++;
+    }
+
+    public User getCurrentOpponent() {
+        return currentOpponent;
+    }
+
+    public void setCurrentOpponent(User currentOpponent) {
+        this.currentOpponent = currentOpponent;
+    }
+
+    public Integer getCurrentScore() {
+        return currentScore;
+    }
+
+    public void setCurrentScore(Integer currentScore) {
+        this.currentScore = currentScore;
     }
 
     @Override

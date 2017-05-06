@@ -14,6 +14,7 @@ import tabletop.repositories.match.tournament.TournamentRepository;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TournamentService {
@@ -64,6 +65,19 @@ public class TournamentService {
     public List<Pair<User>> getInitialRound(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getInitialPairs(((SwissTournamentProcess) tournament.getTournamentProcess()));
+        }
+        return null;
+    }
+
+    public void setWinner(Tournament tournament, User winner) {
+        if (tournament.getType() == TournamentType.SWISS) {
+            swissTournamentService.setWinner(((SwissTournamentProcess) tournament.getTournamentProcess()), winner);
+        }
+    }
+
+    public Map<Pair<User>, Integer> getCurentState(Tournament tournament) {
+        if (tournament.getType() == TournamentType.SWISS) {
+            return swissTournamentService.getCurentState(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }
         return null;
     }
