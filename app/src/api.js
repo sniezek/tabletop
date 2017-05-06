@@ -41,7 +41,7 @@ class Api {
             credentials: "include"
         });
     }
-  
+
     register({ username, password, email }) {
         const body = JSON.stringify({
             username,
@@ -58,6 +58,13 @@ class Api {
             credentials: "include",
             headers,
             body
+        });
+    }
+
+    game(name) {
+        return fetch(`${API_SERVER}/games/${name}`, {
+            method: "GET",
+            credentials: "include"
         });
     }
 }

@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = state => ({
-    gamesList: state.games
+    gamesList: state.games.gamesList
 });
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
@@ -29,13 +29,8 @@ class GamesContainer extends PureComponent {
     }
 
     getGames() {
-    /*        this.props.getGames(({ ok }) => {
-     console.log("getGames w GamesContainer");
-     if (!ok) {
-     console.log("Getting list of games failed");
-     }
-     });*/
     }
+
     buildHrefLink(name) {
         return `/games/${name}`;
     }

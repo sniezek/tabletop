@@ -1,10 +1,13 @@
 import React from "react";
 import GameDetailsContainer from "../containers/GameDetailsContainer.jsx";
-import GamesHeader from "./GamesHeader";
+import GameDetailsHeader from "./GameDetailsHeader";
 import "./Games.scss";
 
-export const GameDetailsView = () => (
-    <div>To be implemented...</div>
+export const GameDetailsView = name => (
+    <div className="games">
+        <GameDetailsHeader />
+        <GameDetailsContainer name={name} />
+    </div>
 );
 
 export default GameDetailsView;

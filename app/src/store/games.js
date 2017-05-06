@@ -2,6 +2,7 @@
 import Api from "../api";
 
 export const GET_GAMES = "GET_GAMES";
+export const GET_GAME_DETAILS = "GET_GAME_DETAILS";
 
 export const getGames = dispatch =>
     Api.games().then((response) => {
@@ -17,13 +18,33 @@ export const getGames = dispatch =>
         }
     });
 
+export const getGameDetails = (dispatch, name) =>
+  Api.game("Chess").then((response) => {
+      if (response.ok) {
+          response.json().then((game) => {
+              dispatch({
+                  type: GET_GAME_DETAILS,
+                  payload: {
+                      game
+                  }
+              });
+          });
+      }
+  });
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function gamesReducer(state = [], { type, payload }) {
+export default function gamesReducer(state = { gamesList: [], game: { name: "" } }, { type, payload }) {
     if (type === GET_GAMES) {
-        state = payload.gamesList;
+        state = {
+            gamesList: payload.gamesList
+        };
+    } else if (type === GET_GAME_DETAILS) {
+        state = {
+            game: payload.game
+        };
     }
     return state;
 }

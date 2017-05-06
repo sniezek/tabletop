@@ -1,12 +1,12 @@
 import React from "react";
 import "../../Events/components/EventsHeader.scss";
 
-export const GamesHeader = () => (
+export const GameDetailsHeader = () => (
     <div className="events-header mdl-shadow--2dp">
         <h2 className="events-header__title">
-            Available games
+            Chess
         </h2>
     </div>
 );
 
-export default GamesHeader;
+export default GameDetailsHeader;

@@ -5,7 +5,7 @@ import "./Games.scss";
 
 export const GamesView = () => (
     <div className="games">
-        <GamesHeader />
+        <GamesHeader title="Available games" />
         <GamesContainer />
     </div>
 );
