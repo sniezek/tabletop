@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { Marker, InfoWindow } from "react-google-maps";
+import { Marker } from "react-google-maps";
 import Spinner from "react-mdl/lib/Spinner";
-import Map from "../../../components/Map";
+import Map from "../../../../components/Map";
 import EventsMapPopup from "./EventsMapPopup.jsx";
 import "./EventsMap.scss";
 

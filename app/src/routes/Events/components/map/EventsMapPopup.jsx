@@ -16,14 +16,10 @@ const defaultProps = {
 
 const enhance = pure;
 
-const options = {
-    pixelOffset: new google.maps.Size(0, -30)
-};
-
 const EventsMapPopup = ({ event: { location } }) => (
     <InfoWindow
         position={location}
-        options={options}
+        options={{ pixelOffset: new google.maps.Size(0, -30) }}
     >
         <div>Example</div>
     </InfoWindow>

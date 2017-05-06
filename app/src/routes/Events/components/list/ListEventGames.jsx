@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import Reveal from "../../../components/Reveal";
+import Reveal from "../../../../components/Reveal";
 
 const propTypes = {
     tournaments: PropTypes.array,

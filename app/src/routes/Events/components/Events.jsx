@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import EventsHeader from "./EventsHeader.jsx";
-import EventsMap from "./EventsMap.jsx";
-import EventsList from "./EventsList.jsx";
-import EventsFilters from "./EventsFilters.jsx";
+import EventsMap from "./map/EventsMap.jsx";
+import EventsList from "./list/EventsList.jsx";
+import EventsFilters from "./filters/EventsFilters.jsx";
 import "./Events.scss";
 
 const propTypes = {
