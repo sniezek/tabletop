@@ -83,7 +83,15 @@ class RegisterContainer extends PureComponent {
         this.setState({
             loading: true
         });
-        if (password===passwordConfirm) {
+
+        if (username.indexOf(' ') >= 0) {
+            alert(" Your username can`t contain white spaces ");
+            this.setState({
+                password: "",
+                passwordConfirm: "",
+                loading: false
+            });
+        } else if (password===passwordConfirm) {
           this.props.register({
               username,
               password,
@@ -99,11 +107,11 @@ class RegisterContainer extends PureComponent {
           });
         } else {
             alert(" Passwords are not the same ");
-            this.setState({
-            password: "",
-            passwordConfirm: "",
-            loading: false
-          });
+                this.setState({
+                password: "",
+                passwordConfirm: "",
+                loading: false
+            });
         }
     }
 
