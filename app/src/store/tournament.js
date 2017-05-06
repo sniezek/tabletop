@@ -86,14 +86,11 @@ export const nextRound = ( id , callback) => dispatch =>
 
 export const setWinner = (id, winner , callback) => dispatch =>
   Api.setWinner( id, winner ).then((response) => {
-      console.log("setWinner1")
       if (response.ok) {
-        console.log("setWinner2")
           dispatch({
               type: SET_WINNER
           });
       }
-    console.log("setWinner3")
       callback(response);
   });
 

@@ -16,14 +16,23 @@ const defaultProps = {};
 class Match extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      radiosDisabled: this.props.winner != "0",
-      hostCheckboxValue: this.props.winner == "1" ? 1 : 0,
-      guestCheckboxValue: this.props.winner == "-1" ? 1 : 0
-    };
     this.winCallback = this.winCallback.bind(this)
     this.winNokCallback = this.winNokCallback.bind(this)
     this.win = this.win.bind(this)
+    this.setCheckboxes = this.setCheckboxes.bind(this)
+    this.setCheckboxes(this.props);
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setCheckboxes(nextProps)
+  }
+
+  setCheckboxes(props) {
+    this.state = {
+      radiosDisabled: props.winner != "0",
+      hostCheckboxValue: props.winner == "1" ? 1 : 0,
+      guestCheckboxValue: props.winner == "-1" ? 1 : 0
+    };
   }
 
   win = (winner) => {
