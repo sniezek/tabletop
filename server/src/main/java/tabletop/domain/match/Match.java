@@ -5,10 +5,7 @@ import tabletop.domain.IdComparableEntity;
 import tabletop.domain.game.Game;
 import tabletop.domain.user.User;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
@@ -34,10 +31,6 @@ public abstract class Match extends IdComparableEntity {
     private Integer maxPlayers;
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
-
-    public Long getId() {
-        return id;
-    }
 
     public Date getStartDate() {
         return startDate;

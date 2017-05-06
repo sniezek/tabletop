@@ -10,7 +10,7 @@ import tabletop.domain.match.tournament.TournamentType;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
-import tabletop.repositories.TournamentRepository;
+import tabletop.repositories.match.tournament.TournamentRepository;
 
 import java.util.Collection;
 import java.util.List;
@@ -62,14 +62,14 @@ public class TournamentService {
     }
 
     public List<Pair<User>> getInitialRound(Tournament tournament) {
-        if (tournament.getTournamentType() == TournamentType.SWISS) {
+        if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getInitialPairs(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }
         return null;
     }
 
     public List<Pair<User>> getNextRound(Tournament tournament, Collection<User> winners) {
-        if (tournament.getTournamentType() == TournamentType.SWISS) {
+        if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getNextPair(((SwissTournamentProcess) tournament.getTournamentProcess()), winners);
         }
         return null;
