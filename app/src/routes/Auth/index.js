@@ -1,6 +1,8 @@
 const LoginRoute = store => ({
     path: "login",
     onEnter: (nextState, replace) => {
+        if (store.getState().user)
+            console.log(store.getState().user.name);
         if (store.getState().user) {
             replace({
                 pathname: "/"
