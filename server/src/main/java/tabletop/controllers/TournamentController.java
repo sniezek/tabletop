@@ -90,7 +90,7 @@ public class TournamentController {
         if (tournament == null || winInformation == null) {
             return null;
         } else {
-            Collection<Pair<User>> nextRound = tournamentService.getNextRound(tournament, winInformation.getWinners());
+            Collection<Pair<User>> nextRound = tournamentService.getNextRound(tournament);
             tournamentService.addTournament(tournament);
             return nextRound;
         }

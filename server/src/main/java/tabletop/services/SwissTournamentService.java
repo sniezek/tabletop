@@ -2,6 +2,7 @@ package tabletop.services;
 
 import org.springframework.stereotype.Service;
 import tabletop.domain.match.tournament.Pair;
+import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
@@ -9,9 +10,7 @@ import tabletop.domain.user.User;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * Created by Rafal on 2017-05-03.
- */
+
 @Service
 public class SwissTournamentService {
 
@@ -38,10 +37,12 @@ public class SwissTournamentService {
         return pairs;
     }
 
-    public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess, Collection<User> winners) {
-        for (User winner : winners) {
-            swissTournamentProcess.getResultByUser(winner).ifPresent(SwissPlayerResult::win);
-        }
+    public void setWinner(SwissTournamentProcess swissTournamentProcess, User winner) {
+        swissTournamentProcess.getResultByUser(winner).ifPresent(SwissPlayerResult::win);
+    }
+
+    public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
+
         Collections.shuffle(swissTournamentProcess.getUsers(), new Random(System.nanoTime()));
         List<User> orderedPlayers = swissTournamentProcess.getPlayerResults().stream()
                 .filter(e -> e.getResult() != 0)
@@ -77,4 +78,5 @@ public class SwissTournamentService {
 
         return pairs;
     }
+
 }

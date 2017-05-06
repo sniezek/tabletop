@@ -68,9 +68,9 @@ public class TournamentService {
         return null;
     }
 
-    public List<Pair<User>> getNextRound(Tournament tournament, Collection<User> winners) {
+    public List<Pair<User>> getNextRound(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
-            return swissTournamentService.getNextPair(((SwissTournamentProcess) tournament.getTournamentProcess()), winners);
+            return swissTournamentService.getNextPair(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }
         return null;
     }
