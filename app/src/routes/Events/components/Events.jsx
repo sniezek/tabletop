@@ -13,7 +13,9 @@ const propTypes = {
     toggleFilters: PropTypes.func,
     displayFilters: PropTypes.bool,
     events: PropTypes.array,
-    loggedIn: PropTypes.bool
+    loggedIn: PropTypes.bool,
+    lat: PropTypes.number,
+    lng: PropTypes.number
 };
 
 const defaultProps = {
@@ -22,12 +24,14 @@ const defaultProps = {
     toggleFilters: () => {},
     displayFilters: false,
     events: [],
-    loggedIn: false
+    loggedIn: false,
+    lat: undefined,
+    lng: undefined
 };
 
 const enhance = pure;
 
-const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn }) => (
+const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng }) => (
     <div className="events">
         <EventsHeader
             mapView={mapView}
@@ -43,6 +47,8 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
         { mapView ? (
             <EventsMapContainer
                 events={events}
+                lat={lat}
+                lng={lng}
             />
         ) : (
             <EventsList

@@ -9,14 +9,20 @@ const propTypes = {
     mapView: PropTypes.bool,
     toggleMapView: PropTypes.func,
     user: PropTypes.object,
-    loadEvents: PropTypes.func
+    loadEvents: PropTypes.func,
+    lat: PropTypes.number,
+    lng: PropTypes.number,
+    events: PropTypes.array
 };
 
 const defaultProps = {
     mapView: true,
     user: null,
     toggleMapView: () => {},
-    loadEvents: () => {}
+    loadEvents: () => {},
+    lat: undefined,
+    lng: undefined,
+    events: []
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -47,6 +53,15 @@ class EventsContainer extends PureComponent {
         this.props.loadEvents(() => {});
     }
 
+    componentWillReceiveProps({ lat, lng }) {
+        const positionDefined = lat !== null && lng !== null;
+        const positionChanged = this.props.lat !== lat || this.props.lng !== lng;
+
+        if (positionDefined && positionChanged) {
+            this.props.toggleMapView(true);
+        }
+    }
+
     toggleFilters(displayFilters) {
         this.setState({
             displayFilters
@@ -55,7 +70,7 @@ class EventsContainer extends PureComponent {
 
     render() {
         const { displayFilters } = this.state;
-        const { mapView, toggleMapView, user, events } = this.props;
+        const { mapView, toggleMapView, user, events, lat, lng } = this.props;
         const loggedIn = user !== null;
 
         return (
@@ -66,6 +81,8 @@ class EventsContainer extends PureComponent {
                 displayFilters={displayFilters}
                 loggedIn={loggedIn}
                 events={events}
+                lat={lat !== undefined ? parseInt(lat, 10) : lat}
+                lng={lng !== undefined ? parseInt(lng, 10) : lng}
             />
         );
     }

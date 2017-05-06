@@ -3,11 +3,15 @@ import PropTypes from "prop-types";
 import EventsMap from "../components/map/EventsMap.jsx";
 
 const propTypes = {
-    events: PropTypes.array
+    events: PropTypes.array,
+    lat: PropTypes.number,
+    lng: PropTypes.number
 };
 
 const defaultProps = {
-    events: []
+    events: [],
+    lng: undefined,
+    lat: undefined
 };
 
 class EventsMapContainer extends PureComponent {
@@ -36,7 +40,7 @@ class EventsMapContainer extends PureComponent {
     }
 
     render() {
-        const { events } = this.props;
+        const { events, lat, lng } = this.props;
         const { currentEvent } = this.state;
 
         return (
@@ -45,6 +49,8 @@ class EventsMapContainer extends PureComponent {
                 currentEvent={currentEvent}
                 showPopup={this.showPopup}
                 hidePopup={this.hidePopup}
+                lat={lat}
+                lng={lng}
             />
         );
     }

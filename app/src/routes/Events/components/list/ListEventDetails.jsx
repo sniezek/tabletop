@@ -18,6 +18,8 @@ const propTypes = {
 
 const enhance = pure;
 
+const pathname = "/events";
+
 const ListEventTime = ({ id, name, location, players }) => (
     <div className="list-event__details">
         <h4 className="list-event__name">
@@ -28,19 +30,17 @@ const ListEventTime = ({ id, name, location, players }) => (
                 {name}
             </Link>
         </h4>
-        <a
-            href={`https://www.google.com/maps/preview/@${location.lat},${location.lng},14z`}
+        <Link
+            to={{ pathname, query: { lat: location.lat, lng: location.lng } }}
             className="list-event__location"
-            rel="noopener noreferrer"
-            target="_blank"
-            title="Open in Google Maps"
+            title="Show on map"
         >
             <Icon
                 name="room"
                 className="list-event__location-icon"
             />
             {location.address ? `${location.name} – ${location.address}` : location.name}
-        </a>
+        </Link>
         <p className="list-event__count">{players} Players going</p>
     </div>
 );

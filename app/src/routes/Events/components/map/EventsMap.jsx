@@ -11,14 +11,18 @@ const propTypes = {
     events: PropTypes.array,
     currentEvent: PropTypes.object,
     showPopup: PropTypes.func,
-    hidePopup: PropTypes.func
+    hidePopup: PropTypes.func,
+    lat: PropTypes.number,
+    lng: PropTypes.number
 };
 
 const defaultProps = {
     events: [],
     currentEvent: null,
     showPopup: () => {},
-    hidePopup: () => {}
+    hidePopup: () => {},
+    lat: undefined,
+    lng: undefined
 };
 
 const enhance = pure;
@@ -37,11 +41,20 @@ const loadingElement = (
     </div>
 );
 
-const EventsMap = ({ events, currentEvent, showPopup, hidePopup }) => (
+const getMapProps = (lat, lng) => (lat !== undefined && lng !== undefined ? {
+    defaultZoom: 14,
+    defaultCenter: {
+        lat,
+        lng
+    }
+} : {});
+
+const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng }) => (
     <Map
         containerElement={containerElement}
         loadingElement={loadingElement}
         mapElement={mapElement}
+        {...getMapProps(lat, lng)}
     >
         { events.map(event => (
             <MapMarker
