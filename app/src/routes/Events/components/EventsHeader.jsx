@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
+import PageHeader from "../../../components/PageHeader";
 import EventsHeaderOptions from "./EventsHeaderOptions.jsx";
-import "./EventsHeader.scss";
 
 const propTypes = {
     mapView: PropTypes.bool,
@@ -23,18 +23,17 @@ const defaultProps = {
 const enhance = pure;
 
 const EventsHeader = ({ mapView, toggleMapView, toggleFilters, count, loggedIn }) => (
-    <div className="events-header mdl-shadow--2dp">
-        <h2 className="events-header__title">
-            Browse events
-            <span className="events-header__count">({count})</span>
-        </h2>
+    <PageHeader
+        count={count}
+        title="Browse events"
+    >
         <EventsHeaderOptions
             mapView={mapView}
             toggleMapView={toggleMapView}
             toggleFilters={toggleFilters}
             loggedIn={loggedIn}
         />
-    </div>
+    </PageHeader>
 );
 
 EventsHeader.propTypes = propTypes;
