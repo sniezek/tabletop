@@ -20,7 +20,6 @@ export const createRoutes = store => ({
         RemindRoute(store),
         EventsRoute(store),
         TournamentRoute(store),
-        TournamentResultsRoute(store),
         GamesRoute(store)
 
     ]

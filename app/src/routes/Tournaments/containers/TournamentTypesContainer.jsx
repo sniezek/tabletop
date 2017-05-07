@@ -64,7 +64,7 @@ class TournamentTypesContainer extends Component {
                                 {/* <a href="#" className="mdl-button">Details</a>    */}
 
                                 {/* 'Start tournament' is a temporary button for demo*/}
-                                <a href="/tournament-results" className="mdl-button">Start tournament</a>
+                                <a href="#" className="mdl-button">Start tournament</a>
                             </div>
                         </div>
 

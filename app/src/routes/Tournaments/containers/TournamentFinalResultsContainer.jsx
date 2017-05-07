@@ -32,15 +32,20 @@ const mapStateToProps = (state) => {
         tournamentId: 1
     };
 };
-
-const enhance = connect(mapStateToProps, mapDispatchToProps);
+const initialState = {};
+// const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 class TournamentFinalResultsContainer extends Component {
 
     constructor(props) {
         super(props);
-        this.state = null;
+        this.state = Object.assign({}, initialState);
+
         this.getFinalResults = this.getFinalResults.bind(this);
+    }
+
+    componentWillMount() {
+        this.getFinalResults();
     }
 
     getFinalResults() {
@@ -56,9 +61,9 @@ class TournamentFinalResultsContainer extends Component {
         return (
             <div>
                 <h1>Tournament Final Results</h1>
-                <ol>
-                    {this.props.finalResults.map(result => <li>{result.id} {result.user.name}</li>)}
-                </ol>
+                <ul><h5>
+                    {this.props.finalResults.map(result => <li key={result.id}>{result.place} {result.user.username} {result.points}</li>)}
+                </h5></ul>
             </div>
         );
     }
@@ -68,4 +73,4 @@ class TournamentFinalResultsContainer extends Component {
 TournamentFinalResultsContainer.propTypes = propTypes;
 TournamentFinalResultsContainer.defaultProps = defaultProps;
 
-export default enhance(TournamentFinalResultsContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(TournamentFinalResultsContainer);

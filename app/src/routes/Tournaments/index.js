@@ -8,15 +8,6 @@ const TournamentRoute = store => ({
     }
 });
 
-const TournamentResultsRoute = store => ({
-    path: "/tournament-results",
-    getComponent(nextState, cb) {
-        require.ensure([], (require) => {
-            const LoginView = require("./components/TournamentResultsView").default;
-            cb(null, LoginView);
-        }, "tournament-results");
-    }
-});
 
-export { TournamentRoute, TournamentResultsRoute };
+export { TournamentRoute };
 

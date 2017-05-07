@@ -113,6 +113,7 @@ public class TournamentController {
 
     @RequestMapping(value = "/finish/{tournamentid}", method = RequestMethod.POST)
     public void setFinalResults(@PathVariable("tournamentid") Long tournamentid) {
+        LOGGER.debug("finish tournament with: {}", tournamentid);
         Tournament tournament  = tournamentService.getTournamentById(tournamentid);
         if (tournament != null && tournament.isFinished()){
             tournamentService.setFinalResults(tournament);

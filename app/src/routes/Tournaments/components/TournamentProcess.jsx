@@ -38,8 +38,8 @@ class TournamentProcess extends Component {
     };
 
     finishTournament = () => {
-        //this.props.finishTournament();
-      this.setState({tournamentFinished:true});
+        this.props.finishTournament();
+        this.setState({tournamentFinished:true});
     };
 
     toggleFinalResults = () => {

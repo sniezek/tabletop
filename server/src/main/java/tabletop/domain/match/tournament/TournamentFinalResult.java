@@ -1,5 +1,6 @@
 package tabletop.domain.match.tournament;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import tabletop.domain.user.User;
 
 import javax.persistence.*;
@@ -25,6 +26,7 @@ public class TournamentFinalResult {
 
     @ManyToOne
     @JoinColumn(name = "tournament")
+    @JsonIgnore
     private Tournament tournament;
 
     @Column
