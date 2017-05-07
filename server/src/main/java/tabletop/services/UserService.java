@@ -1,14 +1,33 @@
 package tabletop.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import tabletop.domain.user.User;
+import tabletop.repositories.UserRepository;
 
-import java.security.Principal;
 import java.util.Optional;
 
-public interface UserService {
-    User createUser(User user);
+@Service
+public class UserService {
+    @Autowired
+    private UserRepository userRepository;
 
-    Optional<User> getUserByUsername(String username);
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-    Optional<User> getUserFromPrincipal(Principal principal);
+    public Optional<User> getUserByUsername(String username) {
+        return Optional.ofNullable(userRepository.findByUsername(username));
+    }
+
+    public Optional<User> getAuthenticatedUser() {
+        return getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    public User addUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        return userRepository.save(user);
+    }
 }

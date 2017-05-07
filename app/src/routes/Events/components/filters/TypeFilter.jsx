@@ -1,49 +1,53 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import Checkbox from "react-mdl/lib/Checkbox";
+import Radio from "react-mdl/lib/Radio";
+import RadioGroup from "react-mdl/lib/RadioGroup";
 import EventsFilter from "./EventsFilter.jsx";
 import "./TypeFilter.scss";
 
 const propTypes = {
     setActive: PropTypes.func,
     active: PropTypes.bool,
-    sparing: PropTypes.bool,
-    tournament: PropTypes.bool,
-    toggleSparing: PropTypes.func,
-    toggleTournament: PropTypes.func
+    setType: PropTypes.func,
+    type: PropTypes.string
 };
 
 const defaultProps = {
     setActive: () => {},
     active: false,
-    sparing: true,
-    tournament: true,
-    toggleSparing: () => {},
-    toggleTournament: () => {}
+    type: "sparring",
+    setType: () => {}
 };
 
 const enhance = pure;
 
-const TypeFilter = ({ active, setActive, sparing, tournament, toggleSparing, toggleTournament }) => (
+const TypeFilter = ({ active, setActive, type, setType }) => (
     <EventsFilter
         name="Type"
         id="type"
         active={active}
         setActive={setActive}
     >
-        <Checkbox
-            label="Sparing"
-            ripple
-            checked={sparing}
-            onChange={toggleSparing}
-        />
-        <Checkbox
-            label="Tournament"
-            ripple
-            checked={tournament}
-            onChange={toggleTournament}
-        />
+        <RadioGroup
+            name="type"
+            value={type}
+            onChange={setType}
+            className="type-filter__group"
+        >
+            <Radio
+                value="sparring"
+                ripple
+            >
+                Sparing
+            </Radio>
+            <Radio
+                value="tournament"
+                ripple
+            >
+                Tournament
+            </Radio>
+        </RadioGroup>
     </EventsFilter>
 );
 

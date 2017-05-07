@@ -4,17 +4,17 @@ import javax.persistence.Entity;
 
 @Entity
 public class Sparring extends Match {
-    private String customGameName;
+    private String gameName;
 
     public Sparring() {
     }
 
     @Override
     public String getGameName() {
-        return isRegisteredGame() ? getGame().getName() : customGameName;
+        return isRegisteredGame() ? getGame().getName() : gameName;
     }
 
-    public void setCustomGameName(String customGameName) {
-        this.customGameName = customGameName;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 }

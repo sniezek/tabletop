@@ -1,4 +1,4 @@
-.events-header {
+.page-header {
     padding: 16px;
     display: flex;
     justify-content: space-between;
@@ -10,12 +10,13 @@
         margin-left: 8px;
         font-size: 20px;
         color: #999;
+        vertical-align: top;
     }
 
     &__title {
         margin: 0;
         font-size: 24px;
-        line-height: 37px;
+        line-height: 36px;
         font-weight: 300;
     }
 }

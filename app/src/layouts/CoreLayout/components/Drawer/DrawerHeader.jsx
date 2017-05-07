@@ -7,7 +7,10 @@ import DrawerLogin from "./DrawerLogin.jsx";
 import "./DrawerHeader.scss";
 
 const propTypes = {
-    user: PropTypes.object,
+    user: PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        email: PropTypes.string.isRequired
+    }),
     actions: PropTypes.array
 };
 
@@ -24,7 +27,7 @@ const DrawerHeader = ({ user, actions }) => (
         { (user && (
             <DrawerProfile
                 name={user.name}
-                avatar={user.avatar}
+                email={user.email}
             />
         )) || (
             <DrawerLogin

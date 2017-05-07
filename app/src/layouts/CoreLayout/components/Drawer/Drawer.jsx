@@ -8,7 +8,7 @@ import "./Drawer.scss";
 const propTypes = {
     user: PropTypes.shape({
         name: PropTypes.string.isRequired,
-        avatar: PropTypes.string.isRequired
+        email: PropTypes.string.isRequired
     }),
     links: PropTypes.array,
     actions: PropTypes.array

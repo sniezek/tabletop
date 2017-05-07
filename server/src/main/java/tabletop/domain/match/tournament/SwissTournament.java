@@ -77,27 +77,4 @@ public class SwissTournament {
         return  pairs;
     }
 
-    public static void main(String[] args) {
-        LinkedList<User> users = new LinkedList<>();
-        for (int i = 0; i < 17; i++) {
-            User user = new User();
-            user.setUsername(String.valueOf(i));
-            users.add(user);
-        }
-        SwissTournament tournament = new SwissTournament(users, false);
-        List<Pair<User>> pairs = tournament.getInitialPairs();
-        List<User> winner = new LinkedList<>();
-        for (Pair p : pairs) {
-            winner.add((User) p.getA());
-            System.out.println(p);
-        }
-        System.out.println();
-        pairs = tournament.getNextPair(winner);
-        for (Pair p : pairs) {
-            winner.add((User) p.getA());
-            System.out.println(p);
-        }
-    }
-
-
 }
