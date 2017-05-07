@@ -34,16 +34,27 @@ class EditContainer extends PureComponent {
             loading: false
         };
 
-        // this.editMail = this.editMail.bind(this);
-        // this.editPass = this.editPass.bind(this);
+        this.editMail = this.editMail.bind(this);
+        this.editPass = this.editPass.bind(this);
         // this.redirect = this.redirect.bind(this);
+    }
+
+    editMail() {
+        console.log("CHUJ");
+    }
+
+    editPass() {
+        console.log("CHUJ");
     }
 
     render() {
         const { loading, password } = this.state;
 
         return (
-            <EditForm/>
+            <EditForm
+                editMail={editMail}
+                editPass={editPass}
+            />
             // <CardForm
             //     title="Log in"
             //     loading={loading}

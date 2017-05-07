@@ -7,41 +7,51 @@ import pure from "recompose/pure";
 
 const propTypes = {
     loading: PropTypes.bool,
+    email: PropTypes.string,
     password: PropTypes.string,
-    edit: PropTypes.func,
-    setPassword: PropTypes.func
+    editMail: PropTypes.func,
+    editPass: PropTypes.func,
 };
 
 const defaultProps = {
     loading: false,
     password: "",
-    edit: () => {},
-    setPassword: () => {}
+    editMail: () => {},
+    editPass: () => {}
 };
 
 const enhance = pure;
 
-const bindActions = (edit) => [{
-    label: "Edit password",
-    colored: true,
-    onClick: edit
+const bindActions = (editMail, editPass) => [{
+    label: "Change email",
+    onClick: editMail
+}, {
+    label: "Change password",
+    onclick: editPass
 }];
 
-const EditForm = ({ loading, password, edit, setPassword }) => (
+const EditForm = ({ loading, password, email, editMail, editPass }) => (
     <CardForm
         title="Edit"
         loading={loading}
-        actions={bindActions(edit)}
+        actions={bindActions(editMail, editPass)}
         className="editform"
     >
         <div>
             <div>
                 <IconTextfield
                     icon="lock"
-                    label="Password"
+                    label="New password"
                     type="password"
                     value={password}
-                    onChange={setPassword}
+                    onChange={editPass}
+                />
+                <IconTextfield
+                    icon="mail"
+                    label="New Email"
+                    type="email"
+                    value={email}
+                    onChange={editMail}
                 />
             </div>
         </div>
