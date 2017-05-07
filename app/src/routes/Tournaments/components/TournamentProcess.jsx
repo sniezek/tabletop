@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import Match from "./Match";
 import { Link } from "react-router";
@@ -24,13 +24,24 @@ const propTypes = {
 const defaultProps = {
 };
 
-class TournamentProcess extends Component {
+class TournamentProcess extends PureComponent {
     constructor(props) {
         super(props);
         this.nextRound = this.nextRound.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
         this.toggleFinalResults = this.toggleFinalResults.bind(this);
-        this.state = {tournamentFinished: false}
+        this.updateNextRoundButton = this.updateNextRoundButton.bind(this);
+        this.state = {
+          tournamentFinished: false,
+          matchesFinished: this.props.pairs.filter(pair => pair.winner != "0").length
+        }
+    }
+
+    componentWillReceiveProps(nextProps){
+      this.state = {
+        tournamentFinished: this.state.tournamentFinished,
+        matchesFinished: nextProps.pairs.filter(pair => pair.winner != "0").length
+      }
     }
 
     nextRound = () => {
@@ -38,14 +49,22 @@ class TournamentProcess extends Component {
     };
 
     finishTournament = () => {
-        //this.props.finishTournament();
-      this.setState({tournamentFinished:true});
+      this.setState({
+        tournamentFinished:true,
+        matchesFinished: this.state.matchesFinished
+      });
     };
 
     toggleFinalResults = () => {
         this.props.toggleFinalResults();
     };
 
+    updateNextRoundButton = () => {
+      this.setState({
+        tournamentFinished: this.state.tournamentFinished,
+        matchesFinished: this.state.matchesFinished+1
+      })
+    };
 
     render() {
         return (
@@ -66,11 +85,15 @@ class TournamentProcess extends Component {
                                     winner={pair.winner}
                                     setWinner={this.props.setWinner}
                                     tournamentId={this.props.tournamentId}
+                                    updateNextRoundButton={this.updateNextRoundButton}
                                 />
                             </li>)}
                         </ol>
                         <div>
-                            <Button colored onClick={() => this.nextRound()}>Next round</Button>
+                            <Button
+                              colored
+                              onClick={() => this.nextRound()}
+                              disabled={this.state.matchesFinished!=this.props.pairs.length}>Next round</Button>
                         </div>
                         <div>
                             <Button colored onClick={() => this.finishTournament()}>Finish tournament</Button>
