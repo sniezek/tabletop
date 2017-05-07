@@ -1,12 +1,14 @@
 import React from "react";
 import "./Edit.scss"
+import pure from "recompose/pure";
+import PageHeader from "../../../components/PageHeader";
+
+const enhance = pure;
 
 export const EditHeader = () => (
-  <div className="edit-header mdl-shadow--2dp">
-    <h2 className="edit-header__title">
-      Edit account
-    </h2>
-  </div>
+    <PageHeader
+        title="Edit account"
+    />
 );
 
-export default EditHeader;
+export default enhance(EditHeader);

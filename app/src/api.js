@@ -69,6 +69,10 @@ class Api {
             credentials: "include"
         });
     }
+
+    edit() {
+        return fetch();
+    }
 }
 
 export default new Api();
