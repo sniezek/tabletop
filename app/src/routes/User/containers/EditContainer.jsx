@@ -46,7 +46,7 @@ class EditContainer extends PureComponent {
 
     setNewPass({ target }) {
         this.setState({
-            newPass: target.value
+            newPassword: target.value
         });
     }
 
