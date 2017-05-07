@@ -46,7 +46,7 @@ VALUES (1);
 INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
 VALUES (0, true, 2, null);
 INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
-VALUES (1, false, 4, null);
+VALUES (1, false, 2, null);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (1, 1);

@@ -105,9 +105,7 @@ public class TournamentService {
                 tournamentFinalResult.setTournament(tournament);
                 tournamentFinalResult.setUser(swissPlayerResult.getId().getUser());
                 tournamentFinalResult.setPoints(swissPlayerResult.getCurrentScore());
-//                tournamentFinalResult.setPoints(0);
                 tournamentFinalResult.setPlace(swissPlayerResult.getResult());
-//                tournamentFinalResult.setPlace(1);
                 tournamentFinalResultRepository.save(tournamentFinalResult);
             }
         }
