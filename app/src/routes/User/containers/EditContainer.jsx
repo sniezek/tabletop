@@ -2,11 +2,14 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editMail, editPass } from "../../../store/edit";
+import EditForm from "../components/EditForm"
+import CardForm from "../../../components/CardForm/CardForm"
 
 const propTypes = {
-    edit: PropTypes.func.isRequired,
+    editMail: PropTypes.func.isRequired,
+    editPass: PropTypes.func.isRequired,
     user: PropTypes.object,
-    router: PropTypes.object.isRequired
+    //router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -14,8 +17,8 @@ const defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    editMail: editMail(dispatch),
-    editPass: editPass(dispatch)
+    editMail,
+    editPass
 });
 
 const mapStateToProps = ({ user }) => ({ user });
@@ -31,21 +34,28 @@ class EditContainer extends PureComponent {
             loading: false
         };
 
-        this.editMail = this.editMail.bind(this);
-        this.setPassword = this.setPassword.bind(this);
-        this.redirect = this.redirect.bind(this);
+        // this.editMail = this.editMail.bind(this);
+        // this.editPass = this.editPass.bind(this);
+        // this.redirect = this.redirect.bind(this);
     }
 
     render() {
         const { loading, password } = this.state;
 
         return (
-            <Edit
+            //<EditForm/>
+            <CardForm
+                title="Log in"
                 loading={loading}
-                password={password}
-                edit={this.edit}
-                setPassword={this.setPassword}
-            />
+                actions={}
+                className="login"
+            >
+            // <Edit
+            //     loading={loading}
+            //     password={password}
+            //     edit={this.edit}
+            //     setPassword={this.setPassword}
+            // />
         );
     }
 }
