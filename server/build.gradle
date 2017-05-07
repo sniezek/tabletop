@@ -24,6 +24,8 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('com.querydsl:querydsl-apt:4.1.4:jpa')
+	compile('com.querydsl:querydsl-jpa:4.1.4')
 	compile('com.h2database:h2')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
@@ -31,4 +33,25 @@ dependencies {
 	compile('com.allanditzel:spring-security-csrf-token-filter:1.1')
 	compile('com.google.guava:guava:21.0')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+compileJava {
+	options.compilerArgs << "-s"
+	options.compilerArgs << "$projectDir/src/meta/java"
+
+	doFirst {
+		file(new File(projectDir, "src/meta/java")).mkdirs()
+	}
+}
+
+clean.doLast {
+	file(new File(projectDir, "src/meta")).deleteDir()
+}
+
+sourceSets {
+	generated {
+		java {
+			srcDir "$projectDir/src/meta/java"
+		}
+	}
 }

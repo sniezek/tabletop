@@ -84,19 +84,35 @@ class RegisterContainer extends PureComponent {
             loading: true
         });
 
-        this.props.register({
-            username,
-            password,
-            email
-        }, ({ ok }) => {
-            if (!ok) {
+        if (username.indexOf(' ') >= 0) {
+            alert(" Your username can`t contain white spaces ");
+            this.setState({
+                password: "",
+                passwordConfirm: "",
+                loading: false
+            });
+        } else if (password===passwordConfirm) {
+          this.props.register({
+              username,
+              password,
+              email
+          }, ({ ok }) => {
+              if (!ok) {
+                  this.setState({
+                      password: "",
+                      passwordConfirm: "",
+                      loading: false
+                  });
+              }
+          });
+        } else {
+            alert(" Passwords are not the same ");
                 this.setState({
-                    password: "",
-                    passwordConfirm: "",
-                    loading: false
-                });
-            }
-        });
+                password: "",
+                passwordConfirm: "",
+                loading: false
+            });
+        }
     }
 
     render() {
