@@ -1,12 +1,13 @@
 import React from "react";
-import EditHeader from "./EditHeader"
-import EditForm from "./EditForm"
 import EditContainer from "../containers/EditContainer"
+import PageHeader from "../../../components/PageHeader";
 import "./Edit.scss";
 
 export const EditView = () => (
   <div className="edit">
-    <EditHeader/>
+    <PageHeader
+        title="Edit"
+    />
     <EditContainer/>
   </div>
 );

@@ -3,22 +3,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editMail, editPass } from "../../../store/edit";
 import EditForm from "../components/EditForm"
-import CardForm from "../../../components/CardForm/CardForm"
 
 const propTypes = {
-    editMail: PropTypes.func.isRequired,
-    editPass: PropTypes.func.isRequired,
     user: PropTypes.object,
     //router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
-    user: null
+    user: null,
 };
 
 const mapDispatchToProps = dispatch => ({
     editMail,
-    editPass
+    editPass,
 });
 
 const mapStateToProps = ({ user }) => ({ user });
@@ -30,43 +27,50 @@ class EditContainer extends PureComponent {
         super(props);
 
         this.state = {
-            password: "",
+            newMail: "",
+            newPassword: "",
             loading: false
         };
 
         this.editMail = this.editMail.bind(this);
         this.editPass = this.editPass.bind(this);
-        // this.redirect = this.redirect.bind(this);
+        this.setNewMail = this.setNewMail.bind(this)
+        this.setNewPass = this.setNewPass.bind(this)
+    }
+
+    setNewMail({ target }) {
+        this.setState({
+            newMail: target.value
+        });
+    }
+
+    setNewPass({ target }) {
+        this.setState({
+            newPass: target.value
+        });
     }
 
     editMail() {
-        console.log("CHUJ");
+        console.log("editMail");
     }
 
     editPass() {
-        console.log("CHUJ");
+        console.log("editPass");
     }
 
     render() {
-        const { loading, password } = this.state;
+        const { newMail, newPassword, loading } = this.state;
 
         return (
             <EditForm
-                editMail={editMail}
-                editPass={editPass}
+                loading={loading}
+                email={newMail}
+                password={newPassword}
+                editMail={this.editMail}
+                editPass={this.editPass}
+                setNewMail={this.setNewMail}
+                setNewPass={this.setNewPass}
             />
-            // <CardForm
-            //     title="Log in"
-            //     loading={loading}
-            //     actions={}
-            //     className="login"
-            // >
-            // <Edit
-            //     loading={loading}
-            //     password={password}
-            //     edit={this.edit}
-            //     setPassword={this.setPassword}
-            // />
         );
     }
 }

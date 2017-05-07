@@ -27,10 +27,10 @@ const bindActions = (editMail, editPass) => [{
     onClick: editMail
 }, {
     label: "Change password",
-    onclick: editPass
+    onClick: editPass
 }];
 
-const EditForm = ({ loading, password, email, editMail, editPass }) => (
+const EditForm = ({ loading, password, email, editMail, editPass, setNewMail, setNewPass }) => (
     <CardForm
         title="Edit"
         loading={loading}
@@ -44,14 +44,14 @@ const EditForm = ({ loading, password, email, editMail, editPass }) => (
                     label="New password"
                     type="password"
                     value={password}
-                    onChange={editPass}
+                    onChange={setNewPass}
                 />
                 <IconTextfield
                     icon="mail"
                     label="New Email"
                     type="email"
                     value={email}
-                    onChange={editMail}
+                    onChange={setNewMail}
                 />
             </div>
         </div>
