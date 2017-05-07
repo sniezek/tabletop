@@ -6,7 +6,6 @@ import EditForm from "../components/EditForm"
 
 const propTypes = {
     user: PropTypes.object,
-    //router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -51,6 +50,24 @@ class EditContainer extends PureComponent {
     }
 
     editMail() {
+        const { newMail, newPassword, loading } = this.state;
+
+        this.setState({
+            loading: true
+        });
+
+        this.props.editMail({
+            newMail
+        }, ({ ok }) => {
+            if (!ok) {
+                this.setState({
+                    password: "",
+                    passwordConfirm: "",
+                    loading: false
+                });
+            }
+        });
+
         console.log("editMail");
     }
 
