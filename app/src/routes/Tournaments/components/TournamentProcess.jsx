@@ -30,6 +30,7 @@ class TournamentProcess extends Component {
         this.nextRound = this.nextRound.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
         this.toggleFinalResults = this.toggleFinalResults.bind(this);
+        this.state = {tournamentFinished: false}
     }
 
     nextRound = () => {
@@ -37,7 +38,8 @@ class TournamentProcess extends Component {
     };
 
     finishTournament = () => {
-        this.props.finishTournament();
+        //this.props.finishTournament();
+      this.setState({tournamentFinished:true});
     };
 
     toggleFinalResults = () => {
@@ -48,7 +50,7 @@ class TournamentProcess extends Component {
     render() {
         return (
             <div>
-                { this.props.displayFinalResults ? (
+                { this.state.tournamentFinished ? (
                     <TournamentFinalResultsContainer
                         tournamentId={this.props.tournamentId}
                     />
