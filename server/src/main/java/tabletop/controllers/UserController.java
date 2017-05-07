@@ -2,12 +2,13 @@ package tabletop.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Errors;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import tabletop.controllers.utils.ControllerErrorHandler;
+import tabletop.controllers.validation.errors.ControllerErrorsHandler;
+import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.controllers.utils.ResponseUtils;
 import tabletop.domain.user.User;
 import tabletop.services.UserService;
@@ -20,17 +21,19 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
-    private ControllerErrorHandler handler;
+    private ControllerErrorsHandler errorsHandler;
 
     @RequestMapping(method = RequestMethod.POST, value = "/users")
-    public ResponseEntity<?> createUser(@Valid @RequestBody User user, Errors errors) {
-        if (errors.hasErrors()) {
+    public ResponseEntity<?> createUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        ControllerErrors errors = new ControllerErrors(bindingResult);
+
+        if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
 
         Optional<User> alreadyExistingUser = userService.getUserByUsername(user.getUsername());
 
-        return alreadyExistingUser.isPresent() ? ResponseUtils.conflict(handler.getErrorMessage("user.already_exists")) : ResponseUtils.created(userService.addUser(user));
+        return alreadyExistingUser.isPresent() ? ResponseUtils.conflict(errorsHandler.getErrorMessage("user.already_exists")) : ResponseUtils.created(userService.addUser(user));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/user")
