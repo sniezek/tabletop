@@ -37,7 +37,9 @@ const LocationFilter = ({ radius, setRadius, setActive, active }) => (
                 onChange={setRadius}
             />
         </LocationInput>
-        <LocationInput label="From:" />
+        <LocationInput label="From:">
+            ...
+        </LocationInput>
     </EventsFilter>
 );
 
