@@ -6,9 +6,11 @@ import Api from "../api";
 export const GET_TOURNAMENT = "GET_TOURNAMENT";
 export const GET_TOURNAMENT_TYPES = "GET_TOURNAMENT_TYPES";
 export const GET_FINISHED_TOURNAMENTS = "GET_FINISHED_TOURNAMENTS";
+export const GET_FINAL_RESULTS = "GET_FINAL_RESULTS";
 export const NEXT_ROUND = "NEXT_ROUND";
 export const SET_WINNER = "SET_WINNER";
 export const INITIAL_ROUND = "INITIAL_ROUND";
+export const FINISH_TOURNAMENT = "FINISH_TOURNAMENT";
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -61,21 +63,34 @@ export const getFinishedTournaments = dispatch =>
       }
   });
 
-export const nextRound = ( id , callback) => dispatch =>
-  Api.nextRound( id ).then((response) => {
+export const getFinalResults = (id, callback) => dispatch =>
+  Api.getFinalResults(id).then((response) => {
       if (response.ok) {
-          response.json().then(( pairs ) => {
-            let pairsFormatted = pairs.map(pair => {
-              return {
-                host: pair["a"],
-                guest: pair["b"],
-                winner: "0"
-              }
-            });
+          response.json().then((finalResults) => {
+              dispatch({
+                  type: GET_FINAL_RESULTS,
+                  payload: {
+                      finalResults
+                  }
+              });
+          });
+      }
+      callback(response);
+  });
+
+export const nextRound = (id, callback) => dispatch =>
+  Api.nextRound(id).then((response) => {
+      if (response.ok) {
+          response.json().then((pairs) => {
+              const pairsFormatted = pairs.map(pair => ({
+                  host: pair.a,
+                  guest: pair.b,
+                  winner: "0"
+              }));
               dispatch({
                   type: NEXT_ROUND,
                   payload: {
-                    pairsFormatted
+                      pairsFormatted
                   }
               });
           });
@@ -84,8 +99,8 @@ export const nextRound = ( id , callback) => dispatch =>
       callback(response);
   });
 
-export const setWinner = (id, winner , callback) => dispatch =>
-  Api.setWinner( id, winner ).then((response) => {
+export const setWinner = (id, winner, callback) => dispatch =>
+  Api.setWinner(id, winner).then((response) => {
       if (response.ok) {
           dispatch({
               type: SET_WINNER
@@ -94,35 +109,45 @@ export const setWinner = (id, winner , callback) => dispatch =>
       callback(response);
   });
 
-export const initialRound = ( id , callback) => dispatch =>
-  Api.initialRound( id ).then((response) => {
-    if (response.ok) {
-      response.json().then(( pairs ) => {
-        let pairsFormatted = pairs.map(pair => {
-          return {
-            host: pair["a"],
-            guest: pair["b"],
-            winner: "0"
-          }
-        });
-        dispatch({
-          type: INITIAL_ROUND,
-          payload: {
-            pairsFormatted
-          }
-        });
-      });
-    }
+export const initialRound = (id, callback) => dispatch =>
+  Api.initialRound(id).then((response) => {
+      if (response.ok) {
+          response.json().then((pairs) => {
+              const pairsFormatted = pairs.map(pair => ({
+                  host: pair.a,
+                  guest: pair.b,
+                  winner: "0"
+              }));
+              dispatch({
+                  type: INITIAL_ROUND,
+                  payload: {
+                      pairsFormatted
+                  }
+              });
+          });
+      }
 
-    callback(response);
+      callback(response);
+  });
+
+export const finishTournament = (id, callback) => dispatch =>
+  Api.finishTournament(id).then((response) => {
+      if (response.ok) {
+          dispatch({
+              type: FINISH_TOURNAMENT
+          });
+      }
+      callback(response);
   });
 
 
 export const actions = {
     getTournament,
+    getFinalResults,
     nextRound,
     initialRound,
-    setWinner
+    setWinner,
+    finishTournament
 };
 
 // ------------------------------------
@@ -137,6 +162,10 @@ export default function tournamentReducer(state = null, { type, payload }) {
     } else if (type === GET_TOURNAMENT_TYPES) {
         state = {
             tournamentTypesList: payload.tournamentTypesList
+        };
+    } else if (type === GET_FINAL_RESULTS) {
+        state = {
+            finalResults: payload.finalResults
         };
     } else if (type === NEXT_ROUND) {
         state = {

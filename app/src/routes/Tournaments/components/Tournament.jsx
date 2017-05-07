@@ -33,13 +33,17 @@ const Tournament = ({ router, tournamentTypesView, loggedIn, toggleFinishedTourn
         <TournamentProcessContainer
             router={router}
         />
-      {/*<TournamentTypes />*/}
         {/* { tournamentTypesView ? (*/}
         {/* <TournamentTypes />*/}
         {/* ) : (*/}
-        {/* <TournamentsFinishedList />*/}
+        {/* <TournamentProcessContainer*/}
+        {/* router={router}*/}
+        {/* />*/}
         {/* )}*/}
     </div>
+
+
+    // <TournamentsFinishedList />
 );
 
 Tournament.propTypes = propTypes;
