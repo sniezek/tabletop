@@ -47,7 +47,7 @@ public class UserController {
         return ResponseUtils.created(userService.editMail(user, mail));
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/editpassword")
     public ResponseEntity<?> editPassword(@Valid @RequestBody User user, Errors errors, String password) {
         if (errors.hasErrors()) {
             return ResponseUtils.badRequest(errors);
