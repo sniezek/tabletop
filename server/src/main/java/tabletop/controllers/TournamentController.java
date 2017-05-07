@@ -110,4 +110,13 @@ public class TournamentController {
             return nextRound;
         }
     }
+
+    @RequestMapping(value = "/finish/{tournamentid}", method = RequestMethod.POST)
+    public void setFinalResults(@PathVariable("tournamentid") Long tournamentid) {
+        Tournament tournament  = tournamentService.getTournamentById(tournamentid);
+        if (tournament != null && tournament.isFinished()){
+            tournamentService.setFinalResults(tournament);
+        }
+    }
+
 }

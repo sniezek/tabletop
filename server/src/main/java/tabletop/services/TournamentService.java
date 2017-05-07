@@ -7,6 +7,7 @@ import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentFinalResult;
 import tabletop.domain.match.tournament.TournamentType;
+import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
@@ -84,8 +85,31 @@ public class TournamentService {
 
     public List<Pair<User>> getNextRound(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
-            return swissTournamentService.getNextPair(((SwissTournamentProcess) tournament.getTournamentProcess()));
+            SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
+
+            if (swissTournamentService.canBeFinished(swissTournamentProcess)){
+                tournament.setFinished(true);
+                tournamentRepository.save(tournament);
+            }
+
+            return swissTournamentService.getNextPair((swissTournamentProcess));
         }
         return null;
+    }
+
+    public void setFinalResults(Tournament tournament){
+        if (tournament.getType() == TournamentType.SWISS) {
+            SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
+            for (SwissPlayerResult swissPlayerResult: swissTournamentProcess.getPlayerResults()) {
+                TournamentFinalResult tournamentFinalResult = new TournamentFinalResult();
+                tournamentFinalResult.setTournament(tournament);
+                tournamentFinalResult.setUser(swissPlayerResult.getId().getUser());
+                tournamentFinalResult.setPoints(swissPlayerResult.getCurrentScore());
+//                tournamentFinalResult.setPoints(0);
+                tournamentFinalResult.setPlace(swissPlayerResult.getResult());
+//                tournamentFinalResult.setPlace(1);
+                tournamentFinalResultRepository.save(tournamentFinalResult);
+            }
+        }
     }
 }

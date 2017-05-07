@@ -13,4 +13,5 @@ public interface TournamentRepository extends JpaRepository<Tournament, Long> {
 
     Optional<Tournament> findOneById(Long id);
     List<Tournament> findTournamentsByFinishedIsTrue();
+
 }

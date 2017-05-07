@@ -21,7 +21,7 @@ INSERT INTO user (id, username, password, email)
 VALUES (5, 'user5', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished)
-VALUES (0, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', 'results', true);
+VALUES (0, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', 'results', false);
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished)
 VALUES (1, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', 'results', false);
 
@@ -43,10 +43,10 @@ VALUES (0);
 INSERT INTO tournament_process(id)
 VALUES (1);
 
-INSERT INTO swiss_tournament_process(id, ranked, bye_user)
-VALUES (0, true, null);
-INSERT INTO swiss_tournament_process(id, ranked, bye_user)
-VALUES (1, false, null);
+INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
+VALUES (0, true, 2, null);
+INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
+VALUES (1, false, 4, null);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (1, 1);

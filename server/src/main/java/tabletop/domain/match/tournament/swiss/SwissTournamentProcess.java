@@ -13,6 +13,8 @@ public class SwissTournamentProcess extends TournamentProcess {
 
     private boolean ranked;
 
+    private int rounds;
+
     @OneToMany(mappedBy = "id.tournamentProcess")
     private List<SwissPlayerResult> playerResults;
 
@@ -32,6 +34,14 @@ public class SwissTournamentProcess extends TournamentProcess {
 
     public boolean isRanked() {
         return ranked;
+    }
+
+    public int getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(int rounds) {
+        this.rounds = rounds;
     }
 
     public List<SwissPlayerResult> getPlayerResults() {

@@ -96,4 +96,8 @@ public class SwissTournamentService {
         return state;
     }
 
+    public boolean canBeFinished(SwissTournamentProcess swissTournamentProcess) {
+        return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().size();  // TODO: 5/7/17 bug: it always returns true
+    }
+
 }
