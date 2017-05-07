@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { edit } from "../../../store/edit";
+import { editMail, editPass } from "../../../store/edit";
 
 const propTypes = {
     edit: PropTypes.func.isRequired,
@@ -14,7 +14,8 @@ const defaultProps = {
 };
 
 const mapDispatchToProps = dispatch => ({
-    edit: edit(dispatch)
+    editMail: editMail(dispatch),
+    editPass: editPass(dispatch)
 });
 
 const mapStateToProps = ({ user }) => ({ user });
@@ -30,7 +31,7 @@ class EditContainer extends PureComponent {
             loading: false
         };
 
-        this.edit = this.edit.bind(this);
+        this.editMail = this.editMail.bind(this);
         this.setPassword = this.setPassword.bind(this);
         this.redirect = this.redirect.bind(this);
     }

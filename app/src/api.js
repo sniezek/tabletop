@@ -8,10 +8,11 @@ class Api {
         this.games = this.games.bind(this);
         this.register = this.register.bind(this);
         this.events = this.events.bind(this);
+        this.editMail = this.editMail.bind(this);
+        this.editPass = this.editPass.bind(this);
     }
 
     user() {
-        console.log("TEST");
         return fetch(`${API_SERVER}/user`, {
             method: "POST",
             credentials: "include"
@@ -70,8 +71,40 @@ class Api {
         });
     }
 
-    edit() {
-        return fetch();
+    editMail({ username, email }) {
+        const body = JSON.stringify({
+            username,
+            email
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editmail`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
+    editPass({ username, password }) {
+        const body = JSON.stringify({
+            username,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editpassword`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
     }
 }
 
