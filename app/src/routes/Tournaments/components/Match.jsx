@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import "./Match.scss";
 import {List, ListItem, ListItemAction, ListItemContent} from "react-mdl/lib/List";
@@ -8,31 +8,34 @@ const propTypes = {
   host: PropTypes.object.isRequired,
   guest: PropTypes.object.isRequired,
   winner: PropTypes.string.isRequired,
-  setWinner: PropTypes.func.isRequired
+  setWinner: PropTypes.func.isRequired,
+  updateNextRoundButton: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
 
-class Match extends Component {
+class Match extends PureComponent {
   constructor(props) {
     super(props);
     this.winCallback = this.winCallback.bind(this)
     this.winNokCallback = this.winNokCallback.bind(this)
     this.win = this.win.bind(this)
     this.setCheckboxes = this.setCheckboxes.bind(this)
-    this.setCheckboxes(this.props);
+    this.setCheckboxes(this.props, null);
   }
 
   componentWillReceiveProps(nextProps){
-    this.setCheckboxes(nextProps)
+    this.setCheckboxes(nextProps, this.props)
   }
 
-  setCheckboxes(props) {
-    this.state = {
-      radiosDisabled: props.winner != "0",
-      hostCheckboxValue: props.winner == "1" ? 1 : 0,
-      guestCheckboxValue: props.winner == "-1" ? 1 : 0
-    };
+  setCheckboxes(propsNew, propsOld) {
+    if(propsOld == null  || propsNew !== propsOld) {
+      this.state = {
+        radiosDisabled: propsNew.winner != "0",
+        hostCheckboxValue: propsNew.winner == "1" ? 1 : 0,
+        guestCheckboxValue: propsNew.winner == "-1" ? 1 : 0
+      };
+    }
   }
 
   win = (winner) => {
@@ -45,6 +48,7 @@ class Match extends Component {
       guestCheckboxValue: hostWon ? 0 : 1,
       radiosDisabled: true
     });
+    this.props.updateNextRoundButton()
   }
 
   winNokCallback() {
