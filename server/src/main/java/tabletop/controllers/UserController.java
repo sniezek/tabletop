@@ -37,4 +37,23 @@ public class UserController {
     public ResponseEntity<User> getAuthenticatedUser() {
         return ResponseEntity.ok(userService.getAuthenticatedUser().get());
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
+    public ResponseEntity<?> editMail(@Valid @RequestBody User user, Errors errors, String mail) {
+        if (errors.hasErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        return ResponseUtils.created(userService.editMail(user, mail));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
+    public ResponseEntity<?> editPassword(@Valid @RequestBody User user, Errors errors, String password) {
+        if (errors.hasErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        return ResponseUtils.created(userService.editPassword(user, password));
+    }
+
 }
