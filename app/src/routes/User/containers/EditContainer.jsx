@@ -43,13 +43,13 @@ class EditContainer extends PureComponent {
         const { loading, password } = this.state;
 
         return (
-            //<EditForm/>
-            <CardForm
-                title="Log in"
-                loading={loading}
-                actions={}
-                className="login"
-            >
+            <EditForm/>
+            // <CardForm
+            //     title="Log in"
+            //     loading={loading}
+            //     actions={}
+            //     className="login"
+            // >
             // <Edit
             //     loading={loading}
             //     password={password}
