@@ -7,11 +7,13 @@ import MapArea from "../components/map/MapArea.jsx";
 
 const propTypes = {
     location: PropTypes.object,
+    active: PropTypes.bool,
     radius: PropTypes.number.isRequired
 };
 
 const defaultProps = {
-    location: null
+    location: null,
+    active: false
 };
 
 const mapStateToProps = ({ locationFilter }) => locationFilter;
@@ -22,7 +24,7 @@ const enhance = compose(
     pure
 );
 
-const MapAreaContainer = ({ location, radius }) => (location !== null ? (
+const MapAreaContainer = ({ active, location, radius }) => (active && location !== null ? (
     <MapArea
         center={location}
         radius={radius}
