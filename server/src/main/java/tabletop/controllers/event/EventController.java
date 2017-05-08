@@ -34,6 +34,7 @@ public class EventController {
         ControllerErrors errors = new ControllerErrors();
 
         validator.validateLocationFilters(lat, lng, radius, errors);
+        validator.validateGames(games, errors);
         validator.validateTypeFilter(type, errors);
         validator.validateDateFilters(startDate, endDate, errors);
 

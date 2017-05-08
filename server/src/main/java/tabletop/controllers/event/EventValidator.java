@@ -16,6 +16,7 @@ import tabletop.services.UserService;
 import tabletop.utils.ValuePresenceUtils;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -96,6 +97,17 @@ class EventValidator extends PathVariableValidator {
         }
     }
 
+    void validateGames(List<String> games, ControllerErrors errors) {
+        if (ValuePresenceUtils.isPresent(games)) {
+            for (String game : games) {
+                if (!game.toLowerCase().equals(game)) {
+                    errorHandler.addIncorrectRequestError(errors);
+                    return;
+                }
+            }
+        }
+    }
+
     void validateTypeFilter(String type, ControllerErrors errors) {
         if (ValuePresenceUtils.isPresent(type) && !type.equals("tournament") && !type.equals("sparring")) {
             errorHandler.addIncorrectRequestError(errors);
@@ -103,9 +115,7 @@ class EventValidator extends PathVariableValidator {
     }
 
     void validateDateFilters(Long startDateTimestamp, Long endDateTimestamp, ControllerErrors errors) {
-        long presentFiltersCount = ValuePresenceUtils.getPresentCount(startDateTimestamp, endDateTimestamp);
-
-        if (presentFiltersCount == 2 && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
+        if (ValuePresenceUtils.areAllPresent(startDateTimestamp, endDateTimestamp) && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
             errorHandler.addIncorrectRequestError(errors);
         }
     }
