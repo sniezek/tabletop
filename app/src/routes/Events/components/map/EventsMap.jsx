@@ -4,6 +4,7 @@ import pure from "recompose/pure";
 import Map from "../../../../components/Map";
 import MapPopup from "./MapPopup.jsx";
 import MapMarker from "./MapMarker.jsx";
+import MapAreaContainer from "../../containers/MapAreaContainer.jsx";
 import "./EventsMap.scss";
 
 const propTypes = {
@@ -59,6 +60,7 @@ const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng }) => 
         <MapPopup
             event={currentEvent}
         />
+        <MapAreaContainer />
     </Map>
 );
 
