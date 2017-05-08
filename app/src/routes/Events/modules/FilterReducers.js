@@ -18,19 +18,20 @@ export function locationReducer(state = { radius: 10, location: null }, { type, 
             radius: payload
         };
     } else if (type === SET_FILTER_LOCATION_PLACE) {
-        if (payload === "") {
-            return {
-                ...state,
-                location: null
-            };
-        } else if (typeof payload === "object") {
-            return {
-                ...state,
-                location: {
-                    ...payload.location
-                }
+        let location = null;
+
+        if (payload !== null) {
+            location = {
+                name: payload.label,
+                lat: payload.location.lat,
+                lng: payload.location.lng
             };
         }
+
+        return {
+            ...state,
+            location
+        };
     } else if (type === SET_FILTER_ACTIVE && payload.id === "location") {
         return {
             ...state,

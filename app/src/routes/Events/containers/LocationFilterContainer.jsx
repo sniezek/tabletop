@@ -1,9 +1,17 @@
-import React from "react";
-import pure from "recompose/pure";
-import compose from "recompose/compose";
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setFilterLocationRadius, setFilterActive, setFilterLocationPlace } from "../modules/FilterActions";
 import LocationFilter from "../components/filters/LocationFilter.jsx";
+
+const propTypes = {
+    location: PropTypes.object,
+    setLocation: PropTypes.func.isRequired
+};
+
+const defaultProps = {
+    location: null
+};
 
 const mapStateToProps = ({ locationFilter }) => locationFilter;
 const mapDispatchToProps = dispatch => ({
@@ -12,13 +20,42 @@ const mapDispatchToProps = dispatch => ({
     setLocation: place => dispatch(setFilterLocationPlace(place))
 });
 
-const enhance = compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    pure
-);
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-const LocationFilterContainer = props => (
-    <LocationFilter {...props} />
-);
+class LocationFilterContainer extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.geosuggest = null;
+        this.setRef = this.setRef.bind(this);
+        this.clearInput = this.clearInput.bind(this);
+    }
+
+    setRef(geosuggest) {
+        this.geosuggest = geosuggest;
+    }
+
+    clearInput(value) {
+        const { location } = this.props;
+
+        if (location !== null && location.name !== value) {
+            this.geosuggest.clear();
+            this.props.setLocation(null);
+        }
+    }
+
+    render() {
+        return (
+            <LocationFilter
+                {...this.props}
+                clearInput={this.clearInput}
+                setRef={this.setRef}
+            />
+        );
+    }
+}
+
+LocationFilterContainer.propTypes = propTypes;
+LocationFilterContainer.defaultProps = defaultProps;
 
 export default enhance(LocationFilterContainer);
