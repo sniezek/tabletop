@@ -10,8 +10,8 @@ const propTypes = {
     toggleMapView: PropTypes.func,
     user: PropTypes.object,
     loadEvents: PropTypes.func,
-    lat: PropTypes.number,
-    lng: PropTypes.number,
+    lat: PropTypes.string,
+    lng: PropTypes.string,
     events: PropTypes.array,
     router: PropTypes.object.isRequired
 };

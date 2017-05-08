@@ -1,17 +1,19 @@
 import React from "react";
 import pure from "recompose/pure";
-import PageHeader from "../../../components/PageHeader";
+import { View, ViewHeader, ViewContent } from "../../../components/View";
 import "./HomeView.scss";
 
 const enhance = pure;
 
 export const HomeView = () => (
-    <div className="home">
-        <PageHeader
+    <View className="home">
+        <ViewHeader
             title="Home"
         />
-        <div style={{ padding: "32px" }}>To be implemented...</div>
-    </div>
+        <ViewContent>
+            <div style={{ padding: "32px" }}>To be implemented...</div>
+        </ViewContent>
+    </View>
 );
 
 export default enhance(HomeView);

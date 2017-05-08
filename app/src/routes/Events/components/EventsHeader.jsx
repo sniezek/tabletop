@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import PageHeader from "../../../components/PageHeader";
+import { ViewHeader } from "../../../components/View";
 import EventsHeaderOptions from "./EventsHeaderOptions.jsx";
 
 const propTypes = {
@@ -23,7 +23,7 @@ const defaultProps = {
 const enhance = pure;
 
 const EventsHeader = ({ mapView, toggleMapView, toggleFilters, count, loggedIn }) => (
-    <PageHeader
+    <ViewHeader
         count={count}
         title="Browse events"
     >
@@ -33,7 +33,7 @@ const EventsHeader = ({ mapView, toggleMapView, toggleFilters, count, loggedIn }
             toggleFilters={toggleFilters}
             loggedIn={loggedIn}
         />
-    </PageHeader>
+    </ViewHeader>
 );
 
 EventsHeader.propTypes = propTypes;

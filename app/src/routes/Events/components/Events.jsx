@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
+import { View } from "../../../components/View";
 import EventsHeader from "./EventsHeader.jsx";
-import EventsMapContainer from "../containers/EventsMapContainer.jsx";
-import EventsList from "./list/EventsList.jsx";
+import EventsContent from "./EventsContent.jsx";
 import EventsFilters from "./filters/EventsFilters.jsx";
 import "./Events.scss";
 
@@ -32,7 +32,7 @@ const defaultProps = {
 const enhance = pure;
 
 const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng }) => (
-    <div className="events">
+    <View className="events">
         <EventsHeader
             mapView={mapView}
             toggleMapView={toggleMapView}
@@ -44,18 +44,13 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
             displayFilters={displayFilters}
             toggleFilters={toggleFilters}
         />
-        { mapView ? (
-            <EventsMapContainer
-                events={events}
-                lat={lat}
-                lng={lng}
-            />
-        ) : (
-            <EventsList
-                events={events}
-            />
-        )}
-    </div>
+        <EventsContent
+            lat={lat}
+            lng={lng}
+            events={events}
+            mapView={mapView}
+        />
+    </View>
 );
 
 Events.propTypes = propTypes;
