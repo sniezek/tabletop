@@ -1,0 +1,41 @@
+.geosuggest {
+    position: relative;
+
+    &__suggests {
+        position: absolute;
+        left: 0;
+        min-width: 100%;
+        max-width: 150%;
+        top: 100%;
+        font-size: 12px;
+        line-height: 16px;
+        background: #fff;
+        z-index: 3;
+        transform: scale(1);
+        transition: all 0.2s;
+        transform-origin: 30% 0;
+
+        &--hidden {
+            transform: scale(0);
+        }
+    }
+
+    &__input {
+        outline: 0;
+    }
+
+    &__item {
+        padding: 8px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+
+        &:hover,
+        &--active {
+            background: #80DEEA;
+            color: #fff;
+        }
+    }
+}

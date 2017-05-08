@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Geosuggest from "react-geosuggest";
 import pure from "recompose/pure";
 import Slider from "react-mdl/lib/Slider";
 import EventsFilter from "./EventsFilter.jsx";
@@ -38,7 +39,10 @@ const LocationFilter = ({ radius, setRadius, setActive, active }) => (
             />
         </LocationInput>
         <LocationInput label="From:">
-            ...
+            <Geosuggest
+                inputClassName="mdl-textfield__input"
+                suggestsClassName="mdl-shadow--2dp"
+            />
         </LocationInput>
     </EventsFilter>
 );
