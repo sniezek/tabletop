@@ -3,33 +3,23 @@ import pure from "recompose/pure";
 import "./Tournament.scss";
 import "../../Games/components/Games.scss";
 import PropTypes from "prop-types";
-import ViewHeader from "../../../components/view/ViewHeader.jsx";
+import TournamentHeader from "./TournamentHeader";
 
 
 import TournamentProcessContainer from "../containers/TournamentProcessContainer";
 
 const propTypes = {
-    router: PropTypes.object.isRequired,
-    tournamentTypesView: PropTypes.bool,
-    loggedIn: PropTypes.bool,
-    toggleTournamentTypesView: PropTypes.func
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
-    tournamentTypesView: true,
-    loggedIn: false,
-    toggleTournamentTypesView: () => {}
 };
 
 const enhance = pure;
 
-const Tournament = ({ router, tournamentTypesView, loggedIn, toggleFinishedTournamentsView }) => (
+const Tournament = ({ router }) => (
     <div className="tournamentTypes">
-        <ViewHeader
-            tournamentTypesView={tournamentTypesView}
-            loggedIn={loggedIn}
-            toggleFinishedTournamentsView={toggleFinishedTournamentsView}
-        />
+        <TournamentHeader />
         <TournamentProcessContainer
             router={router}
         />
