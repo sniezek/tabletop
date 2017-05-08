@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import "./PageHeader.scss";
+import "./ViewHeader.scss";
 
 const propTypes = {
     title: PropTypes.string.isRequired,
@@ -16,17 +16,17 @@ const defaultProps = {
 
 const enhance = pure;
 
-const PageHeader = ({ title, count, children }) => (
-    <div className="page-header mdl-shadow--2dp">
-        <h2 className="page-header__title">
+const ViewHeader = ({ title, count, children }) => (
+    <div className="view-header mdl-shadow--2dp">
+        <h2 className="view-header__title">
             {title}
-            { count !== undefined && <span className="page-header__count">({count})</span> }
+            { count !== undefined && <span className="view-header__count">({count})</span> }
         </h2>
         {children}
     </div>
 );
 
-PageHeader.propTypes = propTypes;
-PageHeader.defaultProps = defaultProps;
+ViewHeader.propTypes = propTypes;
+ViewHeader.defaultProps = defaultProps;
 
-export default enhance(PageHeader);
+export default enhance(ViewHeader);
