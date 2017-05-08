@@ -12,8 +12,14 @@ const mapGamesFilters = () => {
 
 };
 
-const mapTypeFilters = () => {
+const mapTypeFilters = ({ active, type }) => {
+    const output = {};
 
+    if (active && ["sparring", "tournament"].includes(type)) {
+        output.type = type;
+    }
+
+    return output;
 };
 
 const mapDateFilters = ({ active, from, to }) => {
