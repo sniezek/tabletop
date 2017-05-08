@@ -8,8 +8,14 @@ const mapLocationFilters = () => {
 
 };
 
-const mapGamesFilters = () => {
+const mapGamesFilters = ({ active, selected }) => {
+    const output = {};
 
+    if (active && selected.length > 0) {
+        output.games = selected.map(({ id }) => id);
+    }
+
+    return output;
 };
 
 const mapTypeFilters = ({ active, type }) => {

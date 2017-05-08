@@ -28,7 +28,9 @@ export function locationReducer(state = {}, { type, payload }) {
 
 export function gamesReducer(state = { selected: [] }, { type, payload }) {
     if (type === ADD_FILTER_GAME) {
-        if (state.selected.find(({ id }) => id === payload)) {
+        const name = payload.toLowerCase();
+
+        if (state.selected.find(({ id }) => id === name)) {
             return state;
         }
 
@@ -37,7 +39,7 @@ export function gamesReducer(state = { selected: [] }, { type, payload }) {
             selected: [
                 ...state.selected,
                 {
-                    id: payload
+                    id: name
                 }
             ]
         };
