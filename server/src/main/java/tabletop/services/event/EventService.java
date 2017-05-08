@@ -33,7 +33,7 @@ public class EventService {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (ValuePresenceUtils.isPresent(games)) {
-            List<Game> registeredGames = Arrays.stream(Game.values()).filter(game -> games.contains(game.getName())).collect(Collectors.toList());
+            List<Game> registeredGames = Arrays.stream(Game.values()).filter(game -> games.contains(game.getName().toLowerCase())).collect(Collectors.toList());
 
             booleanBuilder.and(QEvent.event.sparrings.any().gameName.in(games).or(QEvent.event.tournaments.any().game.in(registeredGames)));
         }
