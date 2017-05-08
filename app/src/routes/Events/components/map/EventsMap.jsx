@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import Spinner from "react-mdl/lib/Spinner";
 import Map from "../../../../components/Map";
 import MapPopup from "./MapPopup.jsx";
 import MapMarker from "./MapMarker.jsx";
+import MapAreaContainer from "../../containers/MapAreaContainer.jsx";
 import "./EventsMap.scss";
 
 const propTypes = {
@@ -35,12 +35,6 @@ const mapElement = (
     <div className="events-map__map" />
 );
 
-const loadingElement = (
-    <div className="events-map">
-        <Spinner className="events-map__spinner" />
-    </div>
-);
-
 const getMapProps = (lat, lng) => (lat !== undefined && lng !== undefined ? {
     defaultZoom: 14,
     defaultCenter: {
@@ -52,7 +46,6 @@ const getMapProps = (lat, lng) => (lat !== undefined && lng !== undefined ? {
 const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng }) => (
     <Map
         containerElement={containerElement}
-        loadingElement={loadingElement}
         mapElement={mapElement}
         {...getMapProps(lat, lng)}
     >
@@ -67,6 +60,7 @@ const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng }) => 
         <MapPopup
             event={currentEvent}
         />
+        <MapAreaContainer />
     </Map>
 );
 

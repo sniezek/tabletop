@@ -4,8 +4,16 @@ const format = "MM-DD-YYYY";
 
 const getCurrentDate = () => moment().format(format);
 
-const mapLocationFilters = () => {
+const mapLocationFilters = ({ active, radius, location }) => {
+    const output = {};
 
+    if (active && location !== null) {
+        output.lat = location.lat;
+        output.lng = location.lng;
+        output.radius = radius;
+    }
+
+    return output;
 };
 
 const mapGamesFilters = ({ active, selected }) => {
