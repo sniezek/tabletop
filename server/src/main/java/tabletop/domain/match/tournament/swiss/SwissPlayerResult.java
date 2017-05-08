@@ -6,9 +6,6 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-/**
- * Created by Rafal on 2017-05-03.
- */
 @Entity
 public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
     @EmbeddedId
@@ -55,6 +52,11 @@ public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
 
     public void win() {
         result++;
+        currentScore = 1;
+    }
+
+    public void lose() {
+        currentScore = -1;
     }
 
     public User getCurrentOpponent() {

@@ -1,6 +1,9 @@
 package tabletop.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tabletop.controllers.TournamentController;
 import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
@@ -12,6 +15,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class SwissTournamentService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SwissTournamentService.class);
+
 
     public List<Pair<User>> getInitialPairs(SwissTournamentProcess swissTournamentProcess) {
         if (!swissTournamentProcess.isRanked()) {
@@ -32,6 +38,7 @@ public class SwissTournamentService {
             } else {
                 swissTournamentProcess.setByeUser(swissTournamentProcess.getUsers().get(i));
             }
+
         }
         return pairs;
     }
@@ -43,34 +50,31 @@ public class SwissTournamentService {
     }
 
     public void setWinner(SwissTournamentProcess swissTournamentProcess, User winner) {
-        swissTournamentProcess.getResultByUser(winner).ifPresent(SwissPlayerResult::win);
+        Optional<SwissPlayerResult> result = swissTournamentProcess.getResultByUser(winner);
+        if (result.isPresent()) {
+            result.get().win();
+            User loser = result.get().getUsersPlayed().get(result.get().getUsersPlayed().size() - 1);
+            swissTournamentProcess.getResultByUser(loser).ifPresent(SwissPlayerResult::lose);
+        }
     }
 
     public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
 
         Collections.shuffle(swissTournamentProcess.getUsers(), new Random(System.nanoTime()));
         List<User> orderedPlayers = swissTournamentProcess.getPlayerResults().stream()
-                .filter(e -> e.getResult() != 0)
                 .sorted(Comparator.comparingInt(SwissPlayerResult::getResult))
                 .map(result -> result.getId().getUser())
                 .collect(Collectors.toList());
 
-        List<User> shuffledPlayersZero = swissTournamentProcess.getPlayerResults().stream()
-                .filter(e -> e.getResult() == 0)
-                .map(result -> result.getId().getUser())
-                .collect(Collectors.toList());
-
-        Collections.shuffle(shuffledPlayersZero, new Random(System.nanoTime()));
-
-        orderedPlayers.addAll(shuffledPlayersZero);
-
         List<Pair<User>> pairs = new LinkedList<>();
+
+        LOGGER.info("Players sorted: " + orderedPlayers.toString());
 
         while (orderedPlayers.size() > 0) {
             User player = orderedPlayers.remove(0);
             for (User playerToMatch : orderedPlayers) {
-                Optional<SwissPlayerResult> result = swissTournamentProcess.getResultByUser(player);
-                if (result.isPresent() && !result.get().getUsersPlayed().contains(playerToMatch)) {
+                Optional<SwissPlayerResult> result = swissTournamentProcess.getResultByUser(playerToMatch);
+                if (result.isPresent() && !result.get().getUsersPlayed().contains(player)) {
                     Pair<User> pair = new Pair<>(player, playerToMatch);
                     pairs.add(pair);
                     orderedPlayers.remove(playerToMatch);
