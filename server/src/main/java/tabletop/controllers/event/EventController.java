@@ -58,11 +58,7 @@ public class EventController {
         validateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
-        if (errors.areErrors()) {
-            return ResponseUtils.badRequest(errors);
-        }
-
-        return ResponseEntity.ok(eventService.updateEvent(id, event));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.updateEvent(id, event));
     }
 
     @PostMapping
