@@ -5,16 +5,18 @@ export const EDIT = "EDIT";
 export const editMail = ({ username, email }, callback) => dispatch =>
   Api.editMail({ username, email }).then((response) => {
     if (response.ok) {
+      console.log("edit.js editMail ok");
       dispatch({
         type: EDIT
       });
     } else {
+      console.log("edit.js editMail fail");
       callback(response);
     }
   });
 
 export const editPass = ({ username, password }, callback) => dispatch =>
-  Api.editMail({ username, password}).then((response) => {
+  Api.editPass({ username, password}).then((response) => {
     if (response.ok) {
       dispatch({
         type: EDIT

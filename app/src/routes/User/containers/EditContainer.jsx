@@ -5,6 +5,8 @@ import { editMail, editPass } from "../../../store/edit";
 import EditForm from "../components/EditForm"
 
 const propTypes = {
+    editMail: PropTypes.func.isRequired,
+    editPass: PropTypes.func.isRequired,
     user: PropTypes.object,
 };
 
@@ -52,39 +54,37 @@ class EditContainer extends PureComponent {
     editMail() {
         const { newMail, newPassword, loading } = this.state;
 
-        this.setState({
-            loading: true
-        });
-        console.log(this.props.user);
+        // this.setState({
+      //     loading: true
+      // });
         var username = this.props.user.name;
         this.props.editMail({
             username, newMail
         }, ({ ok }) => {
             if (ok) {
+                console.log("Succeeded");
                 this.setState({
-                    password: "",
-                    passwordConfirm: "",
+                    newMail: "",
                     loading: false
                 });
+            } else {
+                console.log("Not succeeded");
             }
         });
 
     }
 
     editPass() {
-        console.log("editPass");
         const { newMail, newPassword, loading } = this.state;
 
-        this.setState({
-            loading: true
-        });
+        // this.setState({
+        //     loading: true
+        // });
 
-        console.log(this.props.user);
         var username = this.props.user.name;
-        var email = this.props.user.email;
         var password = newPassword;
         this.props.editPass({
-            username, email, password
+            username, password
         }, ({ ok }) => {
             if (ok) {
                 this.setState({
