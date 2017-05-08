@@ -8,8 +8,8 @@ import EventsList from "./list/EventsList.jsx";
 const propTypes = {
     events: PropTypes.array.isRequired,
     mapView: PropTypes.bool.isRequired,
-    lat: PropTypes.string,
-    lng: PropTypes.string
+    lat: PropTypes.number,
+    lng: PropTypes.number
 };
 
 const defaultProps = {
