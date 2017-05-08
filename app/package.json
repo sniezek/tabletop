@@ -102,6 +102,7 @@
     "normalize.css": "^5.0.0",
     "postcss-loader": "^1.1.0",
     "prop-types": "^15.5.6",
+    "query-string": "^4.3.4",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-google-maps": "^7.0.0",
