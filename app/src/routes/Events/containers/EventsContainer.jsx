@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { setMapViewActive } from "../../../store/config";
 import { loadEvents } from "../modules/EventActions";
 import Events from "../components/Events.jsx";
+import { mapLocationFilters, mapDateFilters, mapTypeFilters, mapGamesFilters } from "../modules/FilterUtils";
 
 const propTypes = {
     mapView: PropTypes.bool,
@@ -13,7 +14,11 @@ const propTypes = {
     lat: PropTypes.string,
     lng: PropTypes.string,
     events: PropTypes.array,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    dateFilter: PropTypes.object.isRequired,
+    locationFilter: PropTypes.object.isRequired,
+    gamesFilter: PropTypes.object.isRequired,
+    typeFilter: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -31,10 +36,14 @@ const mapDispatchToProps = dispatch => ({
     loadEvents: callback => loadEvents(callback)(dispatch)
 });
 
-const mapStateToProps = ({ user, config, events }) => ({
+const mapStateToProps = ({ user, config, events, dateFilter, locationFilter, gamesFilter, typeFilter }) => ({
     user,
     mapView: config.mapView,
-    events
+    events,
+    dateFilter,
+    locationFilter,
+    gamesFilter,
+    typeFilter
 });
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
@@ -48,10 +57,11 @@ class EventsContainer extends PureComponent {
         };
 
         this.toggleFilters = this.toggleFilters.bind(this);
+        this.loadEvents = this.loadEvents.bind(this);
     }
 
     componentDidMount() {
-        this.props.loadEvents(() => {});
+        this.loadEvents();
     }
 
     componentWillReceiveProps({ lat, lng, mapView }) {
@@ -65,6 +75,19 @@ class EventsContainer extends PureComponent {
         } else if (viewSwitchedToList && router.location.search !== "") {
             router.push("/events");
         }
+    }
+
+    loadEvents() {
+        const { locationFilter, gamesFilter, typeFilter, dateFilter } = this.props;
+
+        const filters = {
+            ...mapLocationFilters(locationFilter),
+            ...mapGamesFilters(gamesFilter),
+            ...mapTypeFilters(typeFilter),
+            ...mapDateFilters(dateFilter)
+        };
+
+        this.props.loadEvents(filters);
     }
 
     toggleFilters(displayFilters) {
@@ -88,6 +111,7 @@ class EventsContainer extends PureComponent {
                 events={events}
                 lat={lat !== undefined ? parseInt(lat, 10) : lat}
                 lng={lng !== undefined ? parseInt(lng, 10) : lng}
+                loadEvents={this.loadEvents}
             />
         );
     }

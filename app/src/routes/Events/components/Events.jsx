@@ -9,8 +9,9 @@ import "./Events.scss";
 
 const propTypes = {
     mapView: PropTypes.bool,
-    toggleMapView: PropTypes.func,
-    toggleFilters: PropTypes.func,
+    toggleMapView: PropTypes.func.isRequired,
+    toggleFilters: PropTypes.func.isRequired,
+    loadEvents: PropTypes.func.isRequired,
     displayFilters: PropTypes.bool,
     events: PropTypes.array,
     loggedIn: PropTypes.bool,
@@ -20,8 +21,6 @@ const propTypes = {
 
 const defaultProps = {
     mapView: true,
-    toggleMapView: () => {},
-    toggleFilters: () => {},
     displayFilters: false,
     events: [],
     loggedIn: false,
@@ -31,7 +30,7 @@ const defaultProps = {
 
 const enhance = pure;
 
-const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng }) => (
+const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng, loadEvents }) => (
     <View className="events">
         <EventsHeader
             mapView={mapView}
@@ -43,6 +42,7 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
         <EventsFilters
             displayFilters={displayFilters}
             toggleFilters={toggleFilters}
+            loadEvents={loadEvents}
         />
         <EventsContent
             lat={lat}

@@ -1,4 +1,8 @@
+import queryString from "query-string";
+
 export const API_SERVER = "http://localhost:8080";
+
+const generateQueryString = params => queryString.stringify(params);
 
 class Api {
     constructor() {
@@ -11,7 +15,6 @@ class Api {
     }
 
     user() {
-        console.log("TEST");
         return fetch(`${API_SERVER}/user`, {
             method: "POST",
             credentials: "include"
@@ -63,8 +66,10 @@ class Api {
         });
     }
 
-    events() {
-        return fetch(`${API_SERVER}/events`, {
+    events(filters = {}) {
+        const qs = generateQueryString(filters);
+
+        return fetch(`${API_SERVER}/events?${qs}`, {
             method: "GET",
             credentials: "include"
         });

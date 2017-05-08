@@ -9,14 +9,16 @@ const propTypes = {
     tags: PropTypes.array,
     onAdd: PropTypes.func,
     onDelete: PropTypes.func,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    suggestions: PropTypes.array
 };
 
 const defaultProps = {
     tags: [],
     onAdd: () => {},
     onDelete: () => {},
-    placeholder: ""
+    placeholder: "",
+    suggestions: []
 };
 
 const enhance = pure;
@@ -32,8 +34,9 @@ const classNames = {
     activeSuggestion: "tags__active-suggestion"
 };
 
-const Tags = ({ tags, onAdd, placeholder, onDelete }) => (
+const Tags = ({ tags, onAdd, placeholder, onDelete, suggestions }) => (
     <ReactTags
+        suggestions={suggestions}
         classNames={classNames}
         labelField="id"
         tags={tags}

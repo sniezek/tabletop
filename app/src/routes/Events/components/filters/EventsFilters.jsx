@@ -11,18 +11,18 @@ import "./EventsFilters.scss";
 
 const propTypes = {
     displayFilters: PropTypes.bool,
-    toggleFilters: PropTypes.func
+    toggleFilters: PropTypes.func.isRequired,
+    loadEvents: PropTypes.func.isRequired
 };
 
 const defaultProps = {
-    displayFilters: false,
-    toggleFilters: () => {}
+    displayFilters: false
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const EventsFilters = ({ displayFilters, toggleFilters }) => (
+const EventsFilters = ({ displayFilters, toggleFilters, loadEvents }) => (
     <Dialog
         className="events-filters"
         open={displayFilters}
@@ -36,7 +36,7 @@ const EventsFilters = ({ displayFilters, toggleFilters }) => (
             <DateFilterContainer />
         </DialogContent>
         <DialogActions>
-            <Button colored onClick={() => toggleFilters(false)}>Apply filters</Button>
+            <Button colored onClick={() => { toggleFilters(false); loadEvents(); }}>Apply filters</Button>
             <Button onClick={() => toggleFilters(false)}>Close</Button>
         </DialogActions>
     </Dialog>

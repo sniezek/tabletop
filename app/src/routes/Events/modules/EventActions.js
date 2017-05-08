@@ -3,8 +3,8 @@ import {
     SET_EVENTS
 } from "./EventConstants";
 
-export const loadEvents = callback => dispatch =>
-    Api.events().then((response) => {
+export const loadEvents = (filters = {}, callback = () => {}) => dispatch =>
+    Api.events(filters).then((response) => {
         if (response.ok) {
             response.json().then((payload) => {
                 dispatch({

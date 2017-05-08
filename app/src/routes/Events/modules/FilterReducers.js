@@ -8,7 +8,7 @@ import {
     ADD_FILTER_GAME,
     DELETE_FILTER_GAME
 } from "./FilterConstants";
-import getCurrentDate from "./FilterUtils";
+import { getCurrentDate } from "./FilterUtils";
 
 export function locationReducer(state = {}, { type, payload }) {
     if (type === SET_FILTER_LOCATION_RADIUS) {
@@ -28,7 +28,9 @@ export function locationReducer(state = {}, { type, payload }) {
 
 export function gamesReducer(state = { selected: [] }, { type, payload }) {
     if (type === ADD_FILTER_GAME) {
-        if (state.selected.find(({ id }) => id === payload)) {
+        const name = payload.toLowerCase();
+
+        if (state.selected.find(({ id }) => id === name)) {
             return state;
         }
 
@@ -37,7 +39,7 @@ export function gamesReducer(state = { selected: [] }, { type, payload }) {
             selected: [
                 ...state.selected,
                 {
-                    id: payload
+                    id: name
                 }
             ]
         };
@@ -77,7 +79,7 @@ export function typeReducer(state = { type: "sparring" }, { type, payload }) {
     return state;
 }
 
-export function dateReducer(state = { from: getCurrentDate() }, { type, payload }) {
+export function dateReducer(state = { active: true, from: getCurrentDate() }, { type, payload }) {
     if (type === SET_FILTER_DATE) {
         return {
             ...state,
