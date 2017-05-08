@@ -2,22 +2,22 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { editMail, editPass } from "../../../store/edit";
-import EditForm from "../components/EditForm"
+import EditForm from "../components/EditForm";
 
 const propTypes = {
     editMail: PropTypes.func.isRequired,
     editPass: PropTypes.func.isRequired,
-    user: PropTypes.object,
+    user: PropTypes.object
 };
 
 const defaultProps = {
-    user: null,
+    user: null
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = {
     editMail,
-    editPass,
-});
+    editPass
+};
 
 const mapStateToProps = ({ user }) => ({ user });
 
@@ -35,8 +35,8 @@ class EditContainer extends PureComponent {
 
         this.editMail = this.editMail.bind(this);
         this.editPass = this.editPass.bind(this);
-        this.setNewMail = this.setNewMail.bind(this)
-        this.setNewPass = this.setNewPass.bind(this)
+        this.setNewMail = this.setNewMail.bind(this);
+        this.setNewPass = this.setNewPass.bind(this);
     }
 
     setNewMail({ target }) {
@@ -52,14 +52,16 @@ class EditContainer extends PureComponent {
     }
 
     editMail() {
-        const { newMail, newPassword, loading } = this.state;
+        const { newMail } = this.state;
 
         // this.setState({
       //     loading: true
       // });
-        var username = this.props.user.name;
+        const username = this.props.user.name;
+
         this.props.editMail({
-            username, newMail
+            username,
+            newMail
         }, ({ ok }) => {
             if (ok) {
                 console.log("Succeeded");
@@ -75,16 +77,17 @@ class EditContainer extends PureComponent {
     }
 
     editPass() {
-        const { newMail, newPassword, loading } = this.state;
+        const { newPassword } = this.state;
 
         // this.setState({
         //     loading: true
         // });
 
-        var username = this.props.user.name;
-        var password = newPassword;
+        const username = this.props.user.name;
+
         this.props.editPass({
-            username, password
+            username,
+            password: newPassword
         }, ({ ok }) => {
             if (ok) {
                 this.setState({
