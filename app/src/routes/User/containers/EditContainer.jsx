@@ -53,15 +53,14 @@ class EditContainer extends PureComponent {
 
     editMail() {
         const { newMail } = this.state;
-
         // this.setState({
       //     loading: true
       // });
         const username = this.props.user.name;
 
         this.props.editMail({
-            username,
-            newMail
+            username: username,
+            email: newMail
         }, ({ ok }) => {
             if (ok) {
                 console.log("Succeeded");

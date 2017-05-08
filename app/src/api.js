@@ -80,7 +80,7 @@ class Api {
         const headers = new Headers({
             "Content-Type": "application/json"
         });
-        console.log("before fetch")
+
         return fetch(`${API_SERVER}/user/editmail`, {
             method: "PUT",
             credentials: "include",
@@ -92,8 +92,7 @@ class Api {
     editPass({ username, password }) {
         const body = JSON.stringify({
             username,
-            password,
-            email
+            password
         });
 
         const headers = new Headers({
