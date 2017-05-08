@@ -77,7 +77,9 @@ public class TournamentController {
         if (tournament == null) {
             return null;
         } else {
-            return tournamentService.getInitialRound(tournament);
+            List<Pair<User>> initialPairs = tournamentService.getInitialRound(tournament);
+            tournamentService.addTournament(tournament);
+            return initialPairs;
         }
     }
 
