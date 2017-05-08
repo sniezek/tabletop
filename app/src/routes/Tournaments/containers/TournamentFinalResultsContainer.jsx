@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getFinalResults } from "../../../store/tournament";
@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
 const initialState = {};
 // const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-class TournamentFinalResultsContainer extends Component {
+class TournamentFinalResultsContainer extends PureComponent {
 
     constructor(props) {
         super(props);
