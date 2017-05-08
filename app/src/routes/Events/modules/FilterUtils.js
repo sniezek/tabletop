@@ -1,16 +1,38 @@
-export default function getCurrentDate() {
-    const date = new Date();
-    let day = date.getDate();
-    let month = date.getMonth();
-    const year = date.getFullYear();
+import moment from "moment";
 
-    if (day < 10) {
-        day = `0${day}`;
+const format = "MM-DD-YYYY";
+
+const getCurrentDate = () => moment().format(format);
+
+const mapLocationFilters = () => {
+
+};
+
+const mapGamesFilters = () => {
+
+};
+
+const mapTypeFilters = () => {
+
+};
+
+const mapDateFilters = ({ active, from, to }) => {
+    const output = {};
+
+    if (active) {
+        const parsedFrom = moment(from, format);
+        const parsedTo = moment(to, format);
+
+        if (parsedFrom.isValid()) {
+            output.startDate = parsedFrom.unix() * 1000;
+        }
+
+        if (parsedTo.isValid()) {
+            output.endDate = parsedTo.unix() * 1000;
+        }
     }
 
-    if (month < 10) {
-        month = `0${month}`;
-    }
+    return output;
+};
 
-    return `${day}-${month}-${year}`;
-}
+export { getCurrentDate, mapLocationFilters, mapGamesFilters, mapTypeFilters, mapDateFilters };

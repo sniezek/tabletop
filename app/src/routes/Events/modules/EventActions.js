@@ -4,7 +4,7 @@ import {
 } from "./EventConstants";
 
 export const loadEvents = (filters = {}, callback = () => {}) => dispatch =>
-    Api.events().then((response) => {
+    Api.events(filters).then((response) => {
         if (response.ok) {
             response.json().then((payload) => {
                 dispatch({

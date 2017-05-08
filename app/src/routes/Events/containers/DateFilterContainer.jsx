@@ -3,7 +3,7 @@ import pure from "recompose/pure";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
 import { setFilterActive, setFilterDateRange } from "../modules/FilterActions";
-import getCurrentDate from "../modules/FilterUtils";
+import { getCurrentDate } from "../modules/FilterUtils";
 import DateFilter from "../components/filters/DateFilter.jsx";
 
 const mapStateToProps = ({ dateFilter }) => dateFilter;
