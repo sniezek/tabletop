@@ -32,12 +32,15 @@ const LocationFilter = ({ radius, setRadius, setActive, active, setLocation, set
         active={active}
     >
         <LocationInput label="Within radius (km):">
-            <Slider
-                min={0}
-                max={100}
-                defaultValue={radius}
-                onChange={setRadius}
-            />
+            <div className="location-filter__slider">
+                <span className="location-filter__slider-value">{radius}</span>
+                <Slider
+                    min={1}
+                    max={250}
+                    defaultValue={radius}
+                    onChange={setRadius}
+                />
+            </div>
         </LocationInput>
         <LocationInput label="From:">
             <Geosuggest
