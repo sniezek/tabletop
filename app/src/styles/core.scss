@@ -21,3 +21,10 @@ body {
     display: flex;
     flex: 1 0 auto;
 }
+
+@media screen and (max-width: 1024px){
+    .mdl-layout__drawer-button {
+        margin: 10px 0;
+        outline: 0;
+    }
+}

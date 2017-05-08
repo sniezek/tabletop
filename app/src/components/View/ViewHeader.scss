@@ -21,3 +21,9 @@
         font-weight: 300;
     }
 }
+
+@media screen and (max-width: 1024px){
+    .view-header {
+        padding-left: 48px;
+    }
+}
