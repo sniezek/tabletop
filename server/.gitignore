@@ -27,3 +27,4 @@ nbdist/
 ### Tabletop ###
 db.mv.db
 db.trace.db
+src/meta

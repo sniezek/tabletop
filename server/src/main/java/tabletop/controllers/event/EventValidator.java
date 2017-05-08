@@ -3,8 +3,9 @@ package tabletop.controllers.event;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import tabletop.controllers.utils.PathVariableValidator;
+import org.springframework.validation.BindingResult;
+import tabletop.controllers.validation.PathVariableValidator;
+import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.Location;
 import tabletop.domain.match.Match;
@@ -12,7 +13,9 @@ import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.user.User;
 import tabletop.services.UserService;
+import tabletop.utils.ValuePresenceUtils;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
@@ -21,17 +24,17 @@ class EventValidator extends PathVariableValidator {
     @Autowired
     private UserService userService;
 
-    void validateNewLocation(Location location, Errors errors) {
-        validator.validate(location, errors);
+    void validateNewLocation(Location location, BindingResult bindingResult) {
+        validator.validate(location, bindingResult);
     }
 
-    void validateExistingLocation(Optional<Location> location, Errors errors) {
+    void validateExistingLocation(Optional<Location> location, ControllerErrors errors) {
         if (!location.isPresent()) {
             errorHandler.addError(errors, "location.not_found");
         }
     }
 
-    void validateMatches(Event event, Errors errors) {
+    void validateMatches(Event event, ControllerErrors errors) {
         Set<Match> matches = event.getMatches();
 
         if (matches.isEmpty()) {
@@ -51,7 +54,7 @@ class EventValidator extends PathVariableValidator {
         }
     }
 
-    void validateSparringsGameInformation(Event event, Errors errors) {
+    void validateSparringsGameInformation(Event event, ControllerErrors errors) {
         for (Sparring sparring : event.getSparrings()) {
             if (Strings.isNullOrEmpty(sparring.getGameName())) {
                 errorHandler.addError(errors, "sparring.no_game");
@@ -60,7 +63,7 @@ class EventValidator extends PathVariableValidator {
         }
     }
 
-    void validateTournaments(Event event, Errors errors) {
+    void validateTournaments(Event event, ControllerErrors errors) {
         for (Tournament tournament : event.getTournaments()) {
             if (!tournament.isRegisteredGame()) {
                 errorHandler.addError(errors, "tournament.unregistered_game");
@@ -71,17 +74,39 @@ class EventValidator extends PathVariableValidator {
         }
     }
 
-    void validateOrganiserIsNotSet(Event event, Errors errors) {
+    void validateOrganiserIsNotSet(Event event, ControllerErrors errors) {
         if (event.getOrganiser() != null) {
             errorHandler.addError(errors, "request.incorrect");
         }
     }
 
-    void validateExistingEvent(Optional<Event> event, Errors errors) {
+    void validateExistingEvent(Optional<Event> event, ControllerErrors errors) {
         if (event.isPresent()) {
             validateUserIsOrganiser(event.get());
         } else {
             errorHandler.addError(errors, "event.not_exists");
+        }
+    }
+
+    void validateLocationFilters(Double lat, Double lng, Integer radius, ControllerErrors errors) {
+        long presentFiltersCount = ValuePresenceUtils.getPresentCount(lat, lng, radius);
+
+        if (presentFiltersCount > 0 && (presentFiltersCount < 3 || lat < -90 || lat > 90 || lng < -180 || lat > 180 || radius < 0)) {
+            errorHandler.addIncorrectRequestError(errors);
+        }
+    }
+
+    void validateTypeFilter(String type, ControllerErrors errors) {
+        if (ValuePresenceUtils.isPresent(type) && !type.equals("tournament") && !type.equals("sparring")) {
+            errorHandler.addIncorrectRequestError(errors);
+        }
+    }
+
+    void validateDateFilters(Long startDateTimestamp, Long endDateTimestamp, ControllerErrors errors) {
+        long presentFiltersCount = ValuePresenceUtils.getPresentCount(startDateTimestamp, endDateTimestamp);
+
+        if (presentFiltersCount == 2 && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
+            errorHandler.addIncorrectRequestError(errors);
         }
     }
 

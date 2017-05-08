@@ -1,4 +1,8 @@
+import queryString from "query-string";
+
 export const API_SERVER = "http://localhost:8080";
+
+const generateQueryString = params => queryString.stringify(params);
 
 class Api {
     constructor() {
@@ -12,6 +16,7 @@ class Api {
         this.initialRound = this.initialRound.bind(this);
         this.setWinner = this.setWinner.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
+        this.events = this.events.bind(this);
     }
 
     user() {
@@ -107,6 +112,15 @@ class Api {
             credentials: "include",
             headers,
             body
+        });
+    }
+
+    events(filters = {}) {
+        const qs = generateQueryString(filters);
+
+        return fetch(`${API_SERVER}/events?${qs}`, {
+            method: "GET",
+            credentials: "include"
         });
     }
 
