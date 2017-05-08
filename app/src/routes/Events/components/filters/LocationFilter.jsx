@@ -9,21 +9,20 @@ import "./LocationFilter.scss";
 
 const propTypes = {
     radius: PropTypes.number,
-    setRadius: PropTypes.func,
-    setActive: PropTypes.func,
+    setRadius: PropTypes.func.isRequired,
+    setActive: PropTypes.func.isRequired,
+    setLocation: PropTypes.func.isRequired,
     active: PropTypes.bool
 };
 
 const defaultProps = {
     radius: 10,
-    setRadius: () => {},
-    setActive: () => {},
     active: false
 };
 
 const enhance = pure;
 
-const LocationFilter = ({ radius, setRadius, setActive, active }) => (
+const LocationFilter = ({ radius, setRadius, setActive, active, setLocation }) => (
     <EventsFilter
         name="Location"
         id="location"
@@ -42,6 +41,8 @@ const LocationFilter = ({ radius, setRadius, setActive, active }) => (
             <Geosuggest
                 inputClassName="mdl-textfield__input"
                 suggestsClassName="mdl-shadow--2dp"
+                onSuggestSelect={setLocation}
+                onBlur={setLocation}
             />
         </LocationInput>
     </EventsFilter>

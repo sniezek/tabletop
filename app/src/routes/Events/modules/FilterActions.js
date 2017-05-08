@@ -1,6 +1,7 @@
 import {
     SET_FILTER_ACTIVE,
     SET_FILTER_LOCATION_RADIUS,
+    SET_FILTER_LOCATION_PLACE,
     SET_FILTER_SELECTED_TYPE,
     SET_FILTER_DATE,
     SET_FILTER_DATE_FROM,
@@ -15,6 +16,11 @@ export const setFilterActive = (id, active) => ({
         id,
         active
     }
+});
+
+export const setFilterLocationPlace = payload => ({
+    type: SET_FILTER_LOCATION_PLACE,
+    payload
 });
 
 export const setFilterLocationRadius = payload => ({
