@@ -11,9 +11,9 @@ const defaultProps = {
     finishedTournamentsList: []
 };
 
-const mapDispatchToProps = dispatch => ({
-    getFinishedTournaments: getFinishedTournaments(dispatch)
-});
+const mapDispatchToProps = {
+    getFinishedTournaments
+};
 
 const mapStateToProps = (state) => {
     if (state.tournament !== null) {
