@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
+import { View } from "../../../components/View";
 import EventsHeader from "./EventsHeader.jsx";
 import EventsMapContainer from "../containers/EventsMapContainer.jsx";
 import EventsList from "./list/EventsList.jsx";
@@ -32,7 +33,7 @@ const defaultProps = {
 const enhance = pure;
 
 const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng }) => (
-    <div className="events">
+    <View className="events">
         <EventsHeader
             mapView={mapView}
             toggleMapView={toggleMapView}
@@ -55,7 +56,7 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
                 events={events}
             />
         )}
-    </div>
+    </View>
 );
 
 Events.propTypes = propTypes;

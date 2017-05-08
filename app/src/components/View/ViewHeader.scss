@@ -1,6 +1,7 @@
 .view-header {
     padding: 16px;
     display: flex;
+    flex-shrink: 0;
     justify-content: space-between;
     align-items: center;
     background: #fff;
