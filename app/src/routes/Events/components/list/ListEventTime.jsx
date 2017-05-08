@@ -10,11 +10,28 @@ const propTypes = {
 
 const enhance = pure;
 
+const endDate = (from, to) => {
+    const parsedTo = moment(to);
+    const parsedFrom = moment(from);
+    const isSame = parsedTo.isSame(parsedFrom, "day");
+
+    return (
+        <time className="list-event__time-to">
+            {parsedTo.format("h:mm A")}
+            {!isSame && (
+                <span className="list-event__time-date">
+                    {parsedTo.format("DD MMM")}
+                </span>
+            )}
+        </time>
+    );
+};
+
 const ListEventTime = ({ from, to }) => (
     <div className="list-event__time">
         <time className="list-event__time-from">{moment(from).format("h:mm A")}</time>
         <span className="list-event__time-delemiter" />
-        <time className="list-event__time-to">{moment(to).format("h:mm A")}</time>
+        {endDate(from, to)}
     </div>
 );
 
