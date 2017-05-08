@@ -105,7 +105,7 @@ class EventValidator extends PathVariableValidator {
     void validateDateFilters(Long startDateTimestamp, Long endDateTimestamp, ControllerErrors errors) {
         long presentFiltersCount = ValuePresenceUtils.getPresentCount(startDateTimestamp, endDateTimestamp);
 
-        if (presentFiltersCount > 0 && (presentFiltersCount < 2 || new Date(startDateTimestamp).after(new Date(endDateTimestamp)))) {
+        if (presentFiltersCount == 2 && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
             errorHandler.addIncorrectRequestError(errors);
         }
     }

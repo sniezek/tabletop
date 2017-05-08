@@ -54,6 +54,18 @@ public class EventService {
                             .or
                                     (QEvent.event.tournaments.any().startDate.goe(startDate).and(QEvent.event.tournaments.any().endDate.loe(endDate)))
             );
+        } else if (ValuePresenceUtils.isPresent(startDateTimestamp)) {
+            Date startDate = new Date(startDateTimestamp);
+            booleanBuilder.and(
+                    (QEvent.event.sparrings.any().startDate.goe(startDate))
+                            .or
+                                    (QEvent.event.tournaments.any().startDate.goe(startDate)));
+        } else if (ValuePresenceUtils.isPresent(endDateTimestamp)) {
+            Date endDate = new Date(endDateTimestamp);
+            booleanBuilder.and(
+                    (QEvent.event.sparrings.any().endDate.loe(endDate))
+                            .or
+                                    (QEvent.event.tournaments.any().endDate.loe(endDate)));
         }
 
         List<Event> events = Lists.newArrayList(eventRepository.findAll(booleanBuilder));
