@@ -8,12 +8,15 @@ const enhance = pure;
 
 const groupedEvents = (events) => {
     const map = events.reduce((days, event) => {
-        const day = moment(event.startDate).format("dddd, D MMMM");
+        const parsedDate = moment(event.startDate);
+        const isCurrentYear = parsedDate.year() === moment().year();
+        const format = isCurrentYear ? "dddd, D MMMM" : "dddd, D MMMM YYYY";
+        const formattedDate = parsedDate.format(format);
 
-        if (days.has(day)) {
-            days.get(day).push(event);
+        if (days.has(formattedDate)) {
+            days.get(formattedDate).push(event);
         } else {
-            days.set(day, [event]);
+            days.set(formattedDate, [event]);
         }
 
         return days;
