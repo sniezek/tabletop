@@ -60,6 +60,7 @@ class EditContainer extends PureComponent {
 
         this.props.editMail({
             username: username,
+            password: "aaa",
             email: newMail
         }, ({ ok }) => {
             if (ok) {

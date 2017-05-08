@@ -71,10 +71,11 @@ class Api {
         });
     }
 
-    editMail({ username, email }) {
+    editMail({ username, email, password }) {
         const body = JSON.stringify({
             username,
-            email
+            email,
+            password
         });
 
         const headers = new Headers({

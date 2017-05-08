@@ -2,8 +2,8 @@ import Api from "../api";
 
 export const EDIT = "EDIT";
 
-export const editMail = ({ username, email }, callback) => dispatch =>
-  Api.editMail({ username, email }).then((response) => {
+export const editMail = ({ username, email, password }, callback) => dispatch =>
+  Api.editMail({ username, email, password }).then((response) => {
     if (response.ok) {
       console.log("edit.js editMail ok");
       dispatch({

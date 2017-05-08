@@ -31,10 +31,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User editMail(User user, String mail) {
-        user.setEmail(mail);
+    public User editMail(User user) {
+        User edited = userRepository.findByUsername(user.getUsername());
+        edited.setEmail(user.getEmail());
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.save(user);
+        return userRepository.save(edited);
     }
 
     public User editPassword(User user) {
