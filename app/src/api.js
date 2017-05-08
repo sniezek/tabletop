@@ -89,10 +89,11 @@ class Api {
         });
     }
 
-    editPass({ username, password }) {
+    editPass({ username, password, email }) {
         const body = JSON.stringify({
             username,
-            password
+            password,
+            email
         });
 
         const headers = new Headers({

@@ -37,8 +37,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User editPassword(User user, String password) {
-        user.setPassword(passwordEncoder.encode(password));
+    public User editPassword(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         return userRepository.save(user);
     }

@@ -55,11 +55,12 @@ class EditContainer extends PureComponent {
         this.setState({
             loading: true
         });
-
+        console.log(this.props.user);
+        var username = this.props.user.name;
         this.props.editMail({
-            newMail
+            username, newMail
         }, ({ ok }) => {
-            if (!ok) {
+            if (ok) {
                 this.setState({
                     password: "",
                     passwordConfirm: "",
@@ -68,11 +69,31 @@ class EditContainer extends PureComponent {
             }
         });
 
-        console.log("editMail");
     }
 
     editPass() {
         console.log("editPass");
+        const { newMail, newPassword, loading } = this.state;
+
+        this.setState({
+            loading: true
+        });
+
+        console.log(this.props.user);
+        var username = this.props.user.name;
+        var email = this.props.user.email;
+        var password = newPassword;
+        this.props.editPass({
+            username, email, password
+        }, ({ ok }) => {
+            if (ok) {
+                this.setState({
+                    password: "",
+                    passwordConfirm: "",
+                    loading: false
+                });
+            }
+        });
     }
 
     render() {

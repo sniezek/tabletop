@@ -48,12 +48,12 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/editpassword")
-    public ResponseEntity<?> editPassword(@Valid @RequestBody User user, Errors errors, String password) {
+    public ResponseEntity<?> editPassword(@Valid @RequestBody User user, Errors errors) {
         if (errors.hasErrors()) {
             return ResponseUtils.badRequest(errors);
         }
 
-        return ResponseUtils.created(userService.editPassword(user, password));
+        return ResponseUtils.created(userService.editPassword(user));
     }
 
 }
