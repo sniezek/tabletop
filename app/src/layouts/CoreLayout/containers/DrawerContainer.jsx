@@ -41,18 +41,27 @@ const actions = [{
     path: "/register"
 }];
 
-const profileLink = ({ name }) => ({
-    label: "My profile",
-    icon: "person",
-    path: `/users/${name}`
-});
+const extendedLinks = ({ name }) => {
+    const item = {
+        label: "My profile",
+        icon: "person",
+        path: `/users/${name}`
+    };
+
+    const links = [...defaultLinks];
+    links.splice(1, 0, item);
+    return links;
+};
 
 class DrawerContainer extends PureComponent {
     constructor(props) {
         super(props);
 
+        const loggedIn = props.user !== null;
+        const links = loggedIn ? extendedLinks(props.user) : defaultLinks;
+
         this.state = {
-            links: defaultLinks
+            links
         };
     }
 
@@ -68,11 +77,8 @@ class DrawerContainer extends PureComponent {
                 links: defaultLinks
             });
         } else if (loggedIn) {
-            const links = [...defaultLinks];
-            links.splice(1, 0, profileLink(nextUser));
-
             this.setState({
-                links
+                links: extendedLinks(nextUser)
             });
         }
     }
