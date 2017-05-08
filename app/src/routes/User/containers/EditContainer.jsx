@@ -83,9 +83,11 @@ class EditContainer extends PureComponent {
         // });
 
         const username = this.props.user.name;
-
+        const oldemail = this.props.user.email;
+        console.log(oldemail);
         this.props.editPass({
             username,
+            email: oldemail,
             password: newPassword
         }, ({ ok }) => {
             if (ok) {

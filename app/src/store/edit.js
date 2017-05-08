@@ -15,8 +15,8 @@ export const editMail = ({ username, email }, callback) => dispatch =>
     }
   });
 
-export const editPass = ({ username, password }, callback) => dispatch =>
-  Api.editPass({ username, password}).then((response) => {
+export const editPass = ({ username, email, password }, callback) => dispatch =>
+  Api.editPass({ username, email, password}).then((response) => {
     if (response.ok) {
       dispatch({
         type: EDIT

@@ -38,8 +38,10 @@ public class UserService {
     }
 
     public User editPassword(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        User edited = userRepository.findByUsername(user.getUsername());
+        edited.setPassword(passwordEncoder.encode(user.getPassword()));
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return userRepository.save(user);
+        return userRepository.save(edited);
     }
 }
