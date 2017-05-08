@@ -109,8 +109,8 @@ class EventsContainer extends PureComponent {
                 displayFilters={displayFilters}
                 loggedIn={loggedIn}
                 events={events}
-                lat={lat !== undefined ? parseInt(lat, 10) : lat}
-                lng={lng !== undefined ? parseInt(lng, 10) : lng}
+                lat={lat !== undefined ? parseFloat(lat) : lat}
+                lng={lng !== undefined ? parseFloat(lng) : lng}
                 loadEvents={this.loadEvents}
             />
         );
