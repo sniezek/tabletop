@@ -48,10 +48,11 @@ class EventsContainer extends PureComponent {
         };
 
         this.toggleFilters = this.toggleFilters.bind(this);
+        this.loadEvents = this.loadEvents.bind(this);
     }
 
     componentDidMount() {
-        this.props.loadEvents(() => {});
+        this.loadEvents();
     }
 
     componentWillReceiveProps({ lat, lng, mapView }) {
@@ -65,6 +66,10 @@ class EventsContainer extends PureComponent {
         } else if (viewSwitchedToList && router.location.search !== "") {
             router.push("/events");
         }
+    }
+
+    loadEvents() {
+        this.props.loadEvents();
     }
 
     toggleFilters(displayFilters) {
@@ -88,6 +93,7 @@ class EventsContainer extends PureComponent {
                 events={events}
                 lat={lat !== undefined ? parseInt(lat, 10) : lat}
                 lng={lng !== undefined ? parseInt(lng, 10) : lng}
+                loadEvents={this.loadEvents}
             />
         );
     }
