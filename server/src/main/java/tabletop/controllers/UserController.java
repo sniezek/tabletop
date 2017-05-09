@@ -41,10 +41,8 @@ public class UserController {
     @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
     public ResponseEntity<?> editMail(@Valid @RequestBody User user, Errors errors) {
         if (errors.hasErrors()) {
-            System.out.println("Server in hasErrors");
             return ResponseUtils.badRequest(errors);
         }
-        System.out.println("Server after hasErrors");
         return ResponseUtils.created(userService.editMail(user));
     }
 

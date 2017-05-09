@@ -30,6 +30,7 @@ class EditContainer extends PureComponent {
         this.state = {
             newMail: "",
             newPassword: "",
+            confirmNewPassword: "",
             loading: false
         };
 
@@ -37,6 +38,7 @@ class EditContainer extends PureComponent {
         this.editPass = this.editPass.bind(this);
         this.setNewMail = this.setNewMail.bind(this);
         this.setNewPass = this.setNewPass.bind(this);
+        this.setConfirmNewPass = this.setConfirmNewPass.bind(this);
     }
 
     setNewMail({ target }) {
@@ -51,68 +53,108 @@ class EditContainer extends PureComponent {
         });
     }
 
+    setConfirmNewPass({ target }) {
+        this.setState({
+            confirmNewPassword: target.value
+        });
+    }
+
     editMail() {
         const { newMail } = this.state;
-        // this.setState({
-      //     loading: true
-      // });
+
+        this.setState({
+            loading: true
+        });
+
         const username = this.props.user.name;
 
         this.props.editMail({
             username: username,
             password: "aaa",
             email: newMail
+        /*PONIZSZE WYKONUJE SIĘ TYLKO GDY WYSLEMY NIEPOPRAWNY MAIL, NP PUSTY*/
         }, ({ ok }) => {
-            if (ok) {
-                console.log("Succeeded");
-                this.setState({
-                    newMail: "",
-                    loading: false
-                });
+            console.log("BEFORE");
+            this.setState({
+                newMail: "",
+                loading: false
+            });
+          console.log("AFTER");
+            if (!ok) {
+                alert("Error encountered while changing e-mail.");
             } else {
-                console.log("Not succeeded");
+                alert("E-mail successfully changed.");
             }
         });
-
+        /*POWYZSZE WYKONUJE SIĘ TYLKO GDY WYSLEMY NIEPOPRAWNY MAIL, NP PUSTY*/
     }
 
     editPass() {
-        const { newPassword } = this.state;
+        const { newPassword, confirmNewPassword } = this.state;
 
-        // this.setState({
-        //     loading: true
-        // });
+        this.setState({
+            loading: true
+        });
 
         const username = this.props.user.name;
         const oldemail = this.props.user.email;
-        console.log(oldemail);
-        this.props.editPass({
-            username,
-            email: oldemail,
-            password: newPassword
-        }, ({ ok }) => {
-            if (ok) {
+
+        if(newPassword.length < 1) {
+            alert("Password can't be empty.");
+            this.setState({
+                loading: false
+            });
+        }
+        else if(newPassword===confirmNewPassword) {
+            this.props.editPass({
+                username,
+                email: oldemail,
+                password: newPassword
+            }, ({ok}) => {
+            /*PONIZSZY KOD SIE NIE WYKONUJE*/
+            console.log("bbb");
+            if (!ok) {
                 this.setState({
-                    password: "",
-                    passwordConfirm: "",
+                    newPassword: "",
                     loading: false
                 });
-            }
-        });
+                console.log("Loading set to " + this.state.loading);
+                alert("Error encountered while changing password.");
+              }
+            else {
+                this.setState({
+                    newPassword: "",
+                    loading: false
+                });
+                console.log("Loading set to " + this.state.loading);
+                alert("Password successfully changed.");
+              }
+            });
+            /*POWYZSZY KOD SIE NIE WYKONUJE*/
+        } else {
+            alert("Entered passwords don't match.");
+            this.setState({
+                newPassword: "",
+                confirmNewPassword: "",
+                loading: false
+            });
+        }
     }
 
     render() {
-        const { newMail, newPassword, loading } = this.state;
+        const { newMail, newPassword, confirmNewPassword, loading } = this.state;
 
         return (
             <EditForm
                 loading={loading}
                 email={newMail}
                 password={newPassword}
+                confirmPassword={confirmNewPassword}
                 editMail={this.editMail}
                 editPass={this.editPass}
                 setNewMail={this.setNewMail}
                 setNewPass={this.setNewPass}
+                setConfirmNewPass={this.setConfirmNewPass}
             />
         );
     }
