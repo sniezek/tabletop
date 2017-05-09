@@ -13,9 +13,7 @@ import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
 import tabletop.repositories.match.tournament.TournamentRepository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class TournamentService {
@@ -98,17 +96,20 @@ public class TournamentService {
     }
 
     public void setFinalResults(Tournament tournament){
+        List<TournamentFinalResult> results = null;
         if (tournament.getType() == TournamentType.SWISS) {
-            SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
-            for (SwissPlayerResult swissPlayerResult: swissTournamentProcess.getPlayerResults()) {
-                TournamentFinalResult tournamentFinalResult = new TournamentFinalResult();
-                tournamentFinalResult.setTournament(tournament);
-                tournamentFinalResult.setUser(swissPlayerResult.getId().getUser());
-                tournamentFinalResult.setPoints(swissPlayerResult.getResult());
-                tournamentFinalResult.setPlace(1);
+            results = swissTournamentService.getFinalResults(tournament);
+        }
 
-                tournamentFinalResultRepository.save(tournamentFinalResult);
+        if (results != null) {
+            for (TournamentFinalResult finalResult:results) {
+                Optional<TournamentFinalResult> tournamentFinalResult;
+                tournamentFinalResult = tournamentFinalResultRepository
+                        .findOneByUserAndTournament(finalResult.getUser(), finalResult.getTournament());
+
+                if (!tournamentFinalResult.isPresent()) tournamentFinalResultRepository.save(finalResult);
             }
         }
     }
+
 }

@@ -31,9 +31,6 @@ const Tournament = ({ router }) => (
         {/* />*/}
         {/* )}*/}
     </div>
-
-
-    // <TournamentsFinishedList />
 );
 
 Tournament.propTypes = propTypes;

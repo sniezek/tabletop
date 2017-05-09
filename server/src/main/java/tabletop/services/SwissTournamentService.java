@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tabletop.controllers.TournamentController;
 import tabletop.domain.match.tournament.Pair;
+import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.match.tournament.TournamentFinalResult;
 import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
@@ -101,8 +103,41 @@ public class SwissTournamentService {
     }
 
     public boolean canBeFinished(SwissTournamentProcess swissTournamentProcess) {
-        return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size()+1;
-//        return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size();
+        return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size();
+    }
+
+    public List<TournamentFinalResult> getFinalResults(Tournament tournament){
+        List<TournamentFinalResult> tournamentFinalResultList = new LinkedList<>();
+        List<SwissPlayerResult> playerResults = getPlayerResultsSortedByPoints((SwissTournamentProcess) tournament.getTournamentProcess());
+
+        for (SwissPlayerResult swissPlayerResult: playerResults) {
+            TournamentFinalResult result = new TournamentFinalResult();
+            result.setTournament(tournament);
+            result.setUser(swissPlayerResult.getId().getUser());
+            result.setPoints(swissPlayerResult.getResult());
+            tournamentFinalResultList.add(result);
+        }
+
+        return setPlaces(tournamentFinalResultList);
+    }
+
+    private List<SwissPlayerResult> getPlayerResultsSortedByPoints(SwissTournamentProcess swissTournamentProcess) {
+        List<SwissPlayerResult> swissPlayerResults = swissTournamentProcess.getPlayerResults();
+        Comparator<SwissPlayerResult> resultComparator = Comparator.comparing(SwissPlayerResult::getResult).thenComparing(SwissPlayerResult::getUserId);
+        swissPlayerResults.sort(resultComparator);
+        return swissPlayerResults;
+    }
+
+    private List<TournamentFinalResult> setPlaces(List<TournamentFinalResult> results) {
+        results.get(results.size()-1).setPlace(1);
+        for (int i=results.size()-2; i>=0; i--){
+            if (results.get(i+1).getPoints() == results.get(i).getPoints()){
+                results.get(i).setPlace(results.get(i+1).getPlace());
+            } else {
+                results.get(i).setPlace(results.get(i+1).getPlace()+1);
+            }
+        }
+        return results;
     }
 
 }

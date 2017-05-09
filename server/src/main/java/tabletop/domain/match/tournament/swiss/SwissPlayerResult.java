@@ -75,8 +75,12 @@ public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
         this.currentScore = currentScore;
     }
 
+    public Long getUserId() {
+        return id.getUser().getId();
+    }
+
     @Override
     public int compareTo(SwissPlayerResult o) {
-        return id.getUser().getId().compareTo(o.getId().getUser().getId());
+        return getUserId().compareTo(o.getUserId());
     }
 }
