@@ -1,7 +1,5 @@
-import React from "react";
+import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import compose from "recompose/compose";
-import pure from "recompose/pure";
 import { connect } from "react-redux";
 import Drawer from "../components/Drawer";
 
@@ -17,12 +15,9 @@ const mapStateToProps = ({ user }) => ({
     user
 });
 
-const enhance = compose(
-    connect(mapStateToProps),
-    pure
-);
+const enhance = connect(mapStateToProps);
 
-const links = [{
+const defaultLinks = [{
     icon: "home",
     label: "Home",
     path: "/"
@@ -39,20 +34,68 @@ const links = [{
 const actions = [{
     label: "Login",
     icon: "lock_outline",
-    url: "/login"
+    path: "/login"
 }, {
     label: "Create account",
     icon: "person_add",
-    url: "/register"
+    path: "/register"
 }];
 
-const DrawerContainer = ({ user }) => (
-    <Drawer
-        user={user}
-        links={links}
-        actions={actions}
-    />
-);
+const extendedLinks = ({ name }) => {
+    const item = {
+        label: "My profile",
+        icon: "person",
+        path: `/users/${name}`
+    };
+
+    const links = [...defaultLinks];
+    links.splice(1, 0, item);
+    return links;
+};
+
+class DrawerContainer extends PureComponent {
+    constructor(props) {
+        super(props);
+
+        const loggedIn = props.user !== null;
+        const links = loggedIn ? extendedLinks(props.user) : defaultLinks;
+
+        this.state = {
+            links
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const nextUser = nextProps.user;
+        const { user } = this.props;
+
+        const loggedOut = nextUser === null && user !== null;
+        const loggedIn = nextUser !== null && user === null;
+
+        if (loggedOut) {
+            this.setState({
+                links: defaultLinks
+            });
+        } else if (loggedIn) {
+            this.setState({
+                links: extendedLinks(nextUser)
+            });
+        }
+    }
+
+    render() {
+        const { user } = this.props;
+        const { links } = this.state;
+
+        return (
+            <Drawer
+                user={user}
+                links={links}
+                actions={actions}
+            />
+        );
+    }
+}
 
 DrawerContainer.propTypes = propTypes;
 DrawerContainer.defaultProps = defaultProps;

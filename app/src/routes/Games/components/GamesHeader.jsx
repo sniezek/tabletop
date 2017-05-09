@@ -1,12 +1,14 @@
 import React from "react";
-import "../../Events/components/EventsHeader.scss";
+import pure from "recompose/pure";
+import { ViewHeader } from "../../../components/View";
 
-export const GamesHeader = () => (
-    <div className="events-header mdl-shadow--2dp">
-        <h2 className="events-header__title">
-            Available games
-        </h2>
-    </div>
+const enhance = pure;
+
+const GamesHeader = () => (
+    <ViewHeader
+	    title="Available games"
+    />
 );
 
-export default GamesHeader;
+
+export default enhance(GamesHeader);

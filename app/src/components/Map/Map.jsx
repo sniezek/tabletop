@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import compose from "recompose/compose";
-import withProps from "recompose/withProps";
+import pure from "recompose/pure";
 import { withGoogleMap, GoogleMap } from "react-google-maps";
-import withScriptjs from "react-google-maps/lib/async/withScriptjs";
 
 const propTypes = {
     defaultZoom: PropTypes.number,
@@ -12,8 +11,6 @@ const propTypes = {
         lng: PropTypes.number.isRequired
     })
 };
-
-const API_KEY = "AIzaSyCI1muQBeAuXVVcRS8hx9VK4ZQ2wssx3jo";
 
 const defaultProps = {
     defaultZoom: 6,
@@ -24,10 +21,7 @@ const defaultProps = {
 };
 
 const enhance = compose(
-    withProps({
-        googleMapURL: `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${API_KEY}`
-    }),
-    withScriptjs,
+    pure,
     withGoogleMap
 );
 

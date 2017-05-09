@@ -1,34 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
+import { View } from "../../../components/View";
 import EventsHeader from "./EventsHeader.jsx";
-import EventsMap from "./EventsMap.jsx";
-import EventsList from "./EventsList.jsx";
-import EventsFilters from "./EventsFilters.jsx";
+import EventsContent from "./EventsContent.jsx";
+import EventsFilters from "./filters/EventsFilters.jsx";
 import "./Events.scss";
 
 const propTypes = {
     mapView: PropTypes.bool,
-    toggleMapView: PropTypes.func,
-    toggleFilters: PropTypes.func,
+    toggleMapView: PropTypes.func.isRequired,
+    toggleFilters: PropTypes.func.isRequired,
+    loadEvents: PropTypes.func.isRequired,
     displayFilters: PropTypes.bool,
     events: PropTypes.array,
-    loggedIn: PropTypes.bool
+    loggedIn: PropTypes.bool,
+    lat: PropTypes.number,
+    lng: PropTypes.number
 };
 
 const defaultProps = {
     mapView: true,
-    toggleMapView: () => {},
-    toggleFilters: () => {},
     displayFilters: false,
     events: [],
-    loggedIn: false
+    loggedIn: false,
+    lat: undefined,
+    lng: undefined
 };
 
 const enhance = pure;
 
-const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn }) => (
-    <div className="events">
+const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng, loadEvents }) => (
+    <View className="events">
         <EventsHeader
             mapView={mapView}
             toggleMapView={toggleMapView}
@@ -39,13 +42,15 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
         <EventsFilters
             displayFilters={displayFilters}
             toggleFilters={toggleFilters}
+            loadEvents={loadEvents}
         />
-        { mapView ? (
-            <EventsMap />
-        ) : (
-            <EventsList />
-        )}
-    </div>
+        <EventsContent
+            lat={lat}
+            lng={lng}
+            events={events}
+            mapView={mapView}
+        />
+    </View>
 );
 
 Events.propTypes = propTypes;

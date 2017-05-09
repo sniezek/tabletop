@@ -1,0 +1,21 @@
+.map-popup {
+    &__name {
+        margin: 0 0 4px;
+        font-size: 18px;
+        line-height: 24px;
+    }
+
+    &__location,
+    &__date {
+        margin: 0;
+        font-size: 12px;
+        line-height: 16px;
+
+        &-icon {
+            margin-right: 4px;
+            font-size: 14px;
+            line-height: 16px;
+            vertical-align: top;
+        }
+    }
+}

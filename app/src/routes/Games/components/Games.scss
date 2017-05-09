@@ -1,76 +1,76 @@
-.games {
-  flex: 1 1 auto;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-}
-
 .gamesList {
-  margin: 20px;
+    margin: 20px;
 }
 
 .gameTile {
-  padding: 20px;
+    padding: 20px;
 }
 
 .gamesList section > .section__play-btn {
-  min-height: 200px;
+    min-height: 200px;
 }
 
 .gamesList section > header > .material-icons {
-  font-size: 3rem;
+    font-size: 3rem;
 }
 
 .gamesList section > button {
-  position: absolute;
-  z-index: 99;
-  top: 8px;
-  right: 8px;
+    position: absolute;
+    z-index: 99;
+    top: 8px;
+    right: 8px;
 }
 
 .gamesList .mdl-card {
-  height: auto;
-  display: flex;
-  flex-direction: column;
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
+
 .gamesList .mdl-card > * {
-  height: auto;
+    height: auto;
 }
+
 .gamesList .mdl-card .mdl-card__supporting-text {
-  margin: 40px;
-  flex-grow: 1;
-  padding: 0;
-  color: inherit;
-  width: calc(100% - 80px);
+    margin: 40px;
+    flex-grow: 1;
+    padding: 0;
+    color: inherit;
+    width: calc(100% - 80px);
 }
+
 .gamesList .mdl-card__supporting-text h4 {
-  margin-top: 0;
-  margin-bottom: 0px;
+    margin-top: 0;
+    margin-bottom: 0px;
 }
+
 .gamesList .mdl-card__actions {
-  margin: 0;
-  padding: 4px 40px;
-  color: inherit;
+    margin: 0;
+    padding: 4px 40px;
+    color: inherit;
 }
+
 .gamesList .mdl-card__actions a {
-  color: #00BCD4;
-  margin: 0;
+    color: #00BCD4;
+    margin: 0;
 }
+
 .gamesList .mdl-card__actions a:hover,
 .gamesList .mdl-card__actions a:active {
-  color: inherit;
-  background-color: transparent;
+    color: inherit;
+    background-color: transparent;
 }
+
 .gamesList .mdl-card__supporting-text + .mdl-card__actions {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 .gameSettings span i.material-icons {
-  vertical-align: middle;
+    vertical-align: middle;
 }
 
 .gameSection {
-  margin-bottom: 15px;
+    margin-bottom: 15px;
 }
 
 .gameSettings {

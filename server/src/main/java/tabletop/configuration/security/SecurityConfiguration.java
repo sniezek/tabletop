@@ -67,7 +67,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user").hasAuthority(TabletopUserDetailsService.ROLE_USER)
-                .antMatchers(HttpMethod.POST, "/events").hasAuthority(TabletopUserDetailsService.ROLE_USER);
+                .antMatchers(HttpMethod.POST, "/events").hasAuthority(TabletopUserDetailsService.ROLE_USER)
+                .antMatchers(HttpMethod.PUT, "/event/**").hasAuthority(TabletopUserDetailsService.ROLE_USER);
 
     }
 

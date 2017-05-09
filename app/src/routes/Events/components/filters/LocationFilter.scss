@@ -1,6 +1,7 @@
 .location-filter {
     &__input {
         display: flex;
+        align-items: center;
     }
 
     &__input-label,
@@ -10,5 +11,17 @@
 
     .mdl-slider__container {
         margin: 0 -20px;
+        flex: 1 1 0%;
+    }
+
+    &__slider {
+        display: flex;
+        flex: 1 1 0%;
+        align-items: center;
+    }
+
+    &__slider-value {
+        width: 30px;
+        color: rgba(0, 0, 0, .87);
     }
 }
