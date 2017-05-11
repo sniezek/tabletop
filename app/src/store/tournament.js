@@ -50,7 +50,7 @@ export const getTournamentTypes = dispatch =>
   });
 
 export const getFinishedTournaments = dispatch =>
-  Api.finishedtournaments().then((response) => {
+  Api.finishedTournaments().then((response) => {
       if (response.ok) {
           response.json().then((finishedTournamentsList) => {
               dispatch({
