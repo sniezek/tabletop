@@ -11,20 +11,13 @@ const defaultProps = {
     tournamentTypesList: []
 };
 
-const mapDispatchToProps = dispatch => ({
-    getTournamentTypes: getTournamentTypes(dispatch)
-});
-
-const mapStateToProps = (state) => {
-    if (state.tournament !== null) {
-        return {
-            tournamentTypesList: state.tournament.tournamentTypesList
-        };
-    }
-    return {
-        tournamentTypesList: []
-    };
+const mapDispatchToProps = {
+    getTournamentTypes
 };
+
+const mapStateToProps = state => ({
+    tournamentTypesList: state.tournament.tournamentTypesList
+});
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 

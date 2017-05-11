@@ -11,7 +11,8 @@ const propTypes = {
 
 const defaultProps = {
     finalResults: [],
-    tournamentId: 1
+    tournamentId: 1,
+    getFinalResults: () => {}
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -20,20 +21,12 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-const mapStateToProps = (state) => {
-    if (state.tournament !== null) {
-        return {
-            finalResults: state.tournament.finalResults,
-            tournamentId: 1
-        };
-    }
-    return {
-        finalResults: [],
-        tournamentId: 1
-    };
-};
+const mapStateToProps = (state) => ({
+    finalResults: state.tournament.finalResults,
+    tournamentId: 1
+});
+
 const initialState = {};
-// const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 class TournamentFinalResultsContainer extends PureComponent {
 

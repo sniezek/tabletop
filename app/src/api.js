@@ -10,8 +10,8 @@ class Api {
         this.logout = this.logout.bind(this);
         this.user = this.user.bind(this);
         this.games = this.games.bind(this);
-        this.tournamentypes = this.tournamentypes.bind(this);
-        this.finishedtournaments = this.finishedtournaments.bind(this);
+        this.tournamenTypes = this.tournamenTypes.bind(this);
+        this.finishedTournaments = this.finishedTournaments.bind(this);
         this.register = this.register.bind(this);
         this.initialRound = this.initialRound.bind(this);
         this.setWinner = this.setWinner.bind(this);
@@ -52,14 +52,14 @@ class Api {
         });
     }
 
-    tournamentypes() {
+    tournamenTypes() {
         return fetch(`${API_SERVER}/tournament/types`, {
             method: "GET",
             credentials: "include"
         });
     }
 
-    finishedtournaments() {
+    finishedTournaments() {
         return fetch(`${API_SERVER}/tournament/finished`, {
             method: "GET",
             credentials: "include"
