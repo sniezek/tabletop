@@ -5,15 +5,16 @@ import { getGameDetails } from "../../../store/games";
 import GameDetails from "../components/GameDetails";
 
 const propTypes = {
-    game: PropTypes.object
+    game: PropTypes.object,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
     game: null
 };
 
-const mapDispatchToProps = (dispatch, name) => ({
-    getGameDetails: getGameDetails(dispatch, name)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    getGameDetails: dispatch(getGameDetails(ownProps.router.params.name))
 });
 
 const mapStateToProps = state => ({
@@ -27,8 +28,7 @@ class GameDetailsContainer extends PureComponent {
         this.getGameDetails = this.getGameDetails.bind(this);
     }
 
-    getGameDetails(name) {
-        console.log(name);
+    getGameDetails() {
     }
 
     render() {

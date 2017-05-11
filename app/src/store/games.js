@@ -18,8 +18,8 @@ export const getGames = dispatch =>
         }
     });
 
-export const getGameDetails = (dispatch, name) =>
-  Api.game("Chess").then((response) => {
+export const getGameDetails = name => dispatch =>
+  Api.game(name).then((response) => {
       if (response.ok) {
           response.json().then((game) => {
               dispatch({
