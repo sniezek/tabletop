@@ -36,7 +36,7 @@ export const getTournament = ({ id }, callback) => dispatch =>
     });
 
 export const getTournamentTypes = dispatch =>
-  Api.tournamentypes().then((response) => {
+  Api.tournamentTypes().then((response) => {
       if (response.ok) {
           response.json().then((tournamentTypesList) => {
               dispatch({
@@ -85,7 +85,7 @@ export const nextRound = (id, callback) => dispatch =>
               const pairsFormatted = pairs.map(pair => ({
                   host: pair.a,
                   guest: pair.b,
-                  winner: "0"
+                  winner: 0
               }));
               dispatch({
                   type: NEXT_ROUND,
@@ -116,7 +116,7 @@ export const initialRound = (id, callback) => dispatch =>
               const pairsFormatted = pairs.map(pair => ({
                   host: pair.a,
                   guest: pair.b,
-                  winner: "0"
+                  winner: 0
               }));
               dispatch({
                   type: INITIAL_ROUND,

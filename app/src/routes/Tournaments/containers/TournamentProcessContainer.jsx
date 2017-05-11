@@ -8,7 +8,7 @@ const propTypes = {
     pairs: PropTypes.arrayOf(PropTypes.shape({
         host: PropTypes.object.isRequired,
         guest: PropTypes.object.isRequired,
-        winner: PropTypes.string.isRequired
+        winner: PropTypes.number.isRequired
     })),
     tournamentId: PropTypes.number.isRequired,
     tournamentName: PropTypes.string.isRequired,
@@ -93,13 +93,11 @@ class TournamentProcessContainer extends PureComponent {
         });
     }
 
-    setWinner(player, okCallback, nokCallback) {
+    setWinner(player, okCallback) {
         const tournamentId = this.props.tournamentId;
         this.props.setWinner(tournamentId, player, ({ ok }) => {
             if (ok) {
                 okCallback();
-            } else {
-                nokCallback();
             }
         });
     }

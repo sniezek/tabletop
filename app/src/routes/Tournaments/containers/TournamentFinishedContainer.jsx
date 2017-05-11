@@ -15,23 +15,15 @@ const mapDispatchToProps = {
     getFinishedTournaments
 };
 
-const mapStateToProps = (state) => {
-    if (state.tournament !== null) {
-        return {
-            finishedTournamentsList: state.tournament.finishedTournamentsList
-        };
-    }
-    return {
-        finishedTournamentsList: []
-    };
-};
+const mapStateToProps = state => ({
+    finishedTournamentsList: state.tournament.finishedTournamentsList
+});
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 class TournamentFinishedContainer extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = null;
         this.getFinishedTournaments = this.getFinishedTournaments.bind(this);
     }
 
