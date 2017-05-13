@@ -69,7 +69,7 @@ class Api {
     setWinner(tournamentId, winner) {
         const body = JSON.stringify({
             tournamentId,
-            winner
+            winnerUsername: winner.username
         });
 
         const headers = new Headers({

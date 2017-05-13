@@ -1,22 +1,22 @@
 package tabletop.domain.game.wininformation;
 
-import tabletop.domain.user.User;
-
-import java.util.Set;
+import javax.validation.constraints.NotNull;
 
 public class SingleWinInformation {
+    @NotNull
     private Long tournamentId;
-    private User winner;
+    @NotNull
+    private String winnerUsername;
 
     public SingleWinInformation() {
     }
 
-    public User getWinner() {
-        return winner;
+    public String getWinnerUsername() {
+        return winnerUsername;
     }
 
-    public void setWinner(User winner) {
-        this.winner = winner;
+    public void setWinnerUsername(String winnerUsername) {
+        this.winnerUsername = winnerUsername;
     }
 
     public Long getTournamentId() {

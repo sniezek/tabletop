@@ -1,8 +1,6 @@
 package tabletop.services;
 
 import org.springframework.stereotype.Service;
-import tabletop.domain.exceptions.BadRequestException;
-import tabletop.domain.exceptions.ErrorInfo;
 import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentPlayerResult;
@@ -12,7 +10,10 @@ import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
 import tabletop.repositories.match.tournament.TournamentRepository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class TournamentService {
@@ -31,10 +32,8 @@ public class TournamentService {
         this.swissTournamentService = swissTournamentService;
     }
 
-    public Tournament getTournamentById(Long tournamentId) {
-        return tournamentRepository
-                .findOneById(tournamentId)
-                .orElseThrow(() -> new BadRequestException(ErrorInfo.TOURNAMENT_NOT_FOUND));
+    public Optional<Tournament> getTournamentById(Long tournamentId) {
+        return tournamentRepository.findOneById(tournamentId);
     }
 
     public void addTournament(Tournament tournament) {
@@ -51,12 +50,10 @@ public class TournamentService {
         return tournamentRepository.findTournamentsByFinishedIsTrue();
     }
 
-    public Collection<TournamentPlayerResult> getFinalResultsForTournament(Long tournamentId) {
-        Tournament tournament = tournamentRepository
-                .findOneById(tournamentId)
-                .orElseThrow(() -> new BadRequestException(ErrorInfo.TOURNAMENT_NOT_FOUND));
+    public Optional<Collection<TournamentPlayerResult>> getFinalResultsForTournament(Long tournamentId) {
+        Optional<Tournament> tournamentOptional = tournamentRepository.findOneById(tournamentId);
 
-        return tournamentFinalResultRepository.findByTournamentOrderByPlace(tournament);
+        return tournamentOptional.map(tournament -> tournamentFinalResultRepository.findByTournamentOrderByPlace(tournament));
 
     }
 
@@ -84,7 +81,7 @@ public class TournamentService {
         if (tournament.getType() == TournamentType.SWISS) {
             SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
 
-            if (swissTournamentService.canBeFinished(swissTournamentProcess)){
+            if (swissTournamentService.canBeFinished(swissTournamentProcess)) {
                 tournament.setFinished(true);
                 tournamentRepository.save(tournament);
             }
@@ -94,14 +91,14 @@ public class TournamentService {
         return null;
     }
 
-    public void setFinalResults(Tournament tournament){
+    public void setFinalResults(Tournament tournament) {
         List<TournamentPlayerResult> results = null;
         if (tournament.getType() == TournamentType.SWISS) {
             results = swissTournamentService.getFinalResults(tournament);
         }
 
         if (results != null) {
-            for (TournamentPlayerResult finalResult:results) {
+            for (TournamentPlayerResult finalResult : results) {
                 Optional<TournamentPlayerResult> tournamentFinalResult;
                 tournamentFinalResult = tournamentFinalResultRepository
                         .findOneByUserAndTournament(finalResult.getUser(), finalResult.getTournament());
