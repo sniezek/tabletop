@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import tabletop.domain.IdComparableEntity;
-import tabletop.domain.match.tournament.TournamentFinalResult;
+import tabletop.domain.match.tournament.TournamentPlayerResult;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ public class User extends IdComparableEntity {
     private String email;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnore
-    private List<TournamentFinalResult> tournamentFinalResults;
+    private List<TournamentPlayerResult> tournamentPlayerResults;
 
     public User() {
     }
@@ -54,12 +54,12 @@ public class User extends IdComparableEntity {
         this.email = email;
     }
 
-    public List<TournamentFinalResult> getTournamentFinalResults() {
-        return tournamentFinalResults;
+    public List<TournamentPlayerResult> getTournamentPlayerResults() {
+        return tournamentPlayerResults;
     }
 
-    public void setTournamentFinalResults(List<TournamentFinalResult> tournamentFinalResults) {
-        this.tournamentFinalResults = tournamentFinalResults;
+    public void setTournamentPlayerResults(List<TournamentPlayerResult> tournamentPlayerResults) {
+        this.tournamentPlayerResults = tournamentPlayerResults;
     }
 
     @Override

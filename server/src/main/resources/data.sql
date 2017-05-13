@@ -1,4 +1,4 @@
-DELETE FROM tournament_final_result;
+DELETE FROM tournament_player_result;
 DELETE FROM tournament_users;
 DELETE FROM swiss_users_played;
 DELETE FROM swiss_player_result;
@@ -25,17 +25,17 @@ VALUES (0, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', '
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished)
 VALUES (1, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', 'results', false);
 
-INSERT INTO tournament_final_result(id, tournament, user, points, place)
+INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (0, 0, 0, 10, 1);
-INSERT INTO tournament_final_result(id, tournament, user, points, place)
+INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (1, 0, 1, 9, 2);
-INSERT INTO tournament_final_result(id, tournament, user, points, place)
+INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (2, 0, 2, 8, 3);
-INSERT INTO tournament_final_result(id, tournament, user, points, place)
+INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (3, 0, 3, 1, 6);
-INSERT INTO tournament_final_result(id, tournament, user, points, place)
+INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (4, 0, 4, 5, 4);
-INSERT INTO tournament_final_result(id, tournament, user, points, place)
+INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (5, 0, 4, 3, 5);
 
 INSERT INTO tournament_process(id)

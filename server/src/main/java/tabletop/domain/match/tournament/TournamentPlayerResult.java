@@ -6,7 +6,7 @@ import tabletop.domain.user.User;
 import javax.persistence.*;
 
 /**
- * TournamentFinalResult stores final results of tournaments for each user separately,
+ * TournamentPlayerResult stores final results of tournaments for each user separately,
  * records are saved after finishing the tournament.
  * <p>
  * points:int - all points earned by the user during the tournament
@@ -14,7 +14,7 @@ import javax.persistence.*;
  */
 
 @Entity
-public class TournamentFinalResult {
+public class TournamentPlayerResult {
 
     @Id
     @GeneratedValue

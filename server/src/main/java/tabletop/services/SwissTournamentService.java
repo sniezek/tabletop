@@ -3,10 +3,9 @@ package tabletop.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import tabletop.controllers.TournamentController;
 import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
-import tabletop.domain.match.tournament.TournamentFinalResult;
+import tabletop.domain.match.tournament.TournamentPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
@@ -106,19 +105,19 @@ public class SwissTournamentService {
         return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size();
     }
 
-    public List<TournamentFinalResult> getFinalResults(Tournament tournament){
-        List<TournamentFinalResult> tournamentFinalResultList = new LinkedList<>();
+    public List<TournamentPlayerResult> getFinalResults(Tournament tournament){
+        List<TournamentPlayerResult> tournamentPlayerResultList = new LinkedList<>();
         List<SwissPlayerResult> playerResults = getPlayerResultsSortedByPoints((SwissTournamentProcess) tournament.getTournamentProcess());
 
         for (SwissPlayerResult swissPlayerResult: playerResults) {
-            TournamentFinalResult result = new TournamentFinalResult();
+            TournamentPlayerResult result = new TournamentPlayerResult();
             result.setTournament(tournament);
             result.setUser(swissPlayerResult.getId().getUser());
             result.setPoints(swissPlayerResult.getResult());
-            tournamentFinalResultList.add(result);
+            tournamentPlayerResultList.add(result);
         }
 
-        return setPlaces(tournamentFinalResultList);
+        return setPlaces(tournamentPlayerResultList);
     }
 
     private List<SwissPlayerResult> getPlayerResultsSortedByPoints(SwissTournamentProcess swissTournamentProcess) {
@@ -128,7 +127,7 @@ public class SwissTournamentService {
         return swissPlayerResults;
     }
 
-    private List<TournamentFinalResult> setPlaces(List<TournamentFinalResult> results) {
+    private List<TournamentPlayerResult> setPlaces(List<TournamentPlayerResult> results) {
         results.get(results.size()-1).setPlace(1);
         for (int i=results.size()-2; i>=0; i--){
             if (results.get(i+1).getPoints() == results.get(i).getPoints()){

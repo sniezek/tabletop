@@ -3,11 +3,10 @@ package tabletop.controllers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
-import tabletop.domain.game.wininformation.BasicWinInformation;
 import tabletop.domain.game.wininformation.SingleWinInformation;
 import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
-import tabletop.domain.match.tournament.TournamentFinalResult;
+import tabletop.domain.match.tournament.TournamentPlayerResult;
 import tabletop.domain.match.tournament.TournamentType;
 import tabletop.domain.user.User;
 import tabletop.services.TournamentService;
@@ -28,9 +27,7 @@ public class TournamentController {
 
     @RequestMapping(value = "/types", method = RequestMethod.GET)
     public List<TournamentType> getTournamentTypesList() {
-        List<TournamentType> tournamentTypes = new ArrayList<>();
-        tournamentTypes.addAll(Arrays.asList(TournamentType.values()));
-        return tournamentTypes;
+        return Arrays.asList(TournamentType.values());
     }
 
     @RequestMapping(value = "/finished", method = RequestMethod.GET)
@@ -44,30 +41,8 @@ public class TournamentController {
         return tournamentService.getTournamentById(tournamentid);
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
-    public void createTournament(@RequestBody Tournament tournament) {
-        LOGGER.debug("Request to create tournament for game: {}", tournament.getGameName());
-        tournamentService.addTournament(tournament);
-    }
-
-    @RequestMapping(value = "/update", method = RequestMethod.PUT, consumes = "application/json")
-    public void updateTournament(@RequestBody Tournament tournament) {
-        if (tournament.getId() == null) {
-            createTournament(tournament);
-        } else {
-            LOGGER.debug("Request to update tournament with id: {}", tournament.getId());
-            tournamentService.addTournament(tournament);
-        }
-    }
-
-    @RequestMapping(value = "/delete/{tournamentid}", method = RequestMethod.DELETE)
-    public void deleteTournament(@PathVariable("tournamentid") Long tournamentid) {
-        LOGGER.debug("Request to delete tournament: {}", tournamentid);
-        tournamentService.deleteById(tournamentid);
-    }
-
     @RequestMapping(value = "/finalresults/{tournamentid}", method = RequestMethod.GET)
-    public Collection<TournamentFinalResult> getFinalResultsForTournament(@PathVariable("tournamentid") Long tournamentid) {
+    public Collection<TournamentPlayerResult> getFinalResultsForTournament(@PathVariable("tournamentid") Long tournamentid) {
         return tournamentService.getFinalResultsForTournament(tournamentid);
     }
 

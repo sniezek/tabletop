@@ -4,9 +4,8 @@ import "./Tournament.scss";
 import "../../Games/components/Games.scss";
 import PropTypes from "prop-types";
 import TournamentHeader from "./TournamentHeader";
-
-
 import TournamentProcessContainer from "../containers/TournamentProcessContainer";
+
 
 const propTypes = {
     router: PropTypes.object.isRequired

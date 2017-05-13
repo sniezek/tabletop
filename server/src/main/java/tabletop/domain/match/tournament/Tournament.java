@@ -25,7 +25,7 @@ public class Tournament extends Match {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnore
-    private List<TournamentFinalResult> tournamentFinalResults;
+    private List<TournamentPlayerResult> tournamentPlayerResults;
 
     public Tournament() {
     }
@@ -70,12 +70,12 @@ public class Tournament extends Match {
         this.tournamentProcess = tournamentProcess;
     }
 
-    public List<TournamentFinalResult> getTournamentFinalResults() {
-        return tournamentFinalResults;
+    public List<TournamentPlayerResult> getTournamentPlayerResults() {
+        return tournamentPlayerResults;
     }
 
-    public void setTournamentFinalResults(List<TournamentFinalResult> tournamentFinalResults) {
-        this.tournamentFinalResults = tournamentFinalResults;
+    public void setTournamentPlayerResults(List<TournamentPlayerResult> tournamentPlayerResults) {
+        this.tournamentPlayerResults = tournamentPlayerResults;
     }
 
     @Override

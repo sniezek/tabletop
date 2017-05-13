@@ -5,9 +5,8 @@ import tabletop.domain.exceptions.BadRequestException;
 import tabletop.domain.exceptions.ErrorInfo;
 import tabletop.domain.match.tournament.Pair;
 import tabletop.domain.match.tournament.Tournament;
-import tabletop.domain.match.tournament.TournamentFinalResult;
+import tabletop.domain.match.tournament.TournamentPlayerResult;
 import tabletop.domain.match.tournament.TournamentType;
-import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
@@ -52,7 +51,7 @@ public class TournamentService {
         return tournamentRepository.findTournamentsByFinishedIsTrue();
     }
 
-    public Collection<TournamentFinalResult> getFinalResultsForTournament(Long tournamentId) {
+    public Collection<TournamentPlayerResult> getFinalResultsForTournament(Long tournamentId) {
         Tournament tournament = tournamentRepository
                 .findOneById(tournamentId)
                 .orElseThrow(() -> new BadRequestException(ErrorInfo.TOURNAMENT_NOT_FOUND));
@@ -96,14 +95,14 @@ public class TournamentService {
     }
 
     public void setFinalResults(Tournament tournament){
-        List<TournamentFinalResult> results = null;
+        List<TournamentPlayerResult> results = null;
         if (tournament.getType() == TournamentType.SWISS) {
             results = swissTournamentService.getFinalResults(tournament);
         }
 
         if (results != null) {
-            for (TournamentFinalResult finalResult:results) {
-                Optional<TournamentFinalResult> tournamentFinalResult;
+            for (TournamentPlayerResult finalResult:results) {
+                Optional<TournamentPlayerResult> tournamentFinalResult;
                 tournamentFinalResult = tournamentFinalResultRepository
                         .findOneByUserAndTournament(finalResult.getUser(), finalResult.getTournament());
 
