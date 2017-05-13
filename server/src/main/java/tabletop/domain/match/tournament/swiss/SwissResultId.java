@@ -54,6 +54,6 @@ public class SwissResultId implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, tournamentProcess, getClass());
+        return Objects.hash(user, tournamentProcess);
     }
 }

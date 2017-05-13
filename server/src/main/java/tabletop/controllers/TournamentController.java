@@ -25,8 +25,8 @@ public class TournamentController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TournamentController.class);
 
-    private TournamentService tournamentService;
-    private UserService userService;
+    private final TournamentService tournamentService;
+    private final UserService userService;
 
     public TournamentController(TournamentService tournamentService, UserService userService) {
         this.tournamentService = tournamentService;
