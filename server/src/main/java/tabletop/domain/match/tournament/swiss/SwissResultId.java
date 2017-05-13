@@ -7,6 +7,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Created by Rafal on 2017-05-03.
@@ -37,20 +38,23 @@ public class SwissResultId implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof SwissResultId) {
+            SwissResultId entity = (SwissResultId) obj;
 
-        SwissResultId that = (SwissResultId) o;
+            return Objects.equals(getClass(), entity.getClass())
+                    && Objects.equals(user, entity.getUser())
+                    && Objects.equals(tournamentProcess, entity.getTournamentProcess());
+        }
 
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        return tournamentProcess != null ? tournamentProcess.equals(that.tournamentProcess) : that.tournamentProcess == null;
+        return false;
     }
 
     @Override
     public int hashCode() {
-        int result = user != null ? user.hashCode() : 0;
-        result = 31 * result + (tournamentProcess != null ? tournamentProcess.hashCode() : 0);
-        return result;
+        return Objects.hash(user, tournamentProcess, getClass());
     }
 }

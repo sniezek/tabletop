@@ -21,23 +21,25 @@ public class SwissTournamentService {
 
 
     public List<Pair<User>> getInitialPairs(SwissTournamentProcess swissTournamentProcess) {
+
+        List<User> users = swissTournamentProcess.getUsers();
         if (!swissTournamentProcess.isRanked()) {
             // random seeding
-            Collections.shuffle(swissTournamentProcess.getUsers(), new Random(System.nanoTime()));
+            shuffleUsers(users);
         }
 
         // initial pairing
         List<Pair<User>> pairs = new LinkedList<>();
-        for (int i = 0; i < swissTournamentProcess.getUsers().size(); i += 2) {
-            if (i + 1 < swissTournamentProcess.getUsers().size()) {
-                User user1 = swissTournamentProcess.getUsers().get(i);
-                User user2 = swissTournamentProcess.getUsers().get(i + 1);
+        for (int i = 0; i < users.size(); i += 2) {
+            if (i + 1 < users.size()) {
+                User user1 = users.get(i);
+                User user2 = users.get(i + 1);
                 Pair<User> pair = new Pair<>(user1, user2);
                 pairs.add(pair);
-                swissTournamentProcess.getResultByUser(user1).ifPresent(result -> setInitialResult(user2, result));
-                swissTournamentProcess.getResultByUser(user2).ifPresent(result -> setInitialResult(user1, result));
+                setInitialResult(user2, swissTournamentProcess.getResultByUser(user1));
+                setInitialResult(user1, swissTournamentProcess.getResultByUser(user2));
             } else {
-                swissTournamentProcess.setByeUser(swissTournamentProcess.getUsers().get(i));
+                swissTournamentProcess.setByeUser(users.get(i));
             }
 
         }
@@ -51,17 +53,15 @@ public class SwissTournamentService {
     }
 
     public void setWinner(SwissTournamentProcess swissTournamentProcess, User winner) {
-        Optional<SwissPlayerResult> result = swissTournamentProcess.getResultByUser(winner);
-        if (result.isPresent()) {
-            result.get().win();
-            User loser = result.get().getUsersPlayed().get(result.get().getUsersPlayed().size() - 1);
-            swissTournamentProcess.getResultByUser(loser).ifPresent(SwissPlayerResult::lose);
-        }
+        SwissPlayerResult result = swissTournamentProcess.getResultByUser(winner);
+        result.win();
+        User loser = result.getUsersPlayed().get(result.getUsersPlayed().size() - 1);
+        swissTournamentProcess.getResultByUser(loser).lose();
     }
 
     public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
 
-        Collections.shuffle(swissTournamentProcess.getUsers(), new Random(System.nanoTime()));
+        shuffleUsers(swissTournamentProcess.getUsers());
         List<User> orderedPlayers = swissTournamentProcess.getPlayerResults().stream()
                 .sorted(Comparator.comparingInt(SwissPlayerResult::getResult))
                 .map(result -> result.getId().getUser())
@@ -74,19 +74,23 @@ public class SwissTournamentService {
         while (orderedPlayers.size() > 0) {
             User player = orderedPlayers.remove(0);
             for (User playerToMatch : orderedPlayers) {
-                Optional<SwissPlayerResult> result = swissTournamentProcess.getResultByUser(playerToMatch);
-                if (result.isPresent() && !result.get().getUsersPlayed().contains(player)) {
+                SwissPlayerResult result = swissTournamentProcess.getResultByUser(playerToMatch);
+                if (!result.getUsersPlayed().contains(player)) {
                     Pair<User> pair = new Pair<>(player, playerToMatch);
                     pairs.add(pair);
                     orderedPlayers.remove(playerToMatch);
-                    swissTournamentProcess.getResultByUser(player).ifPresent(result2 -> setInitialResult(playerToMatch, result2));
-                    swissTournamentProcess.getResultByUser(playerToMatch).ifPresent(result2 -> setInitialResult(player, result2));
+                    setInitialResult(playerToMatch, swissTournamentProcess.getResultByUser(player));
+                    setInitialResult(player, swissTournamentProcess.getResultByUser(playerToMatch));
                     break;
                 }
             }
         }
 
         return pairs;
+    }
+
+    private void shuffleUsers(List<User> users) {
+        Collections.shuffle(users, new Random(System.nanoTime()));
     }
 
     public Map<Pair<User>, Integer> getCurentState(SwissTournamentProcess swissTournamentProcess) {
@@ -105,11 +109,11 @@ public class SwissTournamentService {
         return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size();
     }
 
-    public List<TournamentPlayerResult> getFinalResults(Tournament tournament){
+    public List<TournamentPlayerResult> getFinalResults(Tournament tournament) {
         List<TournamentPlayerResult> tournamentPlayerResultList = new LinkedList<>();
         List<SwissPlayerResult> playerResults = getPlayerResultsSortedByPoints((SwissTournamentProcess) tournament.getTournamentProcess());
 
-        for (SwissPlayerResult swissPlayerResult: playerResults) {
+        for (SwissPlayerResult swissPlayerResult : playerResults) {
             TournamentPlayerResult result = new TournamentPlayerResult();
             result.setTournament(tournament);
             result.setUser(swissPlayerResult.getId().getUser());
@@ -128,12 +132,12 @@ public class SwissTournamentService {
     }
 
     private List<TournamentPlayerResult> setPlaces(List<TournamentPlayerResult> results) {
-        results.get(results.size()-1).setPlace(1);
-        for (int i=results.size()-2; i>=0; i--){
-            if (results.get(i+1).getPoints() == results.get(i).getPoints()){
-                results.get(i).setPlace(results.get(i+1).getPlace());
+        results.get(results.size() - 1).setPlace(1);
+        for (int i = results.size() - 2; i >= 0; i--) {
+            if (results.get(i + 1).getPoints() == results.get(i).getPoints()) {
+                results.get(i).setPlace(results.get(i + 1).getPlace());
             } else {
-                results.get(i).setPlace(results.get(i+1).getPlace()+1);
+                results.get(i).setPlace(results.get(i + 1).getPlace() + 1);
             }
         }
         return results;
