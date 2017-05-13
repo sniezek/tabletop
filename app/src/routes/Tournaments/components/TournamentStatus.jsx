@@ -9,6 +9,8 @@ const propTypes = {
   pairs: PropTypes.arrayOf(PropTypes.shape({
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
   setWinner: PropTypes.func.isRequired,
@@ -20,18 +22,18 @@ const propTypes = {
 const defaultProps = {
 };
 
-class TournamentProcess extends PureComponent {
+class TournamentStatus extends PureComponent {
   constructor(props) {
     super(props);
     this.updateNextRoundButton = this.updateNextRoundButton.bind(this);
     this.state = {
-      matchesFinished: this.props.pairs.filter(pair => pair.winner != "0").length
+      matchesFinished: this.props.pairs.filter(pair => pair.winner !== 0).length
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      matchesFinished: nextProps.pairs.filter(pair => pair.winner != "0").length
+      matchesFinished: nextProps.pairs.filter(pair => pair.winner !== 0).length
     });
   }
 
@@ -51,6 +53,8 @@ class TournamentProcess extends PureComponent {
               host={pair.host}
               guest={pair.guest}
               winner={pair.winner}
+              hostResult={pair.hostResult}
+              guestResult={pair.guestResult}
               setWinner={this.props.setWinner}
               tournamentId={this.props.tournamentId}
               updateNextRoundButton={this.updateNextRoundButton}
@@ -72,7 +76,7 @@ class TournamentProcess extends PureComponent {
   }
 }
 
-TournamentProcess.propTypes = propTypes;
-TournamentProcess.defaultProps = defaultProps;
+TournamentStatus.propTypes = propTypes;
+TournamentStatus.defaultProps = defaultProps;
 
-export default TournamentProcess;
+export default TournamentStatus;

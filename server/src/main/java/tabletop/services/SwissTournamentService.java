@@ -62,25 +62,28 @@ public class SwissTournamentService {
     public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
 
         shuffleUsers(swissTournamentProcess.getUsers());
-        List<User> orderedPlayers = swissTournamentProcess.getPlayerResults().stream()
+        List<SwissPlayerResult> resultsOrdered = swissTournamentProcess.getPlayerResults().stream()
                 .sorted(Comparator.comparingInt(SwissPlayerResult::getResult))
-                .map(result -> result.getId().getUser())
                 .collect(Collectors.toList());
+
 
         List<Pair<User>> pairs = new LinkedList<>();
 
-        LOGGER.info("Players sorted: " + orderedPlayers.toString());
+        LOGGER.info("Players sorted: " + resultsOrdered.toString());
 
-        while (orderedPlayers.size() > 0) {
-            User player = orderedPlayers.remove(0);
-            for (User playerToMatch : orderedPlayers) {
-                SwissPlayerResult result = swissTournamentProcess.getResultByUser(playerToMatch);
-                if (!result.getUsersPlayed().contains(player)) {
-                    Pair<User> pair = new Pair<>(player, playerToMatch);
+        while (resultsOrdered.size() > 0) {
+            SwissPlayerResult resultHost = resultsOrdered.remove(0);
+            for (SwissPlayerResult resultGuest : resultsOrdered) {
+                if (!resultGuest.getUsersPlayed().contains(resultHost.getId().getUser())) {
+                    Pair<User> pair = new Pair<>(
+                            resultHost.getId().getUser(),
+                            resultGuest.getId().getUser(),
+                            resultHost.getResult(),
+                            resultGuest.getResult());
                     pairs.add(pair);
-                    orderedPlayers.remove(playerToMatch);
-                    setInitialResult(playerToMatch, swissTournamentProcess.getResultByUser(player));
-                    setInitialResult(player, swissTournamentProcess.getResultByUser(playerToMatch));
+                    resultsOrdered.remove(resultGuest);
+                    setInitialResult(resultGuest.getId().getUser(), resultHost);
+                    setInitialResult(resultHost.getId().getUser(), resultGuest);
                     break;
                 }
             }
@@ -93,12 +96,17 @@ public class SwissTournamentService {
         Collections.shuffle(users, new Random(System.nanoTime()));
     }
 
-    public Map<Pair<User>, Integer> getCurentState(SwissTournamentProcess swissTournamentProcess) {
-        Map<Pair<User>, Integer> state = new HashMap<>();
+    public List<Pair<User>> getCurentState(SwissTournamentProcess swissTournamentProcess) {
+        List<Pair<User>> state = new ArrayList<>();
         Set<User> hosts = new HashSet<>();
         swissTournamentProcess.getPlayerResults().forEach(result -> {
             if (!hosts.contains(result.getCurrentOpponent())) {
-                state.put(new Pair<>(result.getId().getUser(), result.getCurrentOpponent()), result.getCurrentScore());
+                state.add(new Pair<>(
+                        result.getId().getUser(),
+                        result.getCurrentOpponent(),
+                        result.getCurrentScore(),
+                        result.getResult(),
+                        swissTournamentProcess.getResultByUser(result.getCurrentOpponent()).getResult()));
                 hosts.add(result.getId().getUser());
             }
         });

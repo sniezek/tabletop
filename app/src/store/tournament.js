@@ -82,15 +82,18 @@ export const nextRound = (id, callback) => dispatch =>
   Api.nextRound(id).then((response) => {
       if (response.ok) {
           response.json().then((pairs) => {
-              const pairsFormatted = pairs.map(pair => ({
-                  host: pair.a,
-                  guest: pair.b,
-                  winner: 0
-              }));
+              console.log(pairs)
+              // const pairsFormatted = pairs.map(pair => ({
+              //     host: pair.a,
+              //     guest: pair.b,
+              //     hostResult: pair.s,
+              //     guestResult: pair.s,
+              //     winner: 0
+              // }));
               dispatch({
                   type: NEXT_ROUND,
                   payload: {
-                      pairsFormatted
+                    pairs
                   }
               });
           });
@@ -113,15 +116,17 @@ export const initialRound = (id, callback) => dispatch =>
   Api.initialRound(id).then((response) => {
       if (response.ok) {
           response.json().then((pairs) => {
-              const pairsFormatted = pairs.map(pair => ({
-                  host: pair.a,
-                  guest: pair.b,
-                  winner: 0
-              }));
+              // const pairsFormatted = pairs.map(pair => ({
+              //     host: pair.host,
+              //     guest: pair.guest,
+              //     hostResult: pair.hostResult,
+              //     guestResult: pair.hostResult,
+              //     winner: 0
+              // }));
               dispatch({
                   type: INITIAL_ROUND,
                   payload: {
-                      pairsFormatted
+                    pairs
                   }
               });
           });
@@ -169,7 +174,7 @@ export default function tournamentReducer(state = { pairs: [] }, { type, payload
         };
     } else if (type === NEXT_ROUND) {
         state = {
-            pairs: payload.pairsFormatted
+            pairs: payload.pairs
         };
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {
@@ -177,7 +182,7 @@ export default function tournamentReducer(state = { pairs: [] }, { type, payload
         };
     } else if (type === INITIAL_ROUND) {
         state = {
-            pairs: payload.pairsFormatted
+            pairs: payload.pairs
         };
     }
     return state;

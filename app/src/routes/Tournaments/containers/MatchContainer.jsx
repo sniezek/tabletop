@@ -6,6 +6,8 @@ const propTypes = {
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
     winner: PropTypes.number.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     setWinner: PropTypes.func.isRequired,
     updateNextRoundButton: PropTypes.func.isRequired
 };
@@ -46,6 +48,8 @@ class MatchContainer extends PureComponent {
           host={this.props.host}
           guest={this.props.guest}
           winner={this.state.winner}
+          hostResult={this.props.hostResult}
+          guestResult={this.props.guestResult}
           win={this.win}
         />
     }

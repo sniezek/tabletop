@@ -1,10 +1,7 @@
 package tabletop.services;
 
 import org.springframework.stereotype.Service;
-import tabletop.domain.match.tournament.Pair;
-import tabletop.domain.match.tournament.Tournament;
-import tabletop.domain.match.tournament.TournamentPlayerResult;
-import tabletop.domain.match.tournament.TournamentType;
+import tabletop.domain.match.tournament.*;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
@@ -70,7 +67,7 @@ public class TournamentService {
         }
     }
 
-    public Map<Pair<User>, Integer> getCurentState(Tournament tournament) {
+    public List<Pair<User>> getCurentState(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getCurentState(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }

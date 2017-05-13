@@ -8,10 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import tabletop.controllers.utils.ResponseUtils;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.game.wininformation.SingleWinInformation;
-import tabletop.domain.match.tournament.Pair;
-import tabletop.domain.match.tournament.Tournament;
-import tabletop.domain.match.tournament.TournamentPlayerResult;
-import tabletop.domain.match.tournament.TournamentType;
+import tabletop.domain.match.tournament.*;
 import tabletop.domain.user.User;
 import tabletop.services.TournamentService;
 import tabletop.services.UserService;
@@ -92,7 +89,7 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/state/{tournamentid}", method = RequestMethod.GET)
-    public ResponseEntity<Map<Pair<User>, Integer>> getState(@PathVariable("tournamentid") Long tournamentid) {
+    public ResponseEntity<List<Pair<User>>> getState(@PathVariable("tournamentid") Long tournamentid) {
         Optional<Tournament> tournamentOptional = tournamentService.getTournamentById(tournamentid);
         if (!tournamentOptional.isPresent()) {
             return ResponseUtils.notFound();
@@ -101,12 +98,12 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/next/{tournamentid}", method = RequestMethod.GET)
-    public ResponseEntity<Collection<Pair<User>>> getNextRound(@PathVariable("tournamentid") Long tournamentid) {
+    public ResponseEntity<List<Pair<User>>> getNextRound(@PathVariable("tournamentid") Long tournamentid) {
         Optional<Tournament> tournamentOptional = tournamentService.getTournamentById(tournamentid);
         if (!tournamentOptional.isPresent()) {
             return ResponseUtils.notFound();
         }
-        Collection<Pair<User>> nextRound = tournamentService.getNextRound(tournamentOptional.get());
+        List<Pair<User>> nextRound = tournamentService.getNextRound(tournamentOptional.get());
         tournamentService.addTournament(tournamentOptional.get());
         return ResponseEntity.ok(nextRound);
     }

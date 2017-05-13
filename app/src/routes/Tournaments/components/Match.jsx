@@ -8,6 +8,8 @@ const propTypes = {
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
     winner: PropTypes.number.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     win: PropTypes.func.isRequired
 };
 
@@ -28,13 +30,15 @@ class Match extends PureComponent {
   }
 
     render() {
-        let players = [{player: this.props.host, checked: this.state.winner === 1}, {player: this.props.guest, checked: this.state.winner === -1}];
+        let players = [
+          {player: this.props.host, checked: this.state.winner === 1, result: this.props.hostResult},
+          {player: this.props.guest, checked: this.state.winner === -1, result: this.props.guestResult}];
         return (
             <div>
                 <List style={{ width: "300px" }}>
                   {players.map((object,i) =>
-                    <ListItem key={i}>
-                      <ListItemContent avatar="person">{object.player.username}</ListItemContent>
+                    <ListItem twoLine key={i}>
+                      <ListItemContent avatar="person" subtitle={`${object.result} wins so far`}>{object.player.username}</ListItemContent>
                       <ListItemAction>
                         <Checkbox
                           checked={object.checked}

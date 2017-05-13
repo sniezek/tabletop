@@ -10,6 +10,8 @@ const propTypes = {
   pairs: PropTypes.arrayOf(PropTypes.shape({
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
   setWinner: PropTypes.func.isRequired,

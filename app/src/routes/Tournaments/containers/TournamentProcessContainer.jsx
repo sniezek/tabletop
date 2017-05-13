@@ -8,6 +8,8 @@ const propTypes = {
   pairs: PropTypes.arrayOf(PropTypes.shape({
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
   tournamentId: PropTypes.number.isRequired,
@@ -72,7 +74,7 @@ class TournamentProcessContainer extends PureComponent {
 
     this.props.nextRound(tournamentId, ({ ok }) => {
       if (!ok) {
-        console.log("Passing To Next Round failed!");
+        console.log("Passing To Next Round failed");
       }
     });
   }
