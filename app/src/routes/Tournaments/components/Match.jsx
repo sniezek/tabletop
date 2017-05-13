@@ -35,7 +35,7 @@ class Match extends PureComponent {
           {player: this.props.guest, checked: this.state.winner === -1, result: this.props.guestResult}];
         return (
             <div>
-                <List style={{ width: "300px" }}>
+                <List className="match-list">
                   {players.map((object,i) =>
                     <ListItem twoLine key={i}>
                       <ListItemContent avatar="person" subtitle={`${object.result} wins so far`}>{object.player.username}</ListItemContent>

@@ -1,7 +1,9 @@
-import React, { PureComponent } from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import { Button } from "react-mdl/lib";
+import {Button} from "react-mdl/lib";
 import MatchContainer from "../containers/MatchContainer";
+import {Grid, Cell} from "react-mdl/lib/Grid";
+import "./TournamentStatus.scss";
 
 const propTypes = {
   tournamentId: PropTypes.number,
@@ -19,8 +21,7 @@ const propTypes = {
   displayFinalResults: PropTypes.bool.isRequired
 };
 
-const defaultProps = {
-};
+const defaultProps = {};
 
 class TournamentStatus extends PureComponent {
   constructor(props) {
@@ -44,32 +45,52 @@ class TournamentStatus extends PureComponent {
   };
 
   render() {
+    let i, j, chunk = 3;
+    let columns = []
+    for (i = 0, j = this.props.pairs.length; i < j; i += chunk) {
+      columns.push(this.props.pairs.slice(i, i + chunk));
+    }
+
     return (
       <div className="tournament-results-list">
         <h1>Tournament matches </h1>
-        <ol>
-          {this.props.pairs.map((pair, i) => <li key={i}>
-            <MatchContainer
-              host={pair.host}
-              guest={pair.guest}
-              winner={pair.winner}
-              hostResult={pair.hostResult}
-              guestResult={pair.guestResult}
-              setWinner={this.props.setWinner}
-              tournamentId={this.props.tournamentId}
-              updateNextRoundButton={this.updateNextRoundButton}
-            />
-          </li>)}
-        </ol>
-        <div>
-          <Button
-            colored
-            onClick={() => this.props.nextRound()}
-            disabled={this.state.matchesFinished !== this.props.pairs.length}
-          >Next round</Button>
+        <div style={{width: '80%', margin: 'auto', marginTop: 'initial'}}>
+          {
+            columns.map((pairs, i) =>
+              <Grid key={i} className="demo-grid-ruler" >
+                {
+                  pairs.map((pair, i) =>
+                    <Cell key={i} col={4} shadow={2} className="match-main">
+                      <MatchContainer
+                        host={pair.host}
+                        guest={pair.guest}
+                        winner={pair.winner}
+                        hostResult={pair.hostResult}
+                        guestResult={pair.guestResult}
+                        setWinner={this.props.setWinner}
+                        tournamentId={this.props.tournamentId}
+                        updateNextRoundButton={this.updateNextRoundButton}
+                      />
+                    </Cell>
+                  )
+                }
+              </Grid>
+            )
+          }
         </div>
-        <div>
-          <Button colored onClick={() => this.props.finishTournament()}>Finish tournament</Button>
+        <div style={{width: '100%', margin: 'auto', marginTop: 'initial'}}>
+          <Grid key={i} className="demo-grid-ruler" >
+            <Cell col={6}>
+              <Button
+                colored
+                onClick={() => this.props.nextRound()}
+                disabled={this.state.matchesFinished !== this.props.pairs.length}
+              >Next round</Button>
+            </Cell>
+            <Cell col={6} style={{textAlign: "right"}}>
+              <Button colored onClick={() => this.props.finishTournament()}>Finish tournament</Button>
+            </Cell>
+          </Grid>
         </div>
       </div>
     );

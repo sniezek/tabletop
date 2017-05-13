@@ -82,14 +82,6 @@ export const nextRound = (id, callback) => dispatch =>
   Api.nextRound(id).then((response) => {
       if (response.ok) {
           response.json().then((pairs) => {
-              console.log(pairs)
-              // const pairsFormatted = pairs.map(pair => ({
-              //     host: pair.a,
-              //     guest: pair.b,
-              //     hostResult: pair.s,
-              //     guestResult: pair.s,
-              //     winner: 0
-              // }));
               dispatch({
                   type: NEXT_ROUND,
                   payload: {
@@ -116,13 +108,6 @@ export const initialRound = (id, callback) => dispatch =>
   Api.initialRound(id).then((response) => {
       if (response.ok) {
           response.json().then((pairs) => {
-              // const pairsFormatted = pairs.map(pair => ({
-              //     host: pair.host,
-              //     guest: pair.guest,
-              //     hostResult: pair.hostResult,
-              //     guestResult: pair.hostResult,
-              //     winner: 0
-              // }));
               dispatch({
                   type: INITIAL_ROUND,
                   payload: {
