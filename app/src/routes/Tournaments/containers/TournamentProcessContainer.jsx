@@ -44,18 +44,11 @@ const mapDispatchToProps = dispatch => ({
     toggleFinalResults: () => {
     }
 });
-const mapStateToProps = (state) => {
-    if (state.tournament != null) {
-        return {
-            pairs: state.tournament.pairs,
-            tournamentId: 1
-        };
-    }
-    return {
-        pairs: [],
-        tournamentId: 1
-    };
-};
+const mapStateToProps = ({tournament}) => ({
+    pairs: tournament.pairs,
+    tournamentId: 1
+});
+
 const initialState = {};
 
 class TournamentProcessContainer extends PureComponent {

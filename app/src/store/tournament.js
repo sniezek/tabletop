@@ -154,7 +154,7 @@ export const actions = {
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function tournamentReducer(state = null, { type, payload }) {
+export default function tournamentReducer(state = { pairs: [] }, { type, payload }) {
     if (type === GET_TOURNAMENT) {
         state = {
             pairs: payload.pairs

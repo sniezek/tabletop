@@ -28,7 +28,7 @@ class Match extends PureComponent {
   }
 
     render() {
-        var players = [{player: this.props.host, checked: this.state.winner == 1}, {player: this.props.guest, checked: this.state.winner == -1}];
+        let players = [{player: this.props.host, checked: this.state.winner === 1}, {player: this.props.guest, checked: this.state.winner === -1}];
         return (
             <div>
                 <List style={{ width: "300px" }}>
@@ -39,7 +39,7 @@ class Match extends PureComponent {
                         <Checkbox
                           checked={object.checked}
                           onChange={e => this.props.win(object.player)}
-                          disabled={this.state.winner != 0}
+                          disabled={this.state.winner !== 0}
                         />
                       </ListItemAction>
                     </ListItem>
