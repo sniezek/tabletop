@@ -1,6 +1,7 @@
 import {
     SET_FILTER_ACTIVE,
     SET_FILTER_LOCATION_RADIUS,
+    SET_FILTER_LOCATION_PLACE,
     SET_FILTER_SELECTED_TYPE,
     SET_FILTER_DATE,
     SET_FILTER_DATE_FROM,
@@ -10,11 +11,26 @@ import {
 } from "./FilterConstants";
 import { getCurrentDate } from "./FilterUtils";
 
-export function locationReducer(state = {}, { type, payload }) {
+export function locationReducer(state = { radius: 10, location: null }, { type, payload }) {
     if (type === SET_FILTER_LOCATION_RADIUS) {
         return {
             ...state,
             radius: payload
+        };
+    } else if (type === SET_FILTER_LOCATION_PLACE) {
+        let location = null;
+
+        if (payload !== null) {
+            location = {
+                name: payload.label,
+                lat: payload.location.lat,
+                lng: payload.location.lng
+            };
+        }
+
+        return {
+            ...state,
+            location
         };
     } else if (type === SET_FILTER_ACTIVE && payload.id === "location") {
         return {

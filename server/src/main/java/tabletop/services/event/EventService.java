@@ -30,45 +30,45 @@ public class EventService {
                                  List<String> games,
                                  String type,
                                  Long startDateTimestamp, Long endDateTimestamp) {
-        BooleanBuilder booleanBuilder = new BooleanBuilder();
+        BooleanBuilder predicateBuilder = new BooleanBuilder();
 
         if (ValuePresenceUtils.isPresent(games)) {
-            List<Game> registeredGames = Arrays.stream(Game.values()).filter(game -> games.contains(game.getName().toLowerCase())).collect(Collectors.toList());
+            BooleanBuilder gamesPredicateBuilder = new BooleanBuilder();
 
-            booleanBuilder.and(QEvent.event.sparrings.any().gameName.in(games).or(QEvent.event.tournaments.any().game.in(registeredGames)));
+            games.forEach(gameName -> gamesPredicateBuilder.or(QEvent.event.sparrings.any().gameName.equalsIgnoreCase(gameName)));
+
+            List<Game> registeredGames = Arrays.stream(Game.values()).filter(game -> games.contains(game.getName().toLowerCase())).collect(Collectors.toList());
+            gamesPredicateBuilder.or(QEvent.event.tournaments.any().game.in(registeredGames));
+
+            predicateBuilder.and(gamesPredicateBuilder);
         }
 
         if (ValuePresenceUtils.isPresent(type)) {
             if (type.equals("tournament")) {
-                booleanBuilder.and(QEvent.event.tournaments.isNotEmpty());
+                predicateBuilder.and(QEvent.event.tournaments.isNotEmpty());
             } else {
-                booleanBuilder.and(QEvent.event.sparrings.isNotEmpty());
+                predicateBuilder.and(QEvent.event.sparrings.isNotEmpty());
             }
         }
 
-        if (ValuePresenceUtils.areAllPresent(startDateTimestamp, endDateTimestamp)) {
+        if (ValuePresenceUtils.isPresent(startDateTimestamp)) {
             Date startDate = new Date(startDateTimestamp);
-            Date endDate = new Date(endDateTimestamp);
-            booleanBuilder.and(
-                    (QEvent.event.sparrings.any().startDate.goe(startDate).and(QEvent.event.sparrings.any().endDate.loe(endDate)))
-                            .or
-                                    (QEvent.event.tournaments.any().startDate.goe(startDate).and(QEvent.event.tournaments.any().endDate.loe(endDate)))
-            );
-        } else if (ValuePresenceUtils.isPresent(startDateTimestamp)) {
-            Date startDate = new Date(startDateTimestamp);
-            booleanBuilder.and(
+
+            predicateBuilder.and(
                     (QEvent.event.sparrings.any().startDate.goe(startDate))
                             .or
                                     (QEvent.event.tournaments.any().startDate.goe(startDate)));
-        } else if (ValuePresenceUtils.isPresent(endDateTimestamp)) {
+        }
+        if (ValuePresenceUtils.isPresent(endDateTimestamp)) {
             Date endDate = new Date(endDateTimestamp);
-            booleanBuilder.and(
+
+            predicateBuilder.and(
                     (QEvent.event.sparrings.any().endDate.loe(endDate))
                             .or
                                     (QEvent.event.tournaments.any().endDate.loe(endDate)));
         }
 
-        List<Event> events = Lists.newArrayList(eventRepository.findAll(booleanBuilder));
+        List<Event> events = Lists.newArrayList(eventRepository.findAll(predicateBuilder));
 
         if (ValuePresenceUtils.areAllPresent(lat, lng, radius)) {
             return events.stream().filter(event -> LocationService.isLocationWithinRadiusFromPoint(event.getLocation(), radius, lat, lng)).collect(Collectors.toList());
