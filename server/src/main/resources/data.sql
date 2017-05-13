@@ -8,17 +8,29 @@ DELETE FROM swiss_tournament_process;
 DELETE FROM tournament_process;
 
 INSERT INTO user (id, username, password, email)
-VALUES (0, 'user0', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (0, 'Romero', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
-VALUES (1, 'user1', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (1, 'Julianne', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
-VALUES (2, 'user2', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (2, 'Kevin', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
-VALUES (3, 'user3', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (3, 'Hector', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
-VALUES (4, 'user4', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (4, 'Bob', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
-VALUES (5, 'user5', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (5, 'Viktor', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (6, 'Zhao', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (7, 'William', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (8, 'Christos', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (9, 'Janette', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (10, 'Andrea', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (11, 'Oriol', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished)
 VALUES (0, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', 'results', false);
@@ -59,6 +71,14 @@ VALUES (1, 4);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (1, 5);
 INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 6);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 7);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 8);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (1, 9);
+INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (1, 0);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (0, 1);
@@ -83,5 +103,13 @@ INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent
 VALUES (4, 1, 0, null, 0);
 INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
 VALUES (5, 1, 0, null, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
+VALUES (6, 1, 0, null, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
+VALUES (7, 1, 0, null, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
+VALUES (8, 1, 0, null, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
+VALUES (9, 1, 0, null, 0);
 INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
 VALUES (0, 1, 0, null, 0);

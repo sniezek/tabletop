@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Button} from "react-mdl/lib";
 import MatchContainer from "../containers/MatchContainer";
 import {Grid, Cell} from "react-mdl/lib/Grid";
+import {Dialog, DialogActions, DialogTitle, DialogContent} from "react-mdl/lib/Dialog";
 import "./TournamentStatus.scss";
 
 const propTypes = {
@@ -18,6 +19,7 @@ const propTypes = {
   setWinner: PropTypes.func.isRequired,
   nextRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
+  giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired
 };
 
@@ -28,8 +30,12 @@ class TournamentStatus extends PureComponent {
     super(props);
     this.updateNextRoundButton = this.updateNextRoundButton.bind(this);
     this.state = {
-      matchesFinished: this.props.pairs.filter(pair => pair.winner !== 0).length
+      matchesFinished: this.props.pairs.filter(pair => pair.winner !== 0).length,
+      openResignDialog: false
     };
+    this.handleOpenResignDialog = this.handleOpenResignDialog.bind(this);
+    this.handleCloseResignDialog = this.handleCloseResignDialog.bind(this);
+    this.handleResign = this.handleResign.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -44,6 +50,23 @@ class TournamentStatus extends PureComponent {
     });
   };
 
+  handleOpenResignDialog() {
+    this.setState({
+      openResignDialog: true
+    });
+  }
+
+  handleCloseResignDialog() {
+    this.setState({
+      openResignDialog: false
+    });
+  }
+
+  handleResign() {
+    this.props.giveUp(this.props.tournamentId);
+    this.handleCloseResignDialog()
+  }
+
   render() {
     let i, j, chunk = 3;
     let columns = []
@@ -53,7 +76,7 @@ class TournamentStatus extends PureComponent {
 
     return (
       <div className="tournament-results-list">
-        <h1>Tournament matches </h1>
+        <h1 className="tournament-name-label">{this.props.tournamentName}</h1>
         <div style={{width: '80%', margin: 'auto', marginTop: 'initial'}}>
           {
             columns.map((pairs, i) =>
@@ -88,9 +111,22 @@ class TournamentStatus extends PureComponent {
               >Next round</Button>
             </Cell>
             <Cell col={6} style={{textAlign: "right"}}>
+              <Button colored onClick={this.handleOpenResignDialog}>Give up</Button>
               <Button colored onClick={() => this.props.finishTournament()}>Finish tournament</Button>
             </Cell>
           </Grid>
+          <Dialog
+            className="resign-dialog"
+            open={this.state.openResignDialog}>
+            <DialogTitle>Are you sure?</DialogTitle>
+            <DialogContent>
+              <p>Remember that once You resign You will not be able to participate again.</p>
+            </DialogContent>
+            <DialogActions>
+              <Button type='button' onClick={this.handleResign}>Confirm</Button>
+              <Button type='button' onClick={this.handleCloseResignDialog}>Cancel</Button>
+            </DialogActions>
+          </Dialog>
         </div>
       </div>
     );

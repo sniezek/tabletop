@@ -135,6 +135,12 @@ class Api {
             method: "GET"
         });
     }
+
+    giveUp(id) {
+      return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
+         method: "POST"
+      });
+    }
 }
 
 export default new Api();

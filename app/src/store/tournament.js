@@ -11,6 +11,7 @@ export const NEXT_ROUND = "NEXT_ROUND";
 export const SET_WINNER = "SET_WINNER";
 export const INITIAL_ROUND = "INITIAL_ROUND";
 export const FINISH_TOURNAMENT = "FINISH_TOURNAMENT";
+export const GIVE_UP = "GIVE_UP";
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -128,6 +129,15 @@ export const finishTournament = (id, callback) => dispatch =>
           });
       }
       callback(response);
+  });
+
+export const giveUp = (id) => dispatch =>
+  Api.giveUp(id).then((response) => {
+    if (response.ok) {
+      dispatch({
+        type: GIVE_UP
+      });
+    }
   });
 
 

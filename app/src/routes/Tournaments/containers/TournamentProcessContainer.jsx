@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { initialRound, setWinner, nextRound, finishTournament } from "../../../store/tournament";
+import { initialRound, setWinner, nextRound, finishTournament, giveUp } from "../../../store/tournament";
 import TournamentProcess from "../components/TournamentProcess.jsx";
 
 const propTypes = {
@@ -19,6 +19,7 @@ const propTypes = {
   initialRound: PropTypes.func.isRequired,
   setWinner: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
+  giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired,
   toggleFinalResults: PropTypes.func.isRequired
 };
@@ -43,6 +44,9 @@ const mapDispatchToProps = dispatch => ({
   finishTournament: (id) => {
     dispatch(finishTournament(id));
   },
+  giveUp: (id) => {
+    dispatch(giveUp(id));
+  },
   toggleFinalResults: () => {
   }
 });
@@ -62,6 +66,7 @@ class TournamentProcessContainer extends PureComponent {
     this.initialRound = this.initialRound.bind(this);
     this.setWinner = this.setWinner.bind(this);
     this.finishTournament = this.finishTournament.bind(this);
+    this.giveUp = this.giveUp.bind(this);
     this.toggleFinalResults = this.toggleFinalResults.bind(this);
   }
 
@@ -83,7 +88,7 @@ class TournamentProcessContainer extends PureComponent {
     const tournamentId = this.props.tournamentId;
     this.props.initialRound(tournamentId, ({ ok }) => {
       if (!ok) {
-        console.log("Fetching First Round failed");
+        console.log("Fetching First Round failed!");
       }
     });
   }
@@ -108,6 +113,11 @@ class TournamentProcessContainer extends PureComponent {
     });
   }
 
+  giveUp() {
+    const tournamentId = this.props.tournamentId;
+    this.props.giveUp(tournamentId);
+  }
+
   toggleFinalResults() {
 
   }
@@ -121,6 +131,7 @@ class TournamentProcessContainer extends PureComponent {
         setWinner={this.setWinner}
         nextRound={this.nextRound}
         finishTournament={this.finishTournament}
+        giveUp={this.props.giveUp}
         displayFinalResults={this.props.displayFinalResults}
         toggleFinalResults={this.toggleFinalResults}
       />

@@ -1,7 +1,10 @@
 package tabletop.services;
 
 import org.springframework.stereotype.Service;
-import tabletop.domain.match.tournament.*;
+import tabletop.domain.match.tournament.Pair;
+import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.match.tournament.TournamentPlayerResult;
+import tabletop.domain.match.tournament.TournamentType;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
@@ -9,7 +12,6 @@ import tabletop.repositories.match.tournament.TournamentRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -105,4 +107,9 @@ public class TournamentService {
         }
     }
 
+    public void giveUp(Tournament tournament, User user) {
+        if (tournament.getType() == TournamentType.SWISS) {
+            swissTournamentService.giveUp(tournament, user);
+        }
+    }
 }

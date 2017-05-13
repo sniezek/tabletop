@@ -151,4 +151,7 @@ public class SwissTournamentService {
         return results;
     }
 
+    public void giveUp(Tournament tournament, User user) {
+//        TODO implement
+    }
 }

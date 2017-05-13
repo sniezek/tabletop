@@ -123,4 +123,15 @@ public class TournamentController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/giveup/{tournamentid}", method = RequestMethod.POST)
+    public ResponseEntity giveUp(@PathVariable("tournamentid") Long tournamentid) {
+        Optional<Tournament> tournamentOptional = tournamentService.getTournamentById(tournamentid);
+        if (!tournamentOptional.isPresent()) {
+            return ResponseUtils.notFound();
+        }
+        tournamentService.giveUp(tournamentOptional.get(), userService.getAuthenticatedUser().get());
+
+        return ResponseEntity.ok().build();
+    }
+
 }
