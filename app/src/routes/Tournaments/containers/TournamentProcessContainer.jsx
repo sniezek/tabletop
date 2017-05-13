@@ -1,8 +1,10 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { Grid, Cell } from "react-mdl/lib/Grid";
 import { initialRound, setWinner, nextRound, finishTournament } from "../../../store/tournament";
 import TournamentProcess from "../components/TournamentProcess.jsx";
+import TournamentFinalResultsContainer from "./TournamentFinalResultsContainer";
 
 const propTypes = {
     pairs: PropTypes.arrayOf(PropTypes.shape({
@@ -112,16 +114,31 @@ class TournamentProcessContainer extends PureComponent {
 
     render() {
         return (
-            <TournamentProcess
-                tournamentName={this.props.tournamentName}
-                tournamentId={this.props.tournamentId}
-                pairs={this.props.pairs}
-                setWinner={this.setWinner}
-                nextRound={this.nextRound}
-                finishTournament={this.finishTournament}
-                displayFinalResults={this.props.displayFinalResults}
-                toggleFinalResults={this.toggleFinalResults}
-            />
+          <div style={{width: '80%', margin: 'auto', marginTop: 'initial'}}>
+            <Grid className="demo-grid-ruler">
+              <Cell col={6}>
+                {
+                  <TournamentProcess
+                    tournamentName={this.props.tournamentName}
+                    tournamentId={this.props.tournamentId}
+                    pairs={this.props.pairs}
+                    setWinner={this.setWinner}
+                    nextRound={this.nextRound}
+                    finishTournament={this.finishTournament}
+                    displayFinalResults={this.props.displayFinalResults}
+                    toggleFinalResults={this.toggleFinalResults}
+                  />
+                }
+              </Cell>
+              <Cell col={6}>
+                {
+                  <TournamentFinalResultsContainer
+                    tournamentId={this.props.tournamentId}
+                  />
+                }
+              </Cell>
+            </Grid>
+          </div>
         );
     }
 }
