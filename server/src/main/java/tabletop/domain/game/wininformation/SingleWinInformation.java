@@ -1,11 +1,13 @@
 package tabletop.domain.game.wininformation;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.validation.constraints.NotNull;
 
 public class SingleWinInformation {
-    @NotNull
+    @NotNull(message = "{single_win_information.tournament_id}")
     private Long tournamentId;
-    @NotNull
+    @NotEmpty(message = "{single_win_information.winner_username}")
     private String winnerUsername;
 
     public SingleWinInformation() {

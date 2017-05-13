@@ -45,8 +45,7 @@ public class SwissResultId implements Serializable {
         if (obj instanceof SwissResultId) {
             SwissResultId entity = (SwissResultId) obj;
 
-            return Objects.equals(getClass(), entity.getClass())
-                    && Objects.equals(user, entity.getUser())
+            return Objects.equals(user, entity.getUser())
                     && Objects.equals(tournamentProcess, entity.getTournamentProcess());
         }
 
@@ -55,6 +54,6 @@ public class SwissResultId implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, tournamentProcess, getClass());
+        return Objects.hash(user, tournamentProcess);
     }
 }
