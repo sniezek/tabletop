@@ -21,7 +21,8 @@ libraryDependencies ++= {
     "org.scalatest" %% "scalatest" % scalaTestV % "test",
     "com.typesafe.slick" %% "slick" % "3.0.0",
     "org.slf4j" % "slf4j-nop" % "1.6.4",
-    "com.h2database" % "h2" % "1.4.194"
+    "com.h2database" % "h2" % "1.4.194",
+    "ch.megard" %% "akka-http-cors" % "0.1.2"
 
   )
 }

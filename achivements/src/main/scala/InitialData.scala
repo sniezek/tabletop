@@ -24,11 +24,11 @@ trait InitialData {
       statistics += Statistic(playerId = 9, totalWins = 1024, tournamentWins = 1024),
 
       achivements.delete,
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 10 Games", minVal = 10, name = "10Wins", field = "TotalWins"),
+      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 10 Games", minVal = 10, name = "10Wins", field = "TotalWins" ,url = "http://www.pngall.com/wp-content/uploads/2016/04/10-Number-PNG.png"),
       achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 100 Games", minVal = 100, name = "100Wins", field = "TotalWins"),
       achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 1000 Games", minVal = 1000, name = "1000Wins", field = "TotalWins"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 10 Tournamets", minVal = 10, name = "10TournametsWins", field = "TournametsWins"),
+      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 10 Tournamets", minVal = 10, name = "10TournametsWins", field = "TournametsWins", url = "http://www.pngall.com/wp-content/uploads/2016/04/10-Number-PNG.png"),
       achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 100 Tournamets", minVal = 100, name = "100TournametsWins", field = "TournametsWins"),
       achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then 1000 Tournamets", minVal = 1000, name = "1000TournametsWins", field = "TournametsWins")
     )

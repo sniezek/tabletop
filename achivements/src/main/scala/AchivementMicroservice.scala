@@ -1,15 +1,20 @@
 import akka.actor.ActorSystem
 import akka.event.{Logging, LoggingAdapter}
-import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.model.StatusCodes._
-import akka.http.scaladsl.server.Directives._
+
 import akka.stream.{ActorMaterializer, Materializer}
 import com.typesafe.config.{Config, ConfigFactory}
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
+import akka.http.scaladsl.Http
+
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server._
+import ch.megard.akka.http.cors.CorsDirectives._
+import ch.megard.akka.http.cors.{CorsDirectives, CorsSettings}
 
 //TODO move to antoher file
 case class Achiv(name: String, description: String, imageURL: String)
@@ -134,63 +139,68 @@ trait Service extends Protocols {
     Future.successful(Right(result))
   }
 
-  val routes = {
-    //TODO fix all routes
-    import StringUtils._
-    logRequestResult("AchivementMicroservice") {
-      pathPrefix("achi") {
-        (get & path(Segment)) {
-          id =>
-            complete {
-              getAchivements(id.toIntOpt).map[ToResponseMarshallable] {
-                case Right(response) => response
-                case Left(errorMessage) => BadRequest -> errorMessage
+  val settings = CorsSettings.defaultSettings.copy(allowCredentials = true)
+  val routes: Route = handleRejections(CorsDirectives.corsRejectionHandler) {
+    cors(settings) {
+      handleRejections(RejectionHandler.default) {
+        //TODO fix all routes
+        import StringUtils._
+        logRequestResult("AchivementMicroservice") {
+          pathPrefix("achi") {
+            (get & path(Segment)) {
+              id =>
+                complete {
+                  getAchivements(id.toIntOpt).map[ToResponseMarshallable] {
+                    case Right(response) => response
+                    case Left(errorMessage) => BadRequest -> errorMessage
+                  }
+                }
+            }
+          } ~
+            pathPrefix("update") {
+              (get & path(Segment)) {
+                id =>
+                  complete {
+                    updateWinCounter(id.toIntOpt).map[ToResponseMarshallable] {
+                      case Right(response) => response
+                      case Left(errorMessage) => BadRequest -> errorMessage
+                    }
+                  }
+              }
+            } ~
+            pathPrefix("add") {
+              get {
+                complete {
+                  addPlayer().map[ToResponseMarshallable] {
+                    case Right(response) => response
+                    case Left(errorMessage) => BadRequest -> errorMessage
+                  }
+                }
+              }
+            } ~
+            pathPrefix("newAchivements") {
+              (get & path(Segment)) {
+                id =>
+                  complete {
+                    getNewAchivements(id.toIntOpt).map[ToResponseMarshallable] {
+                      case Right(response) => response
+                      case Left(errorMessage) => BadRequest -> errorMessage
+                    }
+                  }
+              }
+            } ~
+            pathPrefix("allAchivements") {
+              get {
+                complete {
+                  getAllAchivements().map[ToResponseMarshallable] {
+                    case Right(response) => response
+                    case Left(errorMessage) => BadRequest -> errorMessage
+                  }
+                }
               }
             }
         }
-      } ~
-        pathPrefix("update") {
-          (get & path(Segment)) {
-            id =>
-              complete {
-                updateWinCounter(id.toIntOpt).map[ToResponseMarshallable] {
-                  case Right(response) => response
-                  case Left(errorMessage) => BadRequest -> errorMessage
-                }
-              }
-          }
-        } ~
-        pathPrefix("add") {
-          get {
-            complete {
-              addPlayer().map[ToResponseMarshallable] {
-                case Right(response) => response
-                case Left(errorMessage) => BadRequest -> errorMessage
-              }
-            }
-          }
-        } ~
-        pathPrefix("newAchivements") {
-          (get & path(Segment)) {
-            id =>
-              complete {
-                getNewAchivements(id.toIntOpt).map[ToResponseMarshallable] {
-                  case Right(response) => response
-                  case Left(errorMessage) => BadRequest -> errorMessage
-                }
-              }
-          }
-        } ~
-        pathPrefix("allAchivements") {
-          get {
-            complete {
-              getAllAchivements().map[ToResponseMarshallable] {
-                case Right(response) => response
-                case Left(errorMessage) => BadRequest -> errorMessage
-              }
-            }
-          }
-        }
+      }
     }
   }
 }
