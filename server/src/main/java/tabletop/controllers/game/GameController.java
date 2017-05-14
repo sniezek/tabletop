@@ -1,4 +1,4 @@
-package tabletop.controllers;
+package tabletop.controllers.game;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,7 +6,7 @@ import tabletop.controllers.utils.ResourceNotFoundException;
 import tabletop.domain.game.Game;
 import tabletop.domain.ranking.GameRanking;
 import tabletop.domain.user.User;
-import tabletop.services.GameRankingService;
+import tabletop.services.game.GameRankingService;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,10 +31,10 @@ public class GameController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/rankings/{gameName}")
-    public List<GameRanking> getRanking(@PathVariable String gameName) {
+    public List<GameRankingResponse> getRanking(@PathVariable String gameName) {
         try {
             Game game = Game.valueOf(gameName);
-            return gameRankingService.getRankingForGame(null, game);
+            return gameRankingService.getTopUsers(game);
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException();
         }
