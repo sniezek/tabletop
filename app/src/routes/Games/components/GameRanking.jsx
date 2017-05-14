@@ -5,31 +5,26 @@ import { Grid, Cell, List, ListItem, ListItemContent } from "react-mdl/lib";
 import "./GameRanking.scss";
 
 const propTypes = {
-    ranking: PropTypes.object.isRequired
+    ranking: PropTypes.array.isRequired
 };
 
 const enhance = pure;
 
-export const GameRanking = ranking => (
-    <Grid>
+export const GameRanking = (ranking) => {
+    return (<Grid>
         <Cell className="rankingContainer" shadow={1} col={8} offsetDesktop={2}>
             <List className="width300">
-                <ListItem twoLine>
-                    <h3 className="placeHeader"> 1. </h3>
-                    <ListItemContent avatar="person" subtitle="12010 points">Bryan Cranston</ListItemContent>
-                </ListItem>
-                <ListItem twoLine>
-                    <h3 className="placeHeader"> 2. </h3>
-                    <ListItemContent avatar="person" subtitle="11023 points">Aaron Paul</ListItemContent>
-                </ListItem>
-                <ListItem twoLine>
-                    <h3 className="placeHeader"> 3. </h3>
-                    <ListItemContent avatar="person" subtitle="1323 points">Bob Odenkirk</ListItemContent>
-                </ListItem>
+                {ranking.ranking.map(({ username, points }, index) =>
+                    <ListItem twoLine key={username}>
+                        <h3 className="placeHeader">{index + 1}.</h3>
+                        <ListItemContent avatar="person" subtitle={points}>{username}</ListItemContent>
+                    </ListItem>
+      )}
             </List>
         </Cell>
     </Grid>
-);
+    );
+};
 
 GameRanking.propTypes = propTypes;
 

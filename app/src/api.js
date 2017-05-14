@@ -81,6 +81,13 @@ class Api {
             credentials: "include"
         });
     }
+
+    ranking(gameName) {
+        return fetch(`${API_SERVER}/rankings/${gameName}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
 }
 
 export default new Api();

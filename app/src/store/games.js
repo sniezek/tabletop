@@ -3,6 +3,7 @@ import Api from "../api";
 
 export const GET_GAMES = "GET_GAMES";
 export const GET_GAME_DETAILS = "GET_GAME_DETAILS";
+export const GET_GAME_RANKING = "GET_GAME_RANKING";
 
 export const getGames = dispatch =>
     Api.games().then((response) => {
@@ -32,11 +33,25 @@ export const getGameDetails = name => dispatch =>
       }
   });
 
+export const getGameRanking = gameName => dispatch =>
+  Api.ranking(gameName).then((response) => {
+      if (response.ok) {
+          response.json().then((gameRankingList) => {
+              dispatch({
+                  type: GET_GAME_RANKING,
+                  payload: {
+                      gameRankingList
+                  }
+              });
+          });
+      }
+  });
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function gamesReducer(state = { gamesList: [], game: { name: "" } }, { type, payload }) {
+export default function gamesReducer(state = { gamesList: [], game: { name: "" }, gameRankingList: [] }, { type, payload }) {
     if (type === GET_GAMES) {
         state = {
             gamesList: payload.gamesList
@@ -44,6 +59,10 @@ export default function gamesReducer(state = { gamesList: [], game: { name: "" }
     } else if (type === GET_GAME_DETAILS) {
         state = {
             game: payload.game
+        };
+    } else if (type === GET_GAME_RANKING) {
+        state = {
+            gameRankingList: payload.gameRankingList
         };
     }
     return state;
