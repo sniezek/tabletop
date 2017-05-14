@@ -58,10 +58,12 @@ export default function gamesReducer(state = { gamesList: [], game: { name: "" }
         };
     } else if (type === GET_GAME_DETAILS) {
         state = {
+            ...state,
             game: payload.game
         };
     } else if (type === GET_GAME_RANKING) {
         state = {
+            ...state,
             gameRankingList: payload.gameRankingList
         };
     }
