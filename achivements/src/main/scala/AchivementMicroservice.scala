@@ -45,7 +45,7 @@ trait Service extends Protocols {
 
   val allAchivements: Seq[Achivement]
 
-  var newAchivementList: List[Achiv] = List[Achiv]()
+  var newAchivementMap: Map[Int, Achievement] = Map[Int, Achievement]()
 
   var achivementResult: List[Achiv] = List[Achiv]()
 
@@ -77,27 +77,28 @@ trait Service extends Protocols {
             Future.successful(Right(Achievement(s.playerId, Some(a))))
           }
         }
-
     }
   }
 
-  def updateWinCounter(id: Option[Int]): Future[Either[String, String]] = {
+  def updateWinCounter(id: Option[Int], field: String = "TotalWins"): Future[Either[String, String]] = {
     id match {
       case None => Future.successful(Left("Wrong Id"))
-      case Some(s) =>
-        val result = h2Data.getWinAmount(h2Data.dao.player(s))
-        result match {
-          case -1 => {
-            printPlayers()
-            println(newAchivementList)
-            Future.successful(Left("User not found"))
-          }
-          case _ => {
-            h2Data.dao.updateWinsAmount(s, result + 1)
-            if (result + 1 == minValueToAchivement) {
-              newAchivementList ++= List(Achiv("name", "desc", "Url"))
+      case Some(i) =>
+        val player = h2Data.getResult(h2Data.dao.player(i))
+        player match {
+          case None => Future.successful(Left("Cannot find player"))
+          case Some(p) => {
+            field match {
+              case "TotalWins" => {
+                h2Data.dao.updateTotalWins(i, p.totalWins + 1)
+                allAchivements.filter(_.field == "TotalWins").sortBy(_.minVal).foreach(
+                  x => if (Conditions.map(x.conditions)(p.totalWins + 1, x.minVal) && !Conditions.map(x.conditions)(p.totalWins, x.minVal)) {
+                    newAchivementMap += p.playerId -> Achievement(p.playerId, Some(List(Achiv(x.name, x.description, x.url))))
+                  }
+                )
+                Future.successful(Right("Done"))
+              }
             }
-            Future.successful(Right("Done"))
           }
         }
     }
@@ -114,15 +115,23 @@ trait Service extends Protocols {
     Future.successful(Right("Done"))
   }
 
-  def getNewAchivements(): Future[Either[String, List[Achiv]]] = {
-    val a = newAchivementList
-    newAchivementList = List[Achiv]()
-    Future.successful(Right(a))
+  def getNewAchivements(id: Option[Int]): Future[Either[String, Option[Achievement]]] = {
+    id match {
+      case None => Future.successful(Left("Wrong Id"))
+      case Some(i) => {
+        val result = Future.successful(Right(newAchivementMap.get(i)))
+        newAchivementMap -= i
+        result
+      }
+    }
   }
 
-  def update(feed: Feed): Future[Either[String, Feed]] = {
-    println(feed.map)
-    Future.successful(Left("OK"))
+  def getAllAchivements(): Future[Either[String, List[Achiv]]] = {
+    var result = List[Achiv]()
+    for (a <- allAchivements) {
+      result ++= List(Achiv(a.name, a.description, a.url))
+    }
+    Future.successful(Right(result))
   }
 
   val routes = {
@@ -140,16 +149,6 @@ trait Service extends Protocols {
             }
         }
       } ~
-        pathPrefix("updateDB") {
-          (post & entity(as[Feed])) { feed =>
-            complete {
-              update(feed).map[ToResponseMarshallable] {
-                case Left("OK") => "OK"
-                case Left(errorMessage) => BadRequest -> errorMessage
-              }
-            }
-          }
-        } ~
         pathPrefix("update") {
           (get & path(Segment)) {
             id =>
@@ -172,9 +171,20 @@ trait Service extends Protocols {
           }
         } ~
         pathPrefix("newAchivements") {
+          (get & path(Segment)) {
+            id =>
+              complete {
+                getNewAchivements(id.toIntOpt).map[ToResponseMarshallable] {
+                  case Right(response) => response
+                  case Left(errorMessage) => BadRequest -> errorMessage
+                }
+              }
+          }
+        } ~
+        pathPrefix("allAchivements") {
           get {
             complete {
-              getNewAchivements().map[ToResponseMarshallable] {
+              getAllAchivements().map[ToResponseMarshallable] {
                 case Right(response) => response
                 case Left(errorMessage) => BadRequest -> errorMessage
               }
