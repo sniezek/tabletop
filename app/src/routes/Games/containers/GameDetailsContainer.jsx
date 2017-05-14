@@ -61,7 +61,7 @@ class GameDetailsContainer extends PureComponent {
                           } else if (this.state.activeTab === 1) {
                               return (<GameRanking ranking={this.props.game} />);
                           }
-                          return (<IncomingEvents eventsList={this.props.game} />);
+                          return (<IncomingEvents events={null} />);
                       }.call(this)
                     }
                     </div>
