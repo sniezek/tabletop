@@ -8,7 +8,7 @@ DELETE FROM swiss_tournament_process;
 DELETE FROM tournament_process;
 
 INSERT INTO user (id, username, password, email)
-VALUES (0, 'Romero', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+VALUES (0, 'Romero', '$2a$10$nnrqLHplDNisOTY1m1tHcuv6gCsULjyrVjNl9VpIZjDx/1pvQFLyO', 'user@user');
 INSERT INTO user (id, username, password, email)
 VALUES (1, 'Julianne', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
@@ -31,11 +31,14 @@ INSERT INTO user (id, username, password, email)
 VALUES (10, 'Andrea', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
 INSERT INTO user (id, username, password, email)
 VALUES (11, 'Oriol', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
+INSERT INTO user (id, username, password, email)
+VALUES (12, 'Jan', '$2a$10$nnrqLHplDNisOTY1m1tHcuv6gCsULjyrVjNl9VpIZjDx/1pvQFLyO', 'user@user');
+-- password Jan
 
-INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished)
-VALUES (0, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', 'results', false);
-INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished)
-VALUES (1, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', 'results', false);
+INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished, creator_id)
+VALUES (0, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', 'results', false, 12);
+INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, results, finished, creator_id)
+VALUES (1, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', 'results', false, 12);
 
 INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (0, 0, 0, 10, 1);

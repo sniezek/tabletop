@@ -82,11 +82,13 @@ export const getFinalResults = (id, callback) => dispatch =>
 export const nextRound = (id, callback) => dispatch =>
   Api.nextRound(id).then((response) => {
       if (response.ok) {
-          response.json().then((pairs) => {
+          response.json().then((tournament) => {
               dispatch({
                   type: NEXT_ROUND,
                   payload: {
-                    pairs
+                    pairs: tournament.pairs,
+                    creator: tournament.creator,
+                    isCurrentUserParticipant: tournament.participant
                   }
               });
           });
@@ -108,11 +110,13 @@ export const setWinner = (id, winner, callback) => dispatch =>
 export const initialRound = (id, callback) => dispatch =>
   Api.initialRound(id).then((response) => {
       if (response.ok) {
-          response.json().then((pairs) => {
+          response.json().then((tournament) => {
               dispatch({
                   type: INITIAL_ROUND,
                   payload: {
-                    pairs
+                    pairs: tournament.pairs,
+                    creator: tournament.creator,
+                    isCurrentUserParticipant: tournament.participant
                   }
               });
           });
@@ -154,7 +158,15 @@ export const actions = {
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function tournamentReducer(state = { pairs: [] }, { type, payload }) {
+const initialState = {
+  pairs: [],
+  creator: {
+    username: ""
+  },
+  isCurrentUserParticipant: false
+};
+
+export default function tournamentReducer(state = initialState, { type, payload }) {
     if (type === GET_TOURNAMENT) {
         state = {
             pairs: payload.pairs
@@ -169,7 +181,9 @@ export default function tournamentReducer(state = { pairs: [] }, { type, payload
         };
     } else if (type === NEXT_ROUND) {
         state = {
-            pairs: payload.pairs
+            pairs: payload.pairs,
+            creator: payload.creator,
+            isCurrentUserParticipant: payload.isCurrentUserParticipant
         };
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {
@@ -177,7 +191,9 @@ export default function tournamentReducer(state = { pairs: [] }, { type, payload
         };
     } else if (type === INITIAL_ROUND) {
         state = {
-            pairs: payload.pairs
+            pairs: payload.pairs,
+            creator: payload.creator,
+            isCurrentUserParticipant: payload.isCurrentUserParticipant
         };
     }
     return state;

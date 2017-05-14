@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import MatchContainer from "../containers/MatchContainer";
 import {Cell, Grid} from "react-mdl/lib/Grid";
 import "./TournamentStatus.scss";
-import TournamentStatusFooter from "./TournamentStatusFooter";
+import TournamentStatusFooterContainer from "../containers/TournamentStatusFooterContainer";
 
 const propTypes = {
   tournamentId: PropTypes.number,
@@ -71,6 +71,7 @@ class TournamentStatus extends PureComponent {
                         setWinner={this.props.setWinner}
                         tournamentId={this.props.tournamentId}
                         updateNextRoundButton={this.updateNextRoundButton}
+                        creator={this.props.creator}
                       />
                     </Cell>
                   )
@@ -79,7 +80,7 @@ class TournamentStatus extends PureComponent {
             )
           }
         </div>
-        <TournamentStatusFooter
+        <TournamentStatusFooterContainer
           tournamentId={this.props.tournamentId}
           pairsLength={this.props.pairs.length}
           nextRound={this.props.nextRound}

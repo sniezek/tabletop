@@ -11,7 +11,10 @@ const propTypes = {
   nextRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
   giveUp: PropTypes.func.isRequired,
-  matchesFinished: PropTypes.number.isRequired
+  matchesFinished: PropTypes.number.isRequired,
+  currentUser: PropTypes.object,
+  creator: PropTypes.object,
+  isCurrentUserParticipant: PropTypes.bool
 };
 
 const defaultProps = {};
@@ -49,15 +52,24 @@ class TournamentStatusFooter extends PureComponent {
       <div style={{width: '100%', margin: 'auto', marginTop: 'initial'}}>
         <Grid className="demo-grid-ruler">
           <Cell col={6}>
-            <Button
-              colored
-              onClick={() => this.props.nextRound()}
-              disabled={this.props.matchesFinished !== this.props.pairsLength}
-            >Next round</Button>
+            {
+              this.props.currentUser !== null && this.props.currentUser.name === this.props.creator.username &&
+              <Button
+                colored
+                onClick={() => this.props.nextRound()}
+                disabled={this.props.matchesFinished !== this.props.pairsLength}
+              >Next round</Button>
+            }
           </Cell>
           <Cell col={6} style={{textAlign: "right"}}>
-            <Button colored onClick={this.handleOpenResignDialog}>Give up</Button>
-            <Button colored onClick={() => this.props.finishTournament()}>Finish tournament</Button>
+            {
+              this.props.isCurrentUserParticipant &&
+              <Button colored onClick={this.handleOpenResignDialog}>Give up</Button>
+            }
+            {
+              this.props.currentUser !== null && this.props.currentUser.name === this.props.creator.username &&
+              <Button colored onClick={() => this.props.finishTournament()}>Finish tournament</Button>
+            }
           </Cell>
         </Grid>
         <Dialog

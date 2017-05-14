@@ -10,10 +10,14 @@ const propTypes = {
     winner: PropTypes.number.isRequired,
     hostResult: PropTypes.number.isRequired,
     guestResult: PropTypes.number.isRequired,
-    win: PropTypes.func.isRequired
+    win: PropTypes.func.isRequired,
+    creator: PropTypes.object,
+    currentUser: PropTypes.object
 };
 
-const defaultProps = {};
+const defaultProps = {
+    currentUser: null
+};
 
 class Match extends PureComponent {
     constructor(props) {
@@ -43,7 +47,7 @@ class Match extends PureComponent {
                         <Checkbox
                           checked={object.checked}
                           onChange={e => this.props.win(object.player)}
-                          disabled={this.state.winner !== 0}
+                          disabled={this.state.winner !== 0 || this.props.currentUser === null || this.props.currentUser.name !== this.props.creator.username}
                         />
                       </ListItemAction>
                     </ListItem>

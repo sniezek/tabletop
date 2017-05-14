@@ -86,13 +86,15 @@ class Api {
 
     initialRound(id) {
         return fetch(`${API_SERVER}/tournament/init/${id}`, {
-            method: "GET"
+            method: "GET",
+            credentials: "include"
         });
     }
 
     nextRound(id) {
         return fetch(`${API_SERVER}/tournament/next/${id}`, {
-            method: "GET"
+            method: "GET",
+            credentials: "include"
         });
     }
 
@@ -138,7 +140,8 @@ class Api {
 
     giveUp(id) {
       return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
-         method: "POST"
+         method: "POST",
+          credentials: "include"
       });
     }
 }
