@@ -1,9 +1,21 @@
 .create-event {
     &__content {
+        display: flex;
+        flex-direction: column;
         width: 100%;
         flex: 1 1 0%;
         max-width: 600px;
         margin: 64px auto;
         background: #fff;
+    }
+
+    &__tab-wrapper {
+        flex: 1 1 0%;
+    }
+
+    &__navigation {
+        display: flex;
+        padding: 8px;
+        justify-content: flex-end;
     }
 }

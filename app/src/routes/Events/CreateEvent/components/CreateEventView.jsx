@@ -1,5 +1,6 @@
 import React from "react";
 import pure from "recompose/pure";
+import Button from "react-mdl/lib/Button";
 import { Tabs, Tab } from "react-mdl/lib/Tabs";
 import { View, ViewHeader, ViewContent } from "../../../../components/View";
 import "./CreateEventView.scss";
@@ -18,6 +19,13 @@ const CreateEventView = () => (
                     <Tab>Sparrings</Tab>
                     <Tab>Tournaments</Tab>
                 </Tabs>
+                <div className="create-event__tab-wrapper">
+                    ...
+                </div>
+                <div className="create-event__navigation">
+                    <Button>Previous</Button>
+                    <Button colored>Next</Button>
+                </div>
             </div>
         </ViewContent>
     </View>
