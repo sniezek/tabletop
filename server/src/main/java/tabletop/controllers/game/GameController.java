@@ -33,7 +33,7 @@ public class GameController {
     @RequestMapping(method = RequestMethod.GET, value = "/rankings/{gameName}")
     public List<GameRankingResponse> getRanking(@PathVariable String gameName) {
         try {
-            Game game = Game.valueOf(gameName);
+            Game game = Game.valueOf(gameName.toUpperCase());
             return gameRankingService.getTopUsers(game);
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException();
@@ -43,7 +43,7 @@ public class GameController {
     @RequestMapping(method = RequestMethod.POST, value = "/rankings/{gameName}")
     public List<GameRanking> getRanking(@PathVariable String gameName, @RequestBody List<User> users) {
         try {
-            Game game = Game.valueOf(gameName);
+            Game game = Game.valueOf(gameName.toUpperCase());
             return gameRankingService.getRankingForGame(users, game);
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException();
