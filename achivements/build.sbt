@@ -18,9 +18,13 @@ libraryDependencies ++= {
     "com.typesafe.akka" %% "akka-http" % akkaHttpV,
     "com.typesafe.akka" %% "akka-http-spray-json" % akkaHttpV,
     "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpV,
-    "org.scalatest" %% "scalatest" % scalaTestV % "test"
+    "org.scalatest" %% "scalatest" % scalaTestV % "test",
+    "com.typesafe.slick" %% "slick" % "3.0.0",
+    "org.slf4j" % "slf4j-nop" % "1.6.4",
+    "com.h2database" % "h2" % "1.4.194"
+
   )
 }
 
-
+resolvers += Resolver.jcenterRepo
 Revolver.settings
