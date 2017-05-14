@@ -130,7 +130,7 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
         tournamentService.giveUp(tournamentOptional.get(), userService.getAuthenticatedUser().get());
-
+        tournamentService.addTournament(tournamentOptional.get());
         return ResponseEntity.ok().build();
     }
 
