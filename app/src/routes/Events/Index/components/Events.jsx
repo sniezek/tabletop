@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { View } from "../../../components/View";
+import { View } from "../../../../components/View";
 import EventsHeader from "./EventsHeader.jsx";
 import EventsContent from "./EventsContent.jsx";
 import EventsFilters from "./filters/EventsFilters.jsx";

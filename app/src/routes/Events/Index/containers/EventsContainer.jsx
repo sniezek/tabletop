@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setMapViewActive } from "../../../store/config";
+import { setMapViewActive } from "../../../../store/config";
 import { loadEvents } from "../modules/EventActions";
 import Events from "../components/Events.jsx";
 import { mapLocationFilters, mapDateFilters, mapTypeFilters, mapGamesFilters } from "../modules/FilterUtils";

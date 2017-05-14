@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { ViewHeader } from "../../../components/View";
+import { ViewHeader } from "../../../../components/View";
 import EventsHeaderOptions from "./EventsHeaderOptions.jsx";
 
 const propTypes = {
