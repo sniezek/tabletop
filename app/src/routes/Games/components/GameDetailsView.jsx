@@ -1,7 +1,7 @@
 import React from "react";
 import pure from "recompose/pure";
 import PropTypes from "prop-types";
-import GameDetailsContainer from "../containers/GameDetailsContainer.jsx";
+import GameInfoContainer from "../containers/GameInfoContainer.jsx";
 import { View, ViewHeader } from "../../../components/View";
 import "./Games.scss";
 
@@ -14,7 +14,7 @@ const enhance = pure;
 export const GameDetailsView = ({ router }) => (
     <View className="games">
         <ViewHeader title="Game details" />
-        <GameDetailsContainer router={router} />
+        <GameInfoContainer router={router} />
     </View>
 );
 

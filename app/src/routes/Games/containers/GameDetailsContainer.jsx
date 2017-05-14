@@ -1,11 +1,8 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Tab, Tabs } from "react-mdl/lib";
 import { getGameDetails } from "../../../store/games";
 import GameDetails from "../components/GameDetails";
-import GameRankingContainer from "../containers/GameRankingContainer";
-import IncomingEvents from "../components/IncomingEvents";
 
 const propTypes = {
     game: PropTypes.object,
@@ -29,7 +26,6 @@ class GameDetailsContainer extends PureComponent {
     constructor(props) {
         super(props);
         this.getGameDetails = this.getGameDetails.bind(this);
-        this.state = { activeTab: 0 };
     }
 
     getGameDetails() {
@@ -37,37 +33,7 @@ class GameDetailsContainer extends PureComponent {
 
     render() {
         return (
-            <div>
-                <Tabs
-                    style={{ backgroundColor: "white", marginTop: "5px" }}
-                    activeTab={this.state.activeTab}
-                    onChange={tabId => this.setState({ activeTab: tabId })}
-                >
-                    <Tab>
-                        Details
-                    </Tab>
-                    <Tab>
-                        Ranking
-                    </Tab>
-                    <Tab>
-                        Incoming events
-                    </Tab>
-                </Tabs>
-                <section>
-                    <div className="content"> {
-                      function () {
-                          if (this.state.activeTab === 0) {
-                              return (<GameDetails game={this.props.game} />);
-                          } else if (this.state.activeTab === 1) {
-                              return (<GameRankingContainer router={this.props.router} />);
-                          }
-                          return (<IncomingEvents events={null} />);
-                      }.call(this)
-                    }
-                    </div>
-                </section>
-            </div>
-        );
+            <GameDetails game={this.props.game} />);
     }
 }
 
