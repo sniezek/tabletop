@@ -130,6 +130,7 @@ class TournamentProcessContainer extends PureComponent {
         pairs={this.props.pairs}
         setWinner={this.setWinner}
         nextRound={this.nextRound}
+        router={this.props.router}
         finishTournament={this.finishTournament}
         giveUp={this.props.giveUp}
         displayFinalResults={this.props.displayFinalResults}

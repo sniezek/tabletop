@@ -14,7 +14,8 @@ const propTypes = {
   matchesFinished: PropTypes.number.isRequired,
   currentUser: PropTypes.object,
   creator: PropTypes.object,
-  isCurrentUserParticipant: PropTypes.bool
+  isCurrentUserParticipant: PropTypes.bool,
+  router: PropTypes.object.isRequired
 };
 
 const defaultProps = {};
@@ -40,6 +41,8 @@ class TournamentStatusFooter extends PureComponent {
     this.setState({
       openResignDialog: false
     });
+    const {router} = this.props;
+    router.push("/");
   }
 
   handleResign() {

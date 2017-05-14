@@ -12,7 +12,8 @@ const propTypes = {
   matchesFinished: PropTypes.number.isRequired,
   currentUser: PropTypes.object,
   creator: PropTypes.object,
-  isCurrentUserParticipant: PropTypes.bool
+  isCurrentUserParticipant: PropTypes.bool,
+  router: PropTypes.object.isRequired
 };
 
 const defaultProps = {};
@@ -41,6 +42,7 @@ class TournamentStatusFooterContainer extends PureComponent {
       currentUser={this.props.currentUser}
       creator={this.props.creator}
       isCurrentUserParticipant={this.props.isCurrentUserParticipant}
+      router={this.props.router}
     />
   }
 }

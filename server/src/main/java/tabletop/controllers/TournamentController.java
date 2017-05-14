@@ -81,7 +81,7 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
 
-        if (userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
+        if (!userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
             return ResponseUtils.forbidden();
         }
 
@@ -113,7 +113,7 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
 
-        if (userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
+        if (!userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
             return ResponseUtils.forbidden();
         }
 
@@ -129,7 +129,7 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
 
-        if (userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
+        if (!userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
             return ResponseUtils.forbidden();
         }
 

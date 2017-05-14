@@ -19,7 +19,8 @@ const propTypes = {
   finishTournament: PropTypes.func.isRequired,
   giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired,
-  toggleFinalResults: PropTypes.func.isRequired
+  toggleFinalResults: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -58,6 +59,7 @@ class TournamentProcess extends PureComponent {
             finishTournament={this.finishTournament}
             giveUp={this.props.giveUp}
             displayFinalResults={this.props.displayFinalResults}
+            router={this.props.router}
           />
         )
         }
