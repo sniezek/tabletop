@@ -25,6 +25,8 @@ public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
     private User currentOpponent;
     @NotNull
     private Integer currentScore;
+    @NotNull
+    private boolean isAvailable;
 
     public SwissResultId getId() {
         return id;
@@ -73,6 +75,12 @@ public class SwissPlayerResult implements Comparable<SwissPlayerResult> {
 
     public void setCurrentScore(Integer currentScore) {
         this.currentScore = currentScore;
+    }
+
+    public boolean isAvailable() { return isAvailable; }
+
+    public void setIsAvailable(boolean available) {
+        this.isAvailable = available;
     }
 
     public Long getUserId() {

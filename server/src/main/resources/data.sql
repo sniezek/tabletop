@@ -96,23 +96,23 @@ VALUES (0, 5);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (0, 0);
 
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (1, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (2, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (3, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (4, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (5, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (6, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (7, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (8, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (9, 1, 0, null, 0);
-INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
-VALUES (0, 1, 0, null, 0);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (1, 1, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (2, 1, 0, null, 0, TRUE);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (3, 1, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (4, 1, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (5, 1, 0, null, 0, TRUE);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (6, 1, 0, null, 0, TRUE);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (7, 1, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (8, 1, 0, null, 0, TRUE);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (9, 1, 0, null, 0, TRUE);
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (0, 1, 0, null, 0, TRUE );

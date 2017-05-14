@@ -36,8 +36,14 @@ public class SwissTournamentService {
                 User user2 = users.get(i + 1);
                 Pair<User> pair = new Pair<>(user1, user2);
                 pairs.add(pair);
-                setInitialResult(user2, swissTournamentProcess.getResultByUser(user1));
-                setInitialResult(user1, swissTournamentProcess.getResultByUser(user2));
+                if (!swissTournamentProcess.getResultByUser(user1).isAvailable() && swissTournamentProcess.getResultByUser(user2).isAvailable()) {
+                    setWinner(swissTournamentProcess, user2);
+                } else if (swissTournamentProcess.getResultByUser(user1).isAvailable() && !swissTournamentProcess.getResultByUser(user2).isAvailable()) {
+                    setWinner(swissTournamentProcess, user1);
+                } else {
+                    setInitialResult(user2, swissTournamentProcess.getResultByUser(user1));
+                    setInitialResult(user1, swissTournamentProcess.getResultByUser(user2));
+                }
             } else {
                 swissTournamentProcess.setByeUser(users.get(i));
             }
@@ -80,10 +86,16 @@ public class SwissTournamentService {
                             resultGuest.getId().getUser(),
                             resultHost.getResult(),
                             resultGuest.getResult());
-                    pairs.add(pair);
                     resultsOrdered.remove(resultGuest);
                     setInitialResult(resultGuest.getId().getUser(), resultHost);
                     setInitialResult(resultHost.getId().getUser(), resultGuest);
+                    if (!resultHost.isAvailable() && resultGuest.isAvailable()) {
+                        setWinner(swissTournamentProcess, resultGuest.getId().getUser());
+                    } else if (resultHost.isAvailable() && !resultGuest.isAvailable()) {
+                        setWinner(swissTournamentProcess, resultHost.getId().getUser());
+                    } else {
+                        pairs.add(pair);
+                    }
                     break;
                 }
             }
@@ -152,6 +164,7 @@ public class SwissTournamentService {
     }
 
     public void giveUp(Tournament tournament, User user) {
-//        TODO implement
+        SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
+        swissTournamentProcess.getResultByUser(user).setIsAvailable(false);
     }
 }
