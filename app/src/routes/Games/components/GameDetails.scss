@@ -1,5 +1,5 @@
 .cardContainer {
-  maxWidth: 800px;
+  max-width: 800px;
   background-color: white;
 }
 
@@ -14,7 +14,7 @@
 
 .cardContainer > div > div.mdl-card__actions {
   color: rgba(0,0,0,.54);
-  fontSize: 1rem;
+  font-size: 1rem;
   line-height: 18px;
   padding: 0px 15px 20px 15px;
 }
