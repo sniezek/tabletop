@@ -7,9 +7,9 @@ trait DatabaseSchema {
 
     def playerId = column[Int]("PLAYER_ID")
 
-    def tournamentWins = column[Int]("TOURNAMENT_WIND")
+    def tournamentWins = column[Int]("TOURNAMENT_WINS")
 
-    def totalWins = column[Int]("TOTAL_WIND")
+    def totalWins = column[Int]("TOTAL_WINS")
 
     def * = (id.?, playerId, tournamentWins, totalWins) <> (Statistic.tupled, Statistic.unapply)
   }

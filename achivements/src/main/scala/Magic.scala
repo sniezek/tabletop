@@ -24,6 +24,13 @@ trait Magic {
     }
   }
 
+  def getResult[T](f: Future[T]): Option[T] = {
+    Try(Await.result(f, Duration.Inf)) match {
+      case Success(value) => Some(value)
+      case Failure(_) => None
+    }
+  }
+
   def getOptional(optional: Future[Option[Int]]): Option[Int] = {
     Try(Await.result(optional, Duration.Inf)) match {
       case Success(value) => value

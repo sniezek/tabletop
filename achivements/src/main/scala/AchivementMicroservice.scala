@@ -43,24 +43,41 @@ trait Service extends Protocols {
 
   val minValueToAchivement = 10
 
+  val allAchivements: Seq[Achivement]
+
   var newAchivementList: List[Achiv] = List[Achiv]()
+
+  var achivementResult: List[Achiv] = List[Achiv]()
 
   def getAchivements(id: Option[Int]): Future[Either[String, Achievement]] = {
     id match {
       case None => Future.successful(Left("Wrong Id"))
       case Some(s) =>
-        val result = h2Data.getWinAmount(h2Data.dao.player(s))
-        result match {
-          case -1 =>
-            printPlayers()
-            Future.successful(Left("User not found"))
-          case _ =>
-            if (result > minValueToAchivement) {
-              Future.successful(Right(Achievement(s, Some(List(Achiv("name", "desc", "url"))))))
-            } else {
-              Future.successful(Right(Achievement(s, None)))
+        val player = h2Data.getResult(h2Data.dao.player(s))
+        player match {
+          case None => Future.successful(Left("Cannot find player"))
+          case Some(s) => {
+            for (achi <- allAchivements) {
+              achi.field match {
+                case "TotalWins" => {
+                  if (Conditions.map(achi.conditions)(s.totalWins, achi.minVal)) {
+                    achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+                  }
+                }
+                case "TournametsWins" => {
+                  if (Conditions.map(achi.conditions)(s.tournamentWins, achi.minVal)) {
+                    achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+                  }
+                }
+
+              }
             }
+            val a = achivementResult
+            achivementResult = List[Achiv]()
+            Future.successful(Right(Achievement(s.playerId, Some(a))))
+          }
         }
+
     }
   }
 
@@ -184,10 +201,18 @@ object AchivementMicroservice extends App with Service {
   override implicit val executor = system.dispatcher
   override implicit val materializer = ActorMaterializer()
   override implicit val h2Data = new H2Data
-
+  h2Data.run
   override val config = ConfigFactory.load()
   override val logger = Logging(system, getClass)
+  override val allAchivements: Seq[Achivement] = getAchivementsFromDatabase
 
-  h2Data.run
   Http().bindAndHandle(routes, config.getString("http.interface"), config.getInt("http.port"))
+
+  def getAchivementsFromDatabase(): Seq[Achivement] = {
+    val result = h2Data.getResult(h2Data.dao.getDefinedAchivements())
+    result match {
+      case None => null
+      case Some(s) => s
+    }
+  }
 }

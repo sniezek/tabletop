@@ -37,4 +37,8 @@ class Dao(db: Database) extends DatabaseSchema {
   def getHighestPlayerId(): Future[Option[Int]] = {
     db.run(statistics.map(_.playerId).max.result)
   }
+
+  def getDefinedAchivements(): Future[Seq[Achivement]] = {
+    db.run(achivements.result)
+  }
 }
