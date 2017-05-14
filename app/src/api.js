@@ -25,7 +25,7 @@ class Api {
   }
 
   newAchievements(userID) {
-    return fetch(`${ACHI_SERVER}/newAchivements/${userID}`, {
+    return fetch(`${ACHI_SERVER}/add`, {
       method: "GET",
       credentials: "include"
     });
