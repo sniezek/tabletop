@@ -17,14 +17,13 @@ export const GameDetails = game => (
                 <Card shadow={0} className="width100" >
                     <CardTitle
                         className="detailsCardTitle"
-                        style={{
-                            background: "url(https://cdn.theatlantic.com/assets/media/img/mt/2016/02/shutterstock_110240555/lead_960.jpg?1455134071) center / cover" }}
+                        style={{ background: `url(${game.game.bannerUrl}) center / cover` }}
                     >
                         {game.game.name}
                     </CardTitle>
                     <CardText>
                         <div>
-                            {game.game.description}
+                            {game.game.longDescription}
                         </div>
                     </CardText>
                     <CardActions border>

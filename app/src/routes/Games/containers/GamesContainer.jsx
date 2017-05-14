@@ -44,7 +44,7 @@ class GamesContainer extends PureComponent {
                         </Cell>
                         <Cell col={9} tablet={6} phone={4} style={{ margin: "0px" }}>
                             <Card
-                                shadow={2} style={{ width: "100%" }}
+                                shadow={2} style={{ width: "80%" }}
                             >
                                 <div>
 
