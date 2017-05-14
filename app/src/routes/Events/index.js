@@ -16,5 +16,14 @@ export default store => ({
                 cb(null, EventsView);
             }, "events");
         }
-    }
+    },
+    childRoutes: [{
+        path: "/events/create",
+        getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+                const CreateEventView = require("./CreateEvent/components/CreateEventView.jsx").default;
+                cb(null, CreateEventView);
+            }, "create-event");
+        }
+    }]
 });
