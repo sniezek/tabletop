@@ -1,10 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-mdl/lib";
 import MatchContainer from "../containers/MatchContainer";
-import {Grid, Cell} from "react-mdl/lib/Grid";
-import {Dialog, DialogActions, DialogTitle, DialogContent} from "react-mdl/lib/Dialog";
+import {Cell, Grid} from "react-mdl/lib/Grid";
 import "./TournamentStatus.scss";
+import TournamentStatusFooter from "./TournamentStatusFooter";
 
 const propTypes = {
   tournamentId: PropTypes.number,
@@ -31,11 +30,7 @@ class TournamentStatus extends PureComponent {
     this.updateNextRoundButton = this.updateNextRoundButton.bind(this);
     this.state = {
       matchesFinished: this.props.pairs.filter(pair => pair.winner !== 0).length,
-      openResignDialog: false
     };
-    this.handleOpenResignDialog = this.handleOpenResignDialog.bind(this);
-    this.handleCloseResignDialog = this.handleCloseResignDialog.bind(this);
-    this.handleResign = this.handleResign.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -50,23 +45,6 @@ class TournamentStatus extends PureComponent {
     });
   };
 
-  handleOpenResignDialog() {
-    this.setState({
-      openResignDialog: true
-    });
-  }
-
-  handleCloseResignDialog() {
-    this.setState({
-      openResignDialog: false
-    });
-  }
-
-  handleResign() {
-    this.props.giveUp(this.props.tournamentId);
-    this.handleCloseResignDialog()
-  }
-
   render() {
     let i, j, chunk = 3;
     let columns = []
@@ -80,7 +58,7 @@ class TournamentStatus extends PureComponent {
         <div style={{width: '80%', margin: 'auto', marginTop: 'initial'}}>
           {
             columns.map((pairs, i) =>
-              <Grid key={i} className="demo-grid-ruler" >
+              <Grid key={i} className="demo-grid-ruler">
                 {
                   pairs.map((pair, i) =>
                     <Cell key={i} col={4} shadow={2} className="match-main">
@@ -101,33 +79,14 @@ class TournamentStatus extends PureComponent {
             )
           }
         </div>
-        <div style={{width: '100%', margin: 'auto', marginTop: 'initial'}}>
-          <Grid key={i} className="demo-grid-ruler" >
-            <Cell col={6}>
-              <Button
-                colored
-                onClick={() => this.props.nextRound()}
-                disabled={this.state.matchesFinished !== this.props.pairs.length}
-              >Next round</Button>
-            </Cell>
-            <Cell col={6} style={{textAlign: "right"}}>
-              <Button colored onClick={this.handleOpenResignDialog}>Give up</Button>
-              <Button colored onClick={() => this.props.finishTournament()}>Finish tournament</Button>
-            </Cell>
-          </Grid>
-          <Dialog
-            className="resign-dialog"
-            open={this.state.openResignDialog}>
-            <DialogTitle>Are you sure?</DialogTitle>
-            <DialogContent>
-              <p>Remember that once You resign You will not be able to participate again.</p>
-            </DialogContent>
-            <DialogActions>
-              <Button type='button' onClick={this.handleResign}>Confirm</Button>
-              <Button type='button' onClick={this.handleCloseResignDialog}>Cancel</Button>
-            </DialogActions>
-          </Dialog>
-        </div>
+        <TournamentStatusFooter
+          tournamentId={this.props.tournamentId}
+          pairsLength={this.props.pairs.length}
+          nextRound={this.props.nextRound}
+          finishTournament={this.props.finishTournament}
+          giveUp={this.props.giveUp}
+          matchesFinished={this.state.matchesFinished}
+        />
       </div>
     );
   }
