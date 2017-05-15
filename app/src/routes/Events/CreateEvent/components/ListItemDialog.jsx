@@ -4,6 +4,7 @@ import pure from "recompose/pure";
 import Button from "react-mdl/lib/Button";
 import { Dialog, DialogTitle, DialogActions } from "../../../../components/Dialog";
 import SparringDialogContent from "./SparringDialogContent.jsx";
+import TournamentDialogContent from "./TournamentDialogContent.jsx";
 import "./ListItemDialog.scss";
 
 const propTypes = {
@@ -30,6 +31,11 @@ const ListItemDialog = ({ close, save, model, type, ...rest }) => (
         <DialogTitle>{getTitle(model, type)}</DialogTitle>
         { type === "sparring" && (
             <SparringDialogContent
+                {...rest}
+            />
+        )}
+        { type === "tournament" && (
+            <TournamentDialogContent
                 {...rest}
             />
         )}
