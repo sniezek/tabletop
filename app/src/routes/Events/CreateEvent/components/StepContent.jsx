@@ -2,6 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import DetailsStep from "./DetailsStep.jsx";
+import SparringsStep from "./SparringsStep.jsx";
+import TournamentsStep from "./TournamentsStep.jsx";
 
 const propTypes = {
     step: PropTypes.number.isRequired,
@@ -32,6 +34,14 @@ const StepContent = ({ step, setLocation, setDescription, setName, name, locatio
                 location={location}
                 description={description}
             />
+        );
+    } else if (step === 1) {
+        return (
+            <SparringsStep />
+        );
+    } else if (step === 2) {
+        return (
+            <TournamentsStep />
         );
     }
 
