@@ -6,6 +6,7 @@ import EventsRoute from "./Events";
 import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
 import GamesRoute from "./Games";
 import { EditRoute, ProfileRoute } from "./User";
+import achievementsRoute from "./Archievments"
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -23,7 +24,9 @@ export const createRoutes = store => ({
         TournamentRoute(store),
         GamesRoute(store),
         EditRoute(store),
-        ProfileRoute(store)
+        ProfileRoute(store),
+        achievementsRoute(store)
+
     ]
 });
 
