@@ -10,18 +10,22 @@ const propTypes = {
     edit: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
     label: PropTypes.string.isRequired,
-    add: PropTypes.func.isRequired
+    add: PropTypes.func.isRequired,
+    toggle: PropTypes.func.isRequired
 };
 
 const enhance = pure;
 
-const ListStep = ({ data, edit, remove, label, add }) => (
+const ListStep = ({ data, edit, remove, label, add, toggle }) => (
     <StepWrapper>
         {data.length > 0 ? data.map(item => (
             <ListItem
                 {...item}
+                primary={item.name || item.gameName || item.game}
+                secondary={item.name ? item.game : undefined}
                 edit={() => edit(item)}
                 remove={() => remove(item)}
+                toggle={() => toggle(item)}
             />
         )) : (
             <div className="create-event__no-items">

@@ -16,20 +16,20 @@ const propTypes = {
     setEndDate: PropTypes.func.isRequired,
     setMinPlayers: PropTypes.func.isRequired,
     setMaxPlayers: PropTypes.func.isRequired,
-    setType: PropTypes.func.isRequired
+    setGameType: PropTypes.func.isRequired
 };
 
 const defaultProps = {
     minPlayers: "0",
     maxPlayers: "2",
-    type: "standard"
+    gameType: "standard"
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const SparringDialogContent = ({ startDate, endDate, minPlayers, maxPlayers, type, setStartDate, setEndDate, setMinPlayers, setMaxPlayers,
-setType }) => (
+const SparringDialogContent = ({ startDate, endDate, minPlayers, maxPlayers, gameType, setStartDate, setEndDate, setMinPlayers, setMaxPlayers,
+setGameType }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <div className="create-event-dialog__group">
@@ -50,28 +50,31 @@ setType }) => (
         </div>
         <RadioGroup
             className="create-event-dialog__group"
-            value={type}
-            onChange={setType}
+            name="create-event-type"
+            value={gameType}
+            onChange={setGameType}
         >
             <Radio value="standard">Standard game</Radio>
             <Radio value="custom">Custom game</Radio>
         </RadioGroup>
-        <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Min players"
-                icon="people"
-                value={minPlayers}
-                onChange={setMinPlayers}
-                required
-            />
-            <IconTextfield
-                label="Max players"
-                icon="people"
-                value={maxPlayers}
-                onChange={setMaxPlayers}
-                required
-            />
-        </div>
+        { gameType === "custom" && (
+            <div className="create-event-dialog__group">
+                <IconTextfield
+                    label="Min players"
+                    icon="people"
+                    value={minPlayers}
+                    onChange={setMinPlayers}
+                    required
+                />
+                <IconTextfield
+                    label="Max players"
+                    icon="people"
+                    value={maxPlayers}
+                    onChange={setMaxPlayers}
+                    required
+                />
+            </div>
+        )}
     </DialogContent>
 );
 
