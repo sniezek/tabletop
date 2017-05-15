@@ -4,6 +4,7 @@ import authReducer from "./auth";
 import gamesReducer from "./games";
 import configReducer from "./config";
 import tournamentReducer from "./tournament";
+import editReducer from "./edit";
 
 export const makeRootReducer = asyncReducers => combineReducers({
     location: locationReducer,
@@ -11,6 +12,7 @@ export const makeRootReducer = asyncReducers => combineReducers({
     config: configReducer,
     tournament: tournamentReducer,
     games: gamesReducer,
+    edit: editReducer,
     ...asyncReducers
 });
 
