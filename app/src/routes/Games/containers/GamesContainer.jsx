@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import { Card, CardTitle, CardText, CardActions, Grid, Cell } from "react-mdl/lib";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getGames } from "../../../store/games";
@@ -15,66 +16,61 @@ const mapDispatchToProps = dispatch => ({
     getGames: getGames(dispatch)
 });
 
-const mapStateToProps = (state) => {
-    if (state.games !== null) {
-        return {
-            gamesList: state.games.gamesList
-        };
-    } else {
-        return {
-            gamesList: []
-        };
-    }
-};
+const mapStateToProps = state => ({
+    gamesList: state.games.gamesList
+});
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-class GamesContainer extends Component {
+class GamesContainer extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = null;
-
         this.getGames = this.getGames.bind(this);
     }
 
     getGames() {
-/*        this.props.getGames(({ ok }) => {
-            console.log("getGames w GamesContainer");
-            if (!ok) {
-                console.log("Getting list of games failed");
-            }
-        });*/
     }
 
+    buildHrefLink(name) {
+        return `/games/${name}`;
+    }
     render() {
         return (
             <div className="gamesList">
-              {this.props.gamesList.map(game =>
-                <section key={game.name}  className="gameSection section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                      <header className="imageSection section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--blue-grey-50 mdl-color-text--white">
-                        <img className="tileImage" src={game.imageUrl}/>
-                      </header>
-                        <div className="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
-                          <div className="mdl-card__supporting-text">
-                            <h4>{game.name}</h4>
+                {this.props.gamesList.map(({ name, description, minPlayers, maxPlayers, imageUrl }) =>
+                    <Grid key={name}>
+                        <Cell col={3} tablet={2} phone={4} style={{ margin: "0px" }}>
+                            <Card shadow={0} style={{ background: `url(${imageUrl}) center / cover`, width: "100%", height: "100%" }} />
+                        </Cell>
+                        <Cell col={9} tablet={6} phone={4} style={{ margin: "0px" }}>
+                            <Card
+                                shadow={2} style={{ width: "80%" }}
+                            >
+                                <div>
+
+                                    <CardTitle style={{ paddingLeft: "40px", paddingTop: "40px", paddingBottom: "0px" }}>
+                                        {name}
+                                    </CardTitle>
+
+                                    <div className="gameSettings">
+                                        <span><i className="material-icons">group</i> {minPlayers} - {maxPlayers} </span>
+                                    </div>
+
+                                    <CardText>
+                                        {description}
+                                    </CardText>
 
 
-                            <div className="gameSettings">
-                              <span><i className="material-icons">group</i> {game.minPlayers} - {game.maxPlayers} </span>
-                            </div>
+                                    <CardActions>
+                                        <a href={this.buildHrefLink(name)} className="mdl-button">Details</a>
+                                    </CardActions>
 
-                            <div className="gameDescription">
-                              {game.description}
-                            </div>
+                                </div>
+                            </Card>
+                        </Cell>
 
-                          </div>
-                          <div className="mdl-card__actions">
-                            <a href="#" className="mdl-button">Details</a>
-                          </div>
-                        </div>
-
-                </section>
-              )}
+                    </Grid>
+        )}
             </div>
         );
     }

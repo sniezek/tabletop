@@ -3,15 +3,11 @@ package tabletop.domain.ranking;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-/**
- * Created by Katarzyna on 22.04.2017.
- */
-
 @Entity
 @Table(
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "gameName"})}
 )
-public class TournamentRanking {
+public class GameRanking {
 
     @Id
     @GeneratedValue

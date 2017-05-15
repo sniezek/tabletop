@@ -118,6 +118,13 @@ class Api {
         });
     }
 
+    game(name) {
+        return fetch(`${API_SERVER}/games/${name}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
     events(filters = {}) {
         const qs = generateQueryString(filters);
 
@@ -159,6 +166,13 @@ class Api {
          method: "POST",
           credentials: "include"
       });
+    }
+
+    ranking(gameName) {
+        return fetch(`${API_SERVER}/rankings/${gameName}`, {
+            method: "GET",
+            credentials: "include"
+        });
     }
 }
 

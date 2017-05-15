@@ -1,14 +1,22 @@
-import GamesView from "./components/GamesView.jsx";
 
-const GamesRoute = store => ({
+const GamesRoute = () => ({
     path: "/games",
     getComponent(nextState, cb) {
         require.ensure([], (require) => {
-            const LoginView = require("./components/GamesView").default;
-            cb(null, LoginView);
+            const GamesView = require("./components/GamesView").default;
+            cb(null, GamesView);
         }, "games");
     }
 });
 
+const GameDetailsRoute = () => ({
+    path: "/games/:name",
+    getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+            const GameDetailsView = require("./components/GameDetailsView").default;
+            cb(null, GameDetailsView);
+        }, "games");
+    }
+});
 
-export default GamesRoute;
+export { GamesRoute, GameDetailsRoute };

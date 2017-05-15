@@ -1,12 +1,11 @@
 import React from "react";
-import { View } from "../../../components/View";
+import { View, ViewHeader } from "../../../components/View";
 import GamesContainer from "../containers/GamesContainer.jsx";
-import GamesHeader from "./GamesHeader";
 import "./Games.scss";
 
 const GamesView = () => (
     <View className="games">
-        <GamesHeader />
+        <ViewHeader title="Available games" />
         <GamesContainer />
     </View>
 );

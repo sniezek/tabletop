@@ -1,0 +1,31 @@
+.cardContainer {
+  max-width: 800px;
+  background-color: white;
+}
+
+.cardContainer > div > div.mdl-card__title {
+  color: #fff;
+  height: 176px;
+}
+
+.width100 {
+  width: 100% !important;
+}
+
+.cardContainer > div > div.mdl-card__actions {
+  color: rgba(0,0,0,.54);
+  font-size: 1rem;
+  line-height: 18px;
+  padding: 0px 15px 20px 15px;
+}
+
+.cardContainer > div > div.mdl-card__actions > span {
+  font-size: 20px;
+  display: block;
+  margin: 10px 0px;
+}
+
+.parameterIcon > i {
+  vertical-align: middle;
+  margin-right: 5px;
+}
