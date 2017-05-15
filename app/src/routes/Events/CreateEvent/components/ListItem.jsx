@@ -32,6 +32,13 @@ const ListItem = ({ name, minPlayers, maxPlayers, startDate, endDate, remove, ed
             )}
         </div>
         <div className="create-event-item__actions">
+            <Tooltip label="Add me to this match">
+                <Icon
+                    name="person_add"
+                    onClick={edit}
+                    className="create-event-item__action"
+                />
+            </Tooltip>
             <Tooltip label="Edit">
                 <Icon
                     name="edit"

@@ -15,7 +15,9 @@ class CreateEventFormContainer extends PureComponent {
             description: "",
             sparrings: [],
             tournaments: [],
-            loading: false
+            loading: false,
+            model: null,
+            type: null
         };
 
         this.prevStep = this.prevStep.bind(this);
@@ -31,6 +33,7 @@ class CreateEventFormContainer extends PureComponent {
         this.editTournament = this.editTournament.bind(this);
         this.removeSparring = this.removeSparring.bind(this);
         this.removeTournament = this.removeTournament.bind(this);
+        this.close = this.close.bind(this);
     }
 
     setDescription({ target }) {
@@ -63,6 +66,15 @@ class CreateEventFormContainer extends PureComponent {
                 step
             });
         }
+    }
+
+    close(payload) {
+        console.log(payload);
+
+        this.setState({
+            model: null,
+            type: null
+        });
     }
 
     create() {
@@ -100,11 +112,17 @@ class CreateEventFormContainer extends PureComponent {
     }
 
     addTournament() {
-
+        this.setState({
+            model: null,
+            type: "tournament"
+        });
     }
 
     addSparring() {
-
+        this.setState({
+            model: null,
+            type: "sparring"
+        });
     }
 
     removeTournament() {
@@ -115,16 +133,22 @@ class CreateEventFormContainer extends PureComponent {
 
     }
 
-    editTournament() {
-
+    editTournament(model) {
+        this.setState({
+            model,
+            type: "tournament"
+        });
     }
 
-    editSparring() {
-
+    editSparring(model) {
+        this.setState({
+            model,
+            type: "tournament"
+        });
     }
 
     render() {
-        const { step, location, name, description, loading, sparrings, tournaments } = this.state;
+        const { step, location, name, description, loading, sparrings, tournaments, model, type } = this.state;
 
         return (
             <CreateEventForm
@@ -149,6 +173,9 @@ class CreateEventFormContainer extends PureComponent {
                 editSparring={this.editSparring}
                 removeTournament={this.removeTournament}
                 removeSparring={this.removeSparring}
+                model={model}
+                type={type}
+                close={this.close}
             />
         );
     }
