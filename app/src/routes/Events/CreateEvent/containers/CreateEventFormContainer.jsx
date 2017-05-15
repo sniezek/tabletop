@@ -1,4 +1,5 @@
 import React, { PureComponent } from "react";
+import Api from "../../../../api";
 import CreateEventForm from "../components/CreateEventForm.jsx";
 
 const steps = 3;
@@ -12,6 +13,8 @@ class CreateEventFormContainer extends PureComponent {
             location: "",
             name: "",
             description: "",
+            sparrings: [],
+            tournaments: [],
             loading: false
         };
 
@@ -62,6 +65,22 @@ class CreateEventFormContainer extends PureComponent {
         if (!loading) {
             this.setState({
                 loading: true
+            });
+
+            const { name, location, description, sparrings, tournaments } = this.state;
+
+            const payload = {
+                name,
+                location,
+                description,
+                sparrings,
+                tournaments
+            };
+
+            Api.createEvent(payload).then(() => {
+                this.setState({
+                    loading: false
+                });
             });
         }
     }
