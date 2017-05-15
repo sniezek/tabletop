@@ -185,12 +185,24 @@ class CreateEventFormContainer extends PureComponent {
         });
     }
 
-    removeTournament() {
+    removeTournament(tournament) {
+        const tournaments = [...this.state.tournaments];
+        const index = tournaments.indexOf(tournament);
+        tournaments.splice(index, 1);
 
+        this.setState({
+            tournaments
+        });
     }
 
-    removeSparring() {
+    removeSparring(sparring) {
+        const sparrings = [...this.state.sparrings];
+        const index = sparrings.indexOf(sparring);
+        sparrings.splice(index, 1);
 
+        this.setState({
+            sparrings
+        });
     }
 
     editTournament(model) {
