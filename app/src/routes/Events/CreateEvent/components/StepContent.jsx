@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import DetailsStep from "./DetailsStep.jsx";
-import SparringsStep from "./SparringsStep.jsx";
-import TournamentsStep from "./TournamentsStep.jsx";
+import ListStep from "./ListStep.jsx";
 
 const propTypes = {
     step: PropTypes.number.isRequired,
@@ -12,7 +11,15 @@ const propTypes = {
     setDescription: PropTypes.func.isRequired,
     name: PropTypes.string,
     location: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.string,
+    sparrings: PropTypes.array.isRequired,
+    tournaments: PropTypes.array.isRequired,
+    removeSparring: PropTypes.func.isRequired,
+    editSparring: PropTypes.func.isRequired,
+    removeTournament: PropTypes.func.isRequired,
+    editTournament: PropTypes.func.isRequired,
+    addSparring: PropTypes.func.isRequired,
+    addTournament: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -23,7 +30,8 @@ const defaultProps = {
 
 const enhance = pure;
 
-const StepContent = ({ step, setLocation, setDescription, setName, name, location, description }) => {
+const StepContent = ({ step, setLocation, setDescription, setName, name, location, description, sparrings, removeSparring, editSparring, tournaments,
+ removeTournament, editTournament, addSparring, addTournament }) => {
     if (step === 0) {
         return (
             <DetailsStep
@@ -37,11 +45,23 @@ const StepContent = ({ step, setLocation, setDescription, setName, name, locatio
         );
     } else if (step === 1) {
         return (
-            <SparringsStep />
+            <ListStep
+                data={sparrings}
+                remove={removeSparring}
+                edit={editSparring}
+                add={addSparring}
+                label="No sparrings"
+            />
         );
     } else if (step === 2) {
         return (
-            <TournamentsStep />
+            <ListStep
+                data={tournaments}
+                remove={removeTournament}
+                edit={editTournament}
+                add={addTournament}
+                label="No tournaments"
+            />
         );
     }
 

@@ -25,6 +25,12 @@ class CreateEventFormContainer extends PureComponent {
         this.setName = this.setName.bind(this);
         this.setLocation = this.setLocation.bind(this);
         this.create = this.create.bind(this);
+        this.addSparring = this.addSparring.bind(this);
+        this.addTournament = this.addTournament.bind(this);
+        this.editSparring = this.editSparring.bind(this);
+        this.editTournament = this.editTournament.bind(this);
+        this.removeSparring = this.removeSparring.bind(this);
+        this.removeTournament = this.removeTournament.bind(this);
     }
 
     setDescription({ target }) {
@@ -93,8 +99,32 @@ class CreateEventFormContainer extends PureComponent {
         this.setStep(this.state.step + 1);
     }
 
+    addTournament() {
+
+    }
+
+    addSparring() {
+
+    }
+
+    removeTournament() {
+
+    }
+
+    removeSparring() {
+
+    }
+
+    editTournament() {
+
+    }
+
+    editSparring() {
+
+    }
+
     render() {
-        const { step, location, name, description, loading } = this.state;
+        const { step, location, name, description, loading, sparrings, tournaments } = this.state;
 
         return (
             <CreateEventForm
@@ -111,6 +141,14 @@ class CreateEventFormContainer extends PureComponent {
                 description={description}
                 create={this.create}
                 loading={loading}
+                sparrings={sparrings}
+                tournaments={tournaments}
+                addTournament={this.addTournament}
+                addSparring={this.addSparring}
+                editTournament={this.editTournament}
+                editSparring={this.editSparring}
+                removeTournament={this.removeTournament}
+                removeSparring={this.removeSparring}
             />
         );
     }
