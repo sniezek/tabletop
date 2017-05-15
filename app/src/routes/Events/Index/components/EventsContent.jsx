@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { ViewContent } from "../../../components/View";
+import { ViewContent } from "../../../../components/View";
 import EventsMapContainer from "../containers/EventsMapContainer.jsx";
 import EventsList from "./list/EventsList.jsx";
 

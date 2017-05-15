@@ -17,6 +17,7 @@ class Api {
         this.setWinner = this.setWinner.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
         this.events = this.events.bind(this);
+        this.createEvent = this.createEvent.bind(this);
     }
 
     user() {
@@ -121,6 +122,21 @@ class Api {
         return fetch(`${API_SERVER}/events?${qs}`, {
             method: "GET",
             credentials: "include"
+        });
+    }
+
+    createEvent(payload) {
+        const body = JSON.stringify(payload);
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/events`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body
         });
     }
 
