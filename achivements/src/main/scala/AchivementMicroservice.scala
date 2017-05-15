@@ -115,9 +115,9 @@ trait Service extends Protocols {
   }
 
   def addPlayer(): Future[Either[String, String]] = {
-    val id = h2Data.dao.getHighestPlayerId()
-    h2Data.dao.addPlayer(h2Data.getOptional(id))
-    Future.successful(Right("Done"))
+//    val id = h2Data.dao.getHighestPlayerId()
+//    h2Data.dao.addPlayer(h2Data.getOptional(id))
+    Future.successful(Right("[]"))
   }
 
   def getNewAchivements(id: Option[Int]): Future[Either[String, Option[Achievement]]] = {
@@ -183,7 +183,10 @@ trait Service extends Protocols {
                 id =>
                   complete {
                     getNewAchivements(id.toIntOpt).map[ToResponseMarshallable] {
-                      case Right(response) => response
+                      case Right(response) => response match {
+                        case None => "[]"
+                        case Some(i) => i
+                      }
                       case Left(errorMessage) => BadRequest -> errorMessage
                     }
                   }
