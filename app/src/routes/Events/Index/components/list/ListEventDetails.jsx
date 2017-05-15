@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import { Link } from "react-router";
-import Icon from "../../../../components/Icon";
+import Icon from "../../../../../components/Icon";
 
 const propTypes = {
     id: PropTypes.number.isRequired,
