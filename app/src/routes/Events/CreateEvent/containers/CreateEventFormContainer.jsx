@@ -1,8 +1,14 @@
 import React, { PureComponent } from "react";
+import { connect } from "react-redux";
 import Api from "../../../../api";
 import CreateEventForm from "../components/CreateEventForm.jsx";
 
 const steps = 3;
+
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = {};
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 class CreateEventFormContainer extends PureComponent {
     constructor(props) {
@@ -140,7 +146,7 @@ class CreateEventFormContainer extends PureComponent {
         const users = [];
 
         if (item.users.length === 0) {
-            users.push({});
+            users.push({ id: this.state.user.id });
         }
 
         data[index] = {
@@ -255,4 +261,4 @@ class CreateEventFormContainer extends PureComponent {
     }
 }
 
-export default CreateEventFormContainer;
+export default enhance(CreateEventFormContainer);

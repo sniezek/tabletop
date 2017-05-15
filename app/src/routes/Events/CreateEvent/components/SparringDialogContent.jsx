@@ -16,20 +16,23 @@ const propTypes = {
     setEndDate: PropTypes.func.isRequired,
     setMinPlayers: PropTypes.func.isRequired,
     setMaxPlayers: PropTypes.func.isRequired,
-    setGameType: PropTypes.func.isRequired
+    setGameType: PropTypes.func.isRequired,
+    setGameName: PropTypes.func.isRequired,
+    gameName: PropTypes.string
 };
 
 const defaultProps = {
     minPlayers: "0",
     maxPlayers: "2",
-    gameType: "standard"
+    gameType: "standard",
+    gameName: ""
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
 const SparringDialogContent = ({ startDate, endDate, minPlayers, maxPlayers, gameType, setStartDate, setEndDate, setMinPlayers, setMaxPlayers,
-setGameType }) => (
+setGameType, setGameName, gameName }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <div className="create-event-dialog__group">
@@ -49,7 +52,7 @@ setGameType }) => (
             />
         </div>
         <RadioGroup
-            className="create-event-dialog__group"
+            className="create-event-dialog__group create-event-dialog__type"
             name="create-event-type"
             value={gameType}
             onChange={setGameType}
@@ -57,6 +60,15 @@ setGameType }) => (
             <Radio value="standard">Standard game</Radio>
             <Radio value="custom">Custom game</Radio>
         </RadioGroup>
+        { gameType === "custom" && (
+            <IconTextfield
+                label="Game name"
+                icon="stars"
+                value={gameName}
+                onChange={setGameName}
+                required
+            />
+        )}
         { gameType === "custom" && (
             <div className="create-event-dialog__group">
                 <IconTextfield

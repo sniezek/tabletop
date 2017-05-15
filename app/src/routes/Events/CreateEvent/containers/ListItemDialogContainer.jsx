@@ -10,6 +10,7 @@ const initialState = {
     endDate: moment().minutes(30).format(format),
     gameType: "standard",
     name: "",
+    gameName: "",
     minPlayers: "0",
     maxPlayers: "2",
     users: []
@@ -40,14 +41,18 @@ class ListItemDialogContainer extends PureComponent {
         this.setGameType = this.setGameType.bind(this);
         this.setMinPlayers = this.setMinPlayers.bind(this);
         this.setMaxPlayers = this.setMaxPlayers.bind(this);
+        this.setGameName = this.setGameName.bind(this);
         this.save = this.save.bind(this);
     }
 
     componentWillReceiveProps({ type, model }) {
         if (type !== this.props.type || model !== this.props.model) {
             if (model) {
+                const gameType = model.gameName ? "custom" : "standard";
+
                 this.setState({
                     ...model,
+                    gameType,
                     startDate: moment(model.startDate).format(format),
                     endDate: moment(model.endDate).format(format)
                 });
@@ -107,6 +112,14 @@ class ListItemDialogContainer extends PureComponent {
         });
     }
 
+    setGameName({ target }) {
+        const gameName = target.value;
+
+        this.setState({
+            gameName
+        });
+    }
+
     genericPayload() {
         const startDate = moment(this.state.startDate, format).unix() * 1000;
         const endDate = moment(this.state.endDate, format).unix() * 1000;
@@ -120,11 +133,11 @@ class ListItemDialogContainer extends PureComponent {
     }
 
     sparringPayload() {
-        const { gameType, minPlayers, maxPlayers } = this.state;
+        const { gameType, gameName, minPlayers, maxPlayers } = this.state;
         const payload = gameType === "standard" ? {
             game: "CHESS"
         } : {
-            gameName: "Chess",
+            gameName,
             minPlayers: parseInt(minPlayers, 10),
             maxPlayers: parseInt(maxPlayers, 10)
         };
@@ -168,6 +181,7 @@ class ListItemDialogContainer extends PureComponent {
                 setGameType={this.setGameType}
                 setMinPlayers={this.setMinPlayers}
                 setMaxPlayers={this.setMaxPlayers}
+                setGameName={this.setGameName}
             />
         );
     }
