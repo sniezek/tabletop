@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileContainer from "../containers/EditContainer"
+import ProfileContainer from "../containers/ProfileContainer"
 import PageHeader from "../../../components/PageHeader";
 import "./Profile.scss";
 
@@ -8,6 +8,7 @@ export const ProfileView = () => (
         <PageHeader
             title="Profile"
         />
+        <ProfileContainer/>
     </div>
 );
 
