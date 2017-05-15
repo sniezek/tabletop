@@ -91,6 +91,7 @@
     "debug": "^2.2.0",
     "dialog-polyfill": "^0.4.7",
     "extract-text-webpack-plugin": "^1.0.0",
+    "faker": "^4.1.0",
     "file-loader": "^0.9.0",
     "fs-extra": "^1.0.0",
     "html-webpack-plugin": "^2.22.0",
