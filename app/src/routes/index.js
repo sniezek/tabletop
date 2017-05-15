@@ -19,7 +19,6 @@ export const createRoutes = store => ({
         RemindRoute(store),
         EventsRoute(store),
         GamesRoute(store)
-
     ]
 });
 
