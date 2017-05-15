@@ -34,6 +34,8 @@ class CreateEventFormContainer extends PureComponent {
         this.removeSparring = this.removeSparring.bind(this);
         this.removeTournament = this.removeTournament.bind(this);
         this.close = this.close.bind(this);
+        this.toggleSparringParticipation = this.toggleSparringParticipation.bind(this);
+        this.toggleTournamentParticipation = this.toggleTournamentParticipation.bind(this);
     }
 
     setDescription({ target }) {
@@ -68,13 +70,42 @@ class CreateEventFormContainer extends PureComponent {
         }
     }
 
-    close(payload) {
-        console.log(payload);
+    close(value) {
+        if (value) {
+            const { type, payload } = value;
+
+            if (type === "tournament") {
+                this.setState({
+                    tournaments: this.updateCollection(this.state.tournaments, payload)
+                });
+            } else if (type === "sparring") {
+                this.setState({
+                    sparrings: this.updateCollection(this.state.sparrings, payload)
+                });
+            }
+        }
 
         this.setState({
             model: null,
             type: null
         });
+    }
+
+    updateCollection(collection, payload) {
+        const { model } = this.state;
+        const data = [...collection];
+
+        if (model) {
+            const index = data.indexOf(model);
+
+            if (index !== -1) {
+                data[index] = payload;
+            }
+        } else {
+            data.push(payload);
+        }
+
+        return data;
     }
 
     create() {
@@ -101,6 +132,35 @@ class CreateEventFormContainer extends PureComponent {
                 });
             });
         }
+    }
+
+    toggleParticipation(collection, item) {
+        const data = [...collection];
+        const index = data.indexOf(item);
+        const users = [];
+
+        if (item.users.length === 0) {
+            users.push({});
+        }
+
+        data[index] = {
+            ...data[index],
+            users
+        };
+
+        return data;
+    }
+
+    toggleSparringParticipation(sparring) {
+        this.setState({
+            sparrings: this.toggleParticipation(this.state.sparrings, sparring)
+        });
+    }
+
+    toggleTournamentParticipation(tournament) {
+        this.setState({
+            tournaments: this.toggleParticipation(this.state.tournaments, tournament)
+        });
     }
 
     prevStep() {
@@ -176,6 +236,8 @@ class CreateEventFormContainer extends PureComponent {
                 model={model}
                 type={type}
                 close={this.close}
+                toggleSparringPariticipation={this.toggleSparringParticipation}
+                toggleTournamentParticipation={this.toggleTournamentParticipation}
             />
         );
     }

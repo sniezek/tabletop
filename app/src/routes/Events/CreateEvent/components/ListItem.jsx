@@ -7,23 +7,35 @@ import Icon from "react-mdl/lib/Icon";
 import "./ListItem.scss";
 
 const propTypes = {
-    name: PropTypes.string.isRequired,
+    primary: PropTypes.string.isRequired,
+    secondary: PropTypes.string,
     minPlayers: PropTypes.number.isRequired,
     maxPlayers: PropTypes.number.isRequired,
     startDate: PropTypes.number.isRequired,
     endDate: PropTypes.number.isRequired,
     edit: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired
+    remove: PropTypes.func.isRequired,
+    users: PropTypes.array.isRequired,
+    toggle: PropTypes.func.isRequired
+};
+
+const defaultProps = {
+    secondary: undefined
 };
 
 const format = "DD MMM YYYY, h:mm A";
 
 const enhance = pure;
 
-const ListItem = ({ name, minPlayers, maxPlayers, startDate, endDate, remove, edit }) => (
+const ListItem = ({ primary, secondary, minPlayers, maxPlayers, startDate, endDate, remove, edit, users, toggle }) => (
     <div className="create-event-item">
         <div className="create-event-item__main">
-            <div className="create-event-item__name">{name}</div>
+            <div className="create-event-item__name">
+                {primary}
+                {!!secondary && (
+                    <span>({secondary})</span>
+                )}
+            </div>
             <p>{moment(startDate).format(format)} – {moment(endDate).format(format)}</p>
             {minPlayers === maxPlayers ? (
                 <p>{maxPlayers} players</p>
@@ -35,8 +47,8 @@ const ListItem = ({ name, minPlayers, maxPlayers, startDate, endDate, remove, ed
             <Tooltip label="Add me to this match">
                 <Icon
                     name="person_add"
-                    onClick={edit}
-                    className="create-event-item__action"
+                    onClick={toggle}
+                    className={users.length ? "create-event-item__action create-event-item__action--active" : "create-event-item__action"}
                 />
             </Tooltip>
             <Tooltip label="Edit">
@@ -58,5 +70,6 @@ const ListItem = ({ name, minPlayers, maxPlayers, startDate, endDate, remove, ed
 );
 
 ListItem.propTypes = propTypes;
+ListItem.defaultProps = defaultProps;
 
 export default enhance(ListItem);
