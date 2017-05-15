@@ -34,6 +34,10 @@ const defaultLinks = [{
     icon: "casino",
     label: "Games",
     path: "/games"
+}, {
+    icon: "flag",
+    label: "Achievements",
+    path: "/achievements"
 }];
 
 const actions = [{
