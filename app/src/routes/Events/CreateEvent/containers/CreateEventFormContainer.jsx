@@ -8,18 +8,60 @@ class CreateEventFormContainer extends PureComponent {
         super(props);
 
         this.state = {
-            step: 0
+            step: 0,
+            location: "",
+            name: "",
+            description: "",
+            loading: false
         };
 
         this.prevStep = this.prevStep.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.setStep = this.setStep.bind(this);
+        this.setDescription = this.setDescription.bind(this);
+        this.setName = this.setName.bind(this);
+        this.setLocation = this.setLocation.bind(this);
+        this.create = this.create.bind(this);
+    }
+
+    setDescription({ target }) {
+        const description = target.value;
+
+        this.setState({
+            description
+        });
+    }
+
+    setName({ target }) {
+        const name = target.value;
+
+        this.setState({
+            name
+        });
+    }
+
+    setLocation({ target }) {
+        const location = target.value;
+
+        this.setState({
+            location
+        });
     }
 
     setStep(step) {
         if (step >= 0 && step < steps) {
             this.setState({
                 step
+            });
+        }
+    }
+
+    create() {
+        const { loading } = this.state;
+
+        if (!loading) {
+            this.setState({
+                loading: true
             });
         }
     }
@@ -33,7 +75,7 @@ class CreateEventFormContainer extends PureComponent {
     }
 
     render() {
-        const { step } = this.state;
+        const { step, location, name, description, loading } = this.state;
 
         return (
             <CreateEventForm
@@ -42,6 +84,14 @@ class CreateEventFormContainer extends PureComponent {
                 setStep={this.setStep}
                 prevStep={this.prevStep}
                 nextStep={this.nextStep}
+                setLocation={this.setLocation}
+                setDescription={this.setDescription}
+                setName={this.setName}
+                location={location}
+                name={name}
+                description={description}
+                create={this.create}
+                loading={loading}
             />
         );
     }
