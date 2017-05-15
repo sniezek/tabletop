@@ -3,26 +3,26 @@ import Api from "../api";
 export const EDIT = "EDIT";
 
 export const editMail = ({ username, email, password }, callback) => dispatch =>
-  Api.editMail({ username, email, password }).then((response) => {
-    if (response.ok) {
-      dispatch({
-        type: EDIT
-      });
-    } else {
-      callback(response);
-    }
-  });
+    Api.editMail({ username, email, password }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: EDIT
+            });
+        } else {
+            callback(response);
+        }
+    });
 
 export const editPass = ({ username, email, password }, callback) => dispatch =>
-  Api.editPass({ username, email, password}).then((response) => {
-    if (response.ok) {
-      dispatch({
-        type: EDIT
-      });
-    } else {
-      callback(response);
-    }
-  });
+    Api.editPass({ username, email, password}).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: EDIT
+            });
+        } else {
+            callback(response);
+        }
+    });
 
 // ------------------------------------
 // Reducer

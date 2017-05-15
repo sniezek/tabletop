@@ -1,16 +1,16 @@
 .edit {
-  flex: 1 1 auto;
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
+    flex: 1 1 auto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
 }
 
 .edit-header {
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #fff;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
 
   &__title {
     margin: 0;
