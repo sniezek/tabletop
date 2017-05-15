@@ -16,7 +16,7 @@ const propTypes = {
 const enhance = pure;
 
 const DetailsStep = ({ setName, setLocation, setDescription, name, location, description }) => (
-    <StepWrapper>
+    <StepWrapper className="create-event-tab--details">
         <IconTextfield
             value={name}
             onChange={setName}

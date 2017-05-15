@@ -13,7 +13,9 @@ const propTypes = {
     setStep: PropTypes.func.isRequired,
     step: PropTypes.number.isRequired,
     steps: PropTypes.number.isRequired,
-    create: PropTypes.func.isRequired
+    create: PropTypes.func.isRequired,
+    addSparring: PropTypes.func.isRequired,
+    addTournament: PropTypes.func.isRequired
 };
 
 /* eslint-disable react/prop-types */
@@ -24,7 +26,7 @@ const enhance = compose(
     withLoader
 );
 
-const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, ...rest }) => (
+const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, addSparring, addTournament, ...rest }) => (
     <div className="create-event__content mdl-shadow--2dp">
         <StepHeader
             setStep={setStep}
@@ -32,6 +34,8 @@ const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, ...
         />
         <StepContent
             step={step}
+            addSparring={addSparring}
+            addTournament={addTournament}
             {...rest}
         />
         <StepNavigation
@@ -40,6 +44,8 @@ const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, ...
             step={step}
             steps={steps}
             create={create}
+            addSparring={addSparring}
+            addTournament={addTournament}
         />
     </div>
 );
