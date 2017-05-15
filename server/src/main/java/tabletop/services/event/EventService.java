@@ -36,7 +36,7 @@ public class EventService {
             List<String> gamesLowerCase = games.stream().map(String::toLowerCase).collect(Collectors.toList());
             gamesLowerCase.forEach(gameName -> gamesPredicateBuilder.or(QEvent.event.sparrings.any().gameName.containsIgnoreCase(gameName)));
 
-            List<Game> registeredGames = gamesLowerCase.stream().map(gameName -> Stream.of(Game.values()).filter(game -> game.getName().contains(gameName)).collect(Collectors.toList())).flatMap(Collection::stream).collect(Collectors.toList());
+            List<Game> registeredGames = gamesLowerCase.stream().map(gameName -> Stream.of(Game.values()).filter(game -> game.getName().toLowerCase().contains(gameName)).collect(Collectors.toList())).flatMap(Collection::stream).collect(Collectors.toList());
             gamesPredicateBuilder.or(QEvent.event.tournaments.any().game.in(registeredGames));
 
             predicateBuilder.and(gamesPredicateBuilder);
