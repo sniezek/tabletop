@@ -12,7 +12,6 @@ import java.util.Optional;
 public class SwissTournamentProcess extends TournamentProcess {
 
     private boolean ranked;
-
     private int rounds;
 
     @OneToMany(mappedBy = "id.tournamentProcess")

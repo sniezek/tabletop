@@ -12,7 +12,6 @@ import tabletop.repositories.match.tournament.TournamentRepository;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -70,7 +69,7 @@ public class TournamentService {
         }
     }
 
-    public Map<Pair<User>, Integer> getCurentState(Tournament tournament) {
+    public List<Pair<User>> getCurentState(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getCurentState(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }
@@ -108,4 +107,9 @@ public class TournamentService {
         }
     }
 
+    public void giveUp(Tournament tournament, User user) {
+        if (tournament.getType() == TournamentType.SWISS) {
+            swissTournamentService.giveUp(tournament, user);
+        }
+    }
 }

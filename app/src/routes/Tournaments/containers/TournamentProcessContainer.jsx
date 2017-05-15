@@ -1,13 +1,15 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { initialRound, setWinner, nextRound, finishTournament } from "../../../store/tournament";
+import { initialRound, setWinner, nextRound, finishTournament, giveUp } from "../../../store/tournament";
 import TournamentProcess from "../components/TournamentProcess.jsx";
 
 const propTypes = {
   pairs: PropTypes.arrayOf(PropTypes.shape({
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
   tournamentId: PropTypes.number.isRequired,
@@ -17,6 +19,7 @@ const propTypes = {
   initialRound: PropTypes.func.isRequired,
   setWinner: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
+  giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired,
   toggleFinalResults: PropTypes.func.isRequired
 };
@@ -41,6 +44,9 @@ const mapDispatchToProps = dispatch => ({
   finishTournament: (id) => {
     dispatch(finishTournament(id));
   },
+  giveUp: (id) => {
+    dispatch(giveUp(id));
+  },
   toggleFinalResults: () => {
   }
 });
@@ -60,6 +66,7 @@ class TournamentProcessContainer extends PureComponent {
     this.initialRound = this.initialRound.bind(this);
     this.setWinner = this.setWinner.bind(this);
     this.finishTournament = this.finishTournament.bind(this);
+    this.giveUp = this.giveUp.bind(this);
     this.toggleFinalResults = this.toggleFinalResults.bind(this);
   }
 
@@ -72,7 +79,7 @@ class TournamentProcessContainer extends PureComponent {
 
     this.props.nextRound(tournamentId, ({ ok }) => {
       if (!ok) {
-        console.log("Passing To Next Round failed!");
+        console.log("Passing To Next Round failed");
       }
     });
   }
@@ -81,7 +88,7 @@ class TournamentProcessContainer extends PureComponent {
     const tournamentId = this.props.tournamentId;
     this.props.initialRound(tournamentId, ({ ok }) => {
       if (!ok) {
-        console.log("Fetching First Round failed");
+        console.log("Fetching First Round failed!");
       }
     });
   }
@@ -106,6 +113,11 @@ class TournamentProcessContainer extends PureComponent {
     });
   }
 
+  giveUp() {
+    const tournamentId = this.props.tournamentId;
+    this.props.giveUp(tournamentId);
+  }
+
   toggleFinalResults() {
 
   }
@@ -118,7 +130,9 @@ class TournamentProcessContainer extends PureComponent {
         pairs={this.props.pairs}
         setWinner={this.setWinner}
         nextRound={this.nextRound}
+        router={this.props.router}
         finishTournament={this.finishTournament}
+        giveUp={this.props.giveUp}
         displayFinalResults={this.props.displayFinalResults}
         toggleFinalResults={this.toggleFinalResults}
       />

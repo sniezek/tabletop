@@ -10,13 +10,17 @@ const propTypes = {
   pairs: PropTypes.arrayOf(PropTypes.shape({
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
   setWinner: PropTypes.func.isRequired,
   nextRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
+  giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired,
-  toggleFinalResults: PropTypes.func.isRequired
+  toggleFinalResults: PropTypes.func.isRequired,
+  router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -53,7 +57,9 @@ class TournamentProcess extends PureComponent {
             setWinner={this.props.setWinner}
             nextRound={this.props.nextRound}
             finishTournament={this.finishTournament}
+            giveUp={this.props.giveUp}
             displayFinalResults={this.props.displayFinalResults}
+            router={this.props.router}
           />
         )
         }

@@ -8,10 +8,16 @@ const propTypes = {
     host: PropTypes.object.isRequired,
     guest: PropTypes.object.isRequired,
     winner: PropTypes.number.isRequired,
-    win: PropTypes.func.isRequired
+    hostResult: PropTypes.number.isRequired,
+    guestResult: PropTypes.number.isRequired,
+    win: PropTypes.func.isRequired,
+    creator: PropTypes.object,
+    currentUser: PropTypes.object
 };
 
-const defaultProps = {};
+const defaultProps = {
+    currentUser: null
+};
 
 class Match extends PureComponent {
     constructor(props) {
@@ -28,18 +34,20 @@ class Match extends PureComponent {
   }
 
     render() {
-        let players = [{player: this.props.host, checked: this.state.winner === 1}, {player: this.props.guest, checked: this.state.winner === -1}];
+        let players = [
+          {player: this.props.host, checked: this.state.winner === 1, result: this.props.hostResult},
+          {player: this.props.guest, checked: this.state.winner === -1, result: this.props.guestResult}];
         return (
             <div>
-                <List style={{ width: "300px" }}>
+                <List className="match-list">
                   {players.map((object,i) =>
-                    <ListItem key={i}>
-                      <ListItemContent avatar="person">{object.player.username}</ListItemContent>
+                    <ListItem twoLine key={i}>
+                      <ListItemContent avatar="person" subtitle={`${object.result} wins so far`}>{object.player.username}</ListItemContent>
                       <ListItemAction>
                         <Checkbox
                           checked={object.checked}
                           onChange={e => this.props.win(object.player)}
-                          disabled={this.state.winner !== 0}
+                          disabled={this.state.winner !== 0 || this.props.currentUser === null || this.props.currentUser.name !== this.props.creator.username}
                         />
                       </ListItemAction>
                     </ListItem>

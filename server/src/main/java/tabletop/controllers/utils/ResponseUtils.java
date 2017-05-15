@@ -23,4 +23,8 @@ public class ResponseUtils {
     public static <T> ResponseEntity<T> notFound() {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+    public static <T> ResponseEntity<T> forbidden() {
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
 }
