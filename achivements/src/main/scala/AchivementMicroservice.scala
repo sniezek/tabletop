@@ -1,20 +1,18 @@
 import akka.actor.ActorSystem
 import akka.event.{Logging, LoggingAdapter}
+import akka.http.scaladsl.Http
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import akka.http.scaladsl.marshalling.ToResponseMarshallable
 import akka.http.scaladsl.model.StatusCodes._
-
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server._
 import akka.stream.{ActorMaterializer, Materializer}
+import ch.megard.akka.http.cors.CorsDirectives._
+import ch.megard.akka.http.cors.{CorsDirectives, CorsSettings}
 import com.typesafe.config.{Config, ConfigFactory}
 import spray.json.DefaultJsonProtocol
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
-import akka.http.scaladsl.Http
-
-import akka.http.scaladsl.server.Directives._
-import akka.http.scaladsl.server._
-import ch.megard.akka.http.cors.CorsDirectives._
-import ch.megard.akka.http.cors.{CorsDirectives, CorsSettings}
 
 //TODO move to antoher file
 case class Achiv(name: String, description: String, imageURL: String)
@@ -61,25 +59,24 @@ trait Service extends Protocols {
         val player = h2Data.getResult(h2Data.dao.player(s))
         player match {
           case None => Future.successful(Left("Cannot find player"))
-          case Some(s) => {
+          case Some(player) => {
             for (achi <- allAchivements) {
               achi.field match {
                 case "TotalWins" => {
-                  if (Conditions.map(achi.conditions)(s.totalWins, achi.minVal)) {
+                  if (Conditions.map(achi.conditions)(player.totalWins, achi.minVal)) {
                     achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
                   }
                 }
                 case "TournametsWins" => {
-                  if (Conditions.map(achi.conditions)(s.tournamentWins, achi.minVal)) {
+                  if (Conditions.map(achi.conditions)(player.tournamentWins, achi.minVal)) {
                     achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
                   }
                 }
-
               }
             }
-            val a = achivementResult
+            val result = achivementResult
             achivementResult = List[Achiv]()
-            Future.successful(Right(Achievement(s.playerId, Some(a))))
+            Future.successful(Right(Achievement(player.playerId, Some(result))))
           }
         }
     }
