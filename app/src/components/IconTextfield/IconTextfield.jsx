@@ -10,13 +10,17 @@ const propTypes = {
     label: PropTypes.string.isRequired,
     onChange: PropTypes.func,
     type: PropTypes.string,
-    value: PropTypes.string
+    value: PropTypes.string,
+    required: PropTypes.bool,
+    className: PropTypes.string
 };
 
 const defaultProps = {
     type: "text",
     value: "",
-    onChange: () => {}
+    onChange: () => {},
+    required: false,
+    className: ""
 };
 
 const enhance = pure;
@@ -29,8 +33,10 @@ const markAsRequired = ({ target }) => {
     }
 };
 
-const IconTextfield = ({ icon, label, type, onChange, value }) => (
-    <div className="icon-textfield">
+const noop = () => {};
+
+const IconTextfield = ({ icon, label, type, onChange, value, required, className, ...rest }) => (
+    <div className={`icon-textfield ${className}`}>
         <Icon
             name={icon}
             className="icon-textfield__icon"
@@ -41,8 +47,9 @@ const IconTextfield = ({ icon, label, type, onChange, value }) => (
             floatingLabel
             type={type}
             value={value}
-            onBlur={markAsRequired}
+            onBlur={required ? markAsRequired : noop}
             className="icon-textfield__textfield"
+            {...rest}
         />
     </div>
 );
