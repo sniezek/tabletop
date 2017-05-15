@@ -215,7 +215,7 @@ class CreateEventFormContainer extends PureComponent {
     editSparring(model) {
         this.setState({
             model,
-            type: "tournament"
+            type: "sparring"
         });
     }
 
