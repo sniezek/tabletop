@@ -1,7 +1,16 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Api from "../../../../api";
 import CreateEventForm from "../components/CreateEventForm.jsx";
+
+const propTypes = {
+    user: PropTypes.object
+};
+
+const defaultProps = {
+    user: null
+};
 
 const steps = 3;
 
@@ -146,7 +155,7 @@ class CreateEventFormContainer extends PureComponent {
         const users = [];
 
         if (item.users.length === 0) {
-            users.push({ id: this.state.user.id });
+            users.push({ id: this.props.user.id });
         }
 
         data[index] = {
@@ -254,11 +263,14 @@ class CreateEventFormContainer extends PureComponent {
                 model={model}
                 type={type}
                 close={this.close}
-                toggleSparringPariticipation={this.toggleSparringParticipation}
+                toggleSparringParticipation={this.toggleSparringParticipation}
                 toggleTournamentParticipation={this.toggleTournamentParticipation}
             />
         );
     }
 }
+
+CreateEventFormContainer.propTypes = propTypes;
+CreateEventFormContainer.defaultProps = defaultProps;
 
 export default enhance(CreateEventFormContainer);
