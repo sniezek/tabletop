@@ -42,16 +42,16 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
-    public ResponseEntity<?> editMail(@Valid @RequestBody User user, Errors errors) {
-        if (errors.hasErrors()) {
+    public ResponseEntity<?> editMail(@Valid @RequestBody User user, ControllerErrors errors) {
+        if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
         return ResponseUtils.created(userService.editMail(user));
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/editpassword")
-    public ResponseEntity<?> editPassword(@Valid @RequestBody User user, Errors errors) {
-        if (errors.hasErrors()) {
+    public ResponseEntity<?> editPassword(@Valid @RequestBody User user, ControllerErrors errors) {
+        if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
 
