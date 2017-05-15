@@ -9,11 +9,16 @@
         background: #fff;
     }
 
+    &-tab--details {
+        padding: 24px 24px 0;
+    }
+
     &__tab-wrapper {
         display: flex;
         flex-direction: column;
-        padding: 24px 24px 0;
         flex: 1 1 0%;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     &__navigation {
