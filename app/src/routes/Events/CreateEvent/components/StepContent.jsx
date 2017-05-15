@@ -1,33 +1,24 @@
 import React from "react";
+import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import IconTextfield from "../../../../components/IconTextfield";
+import DetailsStep from "./DetailsStep.jsx";
+
+const propTypes = {
+    step: PropTypes.number.isRequired
+};
 
 const enhance = pure;
 
-const StepContent = () => (
-    <div className="create-event__tab-wrapper">
-        <IconTextfield
-            onChange={() => {}}
-            label="Name"
-            icon="stars"
-            required
-            className="create-event__input"
-        />
-        <IconTextfield
-            onChange={() => {}}
-            label="Location"
-            icon="room"
-            required
-            className="create-event__input"
-        />
-        <IconTextfield
-            onChange={() => {}}
-            label="Description"
-            icon="info_outline"
-            className="create-event__input create-event__description"
-            rows={3}
-        />
-    </div>
-);
+const StepContent = ({ step }) => {
+    if (step === 0) {
+        return (
+            <DetailsStep />
+        );
+    }
+
+    return null;
+};
+
+StepContent.propTypes = propTypes;
 
 export default enhance(StepContent);

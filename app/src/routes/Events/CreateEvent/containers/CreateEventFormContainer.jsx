@@ -25,11 +25,11 @@ class CreateEventFormContainer extends PureComponent {
     }
 
     prevStep() {
-        this.setStep(this.step - 1);
+        this.setStep(this.state.step - 1);
     }
 
     nextStep() {
-        this.setStep(this.step + 1);
+        this.setStep(this.state.step + 1);
     }
 
     render() {

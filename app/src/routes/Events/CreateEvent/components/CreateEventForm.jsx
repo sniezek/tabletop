@@ -21,7 +21,9 @@ const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps }) => (
             setStep={setStep}
             step={step}
         />
-        <StepContent />
+        <StepContent
+            step={step}
+        />
         <StepNavigation
             prevStep={prevStep}
             nextStep={nextStep}
