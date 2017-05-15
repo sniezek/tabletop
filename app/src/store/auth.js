@@ -4,10 +4,11 @@ export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 
 const dispatchLogin = (response, dispatch) =>
-    response.json().then(({ username, email }) => {
+    response.json().then(({ id,username, email }) => {
         dispatch({
             type: USER_LOGIN,
             payload: {
+                id,
                 username,
                 email
             }
@@ -56,6 +57,7 @@ const initialState = null;
 export default function authReducer(state = initialState, { type, payload }) {
     if (type === USER_LOGIN) {
         return {
+            id: payload.id,
             name: payload.username,
             email: payload.email
         };
