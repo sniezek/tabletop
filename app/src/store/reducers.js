@@ -4,18 +4,20 @@ import authReducer from "./auth";
 import gamesReducer from "./games";
 import configReducer from "./config";
 import tournamentReducer from "./tournament";
+import editReducer from "./edit";
 import {achievementsReducer,newAchievementsReducer,allAchievementsReducer} from "./achievements"
 
 
 export const makeRootReducer = asyncReducers => combineReducers({
     location: locationReducer,
     user: authReducer,
-  tournament: tournamentReducer,
-  games: gamesReducer,
+   tournament: tournamentReducer,
+    games: gamesReducer,
     config: configReducer,
-  achievements: achievementsReducer,
-  newAchievements: newAchievementsReducer,
-  allAchievements: allAchievementsReducer,
+    edit: editReducer,
+    achievements: achievementsReducer,
+     newAchievements: newAchievementsReducer,
+    allAchievements: allAchievementsReducer,
     ...asyncReducers
 });
 

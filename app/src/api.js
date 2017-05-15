@@ -7,22 +7,37 @@ const generateQueryString = params => queryString.stringify(params);
 
 class Api {
     constructor() {
-      this.achievements = this.achievements.bind(this);
-      this.newAchievements = this.newAchievements.bind(this);
-      this.allAchivements = this.allAchivements.bind(this);
-      this.login = this.login.bind(this);
-      this.logout = this.logout.bind(this);
-      this.user = this.user.bind(this);
-      this.games = this.games.bind(this);
-      this.tournamentTypes = this.tournamentTypes.bind(this);
-      this.finishedTournaments = this.finishedTournaments.bind(this);
-      this.register = this.register.bind(this);
-      this.initialRound = this.initialRound.bind(this);
-      this.setWinner = this.setWinner.bind(this);
-      this.finishTournament = this.finishTournament.bind(this);
-      this.events = this.events.bind(this);
-      this.createEvent = this.createEvent.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+        this.user = this.user.bind(this);
+        this.games = this.games.bind(this);
+        this.tournamentTypes = this.tournamentTypes.bind(this);
+        this.finishedTournaments = this.finishedTournaments.bind(this);
+        this.register = this.register.bind(this);
+        this.initialRound = this.initialRound.bind(this);
+        this.setWinner = this.setWinner.bind(this);
+        this.finishTournament = this.finishTournament.bind(this);
+        this.events = this.events.bind(this);
+        this.createEvent = this.createEvent.bind(this);
+        this.editMail = this.editMail.bind(this);
+        this.editPass = this.editPass.bind(this);
+        this.achievements = this.achievements.bind(this);
+        this.newAchievements = this.newAchievements.bind(this);
+        this.allAchivements = this.allAchivements.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+        this.user = this.user.bind(this);
+        this.games = this.games.bind(this);
+        this.tournamentTypes = this.tournamentTypes.bind(this);
+        this.finishedTournaments = this.finishedTournaments.bind(this);
+        this.register = this.register.bind(this);
+        this.initialRound = this.initialRound.bind(this);
+        this.setWinner = this.setWinner.bind(this);
+        this.finishTournament = this.finishTournament.bind(this);
+        this.events = this.events.bind(this);
+        this.createEvent = this.createEvent.bind(this);
     }
+
   achievements(userID) {
     return fetch(`${ACHI_SERVER}/achi/${userID}`, {
       method: "GET",
@@ -43,6 +58,7 @@ class Api {
       credentials: "include"
     });
   }
+
     user() {
         return fetch(`${API_SERVER}/user`, {
             method: "POST",
@@ -166,6 +182,25 @@ class Api {
 
         return fetch(`${API_SERVER}/events`, {
             method: "POST",
+                credentials: "include",
+                headers,
+                body
+            });
+    }
+
+    editMail({ username, email, password }) {
+        const body = JSON.stringify({
+            username,
+            email,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editmail`, {
+            method: "PUT",
             credentials: "include",
             headers,
             body
@@ -189,6 +224,25 @@ class Api {
          method: "POST",
           credentials: "include"
       });
+    }
+
+    editPass({ username, email, password }) {
+        const body = JSON.stringify({
+            username,
+            email,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editpassword`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
     }
 
     ranking(gameName) {
