@@ -16,11 +16,20 @@ const propTypes = {
 
 const enhance = pure;
 
+const map = new Map();
+
+map.set("CHESS", {
+    minPlayers: 2,
+    maxPlayers: 2
+});
+
 const ListStep = ({ data, edit, remove, label, add, toggle }) => (
     <StepWrapper>
         {data.length > 0 ? data.map(item => (
             <ListItem
                 {...item}
+                maxPlayers={item.gameName ? item.maxPlayers : map.get(item.game).maxPlayers}
+                minPlayers={item.gameName ? item.minPlayers : map.get(item.game).minPlayers}
                 primary={item.name || item.gameName || item.game}
                 secondary={item.name ? item.game : undefined}
                 edit={() => edit(item)}

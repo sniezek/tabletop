@@ -47,7 +47,9 @@ class ListItemDialogContainer extends PureComponent {
         if (type !== this.props.type || model !== this.props.model) {
             if (model) {
                 this.setState({
-                    ...model
+                    ...model,
+                    startDate: moment(model.startDate).format(format),
+                    endDate: moment(model.endDate).format(format)
                 });
             } else {
                 this.setState({

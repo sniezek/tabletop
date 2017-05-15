@@ -11,7 +11,7 @@ const propTypes = {
     endDate: PropTypes.string.isRequired,
     minPlayers: PropTypes.string,
     maxPlayers: PropTypes.string,
-    type: PropTypes.string,
+    gameType: PropTypes.string,
     setStartDate: PropTypes.func.isRequired,
     setEndDate: PropTypes.func.isRequired,
     setMinPlayers: PropTypes.func.isRequired,
