@@ -1,0 +1,21 @@
+.create-event-dialog {
+    width: 500px;
+
+    &__group {
+        display: flex;
+
+        & > label {
+            flex: 1 0 0%;
+            left: 4px;
+
+            &.is-upgraded {
+                padding-left: 28px;
+            }
+        }
+
+        & > .icon-textfield:first-child,
+        & > label:first-child {
+            margin-right: 16px;
+        }
+    }
+}

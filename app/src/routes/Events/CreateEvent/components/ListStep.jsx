@@ -9,12 +9,13 @@ const propTypes = {
     data: PropTypes.array.isRequired,
     edit: PropTypes.func.isRequired,
     remove: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired
+    label: PropTypes.string.isRequired,
+    add: PropTypes.func.isRequired
 };
 
 const enhance = pure;
 
-const ListStep = ({ data, edit, remove, label }) => (
+const ListStep = ({ data, edit, remove, label, add }) => (
     <StepWrapper>
         {data.length > 0 ? data.map(item => (
             <ListItem
@@ -25,7 +26,7 @@ const ListStep = ({ data, edit, remove, label }) => (
         )) : (
             <div className="create-event__no-items">
                 <span className="create-event__no-items-label">{label}</span>
-                <Button colored>Add new</Button>
+                <Button colored onClick={add}>Add new</Button>
             </div>
         )}
     </StepWrapper>
