@@ -188,25 +188,6 @@ class Api {
             });
     }
 
-    editMail({ username, email, password }) {
-        const body = JSON.stringify({
-            username,
-            email,
-            password
-        });
-
-        const headers = new Headers({
-            "Content-Type": "application/json"
-        });
-
-        return fetch(`${API_SERVER}/user/editmail`, {
-            method: "PUT",
-            credentials: "include",
-            headers,
-            body
-        });
-    }
-
     finishTournament(id) {
         return fetch(`${API_SERVER}/tournament/finish/${id}`, {
             method: "POST"
@@ -226,6 +207,32 @@ class Api {
       });
     }
 
+    ranking(gameName) {
+        return fetch(`${API_SERVER}/rankings/${gameName}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    editMail({ username, email, password }) {
+        const body = JSON.stringify({
+            username,
+            email,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editmail`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
     editPass({ username, email, password }) {
         const body = JSON.stringify({
             username,
@@ -242,13 +249,6 @@ class Api {
             credentials: "include",
             headers,
             body
-        });
-    }
-
-    ranking(gameName) {
-        return fetch(`${API_SERVER}/rankings/${gameName}`, {
-            method: "GET",
-            credentials: "include"
         });
     }
 }

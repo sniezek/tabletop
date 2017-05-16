@@ -42,6 +42,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
+
     public ResponseEntity<?> editMail(@Valid @RequestBody User user, ControllerErrors errors) {
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
@@ -50,6 +51,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/user/editpassword")
+
     public ResponseEntity<?> editPassword(@Valid @RequestBody User user, ControllerErrors errors) {
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);

@@ -22,12 +22,11 @@ export const createRoutes = store => ({
         RemindRoute(store),
         EventsRoute(store),
         GamesRoute(store),
-      TournamentRoute(store),
-      achievementsRoute(store),
+        TournamentRoute(store),
+        achievementsRoute(store),
         GameDetailsRoute(store),
         EditRoute(store),
         ProfileRoute(store)
-
     ]
 });
 
