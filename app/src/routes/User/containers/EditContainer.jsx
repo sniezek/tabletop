@@ -72,21 +72,17 @@ class EditContainer extends PureComponent {
             username: username,
             password: "aaa",
             email: newMail
-        /*PONIZSZE WYKONUJE SIĘ TYLKO GDY WYSLEMY NIEPOPRAWNY MAIL, NP PUSTY*/
         }, ({ ok }) => {
-            console.log("BEFORE");
             this.setState({
                 newMail: "",
                 loading: false
             });
-          console.log("AFTER");
             if (!ok) {
                 alert("Error encountered while changing e-mail.");
             } else {
                 alert("E-mail successfully changed.");
             }
         });
-        /*POWYZSZE WYKONUJE SIĘ TYLKO GDY WYSLEMY NIEPOPRAWNY MAIL, NP PUSTY*/
     }
 
     editPass() {
@@ -111,26 +107,23 @@ class EditContainer extends PureComponent {
                 email: oldemail,
                 password: newPassword
             }, ({ok}) => {
-            /*PONIZSZY KOD SIE NIE WYKONUJE*/
-            console.log("bbb");
             if (!ok) {
                 this.setState({
                     newPassword: "",
+                    confirmNewPassword: "",
                     loading: false
                 });
-                console.log("Loading set to " + this.state.loading);
                 alert("Error encountered while changing password.");
               }
             else {
                 this.setState({
                     newPassword: "",
+                    confirmNewPassword: "",
                     loading: false
                 });
-                console.log("Loading set to " + this.state.loading);
                 alert("Password successfully changed.");
               }
             });
-            /*POWYZSZY KOD SIE NIE WYKONUJE*/
         } else {
             alert("Entered passwords don't match.");
             this.setState({

@@ -8,9 +8,8 @@ export const editMail = ({ username, email, password }, callback) => dispatch =>
             dispatch({
                 type: EDIT
             });
-        } else {
-            callback(response);
         }
+        callback(response);
     });
 
 export const editPass = ({ username, email, password }, callback) => dispatch =>
@@ -19,9 +18,8 @@ export const editPass = ({ username, email, password }, callback) => dispatch =>
             dispatch({
                 type: EDIT
             });
-        } else {
-            callback(response);
         }
+        callback(response);
     });
 
 // ------------------------------------
@@ -34,7 +32,7 @@ export default function editReducer(state = initialState, { type, payload }) {
         return {
             // name: payload.username,
             // email: payload.email
-        };
+        }
     }
     return state;
 }
