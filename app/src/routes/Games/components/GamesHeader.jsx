@@ -1,11 +1,11 @@
 import React from "react";
 import pure from "recompose/pure";
-import PageHeader from "../../../components/PageHeader";
+import { ViewHeader } from "../../../components/View";
 
 const enhance = pure;
 
 const GamesHeader = () => (
-    <PageHeader
+    <ViewHeader
         title="Available games"
     />
 );

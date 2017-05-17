@@ -1,6 +1,7 @@
 @import '~normalize.css/normalize';
 @import "~dialog-polyfill/dialog-polyfill.css";
 @import "dialog";
+@import "geosuggest";
 
 * {
     box-sizing: border-box;
@@ -14,9 +15,17 @@ html, body {
 
 body {
     display: flex;
+    height: 100%;
 }
 
 #root {
     display: flex;
     flex: 1 0 auto;
+}
+
+@media screen and (max-width: 1024px){
+    .mdl-layout__drawer-button {
+        margin: 10px 0;
+        outline: 0;
+    }
 }

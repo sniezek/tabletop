@@ -3,8 +3,9 @@ package tabletop.controllers.event;
 import com.google.common.base.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import tabletop.controllers.utils.PathVariableValidator;
+import org.springframework.validation.BindingResult;
+import tabletop.controllers.validation.ControllerValidator;
+import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.Location;
 import tabletop.domain.match.Match;
@@ -12,31 +13,36 @@ import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.user.User;
 import tabletop.services.UserService;
+import tabletop.utils.NotNullUtils;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
 
 @Component
-class EventValidator extends PathVariableValidator {
+class EventValidator extends ControllerValidator {
     @Autowired
     private UserService userService;
 
-    void validateNewLocation(Location location, Errors errors) {
-        validator.validate(location, errors);
+    void validateNewLocation(Location location, BindingResult bindingResult, ControllerErrors errors) {
+        validator.validate(location, bindingResult);
+        errors.addBindingResultErrorMessages(bindingResult);
     }
 
-    void validateExistingLocation(Optional<Location> location, Errors errors) {
+    void validateLocationExists(Optional<Location> location, ControllerErrors errors) {
         if (!location.isPresent()) {
             errorHandler.addError(errors, "location.not_found");
         }
     }
 
-    void validateMatches(Event event, Errors errors) {
+    void validateMatches(Event event, ControllerErrors errors) {
         Set<Match> matches = event.getMatches();
 
         if (matches.isEmpty()) {
             errorHandler.addError(errors, "event.no_matches");
         }
+
+        User user = userService.getAuthenticatedUser().get();
 
         for (Match match : matches) {
             if (match.getStartDate().after(match.getEndDate())) {
@@ -48,10 +54,27 @@ class EventValidator extends PathVariableValidator {
             if (match.getEndStatus() != null) {
                 errorHandler.addIncorrectRequestError(errors);
             }
+            Set<User> users = match.getUsers();
+            if (!users.isEmpty() && !users.contains(user)) {
+                errorHandler.addIncorrectRequestError(errors);
+            }
+        }
+
+        validateUserIsNotAssignedToCollidingMatches(user, matches, errors);
+    }
+
+    private void validateUserIsNotAssignedToCollidingMatches(User user, Set<Match> matches, ControllerErrors errors) {
+        for (Match match : matches) {
+            for (Match match2 : matches) {
+                if (match.getUsers().contains(user) && match2.getUsers().contains(user) && match2.getEndDate().after(match.getStartDate()) && match2.getStartDate().before(match.getEndDate())) {
+                    errorHandler.addIncorrectRequestError(errors);
+                    return;
+                }
+            }
         }
     }
 
-    void validateSparringsGameInformation(Event event, Errors errors) {
+    void validateSparringsGameInformation(Event event, ControllerErrors errors) {
         for (Sparring sparring : event.getSparrings()) {
             if (Strings.isNullOrEmpty(sparring.getGameName())) {
                 errorHandler.addError(errors, "sparring.no_game");
@@ -60,7 +83,7 @@ class EventValidator extends PathVariableValidator {
         }
     }
 
-    void validateTournaments(Event event, Errors errors) {
+    void validateTournaments(Event event, ControllerErrors errors) {
         for (Tournament tournament : event.getTournaments()) {
             if (!tournament.isRegisteredGame()) {
                 errorHandler.addError(errors, "tournament.unregistered_game");
@@ -71,24 +94,34 @@ class EventValidator extends PathVariableValidator {
         }
     }
 
-    void validateOrganiserIsNotSet(Event event, Errors errors) {
+    void validateOrganiserIsNotSet(Event event, ControllerErrors errors) {
         if (event.getOrganiser() != null) {
             errorHandler.addError(errors, "request.incorrect");
         }
     }
 
-    void validateExistingEvent(Optional<Event> event, Errors errors) {
-        if (event.isPresent()) {
-            validateUserIsOrganiser(event.get());
-        } else {
-            errorHandler.addError(errors, "event.not_exists");
+    void validateLocationFilters(Double lat, Double lng, Integer radius, ControllerErrors errors) {
+        long presentFiltersCount = NotNullUtils.getNotNullCount(lat, lng, radius);
+
+        if (presentFiltersCount > 0 && (presentFiltersCount < 3 || lat < -90 || lat > 90 || lng < -180 || lat > 180 || radius < 0)) {
+            errorHandler.addIncorrectRequestError(errors);
         }
     }
 
-    private void validateUserIsOrganiser(Event event) {
-        User user = userService.getAuthenticatedUser().get();
+    void validateTypeFilter(String type, ControllerErrors errors) {
+        if (NotNullUtils.isNotNull(type) && !type.equals("tournament") && !type.equals("sparring")) {
+            errorHandler.addIncorrectRequestError(errors);
+        }
+    }
 
-        if (!event.getOrganiser().equals(user)) {
+    void validateDateFilters(Long startDateTimestamp, Long endDateTimestamp, ControllerErrors errors) {
+        if (NotNullUtils.areAllNotNull(startDateTimestamp, endDateTimestamp) && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
+            errorHandler.addIncorrectRequestError(errors);
+        }
+    }
+
+    void validateUserIsOrganiser(Event event) {
+        if (!event.getOrganiser().equals(userService.getAuthenticatedUser().get())) {
             errorHandler.accessDenied();
         }
     }

@@ -9,7 +9,7 @@ const propTypes = {
     actions: PropTypes.arrayOf(PropTypes.shape({
         label: PropTypes.string.isRequired,
         icon: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired
+        path: PropTypes.string.isRequired
     }))
 };
 
@@ -22,9 +22,9 @@ const enhance = pure;
 const DrawerLogin = ({ actions }) => (
     <div className="drawer-login">
         <ul className="drawer-login__actions">
-            { actions.map(({ label, icon, url }) => (
+            { actions.map(({ label, icon, path }) => (
                 <li className="drawer-login__action" key={label}>
-                    <Link to={url} className="drawer-login__link">
+                    <Link to={path} className="drawer-login__link">
                         <Icon name={icon} className="drawer-login__link-icon" />
                         {label}
                     </Link>

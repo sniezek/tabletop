@@ -1,4 +1,8 @@
+import queryString from "query-string";
+
 export const API_SERVER = "http://localhost:8080";
+
+const generateQueryString = params => queryString.stringify(params);
 
 class Api {
     constructor() {
@@ -6,10 +10,16 @@ class Api {
         this.logout = this.logout.bind(this);
         this.user = this.user.bind(this);
         this.games = this.games.bind(this);
+        this.tournamentTypes = this.tournamentTypes.bind(this);
+        this.finishedTournaments = this.finishedTournaments.bind(this);
         this.register = this.register.bind(this);
+        this.initialRound = this.initialRound.bind(this);
+        this.setWinner = this.setWinner.bind(this);
+        this.finishTournament = this.finishTournament.bind(this);
         this.events = this.events.bind(this);
         this.editMail = this.editMail.bind(this);
         this.editPass = this.editPass.bind(this);
+        this.createEvent = this.createEvent.bind(this);
     }
 
     user() {
@@ -45,6 +55,50 @@ class Api {
         });
     }
 
+    tournamentTypes() {
+        return fetch(`${API_SERVER}/tournament/types`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    finishedTournaments() {
+        return fetch(`${API_SERVER}/tournament/finished`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    setWinner(tournamentId, winner) {
+        const body = JSON.stringify({
+            tournamentId,
+            winnerUsername: winner.username
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/tournament/winner/`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
+    initialRound(id) {
+        return fetch(`${API_SERVER}/tournament/init/${id}`, {
+            method: "GET"
+        });
+    }
+
+    nextRound(id) {
+        return fetch(`${API_SERVER}/tournament/next/${id}`, {
+            method: "GET"
+        });
+    }
+
     register({ username, password, email }) {
         const body = JSON.stringify({
             username,
@@ -64,24 +118,41 @@ class Api {
         });
     }
 
-    events() {
-        return fetch(`${API_SERVER}/events`, {
+    events(filters = {}) {
+        const qs = generateQueryString(filters);
+
+        return fetch(`${API_SERVER}/events?${qs}`, {
             method: "GET",
             credentials: "include"
         });
     }
+    
+    createEvent(payload) {
+        const body = JSON.stringify(payload);
 
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+      
+        return fetch(`${API_SERVER}/events`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+  
     editMail({ username, email, password }) {
         const body = JSON.stringify({
             username,
             email,
             password
         });
-
+      
         const headers = new Headers({
             "Content-Type": "application/json"
         });
-
+      
         return fetch(`${API_SERVER}/user/editmail`, {
             method: "PUT",
             credentials: "include",
@@ -89,7 +160,7 @@ class Api {
             body
         });
     }
-
+  
     editPass({ username, email, password }) {
         const body = JSON.stringify({
             username,
@@ -106,6 +177,18 @@ class Api {
             credentials: "include",
             headers,
             body
+        });
+    }
+  
+    finishTournament(id) {
+        return fetch(`${API_SERVER}/tournament/finish/${id}`, {
+            method: "POST"
+        });
+    }
+
+    getFinalResults(id) {
+        return fetch(`${API_SERVER}/tournament/finalresults/${id}`, {
+            method: "GET"
         });
     }
 }

@@ -3,6 +3,7 @@ import CoreLayout from "../layouts/CoreLayout";
 import Home from "./Home";
 import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute } from "./Auth";
 import EventsRoute from "./Events";
+import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
 import GamesRoute from "./Games";
 import { EditRoute, ProfileRoute } from "./User";
 
@@ -19,9 +20,10 @@ export const createRoutes = store => ({
         RegisterRoute(store),
         RemindRoute(store),
         EventsRoute(store),
-        GamesRoute(store),
         EditRoute(store),
         ProfileRoute(store)
+        TournamentRoute(store),
+        GamesRoute(store)
     ]
 });
 

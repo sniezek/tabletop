@@ -58,6 +58,7 @@ setPasswordConfirm }) => (
                     label="Username"
                     value={username}
                     onChange={setUsername}
+                    required
                 />
                 <IconTextfield
                     icon="email"
@@ -65,6 +66,7 @@ setPasswordConfirm }) => (
                     type="email"
                     value={email}
                     onChange={setEmail}
+                    required
                 />
                 <IconTextfield
                     icon="lock"
@@ -72,6 +74,7 @@ setPasswordConfirm }) => (
                     type="password"
                     value={password}
                     onChange={setPassword}
+                    required
                 />
                 <IconTextfield
                     icon="lock"
@@ -79,6 +82,7 @@ setPasswordConfirm }) => (
                     type="password"
                     value={passwordConfirm}
                     onChange={setPasswordConfirm}
+                    required
                 />
             </div>
         </div>

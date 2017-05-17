@@ -5,10 +5,7 @@ import tabletop.domain.IdComparableEntity;
 import tabletop.domain.game.Game;
 import tabletop.domain.user.User;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
@@ -19,7 +16,11 @@ public abstract class Match extends IdComparableEntity {
     private Date startDate;
     @NotNull(message = "{match.endDate}")
     private Date endDate;
-    @OneToMany
+    @NotNull(message = "{match.users}")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tournament_users",
+            joinColumns = @JoinColumn(name = "tournament_id"),
+            inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> users;
     @Enumerated(EnumType.STRING)
     private Game game;

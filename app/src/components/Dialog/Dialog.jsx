@@ -17,7 +17,9 @@ class Dialog extends PureComponent {
     }
 
     setRef(dialog) {
-        this.dialog = dialog.dialogRef;
+        if (dialog && dialog.dialogRef) {
+            this.dialog = dialog.dialogRef;
+        }
     }
 
     render() {
