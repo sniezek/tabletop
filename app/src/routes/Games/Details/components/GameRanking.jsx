@@ -11,7 +11,7 @@ const propTypes = {
 const enhance = pure;
 
 export const GameRanking = ranking => (<Grid>
-    <Cell className="rankingContainer" shadow={1} col={8} offsetDesktop={2}>
+    <Cell className="rankingContainer" shadow={1} col={8}>
         <List className="width300">
             {ranking.ranking.map(({ username, points }, index) =>
                 <ListItem twoLine key={username}>

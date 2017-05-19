@@ -2,8 +2,8 @@ import React from "react";
 import pure from "recompose/pure";
 import PropTypes from "prop-types";
 import GameInfoContainer from "../containers/GameInfoContainer.jsx";
-import { View, ViewHeader } from "../../../components/View";
-import "./Games.scss";
+import { View, ViewHeader } from "../../../../components/View/index";
+import "../../Index/components/Games.scss";
 
 const propTypes = {
     router: PropTypes.object.isRequired

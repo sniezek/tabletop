@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ViewHeader } from "../../../components/View";
+import { View, ViewHeader } from "../../../../components/View/index";
 import GamesContainer from "../containers/GamesContainer.jsx";
 import "./Games.scss";
 

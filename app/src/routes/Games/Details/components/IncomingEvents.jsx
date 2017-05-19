@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import { Grid, Cell } from "react-mdl/lib";
-import EventsList from "../../Events/Index/components/list/EventsList";
+import EventsList from "../../../Events/Index/components/list/EventsList";
 
 const propTypes = {
     events: PropTypes.arrayOf(PropTypes.shape({

@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getGameRanking } from "../../../store/games";
+import { getGameRanking } from "../../../../store/games";
 import GameRanking from "../components/GameRanking";
 
 const propTypes = {
