@@ -32,16 +32,12 @@
 }
 
 .gamesList .mdl-card .mdl-card__supporting-text {
-    margin: 40px;
+    margin: 15px 40px;
     flex-grow: 1;
     padding: 0;
     color: inherit;
     width: calc(100% - 80px);
-}
-
-.gamesList .mdl-card__supporting-text h4 {
-    margin-top: 0;
-    margin-bottom: 0px;
+    min-height: 35px;
 }
 
 .gamesList .mdl-card__actions {
@@ -69,10 +65,18 @@
     vertical-align: middle;
 }
 
-.gameSection {
-    margin-bottom: 15px;
+.gameSettings {
+  margin: 5px 40px;
 }
 
-.gameSettings {
-  padding-left: 40px;
+.margin0 {
+  margin: 0px !important;
+}
+
+.minWidth250 {
+    min-width: 250px !important;
+}
+
+.gameListTitle {
+  padding: 40px 40px 0px 40px;
 }

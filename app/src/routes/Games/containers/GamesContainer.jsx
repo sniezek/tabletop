@@ -38,17 +38,22 @@ class GamesContainer extends PureComponent {
         return (
             <div className="gamesList">
                 {this.props.gamesList.map(({ name, description, minPlayers, maxPlayers, imageUrl }) =>
-                    <Grid key={name}>
-                        <Cell col={3} tablet={2} phone={4} style={{ margin: "0px" }}>
-                            <Card shadow={0} style={{ background: `url(${imageUrl}) center / cover`, width: "100%", height: "100%" }} />
-                        </Cell>
-                        <Cell col={9} tablet={6} phone={4} style={{ margin: "0px" }}>
+                    <Grid key={name} noSpacing style={{ margin: "10px auto" }}>
+                        <Cell col={3} tablet={2} phone={4} className="margin0">
                             <Card
-                                shadow={2} style={{ width: "80%" }}
+                                shadow={0}
+                                style={{ background: `url(${imageUrl}) center / cover`, width: "100%", height: "100%" }}
+                                className="minWidth200"
+                            />
+                        </Cell>
+                        <Cell col={9} tablet={6} phone={4} className="margin0">
+                            <Card
+                                shadow={2}
+                                style={{ width: "100%" }}
                             >
                                 <div>
 
-                                    <CardTitle style={{ paddingLeft: "40px", paddingTop: "40px", paddingBottom: "0px" }}>
+                                    <CardTitle className="gameListTitle">
                                         {name}
                                     </CardTitle>
 
