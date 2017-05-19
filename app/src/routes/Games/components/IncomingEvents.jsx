@@ -10,6 +10,9 @@ const propTypes = {
     }))
 };
 
+const defaultProps = {
+    events: []
+};
 
 const enhance = pure;
 
@@ -18,7 +21,7 @@ export const IncomingEvents = events => (
         <Cell col={8} offsetDesktop={2}>
             { function () {
                 if (events.events != null) {
-                    return (<EventsList events={events} />);
+                    return (<EventsList events={events.events} />);
                 }
                 return (<div>To be implemented</div>);
             }.call(this)
@@ -29,5 +32,6 @@ export const IncomingEvents = events => (
 );
 
 IncomingEvents.propTypes = propTypes;
+IncomingEvents.defaultProps = defaultProps;
 
 export default enhance(IncomingEvents);
