@@ -18,10 +18,6 @@ public class ControllerErrorsHandler {
         errors.add(messages.getMessage("request.incorrect"));
     }
 
-    public void addInvalidPathVariableError(ControllerErrors errors) {
-        errors.add(messages.getMessage("request.invalid_path_variable"));
-    }
-
     public void accessDenied() {
         throw new AccessDeniedException(messages.getMessage("access_denied"));
     }

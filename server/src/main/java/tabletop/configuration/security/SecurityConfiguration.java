@@ -68,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user").hasAuthority(TabletopUserDetailsService.ROLE_USER)
                 .antMatchers(HttpMethod.POST, "/events").hasAuthority(TabletopUserDetailsService.ROLE_USER)
-                .antMatchers(HttpMethod.PUT, "/event/**").hasAuthority(TabletopUserDetailsService.ROLE_USER);
+                .antMatchers(HttpMethod.PUT, "/events/**").hasAuthority(TabletopUserDetailsService.ROLE_USER);
 
     }
 
