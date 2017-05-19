@@ -13,7 +13,7 @@ const enhance = pure;
 export const GameDetails = game => (
     <div>
         <Grid style={{ margin: "auto" }}>
-            <Cell className="cardContainer" shadow={1} offsetDesktop={2} col={8} tablet={8} phone={4}>
+            <Cell className="cardContainer" shadow={1} col={8} tablet={8} phone={4}>
                 <Card shadow={0} className="width100" >
                     <CardTitle
                         className="detailsCardTitle"

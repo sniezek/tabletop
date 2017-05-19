@@ -10,21 +10,19 @@ const propTypes = {
 
 const enhance = pure;
 
-export const GameRanking = (ranking) => {
-    return (<Grid>
-        <Cell className="rankingContainer" shadow={1} col={8} offsetDesktop={2}>
-            <List className="width300">
-                {ranking.ranking.map(({ username, points }, index) =>
-                    <ListItem twoLine key={username}>
-                        <h3 className="placeHeader">{index + 1}.</h3>
-                        <ListItemContent avatar="person" subtitle={points}>{username}</ListItemContent>
-                    </ListItem>
+export const GameRanking = ranking => (<Grid>
+    <Cell className="rankingContainer" shadow={1} col={8} offsetDesktop={2}>
+        <List className="width300">
+            {ranking.ranking.map(({ username, points }, index) =>
+                <ListItem twoLine key={username}>
+                    <h3 className="placeHeader">{index + 1}.</h3>
+                    <ListItemContent avatar="person" subtitle={points}>{username}</ListItemContent>
+                </ListItem>
       )}
-            </List>
-        </Cell>
-    </Grid>
+        </List>
+    </Cell>
+</Grid>
     );
-};
 
 GameRanking.propTypes = propTypes;
 

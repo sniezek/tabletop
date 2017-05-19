@@ -1,6 +1,7 @@
 .cardContainer {
   max-width: 800px;
   background-color: white;
+  margin: auto;
 }
 
 .cardContainer > div > div.mdl-card__title {
@@ -29,3 +30,4 @@
   vertical-align: middle;
   margin-right: 5px;
 }
+
