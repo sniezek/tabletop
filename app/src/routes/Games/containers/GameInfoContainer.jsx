@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { Tab, Tabs } from "react-mdl/lib";
 import GameDetailsContainer from "../containers/GameDetailsContainer";
 import GameRankingContainer from "../containers/GameRankingContainer";
-import IncomingEvents from "../components/IncomingEvents";
+import IncomingGamesContainer from "../containers/IncomingGamesContainer";
 
 const propTypes = {
     router: PropTypes.object.isRequired
@@ -52,7 +52,7 @@ class GameInfoContainer extends PureComponent {
                 } else if (this.state.activeTab === 1) {
                     return (<GameRankingContainer router={this.props.router} />);
                 }
-                return (<IncomingEvents events={null} />);
+                return (<IncomingGamesContainer router={this.props.router} />);
             }.call(this)
           }
                     </div>

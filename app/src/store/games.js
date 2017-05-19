@@ -4,6 +4,7 @@ import Api from "../api";
 export const GET_GAMES = "GET_GAMES";
 export const GET_GAME_DETAILS = "GET_GAME_DETAILS";
 export const GET_GAME_RANKING = "GET_GAME_RANKING";
+export const GET_INCOMING_GAMES = "GET_INCOMING_GAMES";
 
 export const getGames = dispatch =>
     Api.games().then((response) => {
@@ -47,11 +48,25 @@ export const getGameRanking = gameName => dispatch =>
       }
   });
 
+export const getIncomingGames = filters => dispatch =>
+  Api.events(filters).then((response) => {
+      if (response.ok) {
+          response.json().then((eventsList) => {
+              dispatch({
+                  type: GET_INCOMING_GAMES,
+                  payload: {
+                      eventsList
+                  }
+              });
+          });
+      }
+  });
+
 // ------------------------------------
 // Reducer
 // ------------------------------------
 /* eslint-disable no-param-reassign */
-export default function gamesReducer(state = { gamesList: [], game: { name: "" }, gameRankingList: [] }, { type, payload }) {
+export default function gamesReducer(state = { gamesList: [], game: { name: "" }, gameRankingList: [], eventsList: [] }, { type, payload }) {
     if (type === GET_GAMES) {
         state = {
             gamesList: payload.gamesList
@@ -65,6 +80,11 @@ export default function gamesReducer(state = { gamesList: [], game: { name: "" }
         state = {
             ...state,
             gameRankingList: payload.gameRankingList
+        };
+    } else if (type === GET_INCOMING_GAMES) {
+        state = {
+            ...state,
+            eventsList: payload.eventsList
         };
     }
     return state;
