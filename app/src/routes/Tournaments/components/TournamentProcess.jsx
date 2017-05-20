@@ -17,6 +17,7 @@ const propTypes = {
   setWinner: PropTypes.func.isRequired,
   nextRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
+  initialRound: PropTypes.func.isRequired,
   giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired,
   toggleFinalResults: PropTypes.func.isRequired,
@@ -55,6 +56,7 @@ class TournamentProcess extends PureComponent {
             tournamentName={this.props.tournamentName}
             pairs={this.props.pairs}
             setWinner={this.props.setWinner}
+            initialRound={this.props.initialRound}
             nextRound={this.props.nextRound}
             finishTournament={this.finishTournament}
             giveUp={this.props.giveUp}

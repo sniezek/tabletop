@@ -10,6 +10,7 @@ export const GET_FINAL_RESULTS = "GET_FINAL_RESULTS";
 export const NEXT_ROUND = "NEXT_ROUND";
 export const SET_WINNER = "SET_WINNER";
 export const INITIAL_ROUND = "INITIAL_ROUND";
+export const GET_STATE = "GET_STATE";
 export const FINISH_TOURNAMENT = "FINISH_TOURNAMENT";
 export const GIVE_UP = "GIVE_UP";
 // ------------------------------------
@@ -82,18 +83,8 @@ export const getFinalResults = (id, callback) => dispatch =>
 export const nextRound = (id, callback) => dispatch =>
   Api.nextRound(id).then((response) => {
       if (response.ok) {
-          response.json().then((tournament) => {
-              dispatch({
-                  type: NEXT_ROUND,
-                  payload: {
-                    pairs: tournament.pairs,
-                    creator: tournament.creator,
-                    isCurrentUserParticipant: tournament.participant
-                  }
-              });
-          });
+          response.json().then(dispatchTournamentStateAction(dispatch));
       }
-
       callback(response);
   });
 
@@ -107,22 +98,34 @@ export const setWinner = (id, winner, callback) => dispatch =>
       callback(response);
   });
 
+function dispatchTournamentStateAction(dispatch) {
+  return (tournament) => {
+    dispatch({
+      type: INITIAL_ROUND,
+      payload: {
+        pairs: tournament.pairs,
+        creator: tournament.creator,
+        isCurrentUserParticipant: tournament.participant
+      }
+    });
+  }
+}
+
 export const initialRound = (id, callback) => dispatch =>
   Api.initialRound(id).then((response) => {
       if (response.ok) {
-          response.json().then((tournament) => {
-              dispatch({
-                  type: INITIAL_ROUND,
-                  payload: {
-                    pairs: tournament.pairs,
-                    creator: tournament.creator,
-                    isCurrentUserParticipant: tournament.participant
-                  }
-              });
-          });
+          response.json().then(dispatchTournamentStateAction(dispatch));
       }
 
       callback(response);
+  });
+
+export const getState = (id, callback) => dispatch =>
+  Api.getState(id).then((response) => {
+    if (response.ok) {
+      response.json().then(dispatchTournamentStateAction(dispatch));
+    }
+    callback(response);
   });
 
 export const finishTournament = (id, callback) => dispatch =>
@@ -151,6 +154,7 @@ export const actions = {
     nextRound,
     initialRound,
     setWinner,
+    getState,
     finishTournament
 };
 
@@ -179,17 +183,11 @@ export default function tournamentReducer(state = initialState, { type, payload 
         state = {
             finalResults: payload.finalResults
         };
-    } else if (type === NEXT_ROUND) {
-        state = {
-            pairs: payload.pairs,
-            creator: payload.creator,
-            isCurrentUserParticipant: payload.isCurrentUserParticipant
-        };
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {
             finishedTournamentsList: payload.finishedTournamentsList
         };
-    } else if (type === INITIAL_ROUND) {
+    } else if (type === INITIAL_ROUND || type === GET_STATE || type === NEXT_ROUND) {
         state = {
             pairs: payload.pairs,
             creator: payload.creator,

@@ -10,9 +10,7 @@ import tabletop.domain.user.User;
 import tabletop.repositories.TournamentFinalResultRepository;
 import tabletop.repositories.match.tournament.TournamentRepository;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class TournamentService {
@@ -60,7 +58,7 @@ public class TournamentService {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getInitialPairs(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public void setWinner(Tournament tournament, User winner) {
@@ -73,7 +71,7 @@ public class TournamentService {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getCurentState(((SwissTournamentProcess) tournament.getTournamentProcess()));
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public List<Pair<User>> getNextRound(Tournament tournament) {
@@ -87,7 +85,7 @@ public class TournamentService {
 
             return swissTournamentService.getNextPair((swissTournamentProcess));
         }
-        return null;
+        return Collections.emptyList();
     }
 
     public void setFinalResults(Tournament tournament) {
@@ -111,5 +109,12 @@ public class TournamentService {
         if (tournament.getType() == TournamentType.SWISS) {
             swissTournamentService.giveUp(tournament, user);
         }
+    }
+
+    public boolean isUserAvailable(Tournament tournament, User user) {
+        if (tournament.getType() == TournamentType.SWISS) {
+            return swissTournamentService.isUserAvailable(tournament, user);
+        }
+        return false;
     }
 }

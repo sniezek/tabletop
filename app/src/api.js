@@ -14,6 +14,7 @@ class Api {
         this.finishedTournaments = this.finishedTournaments.bind(this);
         this.register = this.register.bind(this);
         this.initialRound = this.initialRound.bind(this);
+        this.getState = this.getState.bind(this);
         this.setWinner = this.setWinner.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
         this.events = this.events.bind(this);
@@ -90,6 +91,13 @@ class Api {
             method: "GET",
             credentials: "include"
         });
+    }
+
+    getState(id) {
+      return fetch(`${API_SERVER}/tournament/state/${id}`, {
+        method: "GET",
+        credentials: "include"
+      });
     }
 
     nextRound(id) {

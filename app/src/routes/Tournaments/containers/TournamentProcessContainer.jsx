@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { initialRound, setWinner, nextRound, finishTournament, giveUp } from "../../../store/tournament";
+import { initialRound, getState, setWinner, nextRound, finishTournament, giveUp } from "../../../store/tournament";
 import TournamentProcess from "../components/TournamentProcess.jsx";
 
 const propTypes = {
@@ -17,6 +17,7 @@ const propTypes = {
   router: PropTypes.object.isRequired,
   nextRound: PropTypes.func.isRequired,
   initialRound: PropTypes.func.isRequired,
+  getState: PropTypes.func.isRequired,
   setWinner: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
   giveUp: PropTypes.func.isRequired,
@@ -34,6 +35,9 @@ const defaultProps = {
 const mapDispatchToProps = dispatch => ({
   initialRound: (id) => {
     dispatch(initialRound(id));
+  },
+  getState: (id) => {
+    dispatch(getState(id));
   },
   setWinner: (id, winner, callback) => {
     dispatch(setWinner(id, winner, callback));
@@ -64,6 +68,7 @@ class TournamentProcessContainer extends PureComponent {
 
     this.nextRound = this.nextRound.bind(this);
     this.initialRound = this.initialRound.bind(this);
+    this.getState = this.getState.bind(this);
     this.setWinner = this.setWinner.bind(this);
     this.finishTournament = this.finishTournament.bind(this);
     this.giveUp = this.giveUp.bind(this);
@@ -71,26 +76,23 @@ class TournamentProcessContainer extends PureComponent {
   }
 
   componentWillMount() {
-    this.initialRound();
+    this.getState();
   }
 
   nextRound() {
     const tournamentId = this.props.tournamentId;
 
-    this.props.nextRound(tournamentId, ({ ok }) => {
-      if (!ok) {
-        console.log("Passing To Next Round failed");
-      }
-    });
+    this.props.nextRound(tournamentId, ({ ok }) => {});
   }
 
   initialRound() {
     const tournamentId = this.props.tournamentId;
-    this.props.initialRound(tournamentId, ({ ok }) => {
-      if (!ok) {
-        console.log("Fetching First Round failed!");
-      }
-    });
+    this.props.initialRound(tournamentId, ({ ok }) => {});
+  }
+
+  getState() {
+    const tournamentId = this.props.tournamentId;
+    this.props.getState(tournamentId, ({ ok }) => {});
   }
 
   setWinner(player, okCallback) {
@@ -107,8 +109,6 @@ class TournamentProcessContainer extends PureComponent {
     this.props.finishTournament(tournamentId, ({ ok }) => {
       if (ok) {
         this.props.displayFinalResults = true;
-      } else {
-        console.log("Finish tournament failed");
       }
     });
   }
@@ -130,6 +130,7 @@ class TournamentProcessContainer extends PureComponent {
         pairs={this.props.pairs}
         setWinner={this.setWinner}
         nextRound={this.nextRound}
+        initialRound={this.initialRound}
         router={this.props.router}
         finishTournament={this.finishTournament}
         giveUp={this.props.giveUp}
