@@ -3,7 +3,6 @@ import pure from "recompose/pure";
 import "./Tournament.scss";
 import PropTypes from "prop-types";
 import TournamentHeader from "./TournamentHeader";
-import TournamentProcessContainer from "../containers/TournamentProcessContainer";
 import TournamentTypesContainer from "../containers/TournamentTypesContainer";
 
 
@@ -22,16 +21,6 @@ const Tournament = ({ router }) => (
         <TournamentTypesContainer
             router={router}
         />
-        {/* <TournamentProcessContainer*/}
-        {/* router={router}*/}
-        {/* />*/}
-        {/* { tournamentTypesView ? (*/}
-        {/* <TournamentTypes />*/}
-        {/* ) : (*/}
-        {/* <TournamentProcessContainer*/}
-        {/* router={router}*/}
-        {/* />*/}
-        {/* )}*/}
     </div>
 );
 
