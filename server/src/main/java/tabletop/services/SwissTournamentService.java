@@ -36,13 +36,13 @@ public class SwissTournamentService {
                 User user2 = users.get(i + 1);
                 Pair<User> pair = new Pair<>(user1, user2);
                 pairs.add(pair);
-                if (!swissTournamentProcess.getResultByUser(user1).isAvailable() && swissTournamentProcess.getResultByUser(user2).isAvailable()) {
+                if (!isUserAvailable(swissTournamentProcess.getResultByUser(user1)) && isUserAvailable(swissTournamentProcess.getResultByUser(user2)) ) {
                     setWinner(swissTournamentProcess, user2);
-                } else if (swissTournamentProcess.getResultByUser(user1).isAvailable() && !swissTournamentProcess.getResultByUser(user2).isAvailable()) {
+                } else if (isUserAvailable(swissTournamentProcess.getResultByUser(user1))  && !isUserAvailable(swissTournamentProcess.getResultByUser(user2)) ) {
                     setWinner(swissTournamentProcess, user1);
                 } else {
-                    setInitialResult(user2, swissTournamentProcess.getResultByUser(user1));
-                    setInitialResult(user1, swissTournamentProcess.getResultByUser(user2));
+                    swissTournamentProcess.getResultByUser(user1).ifPresent(res -> setInitialResult(user2, res));
+                    swissTournamentProcess.getResultByUser(user2).ifPresent(res -> setInitialResult(user1, res));
                 }
             } else {
                 swissTournamentProcess.setByeUser(users.get(i));
@@ -59,10 +59,14 @@ public class SwissTournamentService {
     }
 
     public void setWinner(SwissTournamentProcess swissTournamentProcess, User winner) {
-        SwissPlayerResult result = swissTournamentProcess.getResultByUser(winner);
+        Optional<SwissPlayerResult> resultOptional = swissTournamentProcess.getResultByUser(winner);
+        resultOptional.ifPresent(result-> handleSetWinner(swissTournamentProcess, result));
+    }
+
+    private void handleSetWinner(SwissTournamentProcess swissTournamentProcess, SwissPlayerResult result) {
         result.win();
         User loser = result.getUsersPlayed().get(result.getUsersPlayed().size() - 1);
-        swissTournamentProcess.getResultByUser(loser).lose();
+        swissTournamentProcess.getResultByUser(loser).ifPresent(SwissPlayerResult::lose);
     }
 
     public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
@@ -113,16 +117,21 @@ public class SwissTournamentService {
         Set<User> hosts = new HashSet<>();
         swissTournamentProcess.getPlayerResults().forEach(result -> {
             if (!hosts.contains(result.getCurrentOpponent())) {
-                state.add(new Pair<>(
-                        result.getId().getUser(),
-                        result.getCurrentOpponent(),
-                        result.getCurrentScore(),
-                        result.getResult(),
-                        swissTournamentProcess.getResultByUser(result.getCurrentOpponent()).getResult()));
+                state.add(getResultPair(result, swissTournamentProcess));
                 hosts.add(result.getId().getUser());
             }
         });
         return state;
+    }
+
+    private Pair<User> getResultPair(SwissPlayerResult result, SwissTournamentProcess swissTournamentProcess) {
+        Optional<SwissPlayerResult> opponentResult = swissTournamentProcess.getResultByUser(result.getCurrentOpponent());
+        return new Pair<>(
+                result.getId().getUser(),
+                result.getCurrentOpponent(),
+                !result.isAvailable() && !isUserAvailable(opponentResult) ? 2 : result.getCurrentScore(),
+                result.getResult(),
+                opponentResult.map(SwissPlayerResult::getResult).orElse(0));
     }
 
     public boolean canBeFinished(SwissTournamentProcess swissTournamentProcess) {
@@ -165,6 +174,31 @@ public class SwissTournamentService {
 
     public void giveUp(Tournament tournament, User user) {
         SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
-        swissTournamentProcess.getResultByUser(user).setIsAvailable(false);
+        Optional<SwissPlayerResult> resultOptional = swissTournamentProcess.getResultByUser(user);
+        resultOptional.ifPresent(result -> handleGiveUp(swissTournamentProcess, result));
+    }
+
+    private void handleGiveUp(SwissTournamentProcess swissTournamentProcess, SwissPlayerResult result) {
+        result.setIsAvailable(false);
+        if (result.getCurrentScore().equals(0)) {
+            result.lose();
+            swissTournamentProcess.getResultByUser(result.getCurrentOpponent())
+                    .filter(SwissPlayerResult::isAvailable)
+                    .ifPresent(SwissPlayerResult::win);
+        }
+    }
+
+    public boolean isUserAvailable(Optional<SwissPlayerResult> resultOptional) {
+        return resultOptional
+                .map(SwissPlayerResult::isAvailable)
+                .orElse(false);
+    }
+
+    public boolean isUserAvailable(Tournament tournament, User user) {
+        SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
+        Optional<SwissPlayerResult> resultOptional = swissTournamentProcess.getResultByUser(user);
+        return resultOptional
+                .map(SwissPlayerResult::isAvailable)
+                .orElse(false);
     }
 }

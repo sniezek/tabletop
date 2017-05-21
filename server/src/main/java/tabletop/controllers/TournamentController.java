@@ -45,7 +45,6 @@ public class TournamentController {
 
     @RequestMapping(value = "/show/{tournamentid}", method = RequestMethod.GET)
     public ResponseEntity<Tournament> getTournamentById(@PathVariable("tournamentid") Long tournamentid) {
-        LOGGER.debug("Return tournament with id: {}", tournamentid);
         return tournamentService.getTournamentById(tournamentid)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseUtils.notFound());
@@ -64,6 +63,7 @@ public class TournamentController {
         if (!tournamentOptional.isPresent()) {
             return ResponseUtils.notFound();
         }
+
         List<Pair<User>> initialPairs = tournamentService.getInitialRound(tournamentOptional.get());
         tournamentService.addTournament(tournamentOptional.get());
         return getOkResponseWithTournamentDetails(tournamentOptional.get(), initialPairs);
@@ -81,7 +81,7 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
 
-        if (!userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
+        if (!isCurrentUserCreator(tournamentOptional.get())) {
             return ResponseUtils.forbidden();
         }
 
@@ -101,9 +101,18 @@ public class TournamentController {
         if (!tournamentOptional.isPresent()) {
             return ResponseUtils.notFound();
         }
+
+        Tournament tournament = tournamentOptional.get();
+        boolean isCurrentUserEnrolled = isCurrentUserEnrolled(tournament);
+        if (!isCurrentUserEnrolled && !isCurrentUserCreator(tournament)) {
+            return ResponseUtils.forbidden();
+        }
+
         return getOkResponseWithTournamentDetails(
-                tournamentOptional.get(),
-                tournamentService.getCurentState(tournamentOptional.get()));
+                tournament,
+                tournamentService.getCurentState(tournament),
+                isCurrentUserEnrolled,
+                tournamentService.isUserAvailable(tournament, userService.getAuthenticatedUser().get()));
     }
 
     @RequestMapping(value = "/next/{tournamentid}", method = RequestMethod.GET)
@@ -113,13 +122,15 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
 
-        if (!userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
+        Tournament tournament = tournamentOptional.get();
+        Optional<User> authenticatedUser = userService.getAuthenticatedUser();
+        if (!isCurrentUserCreator(tournamentOptional.get())) {
             return ResponseUtils.forbidden();
         }
 
-        List<Pair<User>> nextRound = tournamentService.getNextRound(tournamentOptional.get());
-        tournamentService.addTournament(tournamentOptional.get());
-        return getOkResponseWithTournamentDetails(tournamentOptional.get(), nextRound);
+        List<Pair<User>> nextRound = tournamentService.getNextRound(tournament);
+        tournamentService.addTournament(tournament);
+        return getOkResponseWithTournamentDetails(tournament, nextRound, tournamentService.isUserAvailable(tournament, authenticatedUser.get()));
     }
 
     @RequestMapping(value = "/finish/{tournamentid}", method = RequestMethod.POST)
@@ -129,7 +140,7 @@ public class TournamentController {
             return ResponseUtils.notFound();
         }
 
-        if (!userService.getAuthenticatedUser().get().equals(tournamentOptional.get().getCreator())) {
+        if (!isCurrentUserCreator(tournamentOptional.get())) {
             return ResponseUtils.forbidden();
         }
 
@@ -146,18 +157,44 @@ public class TournamentController {
         if (!tournamentOptional.isPresent()) {
             return ResponseUtils.notFound();
         }
+
+        if (!isCurrentUserEnrolled(tournamentOptional.get())) {
+            return ResponseUtils.forbidden();
+        }
+
         tournamentService.giveUp(tournamentOptional.get(), userService.getAuthenticatedUser().get());
         tournamentService.addTournament(tournamentOptional.get());
         return ResponseEntity.ok().build();
     }
 
     private ResponseEntity<TournamentDTO> getOkResponseWithTournamentDetails(Tournament tournament, List<Pair<User>> nextRound) {
+        boolean isEnrolled = isCurrentUserEnrolled(tournament);
+        return getOkResponseWithTournamentDetails(tournament, nextRound, isEnrolled, isEnrolled);
+    }
+
+    private ResponseEntity<TournamentDTO> getOkResponseWithTournamentDetails(Tournament tournament, List<Pair<User>> nextRound, boolean isAvailable) {
+        boolean isEnrolled = isCurrentUserEnrolled(tournament);
+        return getOkResponseWithTournamentDetails(tournament, nextRound, isEnrolled, isAvailable);
+    }
+
+    private ResponseEntity<TournamentDTO> getOkResponseWithTournamentDetails(Tournament tournament, List<Pair<User>> nextRound, boolean isEnrolled, boolean isAvailable) {
         return ResponseEntity.ok(
                 new TournamentDTO(
                         tournament.getCreator(),
                         nextRound,
-                        userService.getAuthenticatedUser()
-                                .map(tournament.getUsers()::contains)
-                                .orElse(false)));
+                        isEnrolled && isAvailable
+                ));
+    }
+
+    private boolean isCurrentUserCreator(Tournament tournamentOptional) {
+        return userService.getAuthenticatedUser()
+                .map(user -> user.equals(tournamentOptional.getCreator()))
+                .orElse(false);
+    }
+
+    private Boolean isCurrentUserEnrolled(Tournament tournament) {
+        return userService.getAuthenticatedUser()
+                .map(tournament.getUsers()::contains)
+                .orElse(false);
     }
 }
