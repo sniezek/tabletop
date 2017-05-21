@@ -3,7 +3,7 @@ import CoreLayout from "../layouts/CoreLayout";
 import Home from "./Home";
 import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute } from "./Auth";
 import EventsRoute from "./Events";
-import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
+import { TournamentRoute} from "./Tournaments";
 import GamesRoute from "./Games";
 
 /*  Note: Instead of using JSX, we recommend using react-router

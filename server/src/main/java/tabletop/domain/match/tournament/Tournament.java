@@ -16,7 +16,7 @@ public class Tournament extends Match {
     @Enumerated(EnumType.STRING)
     private TournamentType type;
     private String results;
-
+    private boolean canBeFinished;
     private boolean finished;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -52,6 +52,14 @@ public class Tournament extends Match {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public boolean isCanBeFinished() {
+        return canBeFinished;
+    }
+
+    public void setCanBeFinished(boolean canBeFinished) {
+        this.canBeFinished = canBeFinished;
     }
 
     public boolean isFinished() {

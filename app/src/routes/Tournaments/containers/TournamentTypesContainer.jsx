@@ -2,18 +2,23 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getTournamentTypes } from "../../../store/tournament";
+import "../components/Tournament.scss";
+import TournamentTypes from "../components/TournamentTypes";
 
 const propTypes = {
-    tournamentTypesList: PropTypes.array
+    tournamentTypesList: PropTypes.array,
+    playDemo: PropTypes.func
 };
 
 const defaultProps = {
-    tournamentTypesList: []
+    tournamentTypesList: [],
+    playDemo: () => {}
 };
 
-const mapDispatchToProps = {
-    getTournamentTypes
-};
+const mapDispatchToProps = dispatch => ({
+    getTournamentTypes: getTournamentTypes(dispatch)
+
+});
 
 const mapStateToProps = state => ({
     tournamentTypesList: state.tournament.tournamentTypesList
@@ -34,36 +39,10 @@ class TournamentTypesContainer extends PureComponent {
 
     render() {
         return (
-            <div className="gamesList">
-                {this.props.tournamentTypesList.map(tournament =>
-                    <section key={tournament.name} className="gameSection section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-                        <div className="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone mdl-shadow--2dp">
-                            <div className="mdl-card__supporting-text">
-                                <h4>{tournament.name}</h4>
-                                <h7>{tournament.eliminating ? "ELIMINATING  " : "NON-ELIMINATING"}</h7>
-
-
-                                <div className="gameSettings">
-                                    <span><i className="material-icons">group</i> {tournament.minPlayers} - {tournament.maxPlayers} </span>
-                                </div>
-
-                                <div className="gameDescription">
-                                    {tournament.description}
-                                </div>
-
-                            </div>
-                            <div className="mdl-card__actions">
-                                {/* add it in the future*/}
-                                {/* <a href="#" className="mdl-button">Details</a>    */}
-
-                                {/* 'Start tournament' is a temporary button for demo*/}
-                                <a href="#" className="mdl-button">Start tournament</a>
-                            </div>
-                        </div>
-
-                    </section>
-        )}
-            </div>
+            <TournamentTypes
+                tournamentTypesList={this.props.tournamentTypesList}
+                playDemo={this.playDemo}
+            />
         );
     }
 
