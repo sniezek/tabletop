@@ -5,6 +5,7 @@ import tabletop.domain.user.User;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Entity
@@ -18,13 +19,14 @@ public class SwissTournamentProcess extends TournamentProcess {
     private List<SwissPlayerResult> playerResults;
 
     @ManyToOne
-    @JoinColumn(name="bye_user")
+    @JoinColumn(name = "bye_user")
     private User byeUser;
 
     public Optional<SwissPlayerResult> getResultByUser(User user) {
-        return playerResults.stream()
-                .filter(result -> result.getId().getUser().getId().equals(user.getId()))
-                .findAny();
+        return Objects.isNull(user) ? Optional.empty() :
+                playerResults.stream()
+                        .filter(result -> result.getId().getUser().getId().equals(user.getId()))
+                        .findAny();
     }
 
     public void setRanked(boolean ranked) {

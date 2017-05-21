@@ -69,7 +69,8 @@ public class TournamentService {
 
     public List<Pair<User>> getCurentState(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
-            return swissTournamentService.getCurentState(((SwissTournamentProcess) tournament.getTournamentProcess()));
+            SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess();
+            return Objects.nonNull(process) ? swissTournamentService.getCurentState(process) : Collections.emptyList();
         }
         return Collections.emptyList();
     }
