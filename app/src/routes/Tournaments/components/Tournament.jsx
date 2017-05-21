@@ -19,7 +19,9 @@ const enhance = pure;
 const Tournament = ({ router }) => (
     <div className="tournamentTypes">
         <TournamentHeader />
-        <TournamentTypesContainer />
+        <TournamentTypesContainer
+            router={router}
+        />
         {/* <TournamentProcessContainer*/}
         {/* router={router}*/}
         {/* />*/}

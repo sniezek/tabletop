@@ -6,7 +6,7 @@ import Tournament from "../components/Tournament.jsx";
 
 
 const propTypes = {
-    loggedIn: PropTypes.bool
+    loggedIn: PropTypes.bool,
 };
 
 const defaultProps = {

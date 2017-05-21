@@ -7,6 +7,7 @@ import TournamentProcessContainer from "../containers/TournamentProcessContainer
 
 const propTypes = {
     tournamentTypesList: PropTypes.array,
+    router: PropTypes.object.isRequired,
     playDemo: PropTypes.func
 };
 
@@ -34,36 +35,38 @@ class TournamentTypes extends PureComponent {
 
     render() {
         return (
-          <div>
-            { this.state.demoView ? (
-               <TournamentProcessContainer />
+            <div>
+                { this.state.demoView ? (
+                    <TournamentProcessContainer
+                        router={this.props.router}
+                    />
             ) : (
-              <div className="tournament-list">
-                {this.props.tournamentTypesList.map(tournament =>
-                  <section key={tournament.name}>
-                    <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>
-                      <CardTitle
-                        style={{ color: "#aaa", height: "176px", background: tournament.pictureUrl }}
-                      >
-                        {tournament.name}
-                      </CardTitle>
-                      <CardText>
-                        <h7 style={{ color: "#faa" }}>{tournament.eliminating ? "ELIMINATING  " : "NON-ELIMINATING"}</h7><br />
-                        <h7>PLAYERS: {tournament.minPlayers} - {tournament.maxPlayers} </h7>
-                      </CardText>
-                      <CardText>
-                        {tournament.description}
-                      </CardText>
-                      <CardActions>
-                        <Button colored onClick={() => this.playDemo()}>Start demo</Button>
-                      </CardActions>
-                    </Card>
-                  </section>
+                <div className="tournament-list">
+                    {this.props.tournamentTypesList.map(tournament =>
+                        <section key={tournament.name}>
+                            <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>
+                                <CardTitle
+                                    style={{ color: "#aaa", height: "176px", background: tournament.pictureUrl }}
+                                >
+                                    {tournament.name}
+                                </CardTitle>
+                                <CardText>
+                                    <h7 style={{ color: "#faa" }}>{tournament.eliminating ? "ELIMINATING  " : "NON-ELIMINATING"}</h7><br />
+                                    <h7>PLAYERS: {tournament.minPlayers} - {tournament.maxPlayers} </h7>
+                                </CardText>
+                                <CardText>
+                                    {tournament.description}
+                                </CardText>
+                                <CardActions>
+                                    <Button colored onClick={() => this.playDemo()}>Start demo</Button>
+                                </CardActions>
+                            </Card>
+                        </section>
                 )}
-              </div>
+                </div>
             )
             }
-          </div>
+            </div>
         );
     }
 }

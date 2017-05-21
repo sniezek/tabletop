@@ -7,6 +7,7 @@ import TournamentTypes from "../components/TournamentTypes";
 
 const propTypes = {
     tournamentTypesList: PropTypes.array,
+    router: PropTypes.object.isRequired,
     playDemo: PropTypes.func
 };
 
@@ -41,6 +42,7 @@ class TournamentTypesContainer extends PureComponent {
         return (
             <TournamentTypes
                 tournamentTypesList={this.props.tournamentTypesList}
+                router={this.props.router}
                 playDemo={this.playDemo}
             />
         );
