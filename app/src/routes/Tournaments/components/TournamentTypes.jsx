@@ -43,7 +43,7 @@ class TournamentTypes extends PureComponent {
                   <section key={tournament.name}>
                     <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>
                       <CardTitle
-                        style={{ color: "#aaa", height: "176px", background: "url(https://www.businessprocessincubator.com/wp-content/uploads/thumbnails/thumbnail-41094.png) center / cover" }}
+                        style={{ color: "#aaa", height: "176px", background: tournament.pictureUrl }}
                       >
                         {tournament.name}
                       </CardTitle>

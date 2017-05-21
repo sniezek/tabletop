@@ -94,10 +94,10 @@ class Api {
     }
 
     getState(id) {
-      return fetch(`${API_SERVER}/tournament/state/${id}`, {
-        method: "GET",
-        credentials: "include"
-      });
+        return fetch(`${API_SERVER}/tournament/state/${id}`, {
+            method: "GET",
+            credentials: "include"
+        });
     }
 
     nextRound(id) {
@@ -163,10 +163,10 @@ class Api {
     }
 
     giveUp(id) {
-      return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
-         method: "POST",
-          credentials: "include"
-      });
+        return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
+            method: "POST",
+            credentials: "include"
+        });
     }
 }
 
