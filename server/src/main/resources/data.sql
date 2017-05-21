@@ -61,15 +61,23 @@ VALUES (4, 0, 4, 5, 4);
 INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (5, 0, 4, 3, 5);
 
-INSERT INTO tournament_process(id)
-VALUES (0);
-INSERT INTO tournament_process(id)
-VALUES (1);
+INSERT INTO tournament_process(id, initialized)
+VALUES (0, false);
+INSERT INTO tournament_process(id, initialized)
+VALUES (1, false);
+INSERT INTO tournament_process(id, initialized)
+VALUES (2, false);
+INSERT INTO tournament_process(id, initialized)
+VALUES (3, false);
 
 INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
 VALUES (0, true, 2, null);
 INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
 VALUES (1, false, 2, null);
+INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
+VALUES (2, false, 2, null);
+INSERT INTO swiss_tournament_process(id, ranked, rounds, bye_user)
+VALUES (3, false, 2, null);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (1, 1);
@@ -147,6 +155,19 @@ VALUES (2, 5);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (2, 6);
 
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (1, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (2, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (3, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (4, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (5, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (6, 2, 0, null, 0, TRUE );
+
 INSERT INTO tournament(id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
 VALUES (3, 'Chess Pro Tournament', '2017-05-30 20:30:00.0', '2017-05-30 22:00:00.0', 'CHESS', 2, 6, 'SWISS', false, 12);
 
@@ -158,6 +179,15 @@ INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (3, 9);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (3, 10);
+
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (7, 3, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (8, 3, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (9, 3, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (10, 3, 0, null, 0, TRUE );
 
 INSERT INTO event_tournaments(event_id, tournaments_id)
 VALUES (0, 2);

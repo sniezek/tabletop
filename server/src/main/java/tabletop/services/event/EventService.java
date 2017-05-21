@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.QEvent;
 import tabletop.domain.game.Game;
+import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.match.tournament.TournamentDetailsDTO;
 import tabletop.domain.user.User;
 import tabletop.repositories.event.EventRepository;
 import tabletop.services.UserService;
@@ -104,5 +106,20 @@ public class EventService {
         Predicate predicate = QEvent.event.organiser.eq(user);
 
         return Lists.newArrayList(eventRepository.findAll(predicate));
+    }
+
+    public List<TournamentDetailsDTO> getTournaments(Long id) {
+        Event event = eventRepository.findOne(id);
+        return Objects.isNull(event) ? Collections.emptyList() :
+                event.getTournaments().stream()
+                        .map(this::createTournamentDetailsDTO)
+                        .collect(Collectors.toList());
+    }
+
+    private TournamentDetailsDTO createTournamentDetailsDTO(Tournament tournament) {
+        return new TournamentDetailsDTO(
+                tournament.getId(),
+                tournament.getName(),
+                Objects.nonNull(tournament.getTournamentProcess()) && tournament.getTournamentProcess().isInitialized());
     }
 }
