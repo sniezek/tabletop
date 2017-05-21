@@ -16,6 +16,7 @@ public abstract class Match extends IdComparableEntity {
     private Date startDate;
     @NotNull(message = "{match.endDate}")
     private Date endDate;
+    @NotNull(message = "{match.users}")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "tournament_users",
             joinColumns = @JoinColumn(name = "tournament_id"),

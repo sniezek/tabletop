@@ -34,27 +34,27 @@ public class EventController {
         ControllerErrors errors = new ControllerErrors();
 
         validator.validateLocationFilters(lat, lng, radius, errors);
-        validator.validateGames(games, errors);
         validator.validateTypeFilter(type, errors);
         validator.validateDateFilters(startDate, endDate, errors);
 
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate));
     }
 
-    @PutMapping("/{pathVariableId}")
-    public ResponseEntity<?> updateEvent(@Valid @RequestBody Event event, BindingResult bindingResult, @PathVariable String pathVariableId) {
-        ControllerErrors errors = new ControllerErrors(bindingResult);
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateEvent(@Valid @RequestBody Event event, BindingResult bindingResult, @PathVariable Long id) {
+        Optional<Event> updatedEvent = eventService.getEventById(id);
 
-        validator.validatePathVariableIsId(pathVariableId, errors);
+        if (!updatedEvent.isPresent()) {
+            return ResponseUtils.notFound();
+        }
+
+        ControllerErrors errors = new ControllerErrors(bindingResult);
 
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
 
-        Long id = Long.valueOf(pathVariableId);
-
-        Optional<Event> existingEvent = eventService.getEventById(id);
-        validator.validateExistingEvent(existingEvent, errors);
+        validator.validateUserIsOrganiser(updatedEvent.get());
 
         validateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
@@ -87,18 +87,17 @@ public class EventController {
         Location location = event.getLocation();
 
         if (isNewLocation(location)) {
-            validator.validateNewLocation(location, bindingResult);
-            errors.addBindingResultErrorMessages(bindingResult);
+            validator.validateNewLocation(location, bindingResult, errors);
 
             if (errors.noErrors()) {
                 locationService.addLocation(location);
             }
         } else {
-            Optional<Location> existingLocation = locationService.getLocationById(location.getId());
-            validator.validateExistingLocation(existingLocation, errors);
+            Optional<Location> requestedLocation = locationService.getLocationById(location.getId());
+            validator.validateLocationExists(requestedLocation, errors);
 
             if (errors.noErrors()) {
-                event.setLocation(existingLocation.get());
+                event.setLocation(requestedLocation.get());
             }
         }
     }
