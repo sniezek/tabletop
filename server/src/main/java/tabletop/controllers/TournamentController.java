@@ -130,6 +130,7 @@ public class TournamentController {
 
         List<Pair<User>> nextRound = tournamentService.getNextRound(tournament);
         tournamentService.addTournament(tournament);
+        setFinalResults(tournamentid);
         return getOkResponseWithTournamentDetails(tournament, nextRound, tournamentService.isUserAvailable(tournament, authenticatedUser.get()));
     }
 
