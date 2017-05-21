@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {setWinner} from "../../../store/tournament";
 import Match from "../components/Match";
 
 const propTypes = {
@@ -15,21 +16,24 @@ const propTypes = {
   currentUser: PropTypes.object
 };
 
-const defaultProps = {
-
-};
+const defaultProps = {};
 
 const mapStateToProps = ({user, tournament}) => ({
   currentUser: user,
   creator: tournament.creator
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => ({
+  setWinner: (id, winner, callback) => {
+    dispatch(setWinner(id, winner, callback));
+  }
+});
 
 class MatchContainer extends PureComponent {
   constructor(props) {
     super(props);
     this.winCallback = this.winCallback.bind(this);
+    this.setWinner = this.setWinner.bind(this);
     this.win = this.win.bind(this);
     this.state = {
       winner: this.props.winner
@@ -44,8 +48,17 @@ class MatchContainer extends PureComponent {
     }
   }
 
+  setWinner(player, okCallback) {
+    const tournamentId = this.props.tournamentId;
+    this.props.setWinner(tournamentId, player, ({ok}) => {
+      if (ok) {
+        okCallback();
+      }
+    });
+  }
+
   win = (winner) => {
-    this.props.setWinner(winner, () => this.winCallback(winner === this.props.host));
+    this.setWinner(winner, () => this.winCallback(winner === this.props.host));
   };
 
   winCallback(hostWon) {
