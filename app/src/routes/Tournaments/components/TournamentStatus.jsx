@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import MatchContainer from "../containers/MatchContainer";
 import {Cell, Grid} from "react-mdl/lib/Grid";
+import {Button} from "react-mdl/lib";
 import "./TournamentStatus.scss";
 import TournamentStatusFooterContainer from "../containers/TournamentStatusFooterContainer";
 
@@ -17,6 +18,7 @@ const propTypes = {
   })),
   setWinner: PropTypes.func.isRequired,
   nextRound: PropTypes.func.isRequired,
+  initialRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
   giveUp: PropTypes.func.isRequired,
   displayFinalResults: PropTypes.bool.isRequired,
@@ -90,6 +92,7 @@ class TournamentStatus extends PureComponent {
           matchesFinished={this.state.matchesFinished}
           router={this.props.router}
         />
+        <Button type='button' onClick={this.props.initialRound}>Init tournament</Button>
       </div>
     );
   }

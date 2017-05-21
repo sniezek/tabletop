@@ -21,10 +21,10 @@ public class SwissTournamentProcess extends TournamentProcess {
     @JoinColumn(name="bye_user")
     private User byeUser;
 
-    public SwissPlayerResult getResultByUser(User user) {
+    public Optional<SwissPlayerResult> getResultByUser(User user) {
         return playerResults.stream()
                 .filter(result -> result.getId().getUser().getId().equals(user.getId()))
-                .findAny().get();
+                .findAny();
     }
 
     public void setRanked(boolean ranked) {

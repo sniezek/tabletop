@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import moment from "moment";
-import Icon from "../../../../components/Icon";
+import Icon from "../../../../../components/Icon";
 
 const propTypes = {
     location: PropTypes.object.isRequired,

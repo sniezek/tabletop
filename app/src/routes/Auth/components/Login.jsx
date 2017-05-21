@@ -52,6 +52,7 @@ const Login = ({ loading, username, password, login, remind, setUsername, setPas
                     label="Username"
                     value={username}
                     onChange={setUsername}
+                    required
                 />
                 <IconTextfield
                     icon="lock"
@@ -59,6 +60,7 @@ const Login = ({ loading, username, password, login, remind, setUsername, setPas
                     type="password"
                     value={password}
                     onChange={setPassword}
+                    required
                 />
             </div>
         </div>

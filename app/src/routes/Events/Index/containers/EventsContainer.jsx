@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setMapViewActive } from "../../../store/config";
+import { setMapViewActive } from "../../../../store/config";
 import { loadEvents } from "../modules/EventActions";
 import Events from "../components/Events.jsx";
 import { mapLocationFilters, mapDateFilters, mapTypeFilters, mapGamesFilters } from "../modules/FilterUtils";
@@ -58,6 +58,7 @@ class EventsContainer extends PureComponent {
 
         this.toggleFilters = this.toggleFilters.bind(this);
         this.loadEvents = this.loadEvents.bind(this);
+        this.addNewEvent = this.addNewEvent.bind(this);
     }
 
     componentDidMount() {
@@ -75,6 +76,10 @@ class EventsContainer extends PureComponent {
         } else if (viewSwitchedToList && router.location.search !== "") {
             router.push("/events");
         }
+    }
+
+    addNewEvent() {
+        this.props.router.push("/events/create");
     }
 
     loadEvents() {
@@ -112,6 +117,7 @@ class EventsContainer extends PureComponent {
                 lat={lat !== undefined ? parseFloat(lat) : lat}
                 lng={lng !== undefined ? parseFloat(lng) : lng}
                 loadEvents={this.loadEvents}
+                addNewEvent={this.addNewEvent}
             />
         );
     }
