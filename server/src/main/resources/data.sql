@@ -132,7 +132,7 @@ INSERT INTO event(id, description, name, location_id, organiser_id)
 VALUES (0, 'Best chess event!', 'Super Chess Event', 0, 12);
 
 INSERT INTO tournament(id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
-VALUES (2, 'tournament2', '2017-05-30 20:00:00.0', '2017-05-30 23:00:00.0', 'CHESS', 4, 16, 'SWISS', false, 12);
+VALUES (2, 'ChessMaster Tournament', '2017-05-30 20:00:00.0', '2017-05-30 23:00:00.0', 'CHESS', 4, 16, 'SWISS', false, 12);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (2, 1);
@@ -148,7 +148,7 @@ INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (2, 6);
 
 INSERT INTO tournament(id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
-VALUES (3, 'tournament3', '2017-05-30 20:30:00.0', '2017-05-30 22:00:00.0', 'CHESS', 2, 6, 'SWISS', false, 12);
+VALUES (3, 'Chess Pro Tournament', '2017-05-30 20:30:00.0', '2017-05-30 22:00:00.0', 'CHESS', 2, 6, 'SWISS', false, 12);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (3, 7);
