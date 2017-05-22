@@ -37,6 +37,7 @@ class Api {
         this.finishTournament = this.finishTournament.bind(this);
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
+        this.remind = this.remind.bind(this);
     }
 
   achievements(userID) {
@@ -219,6 +220,23 @@ class Api {
         return fetch(`${API_SERVER}/rankings/${gameName}`, {
             method: "GET",
             credentials: "include"
+        });
+    }
+
+    remind({ email }) {
+        const body = JSON.stringify({
+            email
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/remind`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
         });
     }
 
