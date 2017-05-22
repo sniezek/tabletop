@@ -6,6 +6,10 @@ DELETE FROM user;
 DELETE FROM tournament;
 DELETE FROM swiss_tournament_process;
 DELETE FROM tournament_process;
+DELETE FROM event;
+DELETE FROM sparring;
+DELETE FROM event_sparrings;
+DELETE FROM location;
 
 INSERT INTO user (id, username, password, email)
 VALUES (0, 'user0', '$2a$10$ebyC4Z5WtCXXc.HGDc1Yoe6CLFzcntFmfse6/pTj7CeDY5I05w16C', 'user@user');
@@ -85,3 +89,48 @@ INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent
 VALUES (5, 1, 0, null, 0);
 INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score)
 VALUES (0, 1, 0, null, 0);
+
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 10, 0);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 98, 1);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 12, 2);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 37, 3);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 65, 4);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 1, 5);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 25, 0);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 46, 1);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 66, 2);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 8, 3);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 44, 4);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 74, 5);
+
+INSERT INTO location(id, address, lat, lng, name)
+VALUES (0, 'os. Dywizjonu 303 23/8', 50.085782, 20.006929, 'Dywizjon');
+INSERT INTO event(id, description, name, location_id, organiser_id)
+VALUES (0, 'Best chess event!', 'Super Chess Event', 0, 1);
+
+INSERT INTO location(id, address, lat, lng, name)
+VALUES (1, 'ul. Meissnera 6/26', 50.078947, 19.975193, 'Salon gier Chuck');
+INSERT INTO event(id, description, name, location_id, organiser_id)
+VALUES (1, 'Monpoly is my life!', 'Monopoly games', 1, 2);
+
+INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
+VALUES (0, '2017-06-18 18:00:00', 'INCORRECT', 'CHESS', 10, 2, '2017-06-18 10:00:00', 'CHESS');
+INSERT INTO event_sparrings(event_id, sparrings_id)
+VALUES (0, 0);
+
+INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
+VALUES (1, '2017-06-19 21:00:00', 'INCORRECT', 'MONOPOLY', 20, 2, '2017-06-19 16:00:00', 'MONOPOLY');
+INSERT INTO event_sparrings(event_id, sparrings_id)
+VALUES (1, 1);
