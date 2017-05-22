@@ -87,6 +87,7 @@ public class Event extends IdComparableEntity {
 
     public void setOrganiser(User organiser) {
         this.organiser = organiser;
+        this.tournaments.forEach(tournament -> tournament.setCreator(organiser));
     }
 
     @JsonIgnore

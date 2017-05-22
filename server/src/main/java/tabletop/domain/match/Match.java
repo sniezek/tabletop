@@ -32,9 +32,6 @@ public abstract class Match extends IdComparableEntity {
     private Integer maxPlayers;
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
-    @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
 
     public Date getStartDate() {
         return startDate;
@@ -97,12 +94,4 @@ public abstract class Match extends IdComparableEntity {
     }
 
     public abstract String getGameName();
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
 }

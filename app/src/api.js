@@ -18,6 +18,7 @@ class Api {
         this.getState = this.getState.bind(this);
         this.setWinner = this.setWinner.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
+        this.getTournaments = this.getTournaments.bind(this);
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
         this.editMail = this.editMail.bind(this);
@@ -205,6 +206,13 @@ class Api {
     getFinalResults(id) {
         return fetch(`${API_SERVER}/tournament/finalresults/${id}`, {
             method: "GET"
+        });
+    }
+
+    getTournaments(id) {
+        return fetch(`${API_SERVER}/events/getTournaments/${id}`, {
+          method: "GET",
+          credentials: "include"
         });
     }
 
