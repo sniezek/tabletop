@@ -47,14 +47,19 @@ const enhance = connect(mapStateToProps, mapDispatchToProps);
 function arr_diff (a1, a2) {
 
   var diff = [];
-
+  var f = false;
 
   for (var i = 0; i < a1.length; i++) {
+    f = true;
     for (var j = 0; j < a2.length; j++) {
-      if (a2[j].name !== a1[i].name) {
-        diff.push(a1[i])
+      if (a2[j].name === a1[i].name) {
+        f = false;
       }
     }
+    if(f){
+      diff.push(a1[i])
+    }
+
   }
   return diff;
 };
@@ -90,7 +95,6 @@ class AchievementsContainer extends React.Component {
 
   updateSnack() {
     const {newAchievements} = this.props;
-    console.log(newAchievements)
     if (typeof newAchievements != "undefined" && newAchievements != null && newAchievements.length > 0) {
       this.setState({isSnackbarActive: true});
     }
