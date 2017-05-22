@@ -1,7 +1,7 @@
 import React from "react";
 import pure from "recompose/pure";
 import "./Tournament.scss";
-import "../../Games/components/Games.scss";
+import "../../Games/Index/components/Games.scss";
 import PropTypes from "prop-types";
 import TournamentHeader from "./TournamentHeader";
 import TournamentProcessContainer from "../containers/TournamentProcessContainer";
