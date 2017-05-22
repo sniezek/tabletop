@@ -24,6 +24,12 @@ class ListTournament extends PureComponent {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      initialized: nextProps.initialized
+    });
+  }
+
   initialRound() {
     const tournamentId = this.props.id;
     this.props.initialRound(tournamentId, ({ok}) => {
