@@ -19,4 +19,8 @@ public class ResponseUtils {
     public static ResponseEntity<String> conflict(String message) {
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }
+
+    public static <T> ResponseEntity<T> notFound() {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

@@ -1,12 +1,12 @@
 package tabletop.domain.match.tournament;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 import tabletop.domain.match.Match;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Tournament extends Match {
@@ -16,6 +16,16 @@ public class Tournament extends Match {
     @Enumerated(EnumType.STRING)
     private TournamentType type;
     private String results;
+
+    private boolean finished;
+
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private TournamentProcess tournamentProcess;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JsonIgnore
+    private List<TournamentPlayerResult> tournamentPlayerResults;
 
     public Tournament() {
     }
@@ -42,6 +52,30 @@ public class Tournament extends Match {
 
     public void setResults(String results) {
         this.results = results;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public TournamentProcess getTournamentProcess() {
+        return tournamentProcess;
+    }
+
+    public void setTournamentProcess(TournamentProcess tournamentProcess) {
+        this.tournamentProcess = tournamentProcess;
+    }
+
+    public List<TournamentPlayerResult> getTournamentPlayerResults() {
+        return tournamentPlayerResults;
+    }
+
+    public void setTournamentPlayerResults(List<TournamentPlayerResult> tournamentPlayerResults) {
+        this.tournamentPlayerResults = tournamentPlayerResults;
     }
 
     @Override

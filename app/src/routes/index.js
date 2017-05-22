@@ -4,6 +4,7 @@ import Home from "./Home";
 import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute } from "./Auth";
 import EventsRoute from "./Events";
 import { GamesRoute, GameDetailsRoute } from "./Games/index";
+import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -19,8 +20,8 @@ export const createRoutes = store => ({
         RemindRoute(store),
         EventsRoute(store),
         GamesRoute(store),
-        GameDetailsRoute(store)
-
+        GameDetailsRoute(store),
+        TournamentRoute(store)
     ]
 });
 

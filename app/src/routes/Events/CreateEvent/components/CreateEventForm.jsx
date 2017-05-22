@@ -6,6 +6,7 @@ import Spinner from "react-mdl/lib/Spinner";
 import StepHeader from "./StepHeader.jsx";
 import StepContent from "./StepContent.jsx";
 import StepNavigation from "./StepNavigation.jsx";
+import ListItemDialogContainer from "../containers/ListItemDialogContainer.jsx";
 
 const propTypes = {
     prevStep: PropTypes.func.isRequired,
@@ -13,7 +14,12 @@ const propTypes = {
     setStep: PropTypes.func.isRequired,
     step: PropTypes.number.isRequired,
     steps: PropTypes.number.isRequired,
-    create: PropTypes.func.isRequired
+    create: PropTypes.func.isRequired,
+    addSparring: PropTypes.func.isRequired,
+    addTournament: PropTypes.func.isRequired,
+    model: PropTypes.object,
+    type: PropTypes.string,
+    close: PropTypes.func.isRequired
 };
 
 /* eslint-disable react/prop-types */
@@ -24,7 +30,7 @@ const enhance = compose(
     withLoader
 );
 
-const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, ...rest }) => (
+const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, addSparring, addTournament, model, type, close, ...rest }) => (
     <div className="create-event__content mdl-shadow--2dp">
         <StepHeader
             setStep={setStep}
@@ -32,6 +38,8 @@ const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, ...
         />
         <StepContent
             step={step}
+            addSparring={addSparring}
+            addTournament={addTournament}
             {...rest}
         />
         <StepNavigation
@@ -40,6 +48,13 @@ const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, ...
             step={step}
             steps={steps}
             create={create}
+            addSparring={addSparring}
+            addTournament={addTournament}
+        />
+        <ListItemDialogContainer
+            model={model}
+            type={type}
+            close={close}
         />
     </div>
 );

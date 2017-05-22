@@ -10,7 +10,12 @@ class Api {
         this.logout = this.logout.bind(this);
         this.user = this.user.bind(this);
         this.games = this.games.bind(this);
+        this.tournamentTypes = this.tournamentTypes.bind(this);
+        this.finishedTournaments = this.finishedTournaments.bind(this);
         this.register = this.register.bind(this);
+        this.initialRound = this.initialRound.bind(this);
+        this.setWinner = this.setWinner.bind(this);
+        this.finishTournament = this.finishTournament.bind(this);
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
     }
@@ -45,6 +50,50 @@ class Api {
         return fetch(`${API_SERVER}/games`, {
             method: "GET",
             credentials: "include"
+        });
+    }
+
+    tournamentTypes() {
+        return fetch(`${API_SERVER}/tournament/types`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    finishedTournaments() {
+        return fetch(`${API_SERVER}/tournament/finished`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    setWinner(tournamentId, winner) {
+        const body = JSON.stringify({
+            tournamentId,
+            winnerUsername: winner.username
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/tournament/winner/`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
+    initialRound(id) {
+        return fetch(`${API_SERVER}/tournament/init/${id}`, {
+            method: "GET"
+        });
+    }
+
+    nextRound(id) {
+        return fetch(`${API_SERVER}/tournament/next/${id}`, {
+            method: "GET"
         });
     }
 
@@ -95,6 +144,18 @@ class Api {
             credentials: "include",
             headers,
             body
+        });
+    }
+
+    finishTournament(id) {
+        return fetch(`${API_SERVER}/tournament/finish/${id}`, {
+            method: "POST"
+        });
+    }
+
+    getFinalResults(id) {
+        return fetch(`${API_SERVER}/tournament/finalresults/${id}`, {
+            method: "GET"
         });
     }
 

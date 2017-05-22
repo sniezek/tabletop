@@ -26,6 +26,11 @@ const defaultLinks = [{
     label: "Events",
     path: "/events"
 }, {
+
+    icon: "people",
+    label: "Tournaments",
+    path: "/tournament"
+}, {
     icon: "casino",
     label: "Games",
     path: "/games"
