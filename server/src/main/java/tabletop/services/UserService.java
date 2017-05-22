@@ -56,13 +56,13 @@ public class UserService {
     }
 
     public User remindPassword(String email) {
-        String newemail = email.substring(email.indexOf(":")+1,email.length()-1);
+        String newemail = email.substring(email.indexOf(":")+2,email.length()-2);
         User user = userRepository.findByEmail(newemail);
         String password = UUID.randomUUID().toString();
 
         //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        sendEmailWithPassword(newemail,password.toString());
-        user.setPassword(passwordEncoder.encode(password.toString()));
+        sendEmailWithPassword(newemail,password);
+        user.setPassword(passwordEncoder.encode(password));
 
         return userRepository.save(user);
     }
