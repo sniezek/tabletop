@@ -60,4 +60,13 @@ public class UserController {
         return ResponseUtils.created(userService.editPassword(user));
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/remind")
+
+    public ResponseEntity<?> remind(@Valid @RequestBody String email, ControllerErrors errors) {
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        return ResponseUtils.created(userService.remindPassword(email));
+    }
 }
