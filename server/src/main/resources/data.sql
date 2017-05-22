@@ -194,3 +194,48 @@ VALUES (0, 2);
 INSERT INTO event_tournaments(event_id, tournaments_id)
 VALUES (0, 3);
 --
+
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 10, 0);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 98, 1);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 12, 2);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 37, 3);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 65, 4);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Chess', 1, 5);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 25, 0);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 46, 1);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 66, 2);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 8, 3);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 44, 4);
+INSERT INTO game_ranking(game_name, points, user_id)
+VALUES ('Monopoly', 74, 5);
+
+INSERT INTO location(id, address, lat, lng, name)
+VALUES (1, 'os. Dywizjonu 303 23/8', 50.085782, 20.006929, 'Dywizjon');
+INSERT INTO event(id, description, name, location_id, organiser_id)
+VALUES (1, 'Best chess event!', 'Super Chess Event', 1, 1);
+
+INSERT INTO location(id, address, lat, lng, name)
+VALUES (2, 'ul. Meissnera 6/26', 50.078947, 19.975193, 'Salon gier Chuck');
+INSERT INTO event(id, description, name, location_id, organiser_id)
+VALUES (2, 'Monpoly is my life!', 'Monopoly games', 2, 2);
+
+INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
+VALUES (0, '2017-06-18 18:00:00', 'INCORRECT', 'CHESS', 10, 2, '2017-06-18 10:00:00', 'CHESS');
+INSERT INTO event_sparrings(event_id, sparrings_id)
+VALUES (1, 0);
+
+INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
+VALUES (1, '2017-06-19 21:00:00', 'INCORRECT', 'MONOPOLY', 20, 2, '2017-06-19 16:00:00', 'MONOPOLY');
+INSERT INTO event_sparrings(event_id, sparrings_id)
+VALUES (2, 1);

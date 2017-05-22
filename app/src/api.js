@@ -26,18 +26,6 @@ class Api {
         this.achievements = this.achievements.bind(this);
         this.newAchievements = this.newAchievements.bind(this);
         this.allAchivements = this.allAchivements.bind(this);
-        this.login = this.login.bind(this);
-        this.logout = this.logout.bind(this);
-        this.user = this.user.bind(this);
-        this.games = this.games.bind(this);
-        this.tournamentTypes = this.tournamentTypes.bind(this);
-        this.finishedTournaments = this.finishedTournaments.bind(this);
-        this.register = this.register.bind(this);
-        this.initialRound = this.initialRound.bind(this);
-        this.setWinner = this.setWinner.bind(this);
-        this.finishTournament = this.finishTournament.bind(this);
-        this.events = this.events.bind(this);
-        this.createEvent = this.createEvent.bind(this);
     }
 
   achievements(userID) {
