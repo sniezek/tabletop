@@ -15,7 +15,7 @@ const defaultProps = {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
     getIncomingGames: dispatch(getIncomingGames({
-        game: ownProps.router.params.name,
+        games: ownProps.router.params.name,
         startDate: new Date().getTime()
     }))
 });
