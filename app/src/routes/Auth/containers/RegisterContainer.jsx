@@ -91,6 +91,11 @@ class RegisterContainer extends PureComponent {
                 passwordConfirm: "",
                 loading: false
             });
+        } else if (!password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+            alert("Your password should be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and one special character from !@#$%^&*");
+            this.setState({
+                loading:false
+            });
         } else if (password===passwordConfirm) {
           this.props.register({
               username,
