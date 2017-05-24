@@ -63,12 +63,16 @@ class RemindContainer extends PureComponent {
         this.props.remind({
             email
         }, ({ ok }) => {
-
-                this.setState({
-                    email: "",
-                    loading: false
-                });
-
+            if(ok) {
+                alert("Remind successful, please check your mailbox.");
+            }
+            else {
+                alert("Error encountered while reminding password.");
+            }
+            this.setState({
+                email: "",
+                loading: false
+            });
         });
     }
 
