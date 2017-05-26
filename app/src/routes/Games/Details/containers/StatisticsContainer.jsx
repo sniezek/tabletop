@@ -18,8 +18,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 });
 
 const mapStateToProps = state => ({
-    gameStats: state.games.gamesStats
+    gameStats: state.games.gameStats
 });
+
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 class StatisticsContainer extends PureComponent {

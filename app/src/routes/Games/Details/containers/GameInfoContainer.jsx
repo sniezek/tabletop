@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import StepHeader from "../components/SteapHeader";
+import StepHeader from "../components/StepHeader";
 import StepContent from "../components/StepContent";
 
 const steps = 4;

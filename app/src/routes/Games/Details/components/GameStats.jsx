@@ -16,7 +16,7 @@ export const GameStats = gameStats => (
         <Grid style={{ margin: "auto" }}>
             <Cell className="cardContainer" shadow={1} col={8} tablet={8} phone={4}>
                 <Card shadow={0} className="width100" >
-                    <span>{gameStats.sparringsCount}</span>
+                    <span>{gameStats.gameStats.sparringsCount}</span>
                 </Card>
             </Cell>
         </Grid>
