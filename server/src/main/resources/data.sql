@@ -223,12 +223,12 @@ VALUES ('Monopoly', 74, 5);
 INSERT INTO location(id, address, lat, lng, name)
 VALUES (1, 'os. Dywizjonu 303 23/8', 50.085782, 20.006929, 'Dywizjon');
 INSERT INTO event(id, description, name, location_id, organiser_id)
-VALUES (1, 'Best chess event!', 'Super Chess Event', 1, 1);
+VALUES (1, 'Chess mania!', 'Chess mania event', 1, 1);
 
 INSERT INTO location(id, address, lat, lng, name)
 VALUES (2, 'ul. Meissnera 6/26', 50.078947, 19.975193, 'Salon gier Chuck');
 INSERT INTO event(id, description, name, location_id, organiser_id)
-VALUES (2, 'Monpoly is my life!', 'Monopoly games', 2, 2);
+VALUES (2, 'Monopoly is my life!', 'Monopoly games', 2, 2);
 
 INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
 VALUES (0, '2017-06-18 18:00:00', 'INCORRECT', 'CHESS', 10, 2, '2017-06-18 10:00:00', 'CHESS');
@@ -239,3 +239,8 @@ INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, s
 VALUES (1, '2017-06-19 21:00:00', 'INCORRECT', 'MONOPOLY', 20, 2, '2017-06-19 16:00:00', 'MONOPOLY');
 INSERT INTO event_sparrings(event_id, sparrings_id)
 VALUES (2, 1);
+
+INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
+VALUES (2, '2017-06-19 17:00:00', 'INCORRECT', 'CHESS', 10, 2, '2017-06-19 10:00:00', 'CHESS');
+INSERT INTO event_sparrings(event_id, sparrings_id)
+VALUES (1, 2);

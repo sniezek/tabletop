@@ -49,4 +49,14 @@ public class GameController {
             throw new ResourceNotFoundException();
         }
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/gameStats/{gameName}")
+    public GameStatisticsResponse getGameStatistics(@PathVariable String gameName) {
+        try {
+            Game game = Game.valueOf(gameName.toUpperCase());
+            return gameRankingService.getGameStatistics(game);
+        } catch (IllegalArgumentException e) {
+            throw new ResourceNotFoundException();
+        }
+    }
 }

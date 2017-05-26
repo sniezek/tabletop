@@ -1,6 +1,7 @@
 package tabletop.repositories.game;
 
 import tabletop.controllers.game.GameRankingResponse;
+import tabletop.controllers.game.GameStatisticsResponse;
 import tabletop.domain.game.Game;
 import tabletop.domain.ranking.GameRanking;
 import tabletop.domain.user.User;
@@ -14,4 +15,6 @@ public interface GameRankingRepositoryCustom {
     List<GameRanking> getRankingForGame(List<User> users, Game game);
 
     List<GameRankingResponse> getTopUsers(Game game);
+
+    GameStatisticsResponse getGameStatistics(Game game);
 }
