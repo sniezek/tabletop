@@ -20,6 +20,21 @@ Users have a variety of statistics and they can get achievements for being activ
 * [rafalzelazko](https://github.com/rafalzelazko) (Users)
 * [l0rd11](https://github.com/l0rd11) (Achievements)
 * [Vlizer](https://github.com/Vlizer) (Achievements)
+
+## DataBase
+### Starting in docker
+
+assuming you have alredy started docker just type:
+
+```
+docker run --name demo-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=db_example -e MYSQL_USER=springuser -e MYSQL_PASSWORD=ThePassword -p 3306:3306 -d mysql:5.6
+```
+remember to start databese before server
+
+### Starting stanalone
+start mysql server then cerate bd_example database 
+next create user springuser with pass ThePassword and grant him all rights to db
+
 ## Server
 ### Starting
 ```
@@ -28,12 +43,7 @@ $ gradlew bootRun
 ```
 Server will be available at `localhost:8080`.
 
-Currently, an in-memory SQL H2 database is used. Its state is saved to file and automatically loaded on the next server startup. A console for the database is available at `localhost:8080/h2` with these credentials:
-```
-Driver Class: org.h2.Driver
-JDBC URL: jdbc:h2:file:./db
-User Name: sa
-Password: (blank)
+
 ```
 ### Stack
 * Spring Boot
