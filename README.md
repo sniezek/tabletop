@@ -23,7 +23,8 @@ Users have a variety of statistics and they can get achievements for being activ
 
 ## DataBase
 ### Starting in docker
-
+install docker for win 7 :https://docs.docker.com/toolbox/toolbox_install_windows/
+install docker for win 10 :https://docs.docker.com/docker-for-windows/
 assuming you have alredy started docker just type:
 
 ```
