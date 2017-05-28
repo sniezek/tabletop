@@ -2,8 +2,8 @@ import React from "react";
 import pure from "recompose/pure";
 import "./Tournament.scss";
 import PropTypes from "prop-types";
-import TournamentHeader from "./TournamentHeader";
-import TournamentTypesContainer from "../containers/TournamentTypesContainer";
+import TournamentHeaderContainer from "../containers/TournamentHeaderContainer";
+import TournamentProcessContainer from "../containers/TournamentProcessContainer";
 
 
 const propTypes = {
@@ -17,8 +17,11 @@ const enhance = pure;
 
 const Tournament = ({ router }) => (
     <div className="tournamentTypes">
-        <TournamentHeader />
-        <TournamentTypesContainer
+        <TournamentHeaderContainer
+            router={router}
+            title="Tournament"
+        />
+        <TournamentProcessContainer
             router={router}
         />
     </div>

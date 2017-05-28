@@ -37,7 +37,7 @@ export const getTournament = ({ id }, callback) => dispatch =>
         callback(response);
     });
 
-export const getTournamentTypes = dispatch =>
+export const getTournamentTypes = (callback) => dispatch =>
   Api.tournamentTypes().then((response) => {
       if (response.ok) {
           response.json().then((tournamentTypesList) => {
@@ -49,6 +49,7 @@ export const getTournamentTypes = dispatch =>
               });
           });
       }
+      callback(response);
   });
 
 export const getFinishedTournaments = dispatch =>
@@ -150,6 +151,7 @@ export const giveUp = (id) => dispatch =>
 
 export const actions = {
     getTournament,
+    getTournamentTypes,
     getFinalResults,
     nextRound,
     initialRound,
