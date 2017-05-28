@@ -5,7 +5,7 @@ import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute } from "./Auth";
 import EventsRoute from "./Events";
 import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
 import { GamesRoute, GameDetailsRoute } from "./Games/index";
-import { EditRoute, ProfileRoute } from "./User";
+import { EditRoute, ProfileRoute, ResetRoute } from "./User";
 import achievementsRoute from "./Archievments"
 
 /*  Note: Instead of using JSX, we recommend using react-router
@@ -26,7 +26,8 @@ export const createRoutes = store => ({
         achievementsRoute(store),
         GameDetailsRoute(store),
         EditRoute(store),
-        ProfileRoute(store)
+        ProfileRoute(store),
+        ResetRoute(store)
     ]
 });
 

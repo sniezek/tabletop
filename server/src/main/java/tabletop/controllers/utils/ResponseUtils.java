@@ -16,6 +16,12 @@ public class ResponseUtils {
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
 
+    public static <T> ResponseEntity<T> reminded(T entity) { return new ResponseEntity<>(HttpStatus.CREATED); }
+
+    public static <T> ResponseEntity<T> reseted(T entity) {
+        return new ResponseEntity<>(entity, HttpStatus.CREATED);
+    }
+
     public static ResponseEntity<String> conflict(String message) {
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }

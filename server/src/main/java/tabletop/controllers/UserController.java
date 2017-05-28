@@ -3,10 +3,7 @@ package tabletop.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tabletop.controllers.validation.errors.ControllerErrorsHandler;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.controllers.utils.ResponseUtils;
@@ -66,7 +63,16 @@ public class UserController {
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
+        return ResponseUtils.reminded(userService.remindPassword(email));
+    }
 
-        return ResponseUtils.created(userService.remindPassword(email));
+    @RequestMapping(method = RequestMethod.POST, value = "/user/reset")
+    public ResponseEntity<?> showChangePasswordPage(@RequestParam("token") String token, @RequestParam("id") long id,
+                                                    ControllerErrors errors) {
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        return ResponseUtils.reseted(userService.redirectToChange(token,id));
     }
 }

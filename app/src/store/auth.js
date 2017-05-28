@@ -3,6 +3,7 @@ import Api from "../api";
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const REMIND = "REMIND"
+export const RESET = "RESET"
 
 const dispatchLogin = (response, dispatch) =>
     response.json().then(({ id,username, email }) => {
@@ -50,6 +51,17 @@ export const remind = ({ email }, callback) => dispatch =>
         if (response.ok) {
             dispatch({
                 type: REMIND
+            });
+        }
+
+        callback(response);
+    });
+
+export const reset = ({ token, id }, callback) => dispatch =>
+    Api.reset({ token, id }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: RESET
             });
         }
 

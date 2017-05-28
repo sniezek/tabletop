@@ -38,6 +38,7 @@ class Api {
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
         this.remind = this.remind.bind(this);
+        this.reset = this.reset.bind(this);
     }
 
   achievements(userID) {
@@ -276,6 +277,19 @@ class Api {
             headers,
             body
         });
+    }
+
+    reset({token, id}) {
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/reset?${token}&${id}`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+        })
     }
 }
 

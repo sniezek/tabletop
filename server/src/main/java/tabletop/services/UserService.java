@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import tabletop.domain.user.PasswordResetToken;
 import tabletop.domain.user.User;
+import tabletop.repositories.PasswordResetTokenRepository;
 import tabletop.repositories.UserRepository;
 import javax.mail.Session;
 import javax.mail.Message;
@@ -13,14 +15,15 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordResetTokenRepository passwordResetTokenRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -58,16 +61,43 @@ public class UserService {
     public User remindPassword(String email) {
         String newemail = email.substring(email.indexOf(":")+2,email.length()-2);
         User user = userRepository.findByEmail(newemail);
-        String password = UUID.randomUUID().toString();
+        String uuid = UUID.randomUUID().toString();
 
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        sendEmailWithPassword(newemail,password);
-        user.setPassword(passwordEncoder.encode(password));
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, 3);
+
+        PasswordResetToken token = new PasswordResetToken();
+        token.setToken(uuid);
+        token.setUser(user);
+        token.setDate(cal.getTime());
+
+        passwordResetTokenRepository.save(token);
+        sendEmailWithPassword(newemail,uuid,user.getId());
+        user.setPassword(passwordEncoder.encode(uuid));
 
         return userRepository.save(user);
     }
 
-    private void sendEmailWithPassword(String email, String password) {
+    public String redirectToChange(String tokenId, Long id) {
+        PasswordResetToken token = passwordResetTokenRepository.findByToken(tokenId);
+        if (token != null) {
+            if (token.getUser().getId()==id) {
+                if (token.getDate().after(new Date())) {
+                    passwordResetTokenRepository.delete(token);
+                    return "token="+tokenId+"&id="+id;
+                }
+                else return "expired";
+            }
+            else return "notvalidid";
+        }
+        else {
+            return "tokennotexist";
+        }
+
+    }
+
+    private void sendEmailWithPassword(String email, String token, Long userid) {
 
         final String username = "tabletopremind@gmail.com";
         final String mailPassword = "userfunct123";
@@ -93,8 +123,9 @@ public class UserService {
                     false) );
 
             message.setSubject("Remind password");
-            message.setText("Here is your new generated password. Please change it,"
-                    + "\n\n as soon as possible! " + password);
+            message.setText("Here is link where you can change your password. Please change it,"
+                    + "\n\n as soon as possible! localhost:3000/user/reset?token=" + token
+            +"&id="+userid);
 
             Transport.send(message);
 
