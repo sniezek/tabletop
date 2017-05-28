@@ -42,7 +42,7 @@ public enum Game {
             ScrabbleConstants.bannerUrl,
             BasicWinInformation.class,
             SWISS),
-    MAGIC_THE_GATHERING("Magic: The Gathering",
+    MAGIC("Magic",
             2,
             -1,
             MTGConstants.description,
