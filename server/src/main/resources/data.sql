@@ -236,11 +236,11 @@ INSERT INTO event_sparrings(event_id, sparrings_id)
 VALUES (1, 0);
 
 INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
-VALUES (1, '2017-06-19 21:00:00', 'INCORRECT', 'MONOPOLY', 20, 2, '2017-06-19 16:00:00', 'MONOPOLY');
+VALUES (1, '2017-06-19 21:00:00', 'INCORRECT', 'MONOPOLY', 20, 2, '2017-06-19 16:00:00', 'Monopoly');
 INSERT INTO event_sparrings(event_id, sparrings_id)
 VALUES (2, 1);
 
 INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, start_date, game_name)
-VALUES (2, '2017-06-19 17:00:00', 'INCORRECT', 'CHESS', 10, 2, '2017-06-19 10:00:00', 'CHESS');
+VALUES (2, '2017-06-19 17:00:00', 'INCORRECT', 'CHESS', 10, 2, '2017-06-19 10:00:00', 'Chess');
 INSERT INTO event_sparrings(event_id, sparrings_id)
 VALUES (1, 2);

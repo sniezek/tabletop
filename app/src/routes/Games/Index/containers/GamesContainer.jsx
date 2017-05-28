@@ -32,7 +32,9 @@ class GamesContainer extends PureComponent {
     }
 
     buildHrefLink(name) {
-        return `/games/${name}`;
+        let nameURL = name.replace(/ /g, "_");
+        nameURL = nameURL.replace(/[!@#$%^&*()+=:;'"><.,]/g, "");
+        return `/games/${nameURL}`;
     }
     render() {
         return (
