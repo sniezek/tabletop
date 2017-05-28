@@ -36,6 +36,16 @@ class GamesContainer extends PureComponent {
         nameURL = nameURL.replace(/[!@#$%^&*()+=:;'"><.,]/g, "");
         return `/games/${nameURL}`;
     }
+
+    formatNumberOfPlayers(minPlayers, maxPlayers) {
+        if (minPlayers === maxPlayers) {
+            return maxPlayers;
+        } else if (maxPlayers === -1) {
+            return `${minPlayers}+`;
+        }
+        return `${minPlayers} - ${maxPlayers}`;
+    }
+
     render() {
         return (
             <div className="gamesList">
@@ -60,7 +70,7 @@ class GamesContainer extends PureComponent {
                                     </CardTitle>
 
                                     <div className="gameSettings">
-                                        <span><i className="material-icons">group</i> {minPlayers} - {maxPlayers} </span>
+                                        <span><i className="material-icons">group</i>{ this.formatNumberOfPlayers(minPlayers, maxPlayers) }</span>
                                     </div>
 
                                     <CardText>
