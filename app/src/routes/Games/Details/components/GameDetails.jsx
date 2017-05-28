@@ -17,7 +17,7 @@ export const GameDetails = game => (
                 <Card shadow={0} className="width100" >
                     <CardTitle
                         className="detailsCardTitle"
-                        style={{ background: `url(${game.game.bannerUrl}) center / cover` }}
+                        style={{ background: `url(${game.game.bannerUrl}) center / cover`, textShadow: "2px 2px grey" }}
                     >
                         {game.game.name}
                     </CardTitle>
