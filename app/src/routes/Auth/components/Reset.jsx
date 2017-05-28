@@ -9,7 +9,7 @@ const propTypes = {
     loading: PropTypes.bool,
     token: PropTypes.string,
     reset: PropTypes.func,
-    id: PropTypes.number
+    id: PropTypes.string
 };
 
 const defaultProps = {
@@ -26,14 +26,24 @@ const bindActions = (reset) => [{
     onLoad: reset
 }];
 
-const Reset = ({ loading, token, id }) => (
+const Reset = ({ loading, id, reset, token }) => (
     <CardForm
         title="Reset password"
         loading={loading}
         actions={bindActions(reset)}
         className="reset"
     >
-
+        <div className="remind__content">
+            <div className="remind__form">
+                <IconTextfield
+                    icon="email"
+                    label="ID"
+                    type="id"
+                    value={id}
+                    onChange={reset}
+                />
+            </div>
+        </div>
     </CardForm>
 );
 

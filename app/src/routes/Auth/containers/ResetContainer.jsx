@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { reset } from "../../../store/auth";
-import Reset from "../components/Remind.jsx";
+import Reset from "../components/Reset.jsx";
 
 const propTypes = {
     reset: PropTypes.func.isRequired,
@@ -11,9 +11,7 @@ const propTypes = {
 };
 
 const defaultProps = {
-    user: null,
-    token: "",
-    id: 0
+    user: null
 };
 
 const mapDispatchToProps = {
@@ -29,8 +27,8 @@ class ResetContainer extends PureComponent {
         super(props);
 
         this.state = {
-            id: this.props.params.id,
-            token: this.props.params.token,
+            id: this.props.router.location.query.id,
+            token: this.props.router.location.query.token,
             loading: false
         };
 
@@ -60,10 +58,10 @@ class ResetContainer extends PureComponent {
             token, id
         }, ({ ok }) => {
             if(ok) {
-                alert("Remind successful, please check your mailbox.");
+                alert("Token validated.");
             }
             else {
-                alert("Error encountered while reminding password.");
+                alert("Error encountered while checking token.");
             }
             this.setState({
                 token: "",
@@ -75,7 +73,7 @@ class ResetContainer extends PureComponent {
 
 
     render() {
-        const { token, id } = this.state;
+        const { token, id, loading } = this.state;
 
         return (
             <Reset
@@ -85,6 +83,9 @@ class ResetContainer extends PureComponent {
                 token={token}
             />
         );
+    }
+    componentDidMount() {
+        reset()
     }
 }
 

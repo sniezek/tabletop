@@ -58,7 +58,7 @@ public class UserService {
         return userRepository.save(edited);
     }
 
-    public User remindPassword(String email) {
+    public PasswordResetToken remindPassword(String email) {
         String newemail = email.substring(email.indexOf(":")+2,email.length()-2);
         User user = userRepository.findByEmail(newemail);
         String uuid = UUID.randomUUID().toString();
@@ -72,11 +72,10 @@ public class UserService {
         token.setUser(user);
         token.setDate(cal.getTime());
 
-        passwordResetTokenRepository.save(token);
         sendEmailWithPassword(newemail,uuid,user.getId());
-        user.setPassword(passwordEncoder.encode(uuid));
+        //user.setPassword(passwordEncoder.encode(uuid));
 
-        return userRepository.save(user);
+        return passwordResetTokenRepository.save(token);
     }
 
     public String redirectToChange(String tokenId, Long id) {
