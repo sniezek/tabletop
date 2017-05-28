@@ -2,7 +2,7 @@ package tabletop.domain.game.constants;
 
 public class TalismanConstants {
 
-    public static final String description = "Magic: The Gathering is a fantasy-themed adventure board game for two to six players, originally designed and " +
+    public static final String description = "Talisman is a fantasy-themed adventure board game for two to six players, originally designed and " +
             "produced by Games Workshop and now published by Fantasy Flight Games";
 
     public static final String longDescription = "The object of the game is to progress through a series of regions and reach the Crown" +

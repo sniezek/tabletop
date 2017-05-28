@@ -18,7 +18,7 @@ public class MonopolyConstants {
             "1930s, it has become a part of popular world culture, having been locally licensed in more than " +
             "103 countries and printed in more than thirty-seven languages.";
 
-    public static final String imageUrl = "http://www.stonecoldmagicmagazine.com/images/free-tricks/monopoly-man2.png";
+    public static final String imageUrl = "http://sad.hasbro.com/db7312c97e69f2aa2a48e9c156bbc05885942775/f4588a3ecaa676e34622199a51636d40.png";
 
     public static final String bannerUrl = "http://bi.gazeta.pl/im/59/43/12/z19151705IER,Monopoly-Krakow.jpg";
 }
