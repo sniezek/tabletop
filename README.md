@@ -23,7 +23,8 @@ Users have a variety of statistics and they can get achievements for being activ
 
 ## DataBase
 ### Starting in docker
-install docker for win 7 :https://docs.docker.com/toolbox/toolbox_install_windows/
+install docker for win 7 :https://docs.docker.com/toolbox/toolbox_install_windows/  it wil start docker in virtual machine with its own ip address writen dyring start of vm you have to use it to conect to database or start data base locay on your machine with setings from next paragraf.
+
 install docker for win 10 :https://docs.docker.com/docker-for-windows/
 assuming you have alredy started docker just type:
 
@@ -34,7 +35,13 @@ remember to start databese before server
 
 ### Starting stanalone
 start mysql server then cerate bd_example database 
-next create user springuser with pass ThePassword and grant him all rights to db
+next create user springuser with pass ThePassword and grant him all rights to db. exampel comands to mysql client.
+
+```
+mysql> create database db_example; -- Create the new database
+mysql> create user 'springuser'@'localhost' identified by 'ThePassword'; -- Creates the user
+mysql> grant all on db_example.* to 'springuser'@'localhost'; -- Gives all the privileges to the new user on the newly created databas
+```
 
 ## Server
 ### Starting
