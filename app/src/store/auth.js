@@ -2,6 +2,7 @@ import Api from "../api";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
+export const REMIND = "REMIND"
 
 const dispatchLogin = (response, dispatch) =>
     response.json().then(({ username, email, id }) => {
@@ -44,6 +45,17 @@ export const register = ({ username, password, email }, callback) => dispatch =>
         } else {
             callback(response);
         }
+    });
+
+export const remind = ({ email }, callback) => dispatch =>
+    Api.remind({ email }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: REMIND
+            });
+        }
+
+        callback(response);
     });
 
 export const data = callback => dispatch =>

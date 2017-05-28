@@ -42,9 +42,10 @@ class TournamentListContainer extends PureComponent {
     super(props);
     this.getTournaments = this.getTournaments.bind(this);
     this.state = Object.assign({}, initialState);
+    this.getTournaments();
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     this.getTournaments();
   }
 
