@@ -10,6 +10,15 @@ const propTypes = {
 
 const enhance = pure;
 
+function formatNumberOfPlayers(minPlayers, maxPlayers) {
+    if (minPlayers === maxPlayers) {
+        return maxPlayers;
+    } else if (maxPlayers === -1) {
+        return `${minPlayers}+`;
+    }
+    return `${minPlayers} - ${maxPlayers}`;
+}
+
 export const GameDetails = game => (
     <div>
         <Grid style={{ margin: "auto" }}>
@@ -17,7 +26,7 @@ export const GameDetails = game => (
                 <Card shadow={0} className="width100" >
                     <CardTitle
                         className="detailsCardTitle"
-                        style={{ background: `url(${game.game.bannerUrl}) center / cover` }}
+                        style={{ background: `url(${game.game.bannerUrl}) center / cover`, textShadow: "2px 2px grey" }}
                     >
                         {game.game.name}
                     </CardTitle>
@@ -30,7 +39,7 @@ export const GameDetails = game => (
                         <span>Game parameters</span>
                         <div>
                             <span className="parameterIcon"><Icon name="group" />
-                                Number of players: {game.game.minPlayers} - {game.game.maxPlayers}
+                                Number of players: {formatNumberOfPlayers(game.game.minPlayers, game.game.maxPlayers)}
                             </span>
                         </div>
                     </CardActions>

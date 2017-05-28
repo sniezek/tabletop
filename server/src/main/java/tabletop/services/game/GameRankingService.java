@@ -3,6 +3,7 @@ package tabletop.services.game;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tabletop.controllers.game.GameRankingResponse;
+import tabletop.controllers.game.GameStatisticsResponse;
 import tabletop.domain.game.Game;
 import tabletop.domain.ranking.GameRanking;
 import tabletop.domain.user.User;
@@ -27,4 +28,7 @@ public class GameRankingService {
         return gameRankingRepository.getTopUsers(game);
     }
 
+    public GameStatisticsResponse getGameStatistics(Game game) {
+        return gameRankingRepository.getGameStatistics(game);
+    }
 }

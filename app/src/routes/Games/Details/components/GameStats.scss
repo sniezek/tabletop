@@ -1,0 +1,30 @@
+.gameStatContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-iems: center;
+  margin-top: 20px;
+}
+
+.statBadge {
+  display: inline-block;
+  float: left;
+  margin: 10px;
+}
+
+.statBadge > span {
+  font-size: 20px;
+}
+
+.locationList {
+  padding: 8px 10px;
+  display: inline-block;
+}
+
+.locationList > h3 {
+  margin: 0px 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 20px;
+}
