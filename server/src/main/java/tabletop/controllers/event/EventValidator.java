@@ -88,7 +88,7 @@ class EventValidator extends ControllerValidator {
             if (!tournament.isRegisteredGame()) {
                 errorHandler.addError(errors, "tournament.unregistered_game");
             }
-            if (tournament.getResults() != null) {
+            if (tournament.isFinished()) {
                 errorHandler.addIncorrectRequestError(errors);
             }
         }

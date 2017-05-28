@@ -14,6 +14,8 @@ public class TournamentProcess extends IdComparableEntity{
     @OneToOne(mappedBy = "tournamentProcess")
     protected Tournament tournament;
 
+    private boolean initialized;
+
     public TournamentProcess() {
     }
 
@@ -28,5 +30,13 @@ public class TournamentProcess extends IdComparableEntity{
     @Transient
     public List<User> getUsers() {
         return tournament.getUsers().stream().collect(Collectors.toList());
+    }
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    public void setInitialized(boolean initialized) {
+        this.initialized = initialized;
     }
 }

@@ -9,9 +9,7 @@ const propTypes = {
   finishTournament: PropTypes.func.isRequired
 };
 
-const defaultProps = {
-  tournamentId: 1,
-};
+const defaultProps = {};
 
 const mapDispatchToProps = dispatch => ({
   finishTournament: (id) => {
@@ -20,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = ({tournament}) => ({
-  tournamentId: 1
+  tournamentId: tournament.tournamentId
 });
 
 const initialState = {};

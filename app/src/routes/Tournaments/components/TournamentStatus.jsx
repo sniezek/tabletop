@@ -16,7 +16,6 @@ const propTypes = {
     guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
-  initialRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired
 };
@@ -85,7 +84,6 @@ class TournamentStatus extends PureComponent {
           matchesFinished={this.state.matchesFinished}
           router={this.props.router}
         />
-        <Button type='button' onClick={this.props.initialRound}>Init tournament</Button>
       </div>
     );
   }

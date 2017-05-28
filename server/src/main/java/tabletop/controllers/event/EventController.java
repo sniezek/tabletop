@@ -8,6 +8,7 @@ import tabletop.controllers.utils.ResponseUtils;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.Location;
+import tabletop.domain.match.tournament.TournamentDetailsDTO;
 import tabletop.services.event.EventService;
 import tabletop.services.event.LocationService;
 
@@ -38,6 +39,11 @@ public class EventController {
         validator.validateDateFilters(startDate, endDate, errors);
 
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate));
+    }
+
+    @GetMapping("/getTournaments/{id}")
+    public ResponseEntity<List<TournamentDetailsDTO>> getTournaments(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getTournaments(id));
     }
 
     @PutMapping("/{id}")

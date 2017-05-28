@@ -49,6 +49,7 @@ public class SwissTournamentService {
             }
 
         }
+        swissTournamentProcess.setInitialized(true);
         return pairs;
     }
 

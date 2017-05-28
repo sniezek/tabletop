@@ -14,20 +14,16 @@ const propTypes = {
     guestResult: PropTypes.number.isRequired,
     winner: PropTypes.number.isRequired
   })),
-  initialRound: PropTypes.func.isRequired,
   finishTournament: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired
 };
 
 const mapStateToProps = ({tournament}) => ({
   pairs: tournament.pairs,
-  tournamentName: "MyTournament",
+  tournamentName: "MyTournament"
 });
 
 const mapDispatchToProps = dispatch => ({
-  initialRound: (id) => {
-    dispatch(initialRound(id));
-  },
   getState: (id) => {
     dispatch(getState(id));
   }
@@ -39,7 +35,6 @@ class TournamentStatusContainer extends PureComponent {
   constructor(props) {
     super(props);
     this.getState = this.getState.bind(this);
-    this.initialRound = this.initialRound.bind(this);
   }
 
   componentWillMount() {
@@ -52,16 +47,9 @@ class TournamentStatusContainer extends PureComponent {
     });
   }
 
-  initialRound() {
-    const tournamentId = this.props.tournamentId;
-    this.props.initialRound(tournamentId, ({ok}) => {
-    });
-  }
-
   render() {
     return (
       <TournamentStatus
-        initialRound={this.initialRound}
         pairs={this.props.pairs}
         tournamentName={this.props.tournamentName}
         tournamentId={this.props.tournamentId}
