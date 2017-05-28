@@ -11,8 +11,4 @@ public class NotNullUtils {
     public static long getNotNullCount(Object... values) {
         return Arrays.stream(values).map(Optional::ofNullable).filter(Optional::isPresent).count();
     }
-
-    public static boolean isNotNull(Object value) {
-        return value != null;
-    }
 }

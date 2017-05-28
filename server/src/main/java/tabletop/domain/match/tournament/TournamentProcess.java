@@ -10,14 +10,10 @@ import java.util.stream.Collectors;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class TournamentProcess extends IdComparableEntity{
-
     @OneToOne(mappedBy = "tournamentProcess")
     protected Tournament tournament;
 
     private boolean initialized;
-
-    public TournamentProcess() {
-    }
 
     public Tournament getTournament() {
         return tournament;
