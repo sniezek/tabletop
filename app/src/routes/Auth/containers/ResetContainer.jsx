@@ -57,7 +57,7 @@ class ResetContainer extends PureComponent {
         });
 
         this.props.reset({
-            id, token
+            token, id
         }, ({ ok }) => {
             if(ok) {
                 alert("Remind successful, please check your mailbox.");

@@ -8,7 +8,7 @@ import IconTextfield from "../../../components/IconTextfield";
 const propTypes = {
     loading: PropTypes.bool,
     token: PropTypes.string,
-    reset: PropTypes.func.
+    reset: PropTypes.func,
     id: PropTypes.number
 };
 
@@ -37,7 +37,7 @@ const Reset = ({ loading, token, id }) => (
     </CardForm>
 );
 
-Remind.propTypes = propTypes;
-Remind.defaultProps = defaultProps;
+Reset.propTypes = propTypes;
+Reset.defaultProps = defaultProps;
 
 export default enhance(Reset);
