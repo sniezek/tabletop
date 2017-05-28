@@ -11,6 +11,8 @@ public enum TournamentType {
                     "the same opponent more than once. "
     ),
 
+    LADDER("Ladder", 2, 1024, true, "Ladder tournament description..."),
+
     NEW_TYPE("New type", 2, 10, true,
             "Put description here."
     );

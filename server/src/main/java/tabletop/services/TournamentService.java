@@ -17,16 +17,19 @@ public class TournamentService {
 
     private TournamentRepository tournamentRepository;
     private TournamentFinalResultRepository tournamentFinalResultRepository;
+    private LadderTournamentService ladderTournamentService;
     private SwissTournamentService swissTournamentService;
 
     public TournamentService(
             TournamentRepository tournamentRepository,
             TournamentFinalResultRepository tournamentFinalResultRepository,
+            LadderTournamentService ladderTournamentService,
             SwissTournamentService swissTournamentService
     ) {
         this.tournamentRepository = tournamentRepository;
         this.tournamentFinalResultRepository = tournamentFinalResultRepository;
         this.swissTournamentService = swissTournamentService;
+        this.ladderTournamentService = ladderTournamentService;
     }
 
     public Optional<Tournament> getTournamentById(Long tournamentId) {
@@ -57,6 +60,8 @@ public class TournamentService {
     public List<Pair<User>> getInitialRound(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getInitialPairs(((SwissTournamentProcess) tournament.getTournamentProcess()));
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            return ladderTournamentService.getInitialPairs((SwissTournamentProcess) tournament.getTournamentProcess());
         }
         return Collections.emptyList();
     }
@@ -64,6 +69,8 @@ public class TournamentService {
     public void setWinner(Tournament tournament, User winner) {
         if (tournament.getType() == TournamentType.SWISS) {
             swissTournamentService.setWinner(((SwissTournamentProcess) tournament.getTournamentProcess()), winner);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            ladderTournamentService.setWinner(((SwissTournamentProcess) tournament.getTournamentProcess()), winner);
         }
     }
 
@@ -71,13 +78,17 @@ public class TournamentService {
         if (tournament.getType() == TournamentType.SWISS) {
             SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess();
             return Objects.nonNull(process) ? swissTournamentService.getCurentState(process) : Collections.emptyList();
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess();
+            return Objects.nonNull(process) ? ladderTournamentService.getCurentState(process) : Collections.emptyList();
         }
         return Collections.emptyList();
     }
 
     public List<Pair<User>> getNextRound(Tournament tournament) {
+        SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
+
         if (tournament.getType() == TournamentType.SWISS) {
-            SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
 
             if (swissTournamentService.canBeFinished(swissTournamentProcess)) {
                 tournament.setFinished(true);
@@ -85,6 +96,14 @@ public class TournamentService {
             }
 
             return swissTournamentService.getNextPair((swissTournamentProcess));
+        } else if (tournament.getType() == TournamentType.LADDER) {
+
+            if (ladderTournamentService.canBeFinished(swissTournamentProcess)) {
+                tournament.setFinished(true);
+                tournamentRepository.save(tournament);
+            }
+
+            return ladderTournamentService.getNextPair(swissTournamentProcess);
         }
         return Collections.emptyList();
     }
@@ -93,6 +112,8 @@ public class TournamentService {
         List<TournamentPlayerResult> results = null;
         if (tournament.getType() == TournamentType.SWISS) {
             results = swissTournamentService.getFinalResults(tournament);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            results = ladderTournamentService.getFinalResults(tournament);
         }
 
         if (results != null) {
@@ -109,12 +130,16 @@ public class TournamentService {
     public void giveUp(Tournament tournament, User user) {
         if (tournament.getType() == TournamentType.SWISS) {
             swissTournamentService.giveUp(tournament, user);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            ladderTournamentService.giveUp(tournament, user);
         }
     }
 
     public boolean isUserAvailable(Tournament tournament, User user) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.isUserAvailable(tournament, user);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            return ladderTournamentService.isUserAvailable(tournament, user);
         }
         return false;
     }

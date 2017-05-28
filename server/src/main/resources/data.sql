@@ -110,6 +110,10 @@ VALUES (0, 4);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (0, 5);
 INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 6);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (0, 7);
+INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (0, 0);
 
 INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
@@ -140,7 +144,7 @@ INSERT INTO event(id, description, name, location_id, organiser_id)
 VALUES (0, 'Best chess event!', 'Super Chess Event', 0, 12);
 
 INSERT INTO tournament(id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
-VALUES (2, 'ChessMaster Tournament', '2017-05-30 20:00:00.0', '2017-05-30 23:00:00.0', 'CHESS', 4, 16, 'SWISS', false, 12);
+VALUES (2, 'ChessMaster Tournament', '2017-05-30 20:00:00.0', '2017-05-30 23:00:00.0', 'CHESS', 4, 16, 'LADDER', false, 12);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (2, 1);
@@ -154,6 +158,10 @@ INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (2, 5);
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (2, 6);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (2, 7);
+INSERT INTO tournament_users(tournament_id, users_id)
+VALUES (2, 0);
 
 INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
 VALUES (1, 2, 0, null, 0, TRUE );
@@ -167,6 +175,10 @@ INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent
 VALUES (5, 2, 0, null, 0, TRUE );
 INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
 VALUES (6, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (7, 2, 0, null, 0, TRUE );
+INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent_id, current_score, is_available)
+VALUES (0, 2, 0, null, 0, TRUE );
 
 INSERT INTO tournament(id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
 VALUES (3, 'Chess Pro Tournament', '2017-05-30 20:30:00.0', '2017-05-30 22:00:00.0', 'CHESS', 2, 6, 'SWISS', false, 12);

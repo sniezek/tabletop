@@ -21,11 +21,9 @@ public class LadderTournamentService extends GeneralTournamentService {
                 .filter(result -> result.getCurrentScore() == 1)
                 .collect(Collectors.toList());
 
-        LOGGER.info(results.size() + " " + results.get(0) + " " + results.get(1));
-
         List<Pair<User>> pairs = new LinkedList<>();
 
-        for (int i = 0; i < results.size()/2; i++) {
+        for (int i = 0; i < results.size(); i+=2) {
             SwissPlayerResult reshost = results.get(i);
             SwissPlayerResult resopponent = results.get(i+1);
             Pair<User> pair = new Pair<User>(reshost.getId().getUser(), resopponent.getId().getUser());
