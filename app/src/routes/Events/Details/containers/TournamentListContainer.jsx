@@ -34,22 +34,20 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const initialState = {
-};
+const initialState = {};
 
 class TournamentListContainer extends PureComponent {
   constructor(props) {
     super(props);
     this.getTournaments = this.getTournaments.bind(this);
     this.state = Object.assign({}, initialState);
+  }
+
+  componentDidMount() {
     this.getTournaments();
   }
 
-  componentDidUpdate() {
-    this.getTournaments();
-  }
-
-  getTournaments(){
+  getTournaments() {
     this.props.getTournaments(this.props.router.params.id)
   }
 
