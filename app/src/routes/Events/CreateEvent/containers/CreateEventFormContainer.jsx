@@ -136,7 +136,7 @@ class CreateEventFormContainer extends PureComponent {
     clearInput(value) {
         const { location } = this.state;
 
-        if (location !== null && location.name !== value) {
+        if (location !== null && location.label !== value) {
             this.geosuggest.clear();
 
             this.setState({
