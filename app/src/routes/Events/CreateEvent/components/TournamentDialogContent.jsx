@@ -5,6 +5,8 @@ import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
 import GameSelect from "../../../../components/GameSelect";
 import TypeSelect from "./TypeSelect.jsx";
+import PlayersCount from "./PlayersCount.jsx";
+import DateRange from "./DateRange.jsx";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -44,22 +46,12 @@ minPlayers, setMinPlayers, maxPlayers, setMaxPlayers }) => (
             onChange={setName}
             required
         />
-        <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Start time"
-                icon="schedule"
-                value={startDate}
-                onChange={setStartDate}
-                required
-            />
-            <IconTextfield
-                label="Estimated end time"
-                icon="schedule"
-                value={endDate}
-                onChange={setEndDate}
-                required
-            />
-        </div>
+        <DateRange
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+        />
         <div className="create-event-dialog__group">
             <GameSelect
                 onChange={setGame}
@@ -70,22 +62,12 @@ minPlayers, setMinPlayers, maxPlayers, setMaxPlayers }) => (
                 value={tournamentType}
             />
         </div>
-        <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Min players"
-                icon="people"
-                value={minPlayers}
-                onChange={setMinPlayers}
-                required
-            />
-            <IconTextfield
-                label="Max players"
-                icon="people"
-                value={maxPlayers}
-                onChange={setMaxPlayers}
-                required
-            />
-        </div>
+        <PlayersCount
+            minPlayers={minPlayers}
+            maxPlayers={maxPlayers}
+            setMinPlayers={setMinPlayers}
+            setMaxPlayers={setMaxPlayers}
+        />
     </DialogContent>
 );
 

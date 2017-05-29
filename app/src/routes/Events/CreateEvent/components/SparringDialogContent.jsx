@@ -6,6 +6,8 @@ import Radio from "react-mdl/lib/Radio";
 import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
 import GameSelect from "../../../../components/GameSelect";
+import PlayersCount from "./PlayersCount.jsx";
+import DateRange from "./DateRange.jsx";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -39,22 +41,12 @@ const SparringDialogContent = ({ startDate, endDate, minPlayers, maxPlayers, gam
 setGameType, setGameName, gameName, setGame, game }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
-        <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Start time"
-                icon="schedule"
-                value={startDate}
-                onChange={setStartDate}
-                required
-            />
-            <IconTextfield
-                label="Estimated end time"
-                icon="schedule"
-                value={endDate}
-                onChange={setEndDate}
-                required
-            />
-        </div>
+        <DateRange
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+        />
         <RadioGroup
             className="create-event-dialog__group create-event-dialog__type"
             name="create-event-type"
@@ -78,22 +70,12 @@ setGameType, setGameName, gameName, setGame, game }) => (
                 value={game}
             />
         )}
-        <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Min players"
-                icon="people"
-                value={minPlayers}
-                onChange={setMinPlayers}
-                required
-            />
-            <IconTextfield
-                label="Max players"
-                icon="people"
-                value={maxPlayers}
-                onChange={setMaxPlayers}
-                required
-            />
-        </div>
+        <PlayersCount
+            minPlayers={minPlayers}
+            maxPlayers={maxPlayers}
+            setMinPlayers={setMinPlayers}
+            setMaxPlayers={setMaxPlayers}
+        />
     </DialogContent>
 );
 
