@@ -40,26 +40,26 @@ class Api {
         this.remind = this.remind.bind(this);
     }
 
-  achievements(userID) {
-    return fetch(`${ACHI_SERVER}/achi/${userID}`, {
-      method: "GET",
-      credentials: "include"
-    });
-  }
+    achievements(userID) {
+        return fetch(`${ACHI_SERVER}/achi/${userID}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
 
-  newAchievements(userID) {
-    return fetch(`${ACHI_SERVER}/newAchivements/${userID}`, {
-      method: "GET",
-      credentials: "include"
-    });
-  }
+    newAchievements(userID) {
+        return fetch(`${ACHI_SERVER}/newAchivements/${userID}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
 
-  allAchivements() {
-    return fetch(`${ACHI_SERVER}/allAchivements`, {
-      method: "GET",
-      credentials: "include"
-    });
-  }
+    allAchivements() {
+        return fetch(`${ACHI_SERVER}/allAchivements`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
 
     user() {
         return fetch(`${API_SERVER}/user`, {
@@ -68,31 +68,31 @@ class Api {
         });
     }
 
-  login({username, password}) {
-    const body = new FormData();
-    body.append("username", username);
-    body.append("password", password);
+    login({ username, password }) {
+        const body = new FormData();
+        body.append("username", username);
+        body.append("password", password);
 
-    return fetch(`${API_SERVER}/login`, {
-      method: "POST",
-      credentials: "include",
-      body
-    });
-  }
+        return fetch(`${API_SERVER}/login`, {
+            method: "POST",
+            credentials: "include",
+            body
+        });
+    }
 
-  logout() {
-    return fetch(`${API_SERVER}/logout`, {
-      method: "POST",
-      credentials: "include"
-    });
-  }
+    logout() {
+        return fetch(`${API_SERVER}/logout`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
 
-  games() {
-    return fetch(`${API_SERVER}/games`, {
-      method: "GET",
-      credentials: "include"
-    });
-  }
+    games() {
+        return fetch(`${API_SERVER}/games`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
 
     tournamentTypes() {
         return fetch(`${API_SERVER}/tournament/types`, {
@@ -134,10 +134,10 @@ class Api {
     }
 
     getState(id) {
-      return fetch(`${API_SERVER}/tournament/state/${id}`, {
-        method: "GET",
-        credentials: "include"
-      });
+        return fetch(`${API_SERVER}/tournament/state/${id}`, {
+            method: "GET",
+            credentials: "include"
+        });
     }
 
     nextRound(id) {
@@ -154,17 +154,17 @@ class Api {
             email
         });
 
-    const headers = new Headers({
-      "Content-Type": "application/json"
-    });
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
 
-    return fetch(`${API_SERVER}/users`, {
-      method: "POST",
-      credentials: "include",
-      headers,
-      body
-    });
-  }
+        return fetch(`${API_SERVER}/users`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
 
     game(name) {
         return fetch(`${API_SERVER}/games/${name}`, {
@@ -191,10 +191,10 @@ class Api {
 
         return fetch(`${API_SERVER}/events`, {
             method: "POST",
-                credentials: "include",
-                headers,
-                body
-            });
+            credentials: "include",
+            headers,
+            body
+        });
     }
 
     finishTournament(id) {
@@ -210,10 +210,10 @@ class Api {
     }
 
     giveUp(id) {
-      return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
-         method: "POST",
-          credentials: "include"
-      });
+        return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
+            method: "POST",
+            credentials: "include"
+        });
     }
 
     ranking(gameName) {

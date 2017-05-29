@@ -2,7 +2,7 @@ import Api from "../api";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
-export const REMIND = "REMIND"
+export const REMIND = "REMIND";
 
 const dispatchLogin = (response, dispatch) =>
     response.json().then(({ username, email, id }) => {

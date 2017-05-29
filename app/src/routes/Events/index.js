@@ -26,12 +26,12 @@ export default store => ({
             }, "create-event");
         }
     }, {
-        path: `/events/:id`,
+        path: "/events/:id",
         getComponent(nextState, cb) {
-          require.ensure([], (require) => {
-            const EventDetailsView = require("./Details/components/EventDetailsView.jsx").default;
-            cb(null, EventDetailsView);
-          }, "event-details");
+            require.ensure([], (require) => {
+                const EventDetailsView = require("./Details/components/EventDetailsView.jsx").default;
+                cb(null, EventDetailsView);
+            }, "event-details");
         }
     }]
 });
