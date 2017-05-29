@@ -1,6 +1,7 @@
 import Api from "../../../../api";
 import {
-    SET_EVENTS
+    SET_EVENTS,
+    SET_EVENT
 } from "./EventConstants";
 
 export const loadEvents = (filters = {}, callback = () => {}) => dispatch =>
@@ -16,3 +17,8 @@ export const loadEvents = (filters = {}, callback = () => {}) => dispatch =>
 
         callback(response);
     });
+
+export const setEvent = event => ({
+    type: SET_EVENT,
+    payload: event
+});

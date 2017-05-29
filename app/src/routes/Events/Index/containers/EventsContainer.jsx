@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setMapViewActive } from "../../../../store/config";
-import { loadEvents } from "../modules/EventActions";
+import { loadEvents, setEvent } from "../modules/EventActions";
 import Events from "../components/Events.jsx";
 import { mapLocationFilters, mapDateFilters, mapTypeFilters, mapGamesFilters } from "../modules/FilterUtils";
 
@@ -18,7 +18,8 @@ const propTypes = {
     dateFilter: PropTypes.object.isRequired,
     locationFilter: PropTypes.object.isRequired,
     gamesFilter: PropTypes.object.isRequired,
-    typeFilter: PropTypes.object.isRequired
+    typeFilter: PropTypes.object.isRequired,
+    preloadEvent: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -33,7 +34,8 @@ const defaultProps = {
 
 const mapDispatchToProps = dispatch => ({
     toggleMapView: active => dispatch(setMapViewActive(active)),
-    loadEvents: callback => loadEvents(callback)(dispatch)
+    loadEvents: callback => loadEvents(callback)(dispatch),
+    preloadEvent: event => dispatch(setEvent(event))
 });
 
 const mapStateToProps = ({ user, config, events, dateFilter, locationFilter, gamesFilter, typeFilter }) => ({
@@ -102,8 +104,10 @@ class EventsContainer extends PureComponent {
         });
     }
 
-    goToEvent({ id }) {
-        this.props.router.push(`/events/${id}`);
+    goToEvent(event) {
+        const { preloadEvent, router } = this.props;
+        preloadEvent(event);
+        router.push(`/events/${event.id}`);
     }
 
     render() {
