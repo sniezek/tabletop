@@ -1,15 +1,10 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { View, ViewHeader, ViewContent } from "../../../../components/View";
+import EventDetails from "../components/EventDetails.jsx";
 
 const propTypes = {
-    id: PropTypes.number.isRequired,
-    name: PropTypes.string
-};
-
-const defaultProps = {
-    name: "Loading..."
+    id: PropTypes.number.isRequired
 };
 
 const mapDispatchToProps = {};
@@ -30,22 +25,14 @@ class EventDetailsContainer extends PureComponent {
     }
 
     render() {
-        const { name, id } = this.props;
-
         return (
-            <View>
-                <ViewHeader
-                    title={name}
-                />
-                <ViewContent>
-                    {id}
-                </ViewContent>
-            </View>
+            <EventDetails
+                {...this.props}
+            />
         );
     }
 }
 
 EventDetailsContainer.propTypes = propTypes;
-EventDetailsContainer.defaultProps = defaultProps;
 
 export default enhance(EventDetailsContainer);
