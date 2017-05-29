@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import Geosuggest from "react-geosuggest";
 import IconTextfield from "../../../../components/IconTextfield";
+import Icon from "../../../../components/Icon";
 import StepWrapper from "./StepWrapper.jsx";
 
 const propTypes = {
@@ -27,13 +28,20 @@ const DetailsStep = ({ setName, setLocation, setDescription, name, description, 
             required
             className="create-event__input"
         />
-        <Geosuggest
-            inputClassName="mdl-textfield__input"
-            suggestsClassName="mdl-shadow--2dp"
-            onSuggestSelect={setLocation}
-            onBlur={clearInput}
-            ref={setRef}
-        />
+        <div className="icon-textfield create-event__input">
+            <Icon
+                name="room"
+                className="icon-textfield__icon"
+            />
+            <Geosuggest
+                inputClassName="mdl-textfield__input"
+                suggestsClassName="mdl-shadow--2dp"
+                onSuggestSelect={setLocation}
+                onBlur={clearInput}
+                ref={setRef}
+                autoActivateFirstSuggest
+            />
+        </div>
         <IconTextfield
             value={description}
             onChange={setDescription}

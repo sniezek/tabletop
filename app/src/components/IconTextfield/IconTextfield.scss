@@ -1,13 +1,14 @@
 .icon-textfield {
     display: flex;
     align-items: center;
-    flex: 1 1 auto;
+    flex: 1 1 0%;
 
     &__icon {
         margin-right: 8px;
     }
 
-    &__textfield {
+    &__textfield,
+    & > .geosuggest {
         width: auto;
         flex: 1;
     }

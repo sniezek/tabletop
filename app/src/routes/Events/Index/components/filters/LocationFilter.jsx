@@ -54,6 +54,7 @@ const LocationFilter = ({ radius, setRadius, setActive, active, setLocation, set
                 initialValue={location.name}
                 onBlur={clearInput}
                 ref={setRef}
+                autoActivateFirstSuggest
             />
         </LocationInput>
     </EventsFilter>
