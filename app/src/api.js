@@ -39,6 +39,7 @@ class Api {
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
         this.remind = this.remind.bind(this);
+        this.event = this.event.bind(this);
     }
 
     achievements(userID) {
@@ -180,6 +181,12 @@ class Api {
         return fetch(`${API_SERVER}/events?${qs}`, {
             method: "GET",
             credentials: "include"
+        });
+    }
+
+    event(id) {
+        return fetch(`${API_SERVER}/events/${id}`, {
+            method: "GET"
         });
     }
 
