@@ -1,14 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
+import compose from "recompose/compose";
+import { connect } from "react-redux";
 import ReactMaterialSelect from "react-material-select";
 
 const propTypes = {
     label: PropTypes.string,
     onChange: PropTypes.func.isRequired,
-    data: PropTypes.arrayOf(PropTypes.shape(
-
-    ))
+    data: PropTypes.arrayOf(PropTypes.shape({
+        name: PropTypes.string.isRequired
+    }))
 };
 
 const defaultProps = {
@@ -16,7 +18,16 @@ const defaultProps = {
     data: []
 };
 
-const enhance = pure;
+const mapStateToProps = state => ({
+    data: state.games.gamesList
+});
+
+const mapDispatchToProps = {};
+
+const enhance = compose(
+    pure,
+    connect(mapStateToProps, mapDispatchToProps)
+);
 
 const GameSelect = ({ label, onChange, data }) => (
     <ReactMaterialSelect
@@ -24,8 +35,13 @@ const GameSelect = ({ label, onChange, data }) => (
         resetLabel="No game"
         onChange={onChange}
     >
-        {data.map(() => (
-            <option dataValue="CHESS">Chess</option>
+        {data.map(({ name }) => (
+            <option
+                key={name}
+                dataValue={name.toUpperCase()}
+            >
+                {name}
+            </option>
         ))}
     </ReactMaterialSelect>
 );
