@@ -13,7 +13,7 @@ export const editMail = ({ username, email, password }, callback) => dispatch =>
     });
 
 export const editPass = ({ username, email, password }, callback) => dispatch =>
-    Api.editPass({ username, email, password}).then((response) => {
+    Api.editPass({ username, email, password }).then((response) => {
         if (response.ok) {
             dispatch({
                 type: EDIT
@@ -32,7 +32,7 @@ export default function editReducer(state = initialState, { type, payload }) {
         return {
             // name: payload.username,
             // email: payload.email
-        }
+        };
     }
     return state;
 }

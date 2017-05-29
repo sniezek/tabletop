@@ -34,6 +34,7 @@ public enum Game {
             ChessWinInformation.class,
             SWISS);
 
+    private final String id;
     private final String name;
     private final int minPlayers;
     private final int maxPlayers;
@@ -47,6 +48,7 @@ public enum Game {
     Game(String name, int minPlayers, int maxPlayers, String description, String longDescription,
          String imageUrl, String bannerUrl, Class<? extends WinInformation> winInformation,
          TournamentType... allowedTournamentTypes) {
+        this.id = this.name();
         this.name = name;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
@@ -56,6 +58,10 @@ public enum Game {
         this.bannerUrl = bannerUrl;
         this.winInformation = winInformation;
         this.allowedTournamentTypes = Sets.newHashSet(allowedTournamentTypes);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -74,11 +80,17 @@ public enum Game {
         return description;
     }
 
-    public String getLongDescription() { return longDescription; }
+    public String getLongDescription() {
+        return longDescription;
+    }
 
-    public String getImageUrl() { return imageUrl; }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-    public String getBannerUrl() { return bannerUrl; }
+    public String getBannerUrl() {
+        return bannerUrl;
+    }
 
     public Class<? extends WinInformation> getWinInformation() {
         return winInformation;

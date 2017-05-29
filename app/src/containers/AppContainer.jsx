@@ -4,15 +4,18 @@ import { browserHistory, Router } from "react-router";
 import { Provider, connect } from "react-redux";
 import MainPreloader from "../components/MainPreloader";
 import { data } from "../store/auth";
+import { getGames } from "../store/games";
 
 const propTypes = {
     routes: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
-    data: PropTypes.func.isRequired
+    data: PropTypes.func.isRequired,
+    getGames: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
-    data
+    data,
+    getGames
 };
 
 const mapStateToProps = () => ({});
@@ -34,6 +37,8 @@ class AppContainer extends PureComponent {
                 initialized: true
             });
         });
+
+        this.props.getGames();
     }
 
     render() {
