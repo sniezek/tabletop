@@ -66,7 +66,7 @@ class EventValidator extends ControllerValidator {
     private void validateUserIsNotAssignedToCollidingMatches(User user, Set<Match> matches, ControllerErrors errors) {
         for (Match match : matches) {
             for (Match match2 : matches) {
-                if (match.getUsers().contains(user) && match2.getUsers().contains(user) && match2.getEndDate().after(match.getStartDate()) && match2.getStartDate().before(match.getEndDate())) {
+                if (!match.equals(match2) && match.getUsers().contains(user) && match2.getUsers().contains(user) && match2.getEndDate().after(match.getStartDate()) && match2.getStartDate().before(match.getEndDate())) {
                     errorHandler.addIncorrectRequestError(errors);
                     return;
                 }
