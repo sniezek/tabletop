@@ -2,12 +2,16 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import EventDetails from "../components/EventDetails.jsx";
+import { loadEvent } from "../../Index/modules/EventActions";
 
 const propTypes = {
-    id: PropTypes.number.isRequired
+    id: PropTypes.number.isRequired,
+    loadDetails: PropTypes.func.isRequired
 };
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = (dispatch) => ({
+    loadDetails: id => loadEvent(id)(dispatch)
+});
 
 const mapStateToProps = ({ event }) => ({
     ...event
@@ -21,7 +25,9 @@ class EventDetailsContainer extends PureComponent {
     }
 
     componentDidMount() {
-        console.log(this.props.id);
+        const { loadDetails, id } = this.props;
+
+        loadDetails(id);
     }
 
     render() {
