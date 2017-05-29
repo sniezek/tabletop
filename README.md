@@ -23,7 +23,7 @@ Users have a variety of statistics and they can get achievements for being activ
 
 ## Database
 ### Starting stanalone
-Start MySQL server (mysqld.exe). At first you have to connect to it with a MySQL client (mysql.exe) and create the database and user and grant him all permissions:
+Start a MySQL server (mysqld.exe). At first you have to connect to it with a MySQL client (mysql.exe) and create the database and user and grant all permissions:
 ```
 mysql> create database db_example; -- Create the new database
 mysql> create user 'springuser'@'localhost' identified by 'ThePassword'; -- Creates the user
@@ -47,8 +47,6 @@ $ gradlew bootRun
 ```
 Server will be available at `localhost:8080`.
 
-
-```
 ### Stack
 * Spring Boot
 * Spring Security
