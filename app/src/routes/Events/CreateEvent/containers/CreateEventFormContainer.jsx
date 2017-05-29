@@ -5,7 +5,8 @@ import Api from "../../../../api";
 import CreateEventForm from "../components/CreateEventForm.jsx";
 
 const propTypes = {
-    user: PropTypes.object
+    user: PropTypes.object,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -123,6 +124,10 @@ class CreateEventFormContainer extends PureComponent {
         return data;
     }
 
+    filterUID(arr) {
+        return arr.map(({ __uid, ...rest }) => rest);
+    }
+
     create() {
         const { loading } = this.state;
 
@@ -131,19 +136,24 @@ class CreateEventFormContainer extends PureComponent {
                 loading: true
             });
 
-            const { name, location, description, sparrings, tournaments } = this.state;
+            const { name, description, sparrings, tournaments } = this.state;
 
             const payload = {
                 name,
-                location,
+                location: {"lat": 52.241402, "lng": 21.003438, "name": "Games Pub", "address": "ul. Marszałkowska 115"},
                 description,
-                sparrings,
-                tournaments
+                sparrings: this.filterUID(sparrings),
+                tournaments: this.filterUID(tournaments)
             };
 
-            Api.createEvent(payload).then(() => {
-                this.setState({
-                    loading: false
+            Api.createEvent(payload).then((response) => {
+                response.json().then(({ id }) => {
+                    this.setState({
+                        loading: false
+                    });
+
+                    const { router } = this.props;
+                    router.push(`/events/${id}`);
                 });
             });
         }

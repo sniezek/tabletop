@@ -14,11 +14,13 @@ const propTypes = {
     label: PropTypes.string.isRequired,
     add: PropTypes.func.isRequired,
     toggle: PropTypes.func.isRequired,
-    games: PropTypes.array.isRequired
+    games: PropTypes.array.isRequired,
+    types: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-    games: state.games.gamesList
+    games: state.games.gamesList,
+    types: state.tournament.tournamentTypesList
 });
 
 const mapDispatchToProps = {};
@@ -28,7 +30,7 @@ const enhance = compose(
     connect(mapStateToProps, mapDispatchToProps)
 );
 
-const itemProps = (games, { gameName, maxPlayers, minPlayers, game, name }) => {
+const itemProps = (games, types, { gameName, maxPlayers, minPlayers, game, name, type }) => {
     const isCustomGame = !!gameName;
 
     if (isCustomGame) {
@@ -42,23 +44,30 @@ const itemProps = (games, { gameName, maxPlayers, minPlayers, game, name }) => {
     const _game = games.find(item => item.id === game);
     const isSparring = !name;
 
-    const primary = isSparring ? _game.name : name;
-    const secondary = isSparring ? undefined : _game.name;
+    let primary = _game.name;
+    let secondary;
+
+    if (!isSparring) {
+        const _type = types.find(item => item.id === type).name;
+        primary = name;
+        secondary = `${_game.name} – ${_type}`;
+    }
 
     return {
         primary,
         secondary,
-        maxPlayers: _game.maxPlayers,
-        minPlayers: _game.minPlayers
+        maxPlayers,
+        minPlayers
     };
 };
 
-const ListStep = ({ data, edit, remove, label, add, toggle, games }) => (
+const ListStep = ({ data, edit, remove, label, add, toggle, games, types }) => (
     <StepWrapper>
         {data.length > 0 ? data.map(item => (
             <ListItem
                 {...item}
-                {...itemProps(games, item)}
+                {...itemProps(games, types, item)}
+                key={item.__uid}
                 edit={() => edit(item)}
                 remove={() => remove(item)}
                 toggle={() => toggle(item)}

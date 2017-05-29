@@ -1,31 +1,29 @@
 import React from "react";
+import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import { View, ViewHeader, ViewContent } from "../../../../components/View";
 import CreateEventFormContainer from "../containers/CreateEventFormContainer.jsx";
 import "./CreateEventView.scss";
 
-/*
- <Geosuggest
- className="mdl-textfield mdl-textfield--floating-label"
- inputClassName="mdl-textfield__input"
- suggestsClassName="mdl-shadow--2dp"
- label="Location"
- placeholder=""
- id="create-event-location"
- />
- */
+const propTypes = {
+    router: PropTypes.object.isRequired
+};
 
 const enhance = pure;
 
-const CreateEventView = () => (
+const CreateEventView = ({ router }) => (
     <View className="create-event">
         <ViewHeader
             title="Create new event"
         />
         <ViewContent>
-            <CreateEventFormContainer />
+            <CreateEventFormContainer
+                router={router}
+            />
         </ViewContent>
     </View>
 );
+
+CreateEventView.propTypes = propTypes;
 
 export default enhance(CreateEventView);
