@@ -21,9 +21,7 @@ const propTypes = {
 const defaultProps = {
     radius: 10,
     active: false,
-    location: {
-        name: ""
-    }
+    location: null
 };
 
 const enhance = pure;
@@ -51,7 +49,7 @@ const LocationFilter = ({ radius, setRadius, setActive, active, setLocation, set
                 inputClassName="mdl-textfield__input"
                 suggestsClassName="mdl-shadow--2dp"
                 onSuggestSelect={setLocation}
-                initialValue={location.name}
+                initialValue={location ? location.label : ""}
                 onBlur={clearInput}
                 ref={setRef}
                 autoActivateFirstSuggest

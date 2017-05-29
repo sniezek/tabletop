@@ -13,12 +13,17 @@ const propTypes = {
     name: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     clearInput: PropTypes.func.isRequired,
-    setRef: PropTypes.func.isRequired
+    setRef: PropTypes.func.isRequired,
+    location: PropTypes.object
+};
+
+const defaultProps = {
+    location: null
 };
 
 const enhance = pure;
 
-const DetailsStep = ({ setName, setLocation, setDescription, name, description, clearInput, setRef }) => (
+const DetailsStep = ({ setName, setLocation, setDescription, name, description, clearInput, setRef, location }) => (
     <StepWrapper className="create-event-tab--details">
         <IconTextfield
             value={name}
@@ -37,6 +42,7 @@ const DetailsStep = ({ setName, setLocation, setDescription, name, description, 
                 inputClassName="mdl-textfield__input"
                 suggestsClassName="mdl-shadow--2dp"
                 onSuggestSelect={setLocation}
+                initialValue={location ? location.label : ""}
                 onBlur={clearInput}
                 ref={setRef}
                 autoActivateFirstSuggest
@@ -54,5 +60,6 @@ const DetailsStep = ({ setName, setLocation, setDescription, name, description, 
 );
 
 DetailsStep.propTypes = propTypes;
+DetailsStep.defaultProps = defaultProps;
 
 export default enhance(DetailsStep);
