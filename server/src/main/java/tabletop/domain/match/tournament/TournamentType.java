@@ -15,6 +15,7 @@ public enum TournamentType {
             "Put description here."
     );
 
+    private final String id;
     private final String name;
     private final int minPlayers;
     private final int maxPlayers;
@@ -22,11 +23,16 @@ public enum TournamentType {
     private final String description;
 
     TournamentType(String name, int minPlayers, int maxPlayers, boolean eliminating, String description) {
+        this.id = this.name();
         this.name = name;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.eliminating = eliminating;
         this.description = description;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
