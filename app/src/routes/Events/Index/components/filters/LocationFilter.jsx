@@ -14,17 +14,21 @@ const propTypes = {
     setLocation: PropTypes.func.isRequired,
     clearInput: PropTypes.func.isRequired,
     setRef: PropTypes.func.isRequired,
-    active: PropTypes.bool
+    active: PropTypes.bool,
+    location: PropTypes.object
 };
 
 const defaultProps = {
     radius: 10,
-    active: false
+    active: false,
+    location: {
+        name: ""
+    }
 };
 
 const enhance = pure;
 
-const LocationFilter = ({ radius, setRadius, setActive, active, setLocation, setRef, clearInput }) => (
+const LocationFilter = ({ radius, setRadius, setActive, active, setLocation, setRef, clearInput, location }) => (
     <EventsFilter
         name="Location"
         id="location"
@@ -47,8 +51,10 @@ const LocationFilter = ({ radius, setRadius, setActive, active, setLocation, set
                 inputClassName="mdl-textfield__input"
                 suggestsClassName="mdl-shadow--2dp"
                 onSuggestSelect={setLocation}
+                initialValue={location.name}
                 onBlur={clearInput}
                 ref={setRef}
+                autoActivateFirstSuggest
             />
         </LocationInput>
     </EventsFilter>

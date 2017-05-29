@@ -5,6 +5,8 @@ import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
 import GameSelect from "../../../../components/GameSelect";
 import TypeSelect from "./TypeSelect.jsx";
+import PlayersCount from "./PlayersCount.jsx";
+import DateRange from "./DateRange.jsx";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -16,18 +18,25 @@ const propTypes = {
     setGame: PropTypes.func.isRequired,
     game: PropTypes.string,
     setTournamentType: PropTypes.func.isRequired,
-    tournamentType: PropTypes.string
+    tournamentType: PropTypes.string,
+    minPlayers: PropTypes.string,
+    maxPlayers: PropTypes.string,
+    setMinPlayers: PropTypes.func.isRequired,
+    setMaxPlayers: PropTypes.func.isRequired
 };
 
 const defaultProps = {
     game: null,
-    tournamentType: null
+    tournamentType: null,
+    minPlayers: "0",
+    maxPlayers: "2"
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame, setTournamentType, tournamentType }) => (
+const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame, setTournamentType, tournamentType,
+minPlayers, setMinPlayers, maxPlayers, setMaxPlayers }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <IconTextfield
@@ -37,22 +46,12 @@ const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate
             onChange={setName}
             required
         />
-        <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Start time"
-                icon="schedule"
-                value={startDate}
-                onChange={setStartDate}
-                required
-            />
-            <IconTextfield
-                label="Estimated end time"
-                icon="schedule"
-                value={endDate}
-                onChange={setEndDate}
-                required
-            />
-        </div>
+        <DateRange
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+        />
         <div className="create-event-dialog__group">
             <GameSelect
                 onChange={setGame}
@@ -63,6 +62,12 @@ const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate
                 value={tournamentType}
             />
         </div>
+        <PlayersCount
+            minPlayers={minPlayers}
+            maxPlayers={maxPlayers}
+            setMinPlayers={setMinPlayers}
+            setMaxPlayers={setMaxPlayers}
+        />
     </DialogContent>
 );
 

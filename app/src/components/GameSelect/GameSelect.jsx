@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
-import ReactMaterialSelect from "react-material-select";
+import IconSelect from "../../components/IconSelect";
 
 const propTypes = {
     label: PropTypes.string,
@@ -33,21 +33,14 @@ const enhance = compose(
 );
 
 const GameSelect = ({ label, onChange, data, value }) => (
-    <ReactMaterialSelect
+    <IconSelect
         label={label}
+        icon="casino"
         resetLabel="No game"
         onChange={onChange}
         defaultValue={value}
-    >
-        {data.map(({ name, id }) => (
-            <option
-                key={id}
-                dataValue={id}
-            >
-                {name}
-            </option>
-        ))}
-    </ReactMaterialSelect>
+        data={data}
+    />
 );
 
 GameSelect.propTypes = propTypes;

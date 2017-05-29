@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import compose from "recompose/compose";
 import { connect } from "react-redux";
-import ReactMaterialSelect from "react-material-select";
+import IconSelect from "../../../../components/IconSelect";
 
 const propTypes = {
     onChange: PropTypes.func.isRequired,
@@ -31,21 +31,14 @@ const enhance = compose(
 );
 
 const TypeSelect = ({ onChange, data, value }) => (
-    <ReactMaterialSelect
+    <IconSelect
         label="Tournament type"
         resetLabel="No type"
         onChange={onChange}
         defaultValue={value}
-    >
-        {data.map(({ name, id }) => (
-            <option
-                key={id}
-                dataValue={id}
-            >
-                {name}
-            </option>
-        ))}
-    </ReactMaterialSelect>
+        data={data}
+        icon="shuffle"
+    />
 );
 
 TypeSelect.propTypes = propTypes;
