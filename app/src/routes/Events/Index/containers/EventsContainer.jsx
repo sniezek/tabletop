@@ -59,6 +59,7 @@ class EventsContainer extends PureComponent {
         this.toggleFilters = this.toggleFilters.bind(this);
         this.loadEvents = this.loadEvents.bind(this);
         this.addNewEvent = this.addNewEvent.bind(this);
+        this.goToEvent = this.goToEvent.bind(this);
     }
 
     componentDidMount() {
@@ -101,6 +102,10 @@ class EventsContainer extends PureComponent {
         });
     }
 
+    goToEvent({ id }) {
+        this.props.router.push(`/events/${id}`);
+    }
+
     render() {
         const { displayFilters } = this.state;
         const { mapView, toggleMapView, user, events, lat, lng } = this.props;
@@ -118,6 +123,7 @@ class EventsContainer extends PureComponent {
                 lng={lng !== undefined ? parseFloat(lng) : lng}
                 loadEvents={this.loadEvents}
                 addNewEvent={this.addNewEvent}
+                goToEvent={this.goToEvent}
             />
         );
     }

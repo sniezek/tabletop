@@ -26,7 +26,7 @@ class CreateEventFormContainer extends PureComponent {
 
         this.state = {
             step: 0,
-            location: "",
+            location: null,
             name: "",
             description: "",
             sparrings: [],
@@ -36,6 +36,7 @@ class CreateEventFormContainer extends PureComponent {
             type: null
         };
 
+        this.geosuggest = null;
         this.prevStep = this.prevStep.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.setStep = this.setStep.bind(this);
@@ -52,6 +53,8 @@ class CreateEventFormContainer extends PureComponent {
         this.close = this.close.bind(this);
         this.toggleSparringParticipation = this.toggleSparringParticipation.bind(this);
         this.toggleTournamentParticipation = this.toggleTournamentParticipation.bind(this);
+        this.setRef = this.setRef.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
 
     setDescription({ target }) {
@@ -70,9 +73,7 @@ class CreateEventFormContainer extends PureComponent {
         });
     }
 
-    setLocation({ target }) {
-        const location = target.value;
-
+    setLocation(location) {
         this.setState({
             location
         });
@@ -84,6 +85,10 @@ class CreateEventFormContainer extends PureComponent {
                 step
             });
         }
+    }
+
+    setRef(geosuggest) {
+        this.geosuggest = geosuggest;
     }
 
     close(value) {
@@ -128,6 +133,18 @@ class CreateEventFormContainer extends PureComponent {
         return arr.map(({ __uid, ...rest }) => rest);
     }
 
+    clearInput(value) {
+        const { location } = this.state;
+
+        if (location !== null && location.name !== value) {
+            this.geosuggest.clear();
+
+            this.setState({
+                location: null
+            });
+        }
+    }
+
     create() {
         const { loading } = this.state;
 
@@ -136,11 +153,14 @@ class CreateEventFormContainer extends PureComponent {
                 loading: true
             });
 
-            const { name, description, sparrings, tournaments } = this.state;
+            const { name, description, sparrings, tournaments, location } = this.state;
 
             const payload = {
                 name,
-                location: {"lat": 52.241402, "lng": 21.003438, "name": "Games Pub", "address": "ul. Marszałkowska 115"},
+                location: {
+                    ...location.location,
+                    name: location.label
+                },
                 description,
                 sparrings: this.filterUID(sparrings),
                 tournaments: this.filterUID(tournaments)
@@ -275,6 +295,8 @@ class CreateEventFormContainer extends PureComponent {
                 close={this.close}
                 toggleSparringParticipation={this.toggleSparringParticipation}
                 toggleTournamentParticipation={this.toggleTournamentParticipation}
+                clearInput={this.clearInput}
+                setRef={this.setRef}
             />
         );
     }
