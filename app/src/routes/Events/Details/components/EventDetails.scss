@@ -89,3 +89,19 @@
         margin-right: 8px;
     }
 }
+
+@media screen and (max-width: 900px){
+    .event__content {
+        display: block;
+    }
+
+    .event-participant {
+        width: 25%;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .event-participant {
+        width: 50%;
+    }
+}
