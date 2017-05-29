@@ -26,7 +26,7 @@ public class LadderTournamentService extends GeneralTournamentService {
         for (int i = 0; i < results.size(); i+=2) {
             SwissPlayerResult reshost = results.get(i);
             SwissPlayerResult resopponent = results.get(i+1);
-            Pair<User> pair = new Pair<User>(reshost.getId().getUser(), resopponent.getId().getUser());
+            Pair<User> pair = new Pair<User>(reshost.getId().getUser(), resopponent.getId().getUser(), reshost.getResult(), resopponent.getResult());
             setInitialResult(reshost.getId().getUser(), resopponent);
             setInitialResult(resopponent.getId().getUser(), reshost);
             if (!reshost.isAvailable() && resopponent.isAvailable()) {
