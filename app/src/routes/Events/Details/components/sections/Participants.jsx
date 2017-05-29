@@ -7,16 +7,18 @@ import Reveal from "../../../../../components/Reveal";
 import DetailsSection from "../DetailsSection.jsx";
 
 const propTypes = {
-    list: PropTypes.array
+    list: PropTypes.array,
+    organiser: PropTypes.object
 };
 
 const defaultProps = {
-    list: null
+    list: null,
+    organiser: null
 };
 
 const enhance = pure;
 
-const Participants = ({ list }) => (
+const Participants = ({ list, organiser }) => (
     <DetailsSection
         title="Participants"
         loading={!list}
@@ -28,6 +30,25 @@ const Participants = ({ list }) => (
             >
                 {({ revealed, reveal, items, left }) => (
                     <div className="event-participants">
+                        <div className="event-participant event-participant--organiser">
+                            <Link
+                                to={`/users/${organiser.id}`}
+                                className="event-participant__link"
+                            >
+                                <Gravatar
+                                    email={organiser.email}
+                                    size={48}
+                                    rating="pg"
+                                    default="identicon"
+                                    className="event-participant__avatar"
+                                    alt={`${organiser.username}'s avatar`}
+                                />
+                                <p>
+                                    <span>Event organiser</span>
+                                    {organiser.username}
+                                </p>
+                            </Link>
+                        </div>
                         <ul className="event-participants__list">
                             {items.map(({ id, email, username }) => (
                                 <li className="event-participant">
