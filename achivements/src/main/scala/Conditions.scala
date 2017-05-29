@@ -31,3 +31,13 @@ object Conditions extends Enumeration {
   }
 
 }
+
+object AchivementsFields {
+  val TournamentsWins = "TournamentsWins"
+  val SparringWins = "SparringWins"
+  val EventOrganizer = "EventOrganizer"
+  val TournamentLooser = "TournamentLooser"
+  val SparringLooser = "SparringLooser"
+  val Tournament3rdPlace = "Tr3rd"
+  val Login = "Login"
+}

@@ -9,6 +9,7 @@ import akka.http.scaladsl.server._
 import akka.stream.{ActorMaterializer, Materializer}
 import ch.megard.akka.http.cors.CorsDirectives._
 import ch.megard.akka.http.cors.{CorsDirectives, CorsSettings}
+import com.schema.Tables.UserRow
 import com.typesafe.config.{Config, ConfigFactory}
 import spray.json.DefaultJsonProtocol
 
@@ -17,7 +18,7 @@ import scala.concurrent.{ExecutionContextExecutor, Future}
 //TODO move to antoher file
 case class Achiv(name: String, description: String, imageURL: String)
 
-case class Achievement(userId: Int, achievements: Option[List[Achiv]])
+case class Achievement(userId: Long, achievements: Option[List[Achiv]])
 
 case class NewAchivementsList(achivements: Option[List[Achiv]])
 
@@ -40,6 +41,8 @@ trait Service extends Protocols {
 
   implicit val h2Data: H2Data
 
+  implicit val mySqlData: MySQLData
+
   def config: Config
 
   val logger: LoggingAdapter
@@ -56,29 +59,87 @@ trait Service extends Protocols {
     id match {
       case None => Future.successful(Left("Wrong Id"))
       case Some(s) =>
-        val player = h2Data.getResult(h2Data.dao.player(s))
+        val player = mySqlData.getResult(mySqlData.getPlayer(s))
         player match {
           case None => Future.successful(Left("Cannot find player"))
           case Some(player) => {
             for (achi <- allAchivements) {
               achi.field match {
-                case "TotalWins" => {
-                  if (Conditions.map(achi.conditions)(player.totalWins, achi.minVal)) {
-                    achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
-                  }
+                case AchivementsFields.TournamentsWins => {
+                  getWinAchivement(achi, player, mySqlData.getTournamentsWins)
                 }
-                case "TournametsWins" => {
-                  if (Conditions.map(achi.conditions)(player.tournamentWins, achi.minVal)) {
-                    achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
-                  }
+                case AchivementsFields.SparringWins => {
+                  getWinAchivement(achi, player, mySqlData.getSparringWins)
+                }
+                case AchivementsFields.EventOrganizer => {
+                  getSimpleAchivement(achi, player, mySqlData.getOrganizedEvents)
+                }
+                case AchivementsFields.TournamentLooser => {
+                  getWinAchivement(achi, player, mySqlData.getTournamentsWins, 2)
+                }
+                case AchivementsFields.Tournament3rdPlace => {
+                  getWinAchivement(achi, player, mySqlData.getTournamentsWins, 3)
+                }
+                case AchivementsFields.SparringLooser => {
+                  getWinAchivement(achi, player, mySqlData.getSparringWins, 2)
+                }
+                case AchivementsFields.Login => {
+                  getSimpleAchivement(achi, player, mySqlData.getLogins)
                 }
               }
             }
             val result = achivementResult
             achivementResult = List[Achiv]()
-            Future.successful(Right(Achievement(player.playerId, Some(result))))
+            Future.successful(Right(Achievement(player.id, Some(result))))
           }
         }
+    }
+  }
+
+  def getWinAchivement(achi: Achivement, player: UserRow, winFunction: (UserRow, Int) => Future[Int], place: Int = 1): Unit = {
+    getAchivement(achi, player, place, winFunction = Some(winFunction))
+  }
+
+  def getSimpleAchivement(achi: Achivement, player: UserRow, simpleAchivementFunction: (UserRow) => Future[Int]): Unit = {
+    getAchivement(achi, player, simpleAchivementFunction = Some(simpleAchivementFunction))
+  }
+
+  def getAchivement(achi: Achivement, player: UserRow, place: Int = 1, winFunction: Option[(UserRow, Int) => Future[Int]] = None, simpleAchivementFunction: Option[(UserRow) => Future[Int]] = None): Unit = {
+    winFunction match {
+      case Some(function) => {
+        mySqlData.getResult(function(player, place)) match {
+          case None => {
+            if (Conditions.map(achi.conditions)(0, achi.minVal)) {
+              achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+            }
+          }
+          case Some(amount) => {
+            if (Conditions.map(achi.conditions)(amount, achi.minVal)) {
+              achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+            }
+          }
+        }
+      }
+      case None => {
+        simpleAchivementFunction match {
+          case Some(function) => {
+            mySqlData.getResult(function(player)) match {
+              case None => {
+                if (Conditions.map(achi.conditions)(0, achi.minVal)) {
+                  achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+                }
+              }
+              case Some(amount) => {
+                if (Conditions.map(achi.conditions)(amount, achi.minVal)) {
+                  achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+                }
+              }
+            }
+          }
+          case None =>
+        }
+
+      }
     }
   }
 
@@ -112,8 +173,8 @@ trait Service extends Protocols {
   }
 
   def addPlayer(): Future[Either[String, String]] = {
-//    val id = h2Data.dao.getHighestPlayerId()
-//    h2Data.dao.addPlayer(h2Data.getOptional(id))
+    //    val id = h2Data.dao.getHighestPlayerId()
+    //    h2Data.dao.addPlayer(h2Data.getOptional(id))
     Future.successful(Right("[]"))
   }
 
@@ -222,6 +283,7 @@ object AchivementMicroservice extends App with Service {
   override implicit val materializer = ActorMaterializer()
   override implicit val h2Data = new H2Data
   h2Data.run
+  override implicit val mySqlData = new MySQLData
   override val config = ConfigFactory.load()
   override val logger = Logging(system, getClass)
   override val allAchivements: Seq[Achivement] = getAchivementsFromDatabase
@@ -235,4 +297,9 @@ object AchivementMicroservice extends App with Service {
       case Some(s) => s
     }
   }
+}
+
+object TadaSchema extends App {
+  slick.codegen.SourceCodeGenerator.main(
+    Array("slick.driver.MySQLDriver", "com.mysql.jdbc.Driver", "jdbc:mysql://192.168.99.100:3306/db_example", "./achivements/src/main/scala/", "com.schema", "root", "password"))
 }

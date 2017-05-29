@@ -22,7 +22,10 @@ libraryDependencies ++= {
     "com.typesafe.slick" %% "slick" % "3.0.0",
     "org.slf4j" % "slf4j-nop" % "1.6.4",
     "com.h2database" % "h2" % "1.4.194",
-    "ch.megard" %% "akka-http-cors" % "0.1.2"
+    "ch.megard" %% "akka-http-cors" % "0.1.2",
+    "com.typesafe.slick" %% "slick-codegen" % "3.0.0",
+    "mysql" % "mysql-connector-java" % "5.1.34",
+    "com.zaxxer" % "HikariCP" % "2.6.1"
 
   )
 }
