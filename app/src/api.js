@@ -18,7 +18,6 @@ class Api {
         this.getState = this.getState.bind(this);
         this.setWinner = this.setWinner.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
-        this.getTournaments = this.getTournaments.bind(this);
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
         this.editMail = this.editMail.bind(this);
@@ -26,6 +25,7 @@ class Api {
         this.achievements = this.achievements.bind(this);
         this.newAchievements = this.newAchievements.bind(this);
         this.allAchivements = this.allAchivements.bind(this);
+        this.remind = this.remind.bind(this);
     }
 
     achievements(userID) {
@@ -197,13 +197,6 @@ class Api {
         });
     }
 
-    getTournaments(id) {
-        return fetch(`${API_SERVER}/events/getTournaments/${id}`, {
-            method: "GET",
-            credentials: "include"
-        });
-    }
-
     giveUp(id) {
         return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
             method: "POST",
@@ -215,6 +208,23 @@ class Api {
         return fetch(`${API_SERVER}/rankings/${gameName}`, {
             method: "GET",
             credentials: "include"
+        });
+    }
+
+    remind({ email }) {
+        const body = JSON.stringify({
+            email
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/remind`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
         });
     }
 

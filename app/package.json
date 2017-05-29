@@ -109,6 +109,7 @@
     "react-geosuggest": "^2.1.0",
     "react-google-maps": "^7.0.0",
     "react-gravatar": "^2.6.1",
+    "react-material-select": "^1.1.0",
     "react-icons": "^2.2.5",
     "react-mdl": "^1.10.2",
     "react-redux": "^5.0.1",

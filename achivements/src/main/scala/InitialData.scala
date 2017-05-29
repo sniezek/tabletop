@@ -28,11 +28,12 @@ trait InitialData {
     for (i <- 10 to 99999) {
       db.run(statistics += Statistic(playerId = i))
     }
+
     for (i <- 1 to 5) {
       val number = math.pow(10, i).toInt
       val query = DBIO.seq(
-        achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then " + number + " Games", minVal = number, name = number + " Wins", field = "TotalWins"),
-        achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then " + number + " Tournamets", minVal = number, name = number + " TournametsWins", field = "TournametsWins")
+        achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then " + number + " Games", minVal = number, name = number + " Wins", field = "TotalWins", url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9pOyp8osRS2v_f2VrrmlWJqPSnVabuyuJrzG7S3AEiQMgYFINqw"),
+        achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win Then " + number + " Tournamets", minVal = number, name = number + " TournametsWins", field = "TournametsWins", url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9pOyp8osRS2v_f2VrrmlWJqPSnVabuyuJrzG7S3AEiQMgYFINqw")
       )
       db.run(query)
     }
