@@ -83,4 +83,21 @@ const ResetRoute = store => ({
     }
 });
 
-export { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute, ResetRoute };
+const ChangeRoute = store => ({
+    path: "/user/change",
+    onEnter: (nextState, replace) => {
+        if (store.getState().user) {
+            replace({
+                pathname: "/"
+            });
+        }
+    },
+    getComponent(nextState, cb) {
+        require.ensure([], (require) => {
+            const ResetView = require("./components/ChangePasswordView").default;
+            cb(null, ResetView);
+        }, "logout");
+    }
+});
+
+export { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute, ResetRoute, ChangeRoute };

@@ -72,7 +72,9 @@ public class UserController {
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
+        String response = userService.redirectToChange(token,id);
 
-        return ResponseUtils.reseted(userService.redirectToChange(token,id));
+        if (response != null) return ResponseUtils.reseted(response);
+        else return ResponseUtils.notFound();
     }
 }

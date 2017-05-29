@@ -9,7 +9,7 @@ const propTypes = {
     loading: PropTypes.bool,
     token: PropTypes.string,
     reset: PropTypes.func,
-    id: PropTypes.string
+    id: PropTypes.number
 };
 
 const defaultProps = {

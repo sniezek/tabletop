@@ -19,7 +19,7 @@ public class ResponseUtils {
     public static <T> ResponseEntity<T> reminded(T entity) { return new ResponseEntity<>(HttpStatus.CREATED); }
 
     public static <T> ResponseEntity<T> reseted(T entity) {
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
 
     public static ResponseEntity<String> conflict(String message) {

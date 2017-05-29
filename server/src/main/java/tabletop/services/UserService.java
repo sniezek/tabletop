@@ -16,6 +16,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.*;
+import java.security.SecureRandom;
+import java.math.BigInteger;
 
 @Service
 public class UserService {
@@ -80,18 +82,25 @@ public class UserService {
 
     public String redirectToChange(String tokenId, Long id) {
         PasswordResetToken token = passwordResetTokenRepository.findByToken(tokenId);
+        User user = userRepository.findOne(id);
         if (token != null) {
             if (token.getUser().getId()==id) {
                 if (token.getDate().after(new Date())) {
                     passwordResetTokenRepository.delete(token);
-                    return "token="+tokenId+"&id="+id;
+
+                    SecureRandom random = new SecureRandom();
+                    String pass = new BigInteger(130, random).toString(32);
+                    user.setPassword(passwordEncoder.encode(pass));
+                    userRepository.save(user);
+
+                    return pass;
                 }
-                else return "expired";
+                else return null;
             }
-            else return "notvalidid";
+            else return null;
         }
         else {
-            return "tokennotexist";
+            return null;
         }
 
     }

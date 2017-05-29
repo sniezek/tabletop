@@ -1,7 +1,7 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from "../layouts/CoreLayout";
 import Home from "./Home";
-import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute, ResetRoute  } from "./Auth";
+import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute, ResetRoute, ChangeRoute  } from "./Auth";
 import EventsRoute from "./Events";
 import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
 import { GamesRoute, GameDetailsRoute } from "./Games/index";
@@ -27,7 +27,8 @@ export const createRoutes = store => ({
         GameDetailsRoute(store),
         EditRoute(store),
         ProfileRoute(store),
-        ResetRoute(store)
+        ResetRoute(store),
+        ChangeRoute(store)
     ]
 });
 

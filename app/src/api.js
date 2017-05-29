@@ -285,12 +285,31 @@ class Api {
             "Content-Type": "application/json"
         });
 
-        return fetch(`${API_SERVER}/user/reset?${token}&${id}`, {
+        return fetch(`${API_SERVER}/user/reset?token=${token}&id=${id}`, {
             method: "POST",
             credentials: "include",
             headers,
         })
     }
+
+    changePassword({ password }) {
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        const body = JSON.stringify({
+                    id,
+                    password
+                });
+
+        return fetch(`${API_SERVER}/user/changepassword`, {
+            method: "POST",
+            credentials: "include",
+            headers,
+        })
+    }
+
 }
 
 export default new Api();

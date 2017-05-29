@@ -4,6 +4,7 @@ export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
 export const REMIND = "REMIND"
 export const RESET = "RESET"
+export const CHANGE = "CHANGE"
 
 const dispatchLogin = (response, dispatch) =>
     response.json().then(({ id,username, email }) => {
@@ -13,6 +14,17 @@ const dispatchLogin = (response, dispatch) =>
                 id,
                 username,
                 email
+            }
+        });
+    });
+
+const dispatchReset = (response, dispatch) =>
+    response.json().then(({ id,token }) => {
+        dispatch({
+            type: RESET,
+            payload: {
+                token,
+                id
             }
         });
     });
@@ -57,12 +69,21 @@ export const remind = ({ email }, callback) => dispatch =>
         callback(response);
     });
 
+export const changePassword = ({ id, password }, callback) => dispatch =>
+    Api.changePassword({ id, password }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: CHANGE
+            });
+        }
+
+        callback(response);
+    });
+
 export const reset = ({ token, id }, callback) => dispatch =>
     Api.reset({ token, id }).then((response) => {
         if (response.ok) {
-            dispatch({
-                type: RESET
-            });
+            dispatchReset(response,dispatch)
         }
 
         callback(response);

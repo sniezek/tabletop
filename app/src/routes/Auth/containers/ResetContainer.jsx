@@ -6,12 +6,13 @@ import Reset from "../components/Reset.jsx";
 
 const propTypes = {
     reset: PropTypes.func.isRequired,
-    user: PropTypes.object,
+    token: PropTypes.string,
+    id: PropTypes.string,
     router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
-    user: null
+    id: "",token:""
 };
 
 const mapDispatchToProps = {
@@ -44,7 +45,7 @@ class ResetContainer extends PureComponent {
 
     redirect(path = "/") {
         const { router } = this.props;
-        router.push(path);
+        router.push({ pathname:path, state:{id: this.state.id, password: ""}});
     }
 
     reset() {
@@ -58,7 +59,8 @@ class ResetContainer extends PureComponent {
             token, id
         }, ({ ok }) => {
             if(ok) {
-                alert("Token validated.");
+                alert("Token validated. Your new password "+ok);
+                //this.redirect('/user/change');
             }
             else {
                 alert("Error encountered while checking token.");
@@ -84,9 +86,11 @@ class ResetContainer extends PureComponent {
             />
         );
     }
+
     componentDidMount() {
-        reset()
+        this.reset();
     }
+
 }
 
 ResetContainer.propTypes = propTypes;
