@@ -19,21 +19,24 @@ const propTypes = {
     setMaxPlayers: PropTypes.func.isRequired,
     setGameType: PropTypes.func.isRequired,
     setGameName: PropTypes.func.isRequired,
-    gameName: PropTypes.string
+    gameName: PropTypes.string,
+    setGame: PropTypes.func.isRequired,
+    game: PropTypes.string
 };
 
 const defaultProps = {
     minPlayers: "0",
     maxPlayers: "2",
     gameType: "standard",
-    gameName: ""
+    gameName: "",
+    game: null
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
 const SparringDialogContent = ({ startDate, endDate, minPlayers, maxPlayers, gameType, setStartDate, setEndDate, setMinPlayers, setMaxPlayers,
-setGameType, setGameName, gameName }) => (
+setGameType, setGameName, gameName, setGame, game }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <div className="create-event-dialog__group">
@@ -89,7 +92,10 @@ setGameType, setGameName, gameName }) => (
             </div>
         )}
         { gameType === "standard" && (
-            <GameSelect />
+            <GameSelect
+                onChange={setGame}
+                value={game}
+            />
         )}
     </DialogContent>
 );

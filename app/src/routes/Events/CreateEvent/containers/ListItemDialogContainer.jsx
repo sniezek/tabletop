@@ -11,6 +11,7 @@ const initialState = {
     gameType: "standard",
     name: "",
     gameName: "",
+    game: null,
     minPlayers: "0",
     maxPlayers: "2",
     users: []
@@ -43,6 +44,7 @@ class ListItemDialogContainer extends PureComponent {
         this.setMaxPlayers = this.setMaxPlayers.bind(this);
         this.setGameName = this.setGameName.bind(this);
         this.save = this.save.bind(this);
+        this.setGame = this.setGame.bind(this);
     }
 
     componentWillReceiveProps({ type, model }) {
@@ -120,6 +122,14 @@ class ListItemDialogContainer extends PureComponent {
         });
     }
 
+    setGame({ value }) {
+        const game = value;
+
+        this.setState({
+            game
+        });
+    }
+
     genericPayload() {
         const startDate = moment(this.state.startDate, format).unix() * 1000;
         const endDate = moment(this.state.endDate, format).unix() * 1000;
@@ -133,9 +143,9 @@ class ListItemDialogContainer extends PureComponent {
     }
 
     sparringPayload() {
-        const { gameType, gameName, minPlayers, maxPlayers } = this.state;
+        const { game, gameType, gameName, minPlayers, maxPlayers } = this.state;
         const payload = gameType === "standard" ? {
-            game: "CHESS"
+            game
         } : {
             gameName,
             minPlayers: parseInt(minPlayers, 10),
@@ -149,8 +159,7 @@ class ListItemDialogContainer extends PureComponent {
     }
 
     tournamentPayload() {
-        const { name } = this.state;
-        const game = "CHESS";
+        const { game, name } = this.state;
 
         return {
             ...this.genericPayload(),
@@ -182,6 +191,7 @@ class ListItemDialogContainer extends PureComponent {
                 setMinPlayers={this.setMinPlayers}
                 setMaxPlayers={this.setMaxPlayers}
                 setGameName={this.setGameName}
+                setGame={this.setGame}
             />
         );
     }
