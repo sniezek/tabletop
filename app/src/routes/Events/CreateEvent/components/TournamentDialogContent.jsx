@@ -16,18 +16,25 @@ const propTypes = {
     setGame: PropTypes.func.isRequired,
     game: PropTypes.string,
     setTournamentType: PropTypes.func.isRequired,
-    tournamentType: PropTypes.string
+    tournamentType: PropTypes.string,
+    minPlayers: PropTypes.string,
+    maxPlayers: PropTypes.string,
+    setMinPlayers: PropTypes.func.isRequired,
+    setMaxPlayers: PropTypes.func.isRequired
 };
 
 const defaultProps = {
     game: null,
-    tournamentType: null
+    tournamentType: null,
+    minPlayers: "0",
+    maxPlayers: "2"
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame, setTournamentType, tournamentType }) => (
+const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame, setTournamentType, tournamentType,
+minPlayers, setMinPlayers, maxPlayers, setMaxPlayers }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <IconTextfield
@@ -61,6 +68,22 @@ const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate
             <TypeSelect
                 onChange={setTournamentType}
                 value={tournamentType}
+            />
+        </div>
+        <div className="create-event-dialog__group">
+            <IconTextfield
+                label="Min players"
+                icon="people"
+                value={minPlayers}
+                onChange={setMinPlayers}
+                required
+            />
+            <IconTextfield
+                label="Max players"
+                icon="people"
+                value={maxPlayers}
+                onChange={setMaxPlayers}
+                required
             />
         </div>
     </DialogContent>
