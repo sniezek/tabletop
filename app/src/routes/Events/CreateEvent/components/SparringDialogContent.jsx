@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import RadioGroup from "react-mdl/lib/RadioGroup";
 import Radio from "react-mdl/lib/Radio";
-import ReactMaterialSelect from "react-material-select";
 import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
+import GameSelect from "../../../../components/GameSelect";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -89,9 +89,7 @@ setGameType, setGameName, gameName }) => (
             </div>
         )}
         { gameType === "standard" && (
-            <ReactMaterialSelect label="Game">
-                <option dataValue="CHESS">Chess</option>
-            </ReactMaterialSelect>
+            <GameSelect />
         )}
     </DialogContent>
 );
