@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import RadioGroup from "react-mdl/lib/RadioGroup";
-import Radio from "react-mdl/lib/Radio";
 import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
+import GameSelect from "../../../../components/GameSelect";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -12,17 +11,19 @@ const propTypes = {
     name: PropTypes.string.isRequired,
     setName: PropTypes.func.isRequired,
     setStartDate: PropTypes.func.isRequired,
-    setEndDate: PropTypes.func.isRequired
+    setEndDate: PropTypes.func.isRequired,
+    setGame: PropTypes.func.isRequired
 };
 
 const defaultProps = {
-    name: ""
+    name: "",
+    game: null
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate }) => (
+const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <IconTextfield
@@ -48,6 +49,10 @@ const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate
                 required
             />
         </div>
+        <GameSelect
+            onChange={setGame}
+            value={game}
+        />
     </DialogContent>
 );
 
