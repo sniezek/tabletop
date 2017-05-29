@@ -12,19 +12,21 @@ const propTypes = {
     name: PropTypes.string,
     description: PropTypes.string,
     users: PropTypes.array,
-    location: PropTypes.object
+    location: PropTypes.object,
+    organiser: PropTypes.object
 };
 
 const defaultProps = {
     name: "Loading...",
     description: null,
     users: null,
-    location: null
+    location: null,
+    organiser: null
 };
 
 const enhance = pure;
 
-const EventDetails = ({ name, description, users, location }) => (
+const EventDetails = ({ name, description, users, location, organiser }) => (
     <View className="event">
         <ViewHeader
             title={name}
@@ -51,6 +53,7 @@ const EventDetails = ({ name, description, users, location }) => (
                         />
                         <Participants
                             list={users}
+                            organiser={organiser}
                         />
                     </aside>
                 </div>
