@@ -21,26 +21,22 @@ Users have a variety of statistics and they can get achievements for being activ
 * [l0rd11](https://github.com/l0rd11) (Achievements)
 * [Vlizer](https://github.com/Vlizer) (Achievements)
 
-## DataBase
-### Starting in docker
-install docker for win 7 :https://docs.docker.com/toolbox/toolbox_install_windows/  it wil start docker in virtual machine with its own ip address writen dyring start of vm you have to use it to conect to database or start data base locay on your machine with setings from next paragraf.
-
-install docker for win 10 :https://docs.docker.com/docker-for-windows/
-assuming you have alredy started docker just type:
-
-```
-docker run --name demo-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=db_example -e MYSQL_USER=springuser -e MYSQL_PASSWORD=ThePassword -p 3306:3306 -d mysql:5.6
-```
-remember to start databese before server
-
+## Database
 ### Starting stanalone
-start mysql server then cerate bd_example database 
-next create user springuser with pass ThePassword and grant him all rights to db. exampel comands to mysql client.
-
+Start MySQL server (mysqld.exe). At first you have to connect to it with a MySQL client (mysql.exe) and create the database and user and grant him all permissions:
 ```
 mysql> create database db_example; -- Create the new database
 mysql> create user 'springuser'@'localhost' identified by 'ThePassword'; -- Creates the user
-mysql> grant all on db_example.* to 'springuser'@'localhost'; -- Gives all the privileges to the new user on the newly created databas
+mysql> grant all on db_example.* to 'springuser'@'localhost'; -- Gives all the privileges to the new user on the newly created database
+```
+
+### Starting in Docker
+* Windows 7: https://docs.docker.com/toolbox/toolbox_install_windows/ - it wil start Docker in a virtual machine with its own ip address logged during the start of the VM so you have to use it to conect to the database or start the database locally on your machine with the setings from the next paragraph.
+* Windows 10 :https://docs.docker.com/docker-for-windows/
+
+Assuming you have alredy started Docker, type:
+```
+docker run --name demo-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=db_example -e MYSQL_USER=springuser -e MYSQL_PASSWORD=ThePassword -p 3306:3306 -d mysql:5.6
 ```
 
 ## Server
@@ -90,10 +86,10 @@ Extracted from [React Redux starter kit](https://github.com/davezuko/react-redux
 
 ## Achievements
 You need:
-* [Sbt](http://www.scala-sbt.org/)
+* [sbt](http://www.scala-sbt.org/)
 
 ### Setup
-If you want run it type:
+To run it type:
 ```
 $ sbt run
 ```
