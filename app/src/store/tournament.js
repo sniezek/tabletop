@@ -47,7 +47,7 @@ export const getTournament = ({ id }, callback) => dispatch =>
         callback(response);
     });
 
-export const getTournamentTypes = dispatch =>
+export const getTournamentTypes = () => dispatch =>
   Api.tournamentTypes().then((response) => {
       if (response.ok) {
           response.json().then((tournamentTypesList) => {
@@ -202,18 +202,22 @@ const initialState = {
 export default function tournamentReducer(state = initialState, { type, payload }) {
     if (type === GET_TOURNAMENT) {
         state = {
+            ...state,
             pairs: payload.pairs
         };
     } else if (type === GET_TOURNAMENT_TYPES) {
         state = {
+            ...state,
             tournamentTypesList: payload.tournamentTypesList
         };
     } else if (type === GET_FINAL_RESULTS) {
         state = {
+            ...state,
             finalResults: payload.finalResults
         };
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {
+            ...state,
             finishedTournamentsList: payload.finishedTournamentsList
         };
     } else if (type === INITIAL_ROUND || type === GET_STATE || type === NEXT_ROUND) {

@@ -5,17 +5,20 @@ import { Provider, connect } from "react-redux";
 import MainPreloader from "../components/MainPreloader";
 import { data } from "../store/auth";
 import { getGames } from "../store/games";
+import { getTournamentTypes } from "../store/tournament";
 
 const propTypes = {
     routes: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired,
     data: PropTypes.func.isRequired,
-    getGames: PropTypes.func.isRequired
+    getGames: PropTypes.func.isRequired,
+    getTournamentTypes: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
     data,
-    getGames
+    getGames,
+    getTournamentTypes
 };
 
 const mapStateToProps = () => ({});
@@ -39,6 +42,7 @@ class AppContainer extends PureComponent {
         });
 
         this.props.getGames();
+        this.props.getTournamentTypes();
     }
 
     render() {

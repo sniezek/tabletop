@@ -4,6 +4,7 @@ import pure from "recompose/pure";
 import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
 import GameSelect from "../../../../components/GameSelect";
+import TypeSelect from "./TypeSelect.jsx";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -12,18 +13,21 @@ const propTypes = {
     setName: PropTypes.func.isRequired,
     setStartDate: PropTypes.func.isRequired,
     setEndDate: PropTypes.func.isRequired,
-    setGame: PropTypes.func.isRequired
+    setGame: PropTypes.func.isRequired,
+    game: PropTypes.string,
+    setTournamentType: PropTypes.func.isRequired,
+    tournamentType: PropTypes.string
 };
 
 const defaultProps = {
-    name: "",
-    game: null
+    game: null,
+    tournamentType: null
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame }) => (
+const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame, setTournamentType, tournamentType }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <IconTextfield
@@ -49,10 +53,16 @@ const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate
                 required
             />
         </div>
-        <GameSelect
-            onChange={setGame}
-            value={game}
-        />
+        <div className="create-event-dialog__group">
+            <GameSelect
+                onChange={setGame}
+                value={game}
+            />
+            <TypeSelect
+                onChange={setTournamentType}
+                value={tournamentType}
+            />
+        </div>
     </DialogContent>
 );
 

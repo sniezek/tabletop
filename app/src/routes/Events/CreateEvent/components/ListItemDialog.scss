@@ -18,7 +18,8 @@
         }
 
         & > .icon-textfield:first-child,
-        & > label:first-child {
+        & > label:first-child,
+        & > .rms-wrapper:first-child {
             margin-right: 16px;
         }
     }
