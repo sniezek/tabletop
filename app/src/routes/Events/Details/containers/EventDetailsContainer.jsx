@@ -8,12 +8,17 @@ const propTypes = {
     id: PropTypes.number.isRequired,
     loadDetails: PropTypes.func.isRequired,
     tournaments: PropTypes.array,
-    sparrings: PropTypes.array
+    sparrings: PropTypes.array,
+    user: PropTypes.object,
+    organiser: PropTypes.object,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
     tournaments: null,
-    sparrings: null
+    sparrings: null,
+    user: null,
+    organiser: null
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -33,6 +38,8 @@ class EventDetailsContainer extends PureComponent {
         this.state = {
             users: null
         };
+
+        this.editEvent = this.editEvent.bind(this);
     }
 
     componentDidMount() {
@@ -61,11 +68,22 @@ class EventDetailsContainer extends PureComponent {
         }
     }
 
+    editEvent() {
+        const { id, router } = this.props;
+
+        router.push(`/events/edit/${id}`);
+    }
+
     render() {
+        const { user, organiser } = this.props;
+        const isOrganiser = user && organiser && user.id === organiser.id;
+
         return (
             <EventDetails
                 {...this.props}
                 users={this.state.users}
+                isOrganiser={isOrganiser}
+                editEvent={this.editEvent}
             />
         );
     }

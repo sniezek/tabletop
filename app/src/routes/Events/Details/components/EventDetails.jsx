@@ -1,23 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { View, ViewHeader, ViewContent } from "../../../../components/View";
+import { View, ViewContent } from "../../../../components/View";
 import DetailsSection from "./DetailsSection.jsx";
 import Description from "./sections/Description.jsx";
 import Participants from "./sections/Participants.jsx";
 import Location from "./sections/Location.jsx";
+import EventHeader from "./EventHeader.jsx";
 import "./EventDetails.scss";
 
 const propTypes = {
+    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     description: PropTypes.string,
     users: PropTypes.array,
     location: PropTypes.object,
-    organiser: PropTypes.object
+    organiser: PropTypes.object,
+    isOrganiser: PropTypes.bool.isRequired,
+    editEvent: PropTypes.func.isRequired
 };
 
 const defaultProps = {
-    name: "Loading...",
+    name: null,
     description: null,
     users: null,
     location: null,
@@ -26,10 +30,12 @@ const defaultProps = {
 
 const enhance = pure;
 
-const EventDetails = ({ name, description, users, location, organiser }) => (
+const EventDetails = ({ id, name, description, users, location, organiser, isOrganiser, editEvent }) => (
     <View className="event">
-        <ViewHeader
-            title={name}
+        <EventHeader
+            name={name}
+            editEvent={editEvent}
+            isOrganiser={isOrganiser}
         />
         <ViewContent>
             <div className="event__wrapper">

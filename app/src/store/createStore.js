@@ -1,6 +1,7 @@
 import { applyMiddleware, compose, createStore } from "redux";
 import thunk from "redux-thunk";
 import { browserHistory } from "react-router";
+import { persistStore, autoRehydrate } from "redux-persist";
 import makeRootReducer from "./reducers";
 import { updateLocation } from "./location";
 
@@ -32,7 +33,8 @@ export default (initialState = {}) => {
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),
-      ...enhancers
+      ...enhancers,
+      autoRehydrate()
     )
   );
     store.asyncReducers = {};
@@ -47,6 +49,10 @@ export default (initialState = {}) => {
             store.replaceReducer(reducers(store.asyncReducers));
         });
     }
+
+    persistStore(store, {
+        whitelist: ["locationFilter", "typeFilter", "dateFilter", "gamesFilter"]
+    });
 
     return store;
 };
