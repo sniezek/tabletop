@@ -73,8 +73,7 @@ export default function authReducer(state = initialState, { type, payload }) {
         return {
             id: payload.id,
             name: payload.username,
-            email: payload.email,
-            id: payload.id
+            email: payload.email
         };
     } else if (type === USER_LOGOUT) {
         return null;
