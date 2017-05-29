@@ -64,7 +64,7 @@ setGameType, setGameName, gameName, setGame, game }) => (
             <Radio value="standard">Standard game</Radio>
             <Radio value="custom">Custom game</Radio>
         </RadioGroup>
-        { gameType === "custom" && (
+        { gameType === "custom" ? (
             <IconTextfield
                 label="Game name"
                 icon="stars"
@@ -72,31 +72,28 @@ setGameType, setGameName, gameName, setGame, game }) => (
                 onChange={setGameName}
                 required
             />
-        )}
-        { gameType === "custom" && (
-            <div className="create-event-dialog__group">
-                <IconTextfield
-                    label="Min players"
-                    icon="people"
-                    value={minPlayers}
-                    onChange={setMinPlayers}
-                    required
-                />
-                <IconTextfield
-                    label="Max players"
-                    icon="people"
-                    value={maxPlayers}
-                    onChange={setMaxPlayers}
-                    required
-                />
-            </div>
-        )}
-        { gameType === "standard" && (
+        ) : (
             <GameSelect
                 onChange={setGame}
                 value={game}
             />
         )}
+        <div className="create-event-dialog__group">
+            <IconTextfield
+                label="Min players"
+                icon="people"
+                value={minPlayers}
+                onChange={setMinPlayers}
+                required
+            />
+            <IconTextfield
+                label="Max players"
+                icon="people"
+                value={maxPlayers}
+                onChange={setMaxPlayers}
+                required
+            />
+        </div>
     </DialogContent>
 );
 

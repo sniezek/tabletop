@@ -13,7 +13,8 @@ const propTypes = {
     showPopup: PropTypes.func,
     hidePopup: PropTypes.func,
     lat: PropTypes.number,
-    lng: PropTypes.number
+    lng: PropTypes.number,
+    goToEvent: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -43,7 +44,7 @@ const getMapProps = (lat, lng) => (lat !== undefined && lng !== undefined ? {
     }
 } : {});
 
-const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng }) => (
+const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng, goToEvent }) => (
     <Map
         containerElement={containerElement}
         mapElement={mapElement}
@@ -55,6 +56,7 @@ const EventsMap = ({ events, currentEvent, showPopup, hidePopup, lat, lng }) => 
                 event={event}
                 showPopup={showPopup}
                 hidePopup={hidePopup}
+                goToEvent={goToEvent}
             />
         ))}
         <MapPopup

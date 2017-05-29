@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { setMapViewActive } from "../../../../store/config";
-import { loadEvents } from "../modules/EventActions";
+import { loadEvents, setEvent } from "../modules/EventActions";
 import Events from "../components/Events.jsx";
 import { mapLocationFilters, mapDateFilters, mapTypeFilters, mapGamesFilters } from "../modules/FilterUtils";
 
@@ -18,7 +18,8 @@ const propTypes = {
     dateFilter: PropTypes.object.isRequired,
     locationFilter: PropTypes.object.isRequired,
     gamesFilter: PropTypes.object.isRequired,
-    typeFilter: PropTypes.object.isRequired
+    typeFilter: PropTypes.object.isRequired,
+    preloadEvent: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -33,7 +34,8 @@ const defaultProps = {
 
 const mapDispatchToProps = dispatch => ({
     toggleMapView: active => dispatch(setMapViewActive(active)),
-    loadEvents: callback => loadEvents(callback)(dispatch)
+    loadEvents: callback => loadEvents(callback)(dispatch),
+    preloadEvent: event => dispatch(setEvent(event))
 });
 
 const mapStateToProps = ({ user, config, events, dateFilter, locationFilter, gamesFilter, typeFilter }) => ({
@@ -59,6 +61,7 @@ class EventsContainer extends PureComponent {
         this.toggleFilters = this.toggleFilters.bind(this);
         this.loadEvents = this.loadEvents.bind(this);
         this.addNewEvent = this.addNewEvent.bind(this);
+        this.goToEvent = this.goToEvent.bind(this);
     }
 
     componentDidMount() {
@@ -101,6 +104,12 @@ class EventsContainer extends PureComponent {
         });
     }
 
+    goToEvent(event) {
+        const { preloadEvent, router } = this.props;
+        preloadEvent(event);
+        router.push(`/events/${event.id}`);
+    }
+
     render() {
         const { displayFilters } = this.state;
         const { mapView, toggleMapView, user, events, lat, lng } = this.props;
@@ -118,6 +127,7 @@ class EventsContainer extends PureComponent {
                 lng={lng !== undefined ? parseFloat(lng) : lng}
                 loadEvents={this.loadEvents}
                 addNewEvent={this.addNewEvent}
+                goToEvent={this.goToEvent}
             />
         );
     }

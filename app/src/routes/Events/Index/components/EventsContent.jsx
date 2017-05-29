@@ -9,7 +9,8 @@ const propTypes = {
     events: PropTypes.array.isRequired,
     mapView: PropTypes.bool.isRequired,
     lat: PropTypes.number,
-    lng: PropTypes.number
+    lng: PropTypes.number,
+    goToEvent: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -19,13 +20,14 @@ const defaultProps = {
 
 const enhance = pure;
 
-const EventsContent = ({ events, mapView, lat, lng }) => (
+const EventsContent = ({ events, mapView, lat, lng, goToEvent }) => (
     <ViewContent>
         { mapView ? (
             <EventsMapContainer
                 events={events}
                 lat={lat}
                 lng={lng}
+                goToEvent={goToEvent}
             />
         ) : (
             <EventsList
