@@ -9,7 +9,8 @@ const propTypes = {
     label: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     data: PropTypes.arrayOf(PropTypes.shape({
-        name: PropTypes.string.isRequired
+        name: PropTypes.string.isRequired,
+        id: PropTypes.string.isRequired
     })),
     value: PropTypes.string
 };
@@ -38,10 +39,10 @@ const GameSelect = ({ label, onChange, data, value }) => (
         onChange={onChange}
         defaultValue={value}
     >
-        {data.map(({ name }) => (
+        {data.map(({ name, id }) => (
             <option
-                key={name}
-                dataValue={name}
+                key={id}
+                dataValue={id}
             >
                 {name}
             </option>

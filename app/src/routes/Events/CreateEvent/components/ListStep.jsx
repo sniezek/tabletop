@@ -39,11 +39,11 @@ const itemProps = (games, { gameName, maxPlayers, minPlayers, game, name }) => {
         };
     }
 
-    const _game = games.find(item => item.name === game);
+    const _game = games.find(item => item.id === game);
     const isSparring = !name;
 
-    const primary = isSparring ? game : name;
-    const secondary = isSparring ? undefined : game;
+    const primary = isSparring ? _game.name : name;
+    const secondary = isSparring ? undefined : _game.name;
 
     return {
         primary,

@@ -123,10 +123,8 @@ class ListItemDialogContainer extends PureComponent {
     }
 
     setGame({ value }) {
-        const game = value;
-
         this.setState({
-            game
+            game: value
         });
     }
 
