@@ -36,10 +36,15 @@ class EventDetailsContainer extends PureComponent {
         super(props);
 
         this.state = {
-            users: null
+            users: null,
+            playersDialogOpened: false
         };
 
         this.editEvent = this.editEvent.bind(this);
+        this.acceptPlayers = this.acceptPlayers.bind(this);
+        this.closePlayersDialog = this.closePlayersDialog.bind(this);
+        this.revokePlayer = this.revokePlayer.bind(this);
+        this.acceptPlayer = this.acceptPlayer.bind(this);
     }
 
     componentDidMount() {
@@ -68,14 +73,35 @@ class EventDetailsContainer extends PureComponent {
         }
     }
 
+    acceptPlayers() {
+        this.setState({
+            playersDialogOpened: true
+        });
+    }
+
     editEvent() {
         const { id, router } = this.props;
 
         router.push(`/events/edit/${id}`);
     }
 
+    acceptPlayer() {
+
+    }
+
+    revokePlayer() {
+
+    }
+
+    closePlayersDialog() {
+        this.setState({
+            playersDialogOpened: false
+        });
+    }
+
     render() {
         const { user, organiser } = this.props;
+        const { playersDialogOpened } = this.state;
         const isOrganiser = user && organiser && user.id === organiser.id;
 
         return (
@@ -84,6 +110,12 @@ class EventDetailsContainer extends PureComponent {
                 users={this.state.users}
                 isOrganiser={isOrganiser}
                 editEvent={this.editEvent}
+                acceptPlayers={this.acceptPlayers}
+                waitingCount={98}
+                playersDialogOpened={playersDialogOpened}
+                acceptPlayer={this.acceptPlayer}
+                revokePlayer={this.revokePlayer}
+                closePlayersDialog={this.closePlayersDialog}
             />
         );
     }
