@@ -7,7 +7,9 @@ import { ViewHeader } from "../../../../components/View";
 const propTypes = {
     name: PropTypes.string,
     editEvent: PropTypes.func.isRequired,
-    isOrganiser: PropTypes.bool
+    isOrganiser: PropTypes.bool,
+    acceptPlayers: PropTypes.func.isRequired,
+    waitingCount: PropTypes.number.isRequired
 };
 
 const defaultProps = {
@@ -17,15 +19,17 @@ const defaultProps = {
 
 const enhance = pure;
 
-const EventHeader = ({ name, isOrganiser, editEvent }) => (
+const EventHeader = ({ name, isOrganiser, editEvent, acceptPlayers, waitingCount }) => (
     <ViewHeader
         title={name}
     >
         {isOrganiser && (
-            <Button
-                colored
-                onClick={editEvent}
-            >Edit event</Button>
+            <div>
+                <Button colored onClick={editEvent}>Edit event</Button>
+                {waitingCount > 0 && (
+                    <Button onClick={acceptPlayers}>Accept players <span className="event-players-count">{waitingCount}</span></Button>
+                )}
+            </div>
         )}
     </ViewHeader>
 );

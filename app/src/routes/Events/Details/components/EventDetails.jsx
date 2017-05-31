@@ -7,17 +7,23 @@ import Description from "./sections/Description.jsx";
 import Participants from "./sections/Participants.jsx";
 import Location from "./sections/Location.jsx";
 import EventHeader from "./EventHeader.jsx";
+import AcceptPlayersDialog from "./AcceptPlayersDialog.jsx";
 import "./EventDetails.scss";
 
 const propTypes = {
-    id: PropTypes.number.isRequired,
     name: PropTypes.string,
     description: PropTypes.string,
     users: PropTypes.array,
     location: PropTypes.object,
     organiser: PropTypes.object,
     isOrganiser: PropTypes.bool.isRequired,
-    editEvent: PropTypes.func.isRequired
+    editEvent: PropTypes.func.isRequired,
+    acceptPlayers: PropTypes.func.isRequired,
+    waitingCount: PropTypes.number.isRequired,
+    playersDialogOpened: PropTypes.bool.isRequired,
+    closePlayersDialog: PropTypes.func.isRequired,
+    revokePlayer: PropTypes.func.isRequired,
+    acceptPlayer: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -30,12 +36,15 @@ const defaultProps = {
 
 const enhance = pure;
 
-const EventDetails = ({ id, name, description, users, location, organiser, isOrganiser, editEvent }) => (
+const EventDetails = ({ name, description, users, location, organiser, isOrganiser, editEvent, acceptPlayers, waitingCount,
+playersDialogOpened, closePlayersDialog, revokePlayer, acceptPlayer }) => (
     <View className="event">
         <EventHeader
             name={name}
             editEvent={editEvent}
             isOrganiser={isOrganiser}
+            acceptPlayers={acceptPlayers}
+            waitingCount={waitingCount}
         />
         <ViewContent>
             <div className="event__wrapper">
@@ -64,6 +73,12 @@ const EventDetails = ({ id, name, description, users, location, organiser, isOrg
                     </aside>
                 </div>
             </div>
+            <AcceptPlayersDialog
+                open={playersDialogOpened}
+                close={closePlayersDialog}
+                revoke={revokePlayer}
+                accept={acceptPlayer}
+            />
         </ViewContent>
     </View>
 );
