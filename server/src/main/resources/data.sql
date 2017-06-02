@@ -399,7 +399,7 @@ VALUES (2, 'os. Dywizjonu 303 23/8', 50.085782, 20.006929, 'Dywizjon');
 INSERT INTO location(id, address, lat, lng, name)
 VALUES (3, 'ul. Meissnera 6/26', 50.078947, 19.975193, 'Salon gier Chuck');
 INSERT INTO location(id, address, lat, lng, name)
-VALUES (4, 'ul. Stanisława Dubois 33/35', 51.118346, 17.028938, 'Kawiarnia Hex');
+VALUES (4, 'ul. Dubois 33/35', 51.118346, 17.028938, 'Kawiarnia Hex');
 INSERT INTO location(id, address, lat, lng, name)
 VALUES (5, 'ul. Chwaliszewo 68', 52.408616, 16.942175, 'Kawroz Club');
 INSERT INTO location(id, address, lat, lng, name)
