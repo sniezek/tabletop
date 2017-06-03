@@ -8,7 +8,7 @@ import "../../components/Tournament.scss";
 const propTypes = {
     router: PropTypes.object.isRequired,
     tournamentTypesList: PropTypes.array,
-    playDemo: PropTypes.func
+    playDemo: PropTypes.func,
 };
 
 const defaultProps = {
@@ -18,8 +18,9 @@ const defaultProps = {
 
 const enhance = pure;
 
-const TournamentTypesList = ({ tournamentTypesList, playDemo }) => (
+const TournamentTypesList = ({ tournamentTypesList, playDemo, router, test }) => (
     <div className="tournament-list">
+        <h2>{test}</h2>
         {tournamentTypesList.map(tournament =>
             <section key={tournament.name}>
                 <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>

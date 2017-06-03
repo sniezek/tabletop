@@ -3,17 +3,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getTournamentTypes } from "../../../../store/tournament";
 import "../../components/Tournament.scss";
-import TournamentTypes from "../components/TournamentTypes";
+import TournamentTypesList from "../components/TournamentTypesList";
 
 const propTypes = {
     tournamentTypesList: PropTypes.array,
     router: PropTypes.object.isRequired,
+    demoView: PropTypes.boolean,
     playDemo: PropTypes.func,
     getTournamentTypes: PropTypes.func
 };
 
 const defaultProps = {
     tournamentTypesList: [],
+    demoView: false,
     playDemo: () => {},
     getTournamentTypes: () => {}
 };
@@ -61,10 +63,9 @@ class TournamentTypesContainer extends PureComponent {
 
     render() {
         return (
-            <TournamentTypes
+            <TournamentTypesList
                 tournamentTypesList={this.props.tournamentTypesList}
                 router={this.props.router}
-                demoView={this.state.demoView}
                 playDemo={this.playDemo}
             />
         );
