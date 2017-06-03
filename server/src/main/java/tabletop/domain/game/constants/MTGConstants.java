@@ -29,6 +29,7 @@ public class MTGConstants {
     public static final Integer randomChance = 3;
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 13;
+    public static final Integer difficulty = 4;
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();

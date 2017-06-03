@@ -28,6 +28,7 @@ public class ScrabbleConstants {
     public static final Integer randomChance = 2;
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 8;
+    public static final Integer difficulty = 4;
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();

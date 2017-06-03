@@ -24,6 +24,7 @@ public enum Game {
             ChessConstants.bannerUrl,
             ChessConstants.time,
             ChessConstants.randomChance,
+            ChessConstants.difficulty,
             ChessConstants.minAge,
             ChessConstants.gameCategories,
             ChessWinInformation.class,
@@ -37,6 +38,7 @@ public enum Game {
             MonopolyConstants.bannerUrl,
             MonopolyConstants.time,
             MonopolyConstants.randomChance,
+            MonopolyConstants.difficulty,
             MonopolyConstants.minAge,
             MonopolyConstants.gameCategories,
             BasicWinInformation.class,
@@ -50,6 +52,7 @@ public enum Game {
             ScrabbleConstants.bannerUrl,
             ScrabbleConstants.time,
             ScrabbleConstants.randomChance,
+            ScrabbleConstants.difficulty,
             ScrabbleConstants.minAge,
             ScrabbleConstants.gameCategories,
             BasicWinInformation.class,
@@ -63,6 +66,7 @@ public enum Game {
             MTGConstants.bannerUrl,
             MTGConstants.time,
             MTGConstants.randomChance,
+            MTGConstants.difficulty,
             MTGConstants.minAge,
             MTGConstants.gameCategories,
             BasicWinInformation.class,
@@ -76,6 +80,7 @@ public enum Game {
             CheckersConstants.bannerUrl,
             CheckersConstants.time,
             CheckersConstants.randomChance,
+            CheckersConstants.difficulty,
             CheckersConstants.minAge,
             CheckersConstants.gameCategories,
             BasicWinInformation.class,
@@ -89,6 +94,7 @@ public enum Game {
             TalismanConstants.bannerUrl,
             TalismanConstants.time,
             TalismanConstants.randomChance,
+            TalismanConstants.difficulty,
             TalismanConstants.minAge,
             TalismanConstants.gameCategories,
             BasicWinInformation.class,
@@ -102,6 +108,7 @@ public enum Game {
             GoConstants.bannerUrl,
             GoConstants.time,
             GoConstants.randomChance,
+            GoConstants.difficulty,
             GoConstants.minAge,
             GoConstants.gameCategories,
             BasicWinInformation.class,
@@ -115,6 +122,7 @@ public enum Game {
             MahjongConstants.bannerUrl,
             MahjongConstants.time,
             MahjongConstants.randomChance,
+            MahjongConstants.difficulty,
             MahjongConstants.minAge,
             MahjongConstants.gameCategories,
             BasicWinInformation.class,
@@ -128,6 +136,7 @@ public enum Game {
             RiskConstants.bannerUrl,
             RiskConstants.time,
             RiskConstants.randomChance,
+            RiskConstants.difficulty,
             RiskConstants.minAge,
             RiskConstants.gameCategories,
             BasicWinInformation.class,
@@ -141,6 +150,7 @@ public enum Game {
             BattleshipConstants.bannerUrl,
             BattleshipConstants.time,
             BattleshipConstants.randomChance,
+            BattleshipConstants.difficulty,
             BattleshipConstants.minAge,
             BattleshipConstants.gameCategories,
             BasicWinInformation.class,
@@ -158,11 +168,12 @@ public enum Game {
     private final Set<TournamentType> allowedTournamentTypes;
     private final String time;
     private final Integer randomChance;
+    private final Integer difficulty;
     private final Integer minAge;
     private final Set<GameCategory> gameCategories;
 
     Game(String name, int minPlayers, int maxPlayers, String description, String longDescription,
-         String imageUrl, String bannerUrl, String time, Integer randomChance, Integer minAge, Set<GameCategory> gameCategories, Class<? extends WinInformation> winInformation,
+         String imageUrl, String bannerUrl, String time, Integer randomChance, Integer difficulty, Integer minAge, Set<GameCategory> gameCategories, Class<? extends WinInformation> winInformation,
          TournamentType... allowedTournamentTypes) {
         this.id = this.name();
         this.name = name;
@@ -174,6 +185,7 @@ public enum Game {
         this.bannerUrl = bannerUrl;
         this.time = time;
         this.randomChance = randomChance;
+        this.difficulty = difficulty;
         this.minAge = minAge;
         this.gameCategories = gameCategories;
         this.winInformation = winInformation;
@@ -234,5 +246,9 @@ public enum Game {
 
     public Integer getMinAge() {
         return minAge;
+    }
+
+    public Integer getDifficulty() {
+        return difficulty;
     }
 }

@@ -31,6 +31,7 @@ public class MonopolyConstants {
     public static final Integer randomChance = 4;
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 8;
+    public static final Integer difficulty = 3;
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();

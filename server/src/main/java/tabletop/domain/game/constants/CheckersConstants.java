@@ -29,6 +29,7 @@ public class CheckersConstants {
     public static final Integer randomChance = 1;
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 7;
+    public static final Integer difficulty = 3;
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();

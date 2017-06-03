@@ -26,6 +26,7 @@ public class MahjongConstants {
     public static final Integer randomChance = 4;
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 5;
+    public static final Integer difficulty = 3;
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();

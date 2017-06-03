@@ -37,6 +37,7 @@ public class BattleshipConstants {
     public static final Integer randomChance = 3;
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 7;
+    public static final Integer difficulty = 1;
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();
