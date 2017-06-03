@@ -24,11 +24,15 @@ public class GameRankingService {
         gameRankingRepository.updateGameRanking(game, usersByResult);
     }
 
-    public List<GameRankingResponse> getTopUsers(Game game) {
-        return gameRankingRepository.getTopUsers(game);
+    public List<GameRankingResponse> getTopUsers(Game game, int pageNum) {
+        return gameRankingRepository.getTopUsers(game, pageNum);
     }
 
     public GameStatisticsResponse getGameStatistics(Game game) {
         return gameRankingRepository.getGameStatistics(game);
+    }
+
+    public Long getRankingSize(Game game) {
+        return gameRankingRepository.getRankingSize(game);
     }
 }

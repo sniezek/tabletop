@@ -46,7 +46,7 @@ class GamesContainer extends PureComponent {
     render() {
         return (
             <div className="gamesList">
-                {this.props.gamesList.map(({ name, description, minPlayers, maxPlayers, imageUrl }) =>
+                {this.props.gamesList.map(({ name, description, minPlayers, maxPlayers, imageUrl, displayName }) =>
                     <Grid key={name} noSpacing style={{ margin: "10px auto", maxWidth: "1024px" }}>
                         <Cell col={3} tablet={2} phone={4} className="margin0">
                             <Card
@@ -63,7 +63,7 @@ class GamesContainer extends PureComponent {
                                 <div>
 
                                     <CardTitle className="gameListTitle">
-                                        {name}
+                                        {displayName}
                                     </CardTitle>
 
                                     <div className="gameSettings">

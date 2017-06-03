@@ -1,6 +1,14 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class CheckersConstants {
+
+    public static final String displayName = "Checkers";
 
     public static final String description = "Checkers (American English) or draughts (British English) is a group of strategy " +
             "board games for two players which involve diagonal moves of uniform game pieces and mandatory captures by jumping " +
@@ -19,4 +27,15 @@ public class CheckersConstants {
 
     public static final String imageUrl = "https://s-media-cache-ak0.pinimg.com/originals/9b/be/52/9bbe52e6923942696e66912c584ad9ad.png";
     public static final String bannerUrl = "https://ttoes.files.wordpress.com/2009/11/checkers.jpg";
+    public static final String time = "30 minutes";
+    public static final Integer randomChance = 1;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 7;
+    public static final Integer difficulty = 3;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

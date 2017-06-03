@@ -1,6 +1,14 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class TalismanConstants {
+
+    public static final String displayName = "Talisman";
 
     public static final String description = "Talisman is a fantasy-themed adventure board game for two to six players, originally designed and " +
             "produced by Games Workshop and now published by Fantasy Flight Games";
@@ -27,5 +35,17 @@ public class TalismanConstants {
 
     public static final String imageUrl = "https://1.bp.blogspot.com/-kG9lq8ULwIQ/VkmeS_KtdAI/AAAAAAAAAqE/tF3H3Av2cA8/s1600/layout-talisman-the-dragon.png";
     public static final String bannerUrl = "http://1.bp.blogspot.com/-o8nAUKHrmAA/T3JotYZ_BxI/AAAAAAAAAcA/7oqS76cYM18/s1600/TotalCon-029-1024x682.jpg";
+    public static final String time = "4 - 5 hours";
+    public static final Integer randomChance = 3;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 12;
+    public static final Integer difficulty = 4;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        tmpSet.add(GameCategory.FANTASY);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 
 }

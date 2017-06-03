@@ -1,6 +1,14 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class GoConstants {
+
+    public static final String displayName = "Go";
 
     public static final String description = "Go is an abstract strategy board game for two players, in which the aim is " +
             "to surround more territory than the opponent. The game was invented in ancient China more than 2,500 years ago, " +
@@ -25,4 +33,15 @@ public class GoConstants {
 
     public static final String imageUrl = "http://www.telgo.com/images/go-game.png";
     public static final String bannerUrl = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Go_board.jpg";
+    public static final String time = "20 - 90 minutes";
+    public static final Integer randomChance = 1;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 6;
+    public static final Integer difficulty = 5;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

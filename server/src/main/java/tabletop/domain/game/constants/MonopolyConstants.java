@@ -1,9 +1,18 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Ewa on 14.05.2017.
  */
 public class MonopolyConstants {
+    
+    public static final String displayName = "Monopoly";
+
     public static final String description = "Monopoly is a board game that originated in the United States in 1903 as a way to " +
             "demonstrate that an economy which rewards wealth creation is better " +
             "than one in which monopolists work under few constraints";
@@ -21,4 +30,16 @@ public class MonopolyConstants {
     public static final String imageUrl = "http://sad.hasbro.com/db7312c97e69f2aa2a48e9c156bbc05885942775/f4588a3ecaa676e34622199a51636d40.png";
 
     public static final String bannerUrl = "http://bi.gazeta.pl/im/59/43/12/z19151705IER,Monopoly-Krakow.jpg";
+    public static final String time = "1 - 3 hours";
+    public static final Integer randomChance = 4;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 8;
+    public static final Integer difficulty = 3;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        tmpSet.add(GameCategory.ECONOMIC);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

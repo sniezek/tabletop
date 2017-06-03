@@ -1,6 +1,14 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class RiskConstants {
+
+    public static final String displayName = "Risk";
 
     public static final String description = "Risk requires a lot of tactics, strategies and negotiation skills. " +
             "The aim is to occupy as many territories as possible through dice rolls. Whoever has world domination " +
@@ -17,4 +25,15 @@ public class RiskConstants {
 
     public static final String imageUrl = "http://sad.hasbro.com/db7312c97e69f2aa2a48e9c156bbc05885942775/a576c6ac51983c80d9e5776efac418e4.png";
     public static final String bannerUrl = "http://static2.businessinsider.com/image/51e6e68e69beddbf39000032/how-to-use-math-to-crush-your-friends-at-risk-like-youve-never-done-before.jpg";
+    public static final String time = "1 - 8 hours";
+    public static final Integer randomChance = 3;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 10;
+    public static final Integer difficulty = 5;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

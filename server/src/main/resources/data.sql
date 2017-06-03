@@ -407,7 +407,7 @@ VALUES (2, 'os. Dywizjonu 303 23/8', 50.085782, 20.006929, 'Dywizjon');
 INSERT INTO location(id, address, lat, lng, name)
 VALUES (3, 'ul. Meissnera 6/26', 50.078947, 19.975193, 'Salon gier Chuck');
 INSERT INTO location(id, address, lat, lng, name)
-VALUES (4, 'ul. Stanisława Dubois 33/35', 51.118346, 17.028938, 'Kawiarnia Hex');
+VALUES (4, 'ul. Dubois 33/35', 51.118346, 17.028938, 'Kawiarnia Hex');
 INSERT INTO location(id, address, lat, lng, name)
 VALUES (5, 'ul. Chwaliszewo 68', 52.408616, 16.942175, 'Kawroz Club');
 INSERT INTO location(id, address, lat, lng, name)
@@ -423,7 +423,7 @@ VALUES (3, 'Monopoly is my life!', 'Monopoly games', 3, 2);
 INSERT INTO event(id, description, name, location_id, organiser_id)
 VALUES (4, 'Just playing some Scrabble', 'Scrabble: the gathering', 5, 7);
 INSERT INTO event(id, description, name, location_id, organiser_id)
-VALUES (5, 'Just playing some MTG', 'MTG games', 4, 8);
+VALUES (5, 'Just playing some cards', 'Fantasy games rule', 4, 8);
 INSERT INTO event(id, description, name, location_id, organiser_id)
 VALUES (6, 'Checkers for all', 'Checkers lovers meetup', 6, 4);
 INSERT INTO event(id, description, name, location_id, organiser_id)

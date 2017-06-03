@@ -1,6 +1,14 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class BattleshipConstants {
+
+    public static final String displayName = "Battleship";
 
     public static final String description = "Battleship is a guessing game for two players. It is played on ruled grids" +
             " (paper or board) on which the players' fleets of ships (including battleships) are marked. The locations " +
@@ -27,4 +35,15 @@ public class BattleshipConstants {
 
     public static final String imageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Battleship_game_board.svg/300px-Battleship_game_board.svg.png";
     public static final String bannerUrl = "https://aos.iacpublishinglabs.com/question/aq/1400px-788px/pieces-game-battleship_e45bf936940bf5e7.jpg?domain=cx.aos.ask.com";
+    public static final String time = "20 minutes";
+    public static final Integer randomChance = 3;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 7;
+    public static final Integer difficulty = 1;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

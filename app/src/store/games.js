@@ -6,6 +6,7 @@ export const GET_GAME_DETAILS = "GET_GAME_DETAILS";
 export const GET_GAME_RANKING = "GET_GAME_RANKING";
 export const GET_INCOMING_GAMES = "GET_INCOMING_GAMES";
 export const GET_GAME_STATS = "GET_GAME_STATS";
+export const GET_PAGES_QUANTITY = "GET_PAGES_QUANTITY";
 
 export const getGames = () => dispatch =>
     Api.games().then((response) => {
@@ -35,14 +36,28 @@ export const getGameDetails = name => dispatch =>
       }
   });
 
-export const getGameRanking = gameName => dispatch =>
-  Api.ranking(gameName).then((response) => {
+export const getGameRanking = (gameName, page) => dispatch =>
+  Api.ranking(gameName, page).then((response) => {
       if (response.ok) {
           response.json().then((gameRankingList) => {
               dispatch({
                   type: GET_GAME_RANKING,
                   payload: {
                       gameRankingList
+                  }
+              });
+          });
+      }
+  });
+
+export const getPagesQuantity = gameName => dispatch =>
+  Api.pagesQuantity(gameName).then((response) => {
+      if (response.ok) {
+          response.json().then((pagesQuantity) => {
+              dispatch({
+                  type: GET_PAGES_QUANTITY,
+                  payload: {
+                      pagesQuantity
                   }
               });
           });
@@ -82,7 +97,10 @@ export const getGameStats = name => dispatch =>
 /* eslint-disable no-param-reassign */
 const initialState = {
     gamesList: [],
-    game: { name: "" },
+    game: {
+        name: "",
+        gameCategories: []
+    },
     gameRankingList: [],
     eventsList: [],
     gameStats: {
@@ -117,6 +135,11 @@ export default function gamesReducer(state = initialState, { type, payload }) {
         state = {
             ...state,
             gameStats: payload.gameStats
+        };
+    } else if (type === GET_PAGES_QUANTITY) {
+        state = {
+            ...state,
+            pagesQuantity: payload.pagesQuantity
         };
     }
     return state;
