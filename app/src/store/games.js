@@ -82,7 +82,10 @@ export const getGameStats = name => dispatch =>
 /* eslint-disable no-param-reassign */
 const initialState = {
     gamesList: [],
-    game: { name: "" },
+    game: {
+        name: "",
+        gameCategories: []
+    },
     gameRankingList: [],
     eventsList: [],
     gameStats: {
