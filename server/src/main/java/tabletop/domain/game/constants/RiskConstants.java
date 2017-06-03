@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class RiskConstants {
 
+    public static final String displayName = "Risk";
+
     public static final String description = "Risk requires a lot of tactics, strategies and negotiation skills. " +
             "The aim is to occupy as many territories as possible through dice rolls. Whoever has world domination " +
             "at the end wins the game.";

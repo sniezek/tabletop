@@ -10,6 +10,9 @@ import java.util.Set;
  * Created by Ewa on 14.05.2017.
  */
 public class MonopolyConstants {
+    
+    public static final String displayName = "Monopoly";
+
     public static final String description = "Monopoly is a board game that originated in the United States in 1903 as a way to " +
             "demonstrate that an economy which rewards wealth creation is better " +
             "than one in which monopolists work under few constraints";

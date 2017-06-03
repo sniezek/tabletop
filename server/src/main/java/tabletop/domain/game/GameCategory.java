@@ -1,5 +1,8 @@
 package tabletop.domain.game;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum GameCategory {
 
     STRATEGY("Strategy"),
@@ -13,4 +16,10 @@ public enum GameCategory {
     GameCategory(String name) {
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
+
+
 }

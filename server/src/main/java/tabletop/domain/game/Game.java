@@ -16,6 +16,7 @@ import static tabletop.domain.match.tournament.TournamentType.SWISS;
 public enum Game {
 
     CHESS("Chess",
+            ChessConstants.displayName,
             2,
             2,
             ChessConstants.description,
@@ -30,6 +31,7 @@ public enum Game {
             ChessWinInformation.class,
             SWISS),
     MONOPOLY("Monopoly",
+            MonopolyConstants.displayName,
             2,
             6,
             MonopolyConstants.description,
@@ -44,6 +46,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     SCRABBLE("Scrabble",
+            ScrabbleConstants.displayName,
             2,
             4,
             ScrabbleConstants.description,
@@ -58,6 +61,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     MAGIC("Magic",
+            MTGConstants.displayName,
             2,
             -1,
             MTGConstants.description,
@@ -72,6 +76,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     CHECKERS("Checkers",
+            CheckersConstants.displayName,
             2,
             2,
             CheckersConstants.description,
@@ -86,6 +91,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     TALISMAN("Talisman",
+            TalismanConstants.displayName,
             2,
             6,
             TalismanConstants.description,
@@ -100,6 +106,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     GO("Go",
+            GoConstants.displayName,
             2,
             2,
             GoConstants.description,
@@ -114,6 +121,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     MAHJONG("Mahjong",
+            MahjongConstants.displayName,
             2,
             4,
             MahjongConstants.description,
@@ -128,6 +136,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     RISK("Risk",
+            RiskConstants.displayName,
             2,
             6,
             RiskConstants.description,
@@ -142,6 +151,7 @@ public enum Game {
             BasicWinInformation.class,
             SWISS),
     BATTLESHIP("Battleship",
+            BattleshipConstants.displayName,
             2,
             2,
             BattleshipConstants.description,
@@ -157,6 +167,7 @@ public enum Game {
             SWISS);
 
     private final String id;
+    private final String displayName;
     private final String name;
     private final int minPlayers;
     private final int maxPlayers;
@@ -172,11 +183,12 @@ public enum Game {
     private final Integer minAge;
     private final Set<GameCategory> gameCategories;
 
-    Game(String name, int minPlayers, int maxPlayers, String description, String longDescription,
+    Game(String name, String displayName, int minPlayers, int maxPlayers, String description, String longDescription,
          String imageUrl, String bannerUrl, String time, Integer randomChance, Integer difficulty, Integer minAge, Set<GameCategory> gameCategories, Class<? extends WinInformation> winInformation,
          TournamentType... allowedTournamentTypes) {
         this.id = this.name();
         this.name = name;
+        this.displayName = displayName;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
         this.description = description;
@@ -198,6 +210,10 @@ public enum Game {
 
     public String getName() {
         return name;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 
     public int getMinPlayers() {

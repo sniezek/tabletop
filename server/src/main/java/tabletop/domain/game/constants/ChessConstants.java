@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class ChessConstants {
 
+    public static final String displayName = "Chess";
+
     public static final String description = "Two-player strategy board game played on a chessboard, a checkered " +
             "gameboard with 64 squares arranged in an " +
             "8×8 grid.";
@@ -30,6 +32,7 @@ public class ChessConstants {
     public static final Set<GameCategory> gameCategories;
     public static final Integer minAge = 12;
     public static final Integer difficulty = 5;
+
 
     static {
         Set<GameCategory> tmpSet = new HashSet<>();

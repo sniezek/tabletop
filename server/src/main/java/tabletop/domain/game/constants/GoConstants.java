@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class GoConstants {
 
+    public static final String displayName = "Go";
+
     public static final String description = "Go is an abstract strategy board game for two players, in which the aim is " +
             "to surround more territory than the opponent. The game was invented in ancient China more than 2,500 years ago, " +
             "and is therefore believed to be the oldest board game continuously played today.";

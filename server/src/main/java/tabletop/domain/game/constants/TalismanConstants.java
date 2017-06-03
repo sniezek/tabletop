@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class TalismanConstants {
 
+    public static final String displayName = "Talisman";
+
     public static final String description = "Talisman is a fantasy-themed adventure board game for two to six players, originally designed and " +
             "produced by Games Workshop and now published by Fantasy Flight Games";
 

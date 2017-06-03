@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class BattleshipConstants {
 
+    public static final String displayName = "Battleship";
+
     public static final String description = "Battleship is a guessing game for two players. It is played on ruled grids" +
             " (paper or board) on which the players' fleets of ships (including battleships) are marked. The locations " +
             "of the fleet are concealed from the other player. Players alternate turns calling \"shots\" at the other " +

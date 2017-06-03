@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class ScrabbleConstants {
 
+    public static final String displayName = "Scrabble";
+
     public static final String description = "Scrabble is a word game in which two to four players score points by " +
             "placing tiles, each bearing a single letter, onto a gameboard which is divided into a 15×15 grid of " +
             "squares. ";

@@ -8,6 +8,8 @@ import java.util.Set;
 
 public class MahjongConstants {
 
+    public static final String displayName = "Mahjong";
+
     public static final String description = "Mahjong is a tile-based game that originated in China during the Qing dynasty. " +
             "It is commonly played by four players.  It is a game of skill, strategy, and calculation and involves a degree of chance";
 
