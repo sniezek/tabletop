@@ -11,7 +11,6 @@ public enum TournamentType {
                     "designed to ensure that each competitor plays opponents with a similar running score, but not " +
                     "the same opponent more than once. "
     ),
-
     LADDER("Ladder", 2, 1024, true,
             "url(https://www.incimages.com/uploaded_files/image/1940x900/climbing-ladder-1940x900_34483.jpg) center / cover",
             "A ladder tournament is a form of tournament which has an element of elimination. Players are listed " +
