@@ -6,11 +6,12 @@ import TournamentHeader from "../components/TournamentHeader";
 const propTypes = {
     router: PropTypes.object.isRequired,
     title: PropTypes.string,
-    tournamentTypesView: PropTypes.bool.isRequired
+    tournamentTypesView: PropTypes.bool
 };
 
 const defaultProps = {
-    title: "Tournaments"
+    title: "Tournaments",
+    tournamentTypesView: false
 };
 
 const enhance = pure;

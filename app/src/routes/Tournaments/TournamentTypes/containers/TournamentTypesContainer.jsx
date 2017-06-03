@@ -9,14 +9,14 @@ const propTypes = {
     tournamentTypesList: PropTypes.array,
     router: PropTypes.object.isRequired,
     demoView: PropTypes.boolean,
-    playDemo: PropTypes.func,
+    redirectToDemo: PropTypes.func,
     getTournamentTypes: PropTypes.func
 };
 
 const defaultProps = {
     tournamentTypesList: [],
     demoView: false,
-    playDemo: () => {},
+    redirectToDemo: () => {},
     getTournamentTypes: () => {}
 };
 
@@ -40,7 +40,7 @@ class TournamentTypesContainer extends PureComponent {
             demoView: false
         };
         this.getTournamentTypes = this.getTournamentTypes.bind(this);
-        this.playDemo = this.playDemo.bind(this);
+        this.redirectToDemo = this.redirectToDemo.bind(this);
     }
 
     componentWillMount() {
@@ -55,10 +55,8 @@ class TournamentTypesContainer extends PureComponent {
         });
     }
 
-    playDemo = () => {
-        this.setState({
-            demoView: true
-        });
+    redirectToDemo = () => {
+        this.props.router.push("/tournament/demo");
     };
 
     render() {
@@ -66,7 +64,7 @@ class TournamentTypesContainer extends PureComponent {
             <TournamentTypesList
                 tournamentTypesList={this.props.tournamentTypesList}
                 router={this.props.router}
-                playDemo={this.playDemo}
+                redirectToDemo={this.redirectToDemo}
             />
         );
     }

@@ -8,17 +8,17 @@ import "../../components/Tournament.scss";
 const propTypes = {
     router: PropTypes.object.isRequired,
     tournamentTypesList: PropTypes.array,
-    playDemo: PropTypes.func,
+    redirectToDemo: PropTypes.func,
 };
 
 const defaultProps = {
     tournamentTypesList: [],
-    playDemo: () => {}
+    redirectToDemo: () => {}
 };
 
 const enhance = pure;
 
-const TournamentTypesList = ({ tournamentTypesList, playDemo, router, test }) => (
+const TournamentTypesList = ({ tournamentTypesList, redirectToDemo, router, test }) => (
     <div className="tournament-list">
         <h2>{test}</h2>
         {tournamentTypesList.map(tournament =>
@@ -37,7 +37,7 @@ const TournamentTypesList = ({ tournamentTypesList, playDemo, router, test }) =>
                         {tournament.description}
                     </CardText>
                     <CardActions>
-                        <Button colored onClick={() => playDemo()}>Start demo</Button>
+                        <Button colored onClick={() => redirectToDemo()}>Start demo</Button>
                     </CardActions>
                 </Card>
             </section>

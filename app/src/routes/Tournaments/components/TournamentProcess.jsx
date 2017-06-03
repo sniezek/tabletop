@@ -5,9 +5,9 @@ import TournamentStatusContainer from "../containers/TournamentStatusContainer";
 
 
 const propTypes = {
-  tournamentId: PropTypes.number,
-  finishTournament: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+    tournamentId: PropTypes.number,
+    finishTournament: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
@@ -37,11 +37,11 @@ class TournamentProcess extends PureComponent {
                         tournamentId={this.props.tournamentId}
                     />
         ) : (
-          <TournamentStatusContainer
-            tournamentId={this.props.tournamentId}
-            finishTournament={this.finishTournament}
-            router={this.props.router}
-          />
+            <TournamentStatusContainer
+                tournamentId={this.props.tournamentId}
+                finishTournament={this.finishTournament}
+                router={this.props.router}
+            />
         )
         }
             </div>

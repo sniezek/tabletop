@@ -8,22 +8,22 @@ import TournamentTypesContainer from "../containers/TournamentTypesContainer";
 const propTypes = {
     router: PropTypes.object.isRequired,
     tournamentTypesList: PropTypes.array,
-    playDemo: PropTypes.func,
+    redirectToDemo: PropTypes.func,
     demoView: PropTypes.bool,
     tournamentTypesView: PropTypes.bool,
 };
 
 const defaultProps = {
     tournamentTypesList: [],
-    playDemo: () => {},
+    redirectToDemo: () => {},
     demoView: false,
     tournamentTypesView: true
 };
 
 const enhance = pure;
 
-const TournamentTypes = ({ router, tournamentTypesList, playDemo, demoView, tournamentTypesView }) => (
-    <div className="tournamentTypes">
+const TournamentTypes = ({ router, tournamentTypesList, redirectToDemo, demoView, tournamentTypesView }) => (
+    <div className="tournaments">
         <TournamentHeaderContainer
             router={router}
             title="Tournament types"
@@ -33,7 +33,7 @@ const TournamentTypes = ({ router, tournamentTypesList, playDemo, demoView, tour
             router={router}
             tournamentTypesList={tournamentTypesList}
             demoView={demoView}
-            playDemo={playDemo}
+            redirectToDemo={redirectToDemo}
         />
     </div>
 );
