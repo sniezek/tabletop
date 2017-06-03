@@ -71,7 +71,7 @@ export const GameDetails = game => (
                         className="detailsCardTitle"
                         style={{ background: `url(${game.game.bannerUrl}) center / cover`, textShadow: "2px 2px grey" }}
                     >
-                        {game.game.name}
+                        {game.game.displayName}
                     </CardTitle>
                     <CardText>
                         <div>
