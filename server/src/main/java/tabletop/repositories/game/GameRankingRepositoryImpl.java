@@ -1,7 +1,9 @@
 package tabletop.repositories.game;
 
+import com.querydsl.core.types.ExpressionBase;
 import com.querydsl.core.types.Predicate;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import tabletop.controllers.game.GameRankingResponse;
@@ -27,6 +29,8 @@ import java.util.stream.Collectors;
 
 @Transactional
 public class GameRankingRepositoryImpl implements GameRankingRepositoryCustom {
+    private static final Long PAGE_SIZE = 5L;
+
     @Autowired
     private EntityManager entityManager;
 
@@ -76,13 +80,13 @@ public class GameRankingRepositoryImpl implements GameRankingRepositoryCustom {
     }
 
     @Override
-    public List<GameRankingResponse> getTopUsers(Game game) {
+    public List<GameRankingResponse> getTopUsers(Game game, int pageNum) {
         QGameRanking gameRanking = QGameRanking.gameRanking;
         QUser user = QUser.user;
         JPAQuery<GameRankingResponse> query = new JPAQuery(entityManager);
         query.from(gameRanking, user)
                 .where(gameRanking.userId.eq(user.id), gameRanking.gameName.eq(game.getName()));
-        return query.select(Projections.bean(GameRankingResponse.class, user.username, gameRanking.points)).orderBy(gameRanking.points.desc()).limit(20L).fetch();
+        return query.select(Projections.bean(GameRankingResponse.class, user.username, gameRanking.points)).orderBy(gameRanking.points.desc()).limit(PAGE_SIZE).offset((pageNum - 1) * PAGE_SIZE).fetch();
     }
 
     @Override
@@ -113,5 +117,15 @@ public class GameRankingRepositoryImpl implements GameRankingRepositoryCustom {
         List<Location> topLocations = locationQuery.select(location).limit(5L).fetch();
 
         return new GameStatisticsResponse(sparringCount, tournamentCount, eventsCount, topLocations);
+    }
+
+    @Override
+    public Long getRankingSize(Game game) {
+        QGameRanking gameRanking = QGameRanking.gameRanking;
+        QUser user = QUser.user;
+        JPAQuery<GameRankingResponse> query = new JPAQuery(entityManager);
+        query.from(gameRanking, user)
+                .where(gameRanking.userId.eq(user.id), gameRanking.gameName.eq(game.getName()));
+        return query.fetchCount();
     }
 }

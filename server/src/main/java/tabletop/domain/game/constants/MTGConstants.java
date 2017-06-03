@@ -8,12 +8,12 @@ import java.util.Set;
 
 public class MTGConstants {
 
-    public static final String displayName = "Magic: the Gathering";
+    public static final String displayName = "Magic: The Gathering";
 
-    public static final String description = "Magic: the Gathering is a tradable card game where you build your collection of " +
+    public static final String description = "Magic: The Gathering is a tradable card game where you build your collection of " +
             "cards by trading with your friends, assembling decks of cards, and battling against an opponent and their deck.";
 
-    public static final String longDescription = "Magic: the Gathering can be played by two or more players in various formats, the most common " +
+    public static final String longDescription = "Magic: The Gathering can be played by two or more players in various formats, the most common " +
             "of which uses a deck of 60+ cards, containing no more than 4 of a single card with the exception of basic land cards, " +
             "either in person with printed cards or using a deck of virtual cards through the Internet-based Magic: The Gathering Online, " +
             "on a smartphone or tablet, or other programs.\nEach game represents a battle between wizards known as \"planeswalkers\", who employ " +

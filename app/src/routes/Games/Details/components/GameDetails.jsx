@@ -105,26 +105,28 @@ export const GameDetails = game => (
                             </Cell>
                             <Cell col={6}>
                                 <table>
-                                    <tr>
-                                        <td>
+                                    <tbody>
+                                        <tr>
+                                            <td>
                                                 Random chance:
                                             </td>
-                                        <td>
-                                            <span className="indicator">
-                                                {lightUpRandomness(game.game.randomChance).map(x => x)}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
+                                            <td>
+                                                <span className="indicator">
+                                                    {lightUpRandomness(game.game.randomChance).map(x => x)}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
                                               Difficulty:
                                           </td>
-                                        <td>
-                                            <span className="indicator">
-                                                {lightUpDifficulty(game.game.difficulty).map(x => x)}
-                                            </span>
-                                        </td>
-                                    </tr>
+                                            <td>
+                                                <span className="indicator">
+                                                    {lightUpDifficulty(game.game.difficulty).map(x => x)}
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
                                 </table>
                             </Cell>
                         </Grid>

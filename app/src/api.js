@@ -204,8 +204,15 @@ class Api {
         });
     }
 
-    ranking(gameName) {
-        return fetch(`${API_SERVER}/rankings/${gameName}`, {
+    ranking(gameName, page) {
+        return fetch(`${API_SERVER}/rankings/${gameName}/${page}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    pagesQuantity(gameName) {
+        return fetch(`${API_SERVER}/rankings/size/${gameName}`, {
             method: "GET",
             credentials: "include"
         });

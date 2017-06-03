@@ -415,7 +415,7 @@ VALUES (3, 'Monopoly is my life!', 'Monopoly games', 3, 2);
 INSERT INTO event(id, description, name, location_id, organiser_id)
 VALUES (4, 'Just playing some Scrabble', 'Scrabble: the gathering', 5, 7);
 INSERT INTO event(id, description, name, location_id, organiser_id)
-VALUES (5, 'Just playing some M:tG', 'M:tG games', 4, 8);
+VALUES (5, 'Just playing some cards', 'Fantasy games rule', 4, 8);
 INSERT INTO event(id, description, name, location_id, organiser_id)
 VALUES (6, 'Checkers for all', 'Checkers lovers meetup', 6, 4);
 INSERT INTO event(id, description, name, location_id, organiser_id)

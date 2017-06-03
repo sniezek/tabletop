@@ -14,7 +14,9 @@ public interface GameRankingRepositoryCustom {
 
     List<GameRanking> getRankingForGame(List<User> users, Game game);
 
-    List<GameRankingResponse> getTopUsers(Game game);
+    List<GameRankingResponse> getTopUsers(Game game, int pageNum);
 
     GameStatisticsResponse getGameStatistics(Game game);
+
+    Long getRankingSize(Game game);
 }

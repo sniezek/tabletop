@@ -30,11 +30,11 @@ public class GameController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/rankings/{gameName}")
-    public List<GameRankingResponse> getRanking(@PathVariable String gameName) {
+    @RequestMapping(method = RequestMethod.GET, value = "/rankings/{gameName}/{pageNum}")
+    public List<GameRankingResponse> getRanking(@PathVariable String gameName, @PathVariable Integer pageNum) {
         try {
             Game game = Game.valueOf(gameName.toUpperCase());
-            return gameRankingService.getTopUsers(game);
+            return gameRankingService.getTopUsers(game, pageNum);
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException();
         }
@@ -45,6 +45,16 @@ public class GameController {
         try {
             Game game = Game.valueOf(gameName.toUpperCase());
             return gameRankingService.getRankingForGame(users, game);
+        } catch (IllegalArgumentException e) {
+            throw new ResourceNotFoundException();
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/rankings/size/{gameName}")
+    public Long getRankingSize(@PathVariable String gameName) {
+        try {
+            Game game = Game.valueOf(gameName.toUpperCase());
+            return gameRankingService.getRankingSize(game);
         } catch (IllegalArgumentException e) {
             throw new ResourceNotFoundException();
         }
