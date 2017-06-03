@@ -40,4 +40,33 @@ public class UserController {
     public ResponseEntity<User> getAuthenticatedUser() {
         return ResponseEntity.ok(userService.getAuthenticatedUser().get());
     }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/editmail")
+
+    public ResponseEntity<?> editMail(@Valid @RequestBody User user, ControllerErrors errors) {
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+        return ResponseUtils.created(userService.editMail(user));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/editpassword")
+
+    public ResponseEntity<?> editPassword(@Valid @RequestBody User user, ControllerErrors errors) {
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        return ResponseUtils.created(userService.editPassword(user));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/user/remind")
+
+    public ResponseEntity<?> remind(@Valid @RequestBody String email, ControllerErrors errors) {
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        return ResponseUtils.created(userService.remindPassword(email));
+    }
 }

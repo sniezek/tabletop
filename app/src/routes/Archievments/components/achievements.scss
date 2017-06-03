@@ -1,0 +1,103 @@
+.achievements {
+  flex: 1 1 auto;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+}
+
+.achievementsList {
+  margin: 20px;
+}
+
+.achievementTile {
+  padding: 20px;
+}
+
+.achievementsList section > .section__play-btn {
+  min-height: 200px;
+}
+
+.achievementsList section > header > .material-icons {
+  font-size: 3rem;
+}
+
+.achievementsList section > button {
+  position: absolute;
+  z-index: 99;
+  top: 8px;
+  right: 8px;
+}
+
+.achievementsList .mdl-card {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+.achievementsList .mdl-card > * {
+  height: auto;
+}
+.achievementsList .mdl-card .mdl-card__supporting-text {
+  margin: 40px;
+  flex-grow: 1;
+  padding: 0;
+  color: inherit;
+  width: calc(100% - 80px);
+}
+.achievementsList .mdl-card__supporting-text h4 {
+  margin-top: 0;
+  margin-bottom: 0px;
+}
+.achievementsList .mdl-card__actions {
+  margin: 0;
+  padding: 4px 40px;
+  color: inherit;
+}
+.achievementsList .mdl-card__actions a {
+  color: #00BCD4;
+  margin: 0;
+}
+.achievementsList .mdl-card__actions a:hover,
+.achievementsList .mdl-card__actions a:active {
+  color: inherit;
+  background-color: transparent;
+}
+.achievementsList .mdl-card__supporting-text + .mdl-card__actions {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.achievementsSettings {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.achievementsDescription {
+  margin-top: 10px;
+  display: block;
+}
+
+.achievementsSettings span i.material-icons {
+  vertical-align: middle;
+}
+
+.tileImageAquired {
+  max-height: 180px;
+  border: 3px;
+  border: green;
+
+}
+.tileImage {
+  max-height: 180px;
+  border: 3px;
+  border: green;
+  filter: grayscale(100%);
+}
+
+.imageSection {
+  align-content: center;
+  padding: 20px;
+
+}
+
+.achievementsSection {
+  margin-bottom: 15px;
+}

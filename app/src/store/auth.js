@@ -2,14 +2,16 @@ import Api from "../api";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
+export const REMIND = "REMIND";
 
 const dispatchLogin = (response, dispatch) =>
-    response.json().then(({ username, email }) => {
+    response.json().then(({ username, email, id }) => {
         dispatch({
             type: USER_LOGIN,
             payload: {
                 username,
-                email
+                email,
+                id
             }
         });
     });
@@ -37,10 +39,23 @@ export const logout = callback => dispatch =>
 export const register = ({ username, password, email }, callback) => dispatch =>
     Api.register({ username, password, email }).then((response) => {
         if (response.ok) {
-            login({ username, password }, callback)(dispatch);
+            response.json().then(({ id }) => {
+                login({ username, password, id }, callback)(dispatch);
+            });
         } else {
             callback(response);
         }
+    });
+
+export const remind = ({ email }, callback) => dispatch =>
+    Api.remind({ email }).then((response) => {
+        if (response.ok) {
+            dispatch({
+                type: REMIND
+            });
+        }
+
+        callback(response);
     });
 
 export const data = callback => dispatch =>
@@ -56,6 +71,7 @@ const initialState = null;
 export default function authReducer(state = initialState, { type, payload }) {
     if (type === USER_LOGIN) {
         return {
+            id: payload.id,
             name: payload.username,
             email: payload.email
         };

@@ -26,12 +26,17 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('com.querydsl:querydsl-apt:4.1.4:jpa')
 	compile('com.querydsl:querydsl-jpa:4.1.4')
-	compile('com.h2database:h2')
+//	compile('com.h2database:h2')
+	compile('mysql:mysql-connector-java')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile("org.springframework.boot:spring-boot-starter-data-rest")
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('com.allanditzel:spring-security-csrf-token-filter:1.1')
+	compile('org.apache.httpcomponents:httpclient:4.5.3')
 	compile('com.google.guava:guava:21.0')
+	compile("com.querydsl:querydsl-jpa:4.1.4")
+	compile("com.querydsl:querydsl-apt:4.1.4:jpa")
+	compile("javax.mail:mail:1.5.0-b01")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

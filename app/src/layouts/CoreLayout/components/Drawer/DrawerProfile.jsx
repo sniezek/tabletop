@@ -25,9 +25,10 @@ const DrawerProfile = ({ email, name }) => (
         />
         <div className="drawer-profile__links">
             <Link to={`/users/${name}`} className="drawer-profile__name">{name}</Link>
+            <Link to={`/users/edit`} className="drawer-profile__edit-account">Edit Account</Link>
             <Link to="/logout" className="drawer-profile__logout">
                 <Icon name="exit_to_app" className="drawer-profile__logout-icon" />
-                logout
+                Logout
             </Link>
         </div>
     </div>

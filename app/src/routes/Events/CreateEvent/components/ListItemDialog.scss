@@ -2,7 +2,7 @@
     width: 500px;
 
     &__type {
-        margin-bottom: 16px;
+        margin-bottom: 8px;
     }
 
     &__group {
@@ -18,7 +18,8 @@
         }
 
         & > .icon-textfield:first-child,
-        & > label:first-child {
+        & > label:first-child,
+        & > .icon-select:first-child {
             margin-right: 16px;
         }
     }

@@ -38,7 +38,7 @@ class LocationFilterContainer extends PureComponent {
     clearInput(value) {
         const { location } = this.props;
 
-        if (location !== null && location.name !== value) {
+        if (location !== null && location.label !== value) {
             this.geosuggest.clear();
             this.props.setLocation(null);
         }

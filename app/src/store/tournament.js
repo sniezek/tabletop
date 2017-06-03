@@ -23,12 +23,12 @@ export const GIVE_UP = "GIVE_UP";
  returns a function for lazy evaluation. It is incredibly useful for
  creating async actions, especially when combined with redux-thunk! */
 
-export const showTournament = (id) => dispatch =>
+export const showTournament = id => dispatch =>
       dispatch({
-        type: SHOW_TOURNAMENT,
-        payload: {
-          id
-        }
+          type: SHOW_TOURNAMENT,
+          payload: {
+              id
+          }
       });
 
 export const getTournament = ({ id }, callback) => dispatch =>
@@ -110,16 +110,16 @@ export const setWinner = (id, winner, callback) => dispatch =>
   });
 
 function dispatchTournamentStateAction(dispatch) {
-  return (tournament) => {
-    dispatch({
-      type: INITIAL_ROUND,
-      payload: {
-        pairs: tournament.pairs,
-        creator: tournament.creator,
-        isCurrentUserParticipant: tournament.participant
-      }
-    });
-  }
+    return (tournament) => {
+        dispatch({
+            type: INITIAL_ROUND,
+            payload: {
+                pairs: tournament.pairs,
+                creator: tournament.creator,
+                isCurrentUserParticipant: tournament.participant
+            }
+        });
+    };
 }
 
 export const initialRound = (id, callback) => dispatch =>
@@ -133,25 +133,25 @@ export const initialRound = (id, callback) => dispatch =>
 
 export const getTournaments = (id, callback) => dispatch =>
   Api.getTournaments(id).then((response) => {
-    if (response.ok) {
-      response.json().then((tournaments) => {
-        dispatch({
-          type: GET_TOURNAMENTS,
-          payload: {
-            tournaments
-          }
-        });
-      });
-    }
-    callback(response);
+      if (response.ok) {
+          response.json().then((tournaments) => {
+              dispatch({
+                  type: GET_TOURNAMENTS,
+                  payload: {
+                      tournaments
+                  }
+              });
+          });
+      }
+      callback(response);
   });
 
 export const getState = (id, callback) => dispatch =>
   Api.getState(id).then((response) => {
-    if (response.ok) {
-      response.json().then(dispatchTournamentStateAction(dispatch));
-    }
-    callback(response);
+      if (response.ok) {
+          response.json().then(dispatchTournamentStateAction(dispatch));
+      }
+      callback(response);
   });
 
 export const finishTournament = (id, callback) => dispatch =>
@@ -164,13 +164,13 @@ export const finishTournament = (id, callback) => dispatch =>
       callback(response);
   });
 
-export const giveUp = (id) => dispatch =>
+export const giveUp = id => dispatch =>
   Api.giveUp(id).then((response) => {
-    if (response.ok) {
-      dispatch({
-        type: GIVE_UP
-      });
-    }
+      if (response.ok) {
+          dispatch({
+              type: GIVE_UP
+          });
+      }
   });
 
 
@@ -192,30 +192,34 @@ export const actions = {
 // ------------------------------------
 /* eslint-disable no-param-reassign */
 const initialState = {
-  pairs: [],
-  creator: {
-    username: ""
-  },
-  isCurrentUserParticipant: false,
-  tournaments: [],
-  tournamentId: -1
+    pairs: [],
+    creator: {
+        username: ""
+    },
+    isCurrentUserParticipant: false,
+    tournaments: [],
+    tournamentId: 0
 };
 
 export default function tournamentReducer(state = initialState, { type, payload }) {
     if (type === GET_TOURNAMENT) {
         state = {
+            ...state,
             pairs: payload.pairs
         };
     } else if (type === GET_TOURNAMENT_TYPES) {
         state = {
+            ...state,
             tournamentTypesList: payload.tournamentTypesList
         };
     } else if (type === GET_FINAL_RESULTS) {
         state = {
+            ...state,
             finalResults: payload.finalResults
         };
     } else if (type === GET_FINISHED_TOURNAMENTS) {
         state = {
+            ...state,
             finishedTournamentsList: payload.finishedTournamentsList
         };
     } else if (type === INITIAL_ROUND || type === GET_STATE || type === NEXT_ROUND) {
@@ -225,16 +229,16 @@ export default function tournamentReducer(state = initialState, { type, payload 
             creator: payload.creator,
             isCurrentUserParticipant: payload.isCurrentUserParticipant
         };
-    } else if (type === SHOW_TOURNAMENT){
+    } else if (type === SHOW_TOURNAMENT) {
         state = {
             ...state,
             tournamentId: payload.id
-        }
-    } else if (type === GET_TOURNAMENTS){
+        };
+    } else if (type === GET_TOURNAMENTS) {
         state = {
             ...state,
             tournaments: payload.tournaments
-        }
+        };
     }
     return state;
 }

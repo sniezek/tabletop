@@ -1,6 +1,7 @@
 import queryString from "query-string";
 
 export const API_SERVER = "http://localhost:8080";
+export const ACHI_SERVER = "http://localhost:9000";
 
 const generateQueryString = params => queryString.stringify(params);
 
@@ -17,9 +18,48 @@ class Api {
         this.getState = this.getState.bind(this);
         this.setWinner = this.setWinner.bind(this);
         this.finishTournament = this.finishTournament.bind(this);
-        this.getTournaments = this.getTournaments.bind(this);
         this.events = this.events.bind(this);
         this.createEvent = this.createEvent.bind(this);
+        this.editMail = this.editMail.bind(this);
+        this.editPass = this.editPass.bind(this);
+        this.achievements = this.achievements.bind(this);
+        this.newAchievements = this.newAchievements.bind(this);
+        this.allAchivements = this.allAchivements.bind(this);
+        this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
+        this.user = this.user.bind(this);
+        this.games = this.games.bind(this);
+        this.tournamentTypes = this.tournamentTypes.bind(this);
+        this.finishedTournaments = this.finishedTournaments.bind(this);
+        this.register = this.register.bind(this);
+        this.initialRound = this.initialRound.bind(this);
+        this.setWinner = this.setWinner.bind(this);
+        this.finishTournament = this.finishTournament.bind(this);
+        this.events = this.events.bind(this);
+        this.createEvent = this.createEvent.bind(this);
+        this.remind = this.remind.bind(this);
+        this.event = this.event.bind(this);
+    }
+
+    achievements(userID) {
+        return fetch(`${ACHI_SERVER}/achi/${userID}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    newAchievements(userID) {
+        return fetch(`${ACHI_SERVER}/newAchivements/${userID}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    allAchivements() {
+        return fetch(`${ACHI_SERVER}/allAchivements`, {
+            method: "GET",
+            credentials: "include"
+        });
     }
 
     user() {
@@ -127,12 +167,25 @@ class Api {
         });
     }
 
+    game(name) {
+        return fetch(`${API_SERVER}/games/${name}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
     events(filters = {}) {
         const qs = generateQueryString(filters);
 
         return fetch(`${API_SERVER}/events?${qs}`, {
             method: "GET",
             credentials: "include"
+        });
+    }
+
+    event(id) {
+        return fetch(`${API_SERVER}/events/${id}`, {
+            method: "GET"
         });
     }
 
@@ -165,17 +218,72 @@ class Api {
         });
     }
 
-    getTournaments(id) {
-        return fetch(`${API_SERVER}/events/getTournaments/${id}`, {
-          method: "GET",
-          credentials: "include"
-        });
-    }
-
     giveUp(id) {
         return fetch(`${API_SERVER}/tournament/giveup/${id}`, {
             method: "POST",
             credentials: "include"
+        });
+    }
+
+    ranking(gameName) {
+        return fetch(`${API_SERVER}/rankings/${gameName}`, {
+            method: "GET",
+            credentials: "include"
+        });
+    }
+
+    remind({ email }) {
+        const body = JSON.stringify({
+            email
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/remind`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
+    editMail({ username, email, password }) {
+        const body = JSON.stringify({
+            username,
+            email,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editmail`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
+    editPass({ username, email, password }) {
+        const body = JSON.stringify({
+            username,
+            email,
+            password
+        });
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/user/editpassword`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
         });
     }
 }
