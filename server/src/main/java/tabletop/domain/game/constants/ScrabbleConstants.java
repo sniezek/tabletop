@@ -1,5 +1,11 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class ScrabbleConstants {
 
     public static final String description = "Scrabble is a word game in which two to four players score points by " +
@@ -18,4 +24,15 @@ public class ScrabbleConstants {
 
     public static final String imageUrl = "http://old.e-s-g.eu/Images/Spiele/Themen/Scrabble/SCRABBLE%20Buchstaben.gif";
     public static final String bannerUrl = "http://theromantic.com/wp-content/uploads/2015/07/romantic-games-scrabbling-.jpg";
+    public static final String time = "50 minutes";
+    public static final Integer randomChance = 2;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 8;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        tmpSet.add(GameCategory.WORD_GAME);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

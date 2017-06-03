@@ -1,5 +1,11 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Ewa on 14.05.2017.
  */
@@ -21,4 +27,15 @@ public class MonopolyConstants {
     public static final String imageUrl = "http://sad.hasbro.com/db7312c97e69f2aa2a48e9c156bbc05885942775/f4588a3ecaa676e34622199a51636d40.png";
 
     public static final String bannerUrl = "http://bi.gazeta.pl/im/59/43/12/z19151705IER,Monopoly-Krakow.jpg";
+    public static final String time = "1 - 3 hours";
+    public static final Integer randomChance = 4;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 8;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        tmpSet.add(GameCategory.ECONOMIC);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }

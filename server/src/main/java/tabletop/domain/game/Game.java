@@ -22,15 +22,23 @@ public enum Game {
             ChessConstants.longDescription,
             ChessConstants.imageUrl,
             ChessConstants.bannerUrl,
+            ChessConstants.time,
+            ChessConstants.randomChance,
+            ChessConstants.minAge,
+            ChessConstants.gameCategories,
             ChessWinInformation.class,
             SWISS),
     MONOPOLY("Monopoly",
             2,
-            10,
+            6,
             MonopolyConstants.description,
             MonopolyConstants.longDescription,
             MonopolyConstants.imageUrl,
             MonopolyConstants.bannerUrl,
+            MonopolyConstants.time,
+            MonopolyConstants.randomChance,
+            MonopolyConstants.minAge,
+            MonopolyConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     SCRABBLE("Scrabble",
@@ -40,6 +48,10 @@ public enum Game {
             ScrabbleConstants.longDescription,
             ScrabbleConstants.imageUrl,
             ScrabbleConstants.bannerUrl,
+            ScrabbleConstants.time,
+            ScrabbleConstants.randomChance,
+            ScrabbleConstants.minAge,
+            ScrabbleConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     MAGIC("Magic",
@@ -49,6 +61,10 @@ public enum Game {
             MTGConstants.longDescription,
             MTGConstants.imageUrl,
             MTGConstants.bannerUrl,
+            MTGConstants.time,
+            MTGConstants.randomChance,
+            MTGConstants.minAge,
+            MTGConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     CHECKERS("Checkers",
@@ -58,6 +74,10 @@ public enum Game {
             CheckersConstants.longDescription,
             CheckersConstants.imageUrl,
             CheckersConstants.bannerUrl,
+            CheckersConstants.time,
+            CheckersConstants.randomChance,
+            CheckersConstants.minAge,
+            CheckersConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     TALISMAN("Talisman",
@@ -67,6 +87,10 @@ public enum Game {
             TalismanConstants.longDescription,
             TalismanConstants.imageUrl,
             TalismanConstants.bannerUrl,
+            TalismanConstants.time,
+            TalismanConstants.randomChance,
+            TalismanConstants.minAge,
+            TalismanConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     GO("Go",
@@ -76,15 +100,23 @@ public enum Game {
             GoConstants.longDescription,
             GoConstants.imageUrl,
             GoConstants.bannerUrl,
+            GoConstants.time,
+            GoConstants.randomChance,
+            GoConstants.minAge,
+            GoConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     MAHJONG("Mahjong",
-            4,
+            2,
             4,
             MahjongConstants.description,
             MahjongConstants.longDescription,
             MahjongConstants.imageUrl,
             MahjongConstants.bannerUrl,
+            MahjongConstants.time,
+            MahjongConstants.randomChance,
+            MahjongConstants.minAge,
+            MahjongConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     RISK("Risk",
@@ -94,6 +126,10 @@ public enum Game {
             RiskConstants.longDescription,
             RiskConstants.imageUrl,
             RiskConstants.bannerUrl,
+            RiskConstants.time,
+            RiskConstants.randomChance,
+            RiskConstants.minAge,
+            RiskConstants.gameCategories,
             BasicWinInformation.class,
             SWISS),
     BATTLESHIP("Battleship",
@@ -103,6 +139,10 @@ public enum Game {
             BattleshipConstants.longDescription,
             BattleshipConstants.imageUrl,
             BattleshipConstants.bannerUrl,
+            BattleshipConstants.time,
+            BattleshipConstants.randomChance,
+            BattleshipConstants.minAge,
+            BattleshipConstants.gameCategories,
             BasicWinInformation.class,
             SWISS);
 
@@ -116,9 +156,13 @@ public enum Game {
     private final String bannerUrl;
     private final Class<? extends WinInformation> winInformation;
     private final Set<TournamentType> allowedTournamentTypes;
+    private final String time;
+    private final Integer randomChance;
+    private final Integer minAge;
+    private final Set<GameCategory> gameCategories;
 
     Game(String name, int minPlayers, int maxPlayers, String description, String longDescription,
-         String imageUrl, String bannerUrl, Class<? extends WinInformation> winInformation,
+         String imageUrl, String bannerUrl, String time, Integer randomChance, Integer minAge, Set<GameCategory> gameCategories, Class<? extends WinInformation> winInformation,
          TournamentType... allowedTournamentTypes) {
         this.id = this.name();
         this.name = name;
@@ -128,6 +172,10 @@ public enum Game {
         this.longDescription = longDescription;
         this.imageUrl = imageUrl;
         this.bannerUrl = bannerUrl;
+        this.time = time;
+        this.randomChance = randomChance;
+        this.minAge = minAge;
+        this.gameCategories = gameCategories;
         this.winInformation = winInformation;
         this.allowedTournamentTypes = Sets.newHashSet(allowedTournamentTypes);
     }
@@ -170,5 +218,21 @@ public enum Game {
 
     public Set<TournamentType> getAllowedTournamentTypes() {
         return allowedTournamentTypes;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public Integer getRandomChance() {
+        return randomChance;
+    }
+
+    public Set<GameCategory> getGameCategories() {
+        return gameCategories;
+    }
+
+    public Integer getMinAge() {
+        return minAge;
     }
 }

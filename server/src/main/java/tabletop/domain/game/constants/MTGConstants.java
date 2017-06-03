@@ -1,5 +1,11 @@
 package tabletop.domain.game.constants;
 
+import tabletop.domain.game.GameCategory;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 public class MTGConstants {
 
     public static final String description = "Magic is a tradable card game where you build your collection of " +
@@ -19,4 +25,16 @@ public class MTGConstants {
 
     public static final String imageUrl = "https://www.enlighteningmindsgaming.com/wp-content/uploads/2017/02/magic-logo-min.png";
     public static final String bannerUrl = "http://guttulus.com/wp-content/uploads/2016/09/3059639-poster-1280-magic-the-gathering-lessons.jpg";
+    public static final String time = "30 minutes";
+    public static final Integer randomChance = 3;
+    public static final Set<GameCategory> gameCategories;
+    public static final Integer minAge = 13;
+
+    static {
+        Set<GameCategory> tmpSet = new HashSet<>();
+        tmpSet.add(GameCategory.STRATEGY);
+        tmpSet.add(GameCategory.CARD_GAME);
+        tmpSet.add(GameCategory.FANTASY);
+        gameCategories = Collections.unmodifiableSet(tmpSet);
+    }
 }
