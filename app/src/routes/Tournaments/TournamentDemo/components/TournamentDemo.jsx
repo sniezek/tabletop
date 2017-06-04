@@ -2,8 +2,8 @@ import React from "react";
 import pure from "recompose/pure";
 import PropTypes from "prop-types";
 import "../../components/Tournament.scss";
-import TournamentHeaderContainer from "../../containers/TournamentHeaderContainer";
-import TournamentProcessConatainer from "../../containers/TournamentProcessContainer";
+import TournamentHeaderContainer from "../../TournamentHeader/containers/TournamentHeaderContainer";
+import TournamentDemoContainer from "../containers/TournamentDemoContainer";
 
 const propTypes = {
     router: PropTypes.object.isRequired,
@@ -23,8 +23,10 @@ const TournamentDemo = ({ router, tournamentName }) => (
             router={router}
             title={`${tournamentName} demo`}
         />
-        <TournamentProcessConatainer
+        <TournamentDemoContainer
             router={router}
+            // demoId={router.id} todo get id from url
+            demoId={1}
         />
     </div>
 );

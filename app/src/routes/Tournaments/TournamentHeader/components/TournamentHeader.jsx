@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import { ViewHeader } from "../../../components/View";
+import { ViewHeader } from "../../../../components/View/index";
 import TournamentHeaderOptions from "./TournamentHeaderOptions";
 
 const propTypes = {

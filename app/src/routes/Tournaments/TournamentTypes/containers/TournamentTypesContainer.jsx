@@ -8,14 +8,12 @@ import TournamentTypesList from "../components/TournamentTypesList";
 const propTypes = {
     tournamentTypesList: PropTypes.array,
     router: PropTypes.object.isRequired,
-    demoView: PropTypes.boolean,
     redirectToDemo: PropTypes.func,
     getTournamentTypes: PropTypes.func
 };
 
 const defaultProps = {
     tournamentTypesList: [],
-    demoView: false,
     redirectToDemo: () => {},
     getTournamentTypes: () => {}
 };
@@ -55,8 +53,8 @@ class TournamentTypesContainer extends PureComponent {
         });
     }
 
-    redirectToDemo = () => {
-        this.props.router.push("/tournament/demo");
+    redirectToDemo = (id) => {
+        this.props.router.push(`/tournament/demo/${id}`);
     };
 
     render() {
@@ -68,7 +66,6 @@ class TournamentTypesContainer extends PureComponent {
             />
         );
     }
-
 }
 
 TournamentTypesContainer.propTypes = propTypes;

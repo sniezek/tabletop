@@ -18,9 +18,9 @@ const defaultProps = {
 
 const enhance = pure;
 
-const TournamentTypesList = ({ tournamentTypesList, redirectToDemo, router, test }) => (
+const TournamentTypesList = ({ tournamentTypesList, redirectToDemo, router}) => (
     <div className="tournament-list">
-        <h2>{test}</h2>
+        <h2></h2>
         {tournamentTypesList.map(tournament =>
             <section key={tournament.name}>
                 <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>
@@ -37,7 +37,7 @@ const TournamentTypesList = ({ tournamentTypesList, redirectToDemo, router, test
                         {tournament.description}
                     </CardText>
                     <CardActions>
-                        <Button colored onClick={() => redirectToDemo()}>Start demo</Button>
+                        <Button colored onClick={() => redirectToDemo(tournament.demoId)}>Start demo</Button>
                     </CardActions>
                 </Card>
             </section>

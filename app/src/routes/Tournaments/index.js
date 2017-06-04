@@ -17,12 +17,12 @@ export default store => ({
             }, "tournament-types");
         }
     }, {
-        path: "/tournament/demo",
+        path: "/tournament/demo/:id",
         getComponent(nextState, cb) {
-          require.ensure([], (require) => {
-            const TournamentDemo= require("./TournamentDemo/components/TournamentDemo").default;
-            cb(null, TournamentDemo);
-          }, "tournament-demo");
+            require.ensure([], (require) => {
+                const TournamentDemo = require("./TournamentDemo/components/TournamentDemo").default;
+                cb(null, TournamentDemo);
+            }, "tournament-demo");
         }
     }
     ]

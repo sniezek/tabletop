@@ -2,21 +2,19 @@ import React from "react";
 import pure from "recompose/pure";
 import PropTypes from "prop-types";
 import "../../components/Tournament.scss";
-import TournamentHeaderContainer from "../../containers/TournamentHeaderContainer";
+import TournamentHeaderContainer from "../../TournamentHeader/containers/TournamentHeaderContainer";
 import TournamentTypesContainer from "../containers/TournamentTypesContainer";
 
 const propTypes = {
     router: PropTypes.object.isRequired,
     tournamentTypesList: PropTypes.array,
     redirectToDemo: PropTypes.func,
-    demoView: PropTypes.bool,
     tournamentTypesView: PropTypes.bool,
 };
 
 const defaultProps = {
     tournamentTypesList: [],
     redirectToDemo: () => {},
-    demoView: false,
     tournamentTypesView: true
 };
 
@@ -32,7 +30,6 @@ const TournamentTypes = ({ router, tournamentTypesList, redirectToDemo, demoView
         <TournamentTypesContainer
             router={router}
             tournamentTypesList={tournamentTypesList}
-            demoView={demoView}
             redirectToDemo={redirectToDemo}
         />
     </div>
