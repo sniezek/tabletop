@@ -100,8 +100,12 @@ class EditContainer extends PureComponent {
             this.setState({
                 loading: false
             });
-        }
-        else if(newPassword===confirmNewPassword) {
+        } else if (!newPassword.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+          alert("Your password should be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and one special character from !@#$%^&*");
+          this.setState({
+            loading:false
+          });
+        } else if(newPassword===confirmNewPassword) {
             this.props.editPass({
                 username,
                 email: oldemail,

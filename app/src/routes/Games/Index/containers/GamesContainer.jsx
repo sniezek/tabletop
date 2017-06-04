@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { Card, CardTitle, CardText, CardActions, Grid, Cell } from "react-mdl/lib";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getGames } from "../../../../store/games";
 
 const propTypes = {
     gamesList: PropTypes.array
@@ -12,9 +11,7 @@ const defaultProps = {
     gamesList: []
 };
 
-const mapDispatchToProps = dispatch => ({
-    getGames: getGames(dispatch)
-});
+const mapDispatchToProps = {};
 
 const mapStateToProps = state => ({
     gamesList: state.games.gamesList

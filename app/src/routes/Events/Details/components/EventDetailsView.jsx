@@ -1,21 +1,21 @@
 import React from "react";
 import pure from "recompose/pure";
-import { View, ViewHeader, ViewContent } from "../../../../components/View";
-import TournamentListContainer from "../containers/TournamentListContainer.jsx";
+import PropTypes from "prop-types";
+import EventDetailsContainer from "../containers/EventDetailsContainer.jsx";
+
+const propTypes = {
+    router: PropTypes.object.isRequired
+};
 
 const enhance = pure;
 
 const EventDetailsView = ({ router }) => (
-    <View>
-        <ViewHeader
-            title="Event details"
-        />
-        <ViewContent>
-            <TournamentListContainer
-              router={router}
-            />
-        </ViewContent>
-    </View>
+    <EventDetailsContainer
+        id={parseInt(router.params.id, 10)}
+        router={router}
+    />
 );
+
+EventDetailsView.propTypes = propTypes;
 
 export default enhance(EventDetailsView);

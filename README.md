@@ -20,6 +20,25 @@ Users have a variety of statistics and they can get achievements for being activ
 * [rafalzelazko](https://github.com/rafalzelazko) (Users)
 * [l0rd11](https://github.com/l0rd11) (Achievements)
 * [Vlizer](https://github.com/Vlizer) (Achievements)
+
+## Database
+### Starting stanalone
+Start a MySQL server (mysqld.exe). At first you have to connect to it with a MySQL client (mysql.exe) and create the database and user and grant all permissions:
+```
+mysql> create database db_example; -- Create the new database
+mysql> create user 'springuser'@'localhost' identified by 'ThePassword'; -- Creates the user
+mysql> grant all on db_example.* to 'springuser'@'localhost'; -- Gives all the privileges to the new user on the newly created database
+```
+
+### Starting in Docker
+* Windows 7: https://docs.docker.com/toolbox/toolbox_install_windows/ - it wil start Docker in a virtual machine with its own ip address logged during the start of the VM so you have to use it to conect to the database or start the database locally on your machine with the setings from the next paragraph.
+* Windows 10 :https://docs.docker.com/docker-for-windows/
+
+Assuming you have alredy started Docker, type:
+```
+docker run --name demo-mysql -e MYSQL_ROOT_PASSWORD=password -e MYSQL_DATABASE=db_example -e MYSQL_USER=springuser -e MYSQL_PASSWORD=ThePassword -p 3306:3306 -d mysql:5.6
+```
+
 ## Server
 ### Starting
 ```
@@ -28,13 +47,6 @@ $ gradlew bootRun
 ```
 Server will be available at `localhost:8080`.
 
-Currently, an in-memory SQL H2 database is used. Its state is saved to file and automatically loaded on the next server startup. A console for the database is available at `localhost:8080/h2` with these credentials:
-```
-Driver Class: org.h2.Driver
-JDBC URL: jdbc:h2:file:./db
-User Name: sa
-Password: (blank)
-```
 ### Stack
 * Spring Boot
 * Spring Security
@@ -72,10 +84,10 @@ Extracted from [React Redux starter kit](https://github.com/davezuko/react-redux
 
 ## Achievements
 You need:
-* [Sbt](http://www.scala-sbt.org/)
+* [sbt](http://www.scala-sbt.org/)
 
 ### Setup
-If you want run it type:
+To run it type:
 ```
 $ sbt run
 ```

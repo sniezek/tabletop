@@ -15,9 +15,9 @@ const StepHeader = ({ setStep, step }) => (
         activeTab={step}
         onChange={setStep}
     >
-        <Tab>Details</Tab>
-        <Tab>Sparrings</Tab>
-        <Tab>Tournaments</Tab>
+        <Tab href="javascript:;">Details</Tab>
+        <Tab href="javascript:;">Sparrings</Tab>
+        <Tab href="javascript:;">Tournaments</Tab>
     </Tabs>
 );
 

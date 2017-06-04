@@ -45,6 +45,16 @@ public class EventController {
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
+        return eventService.getEventById(id).map(ResponseEntity::ok).orElse(ResponseUtils.notFound());
+    }
+
+    @GetMapping("/getTournaments/{id}")
+    public ResponseEntity<List<TournamentDetailsDTO>> getTournaments(@PathVariable Long id) {
+        return ResponseEntity.ok(eventService.getTournaments(id));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateEvent(@Valid @RequestBody Event event, BindingResult bindingResult, @PathVariable Long id) {
         Optional<Event> updatedEvent = eventService.getEventById(id);

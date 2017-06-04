@@ -6,7 +6,7 @@ import EventsRoute from "./Events";
 import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
 import { GamesRoute, GameDetailsRoute } from "./Games/index";
 import { EditRoute, ProfileRoute } from "./User";
-import achievementsRoute from "./Archievments"
+import achievementsRoute from "./Archievments";
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */

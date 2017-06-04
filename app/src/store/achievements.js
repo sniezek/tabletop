@@ -10,41 +10,40 @@ export const GET_ALL_ACHIEVEMENTS = "GET_ALL_ACHIEVEMENTS";
 export const getAchievements = (userID, callback = () => {
 }) => dispatch =>
   Api.achievements(userID).then((response) => {
-    if (response.ok) {
-      response.json().then((payload) => {
-        dispatch({
-          type: GET_ACHIEVEMENTS,
-          payload
-        });
-      });
-    }
-    callback(response);
+      if (response.ok) {
+          response.json().then((payload) => {
+              dispatch({
+                  type: GET_ACHIEVEMENTS,
+                  payload
+              });
+          });
+      }
+      callback(response);
   });
 export const getNewAchievements = (userID, callback = () => {
 }) => dispatch =>
   Api.newAchievements(userID).then((response) => {
-    if (response.ok) {
-      response.json().then((payload) => {
-        dispatch({
-          type: GET_NEW_ACHIEVEMENTS,
-          payload
-        });
-      });
-    }
-    callback(response);
+      if (response.ok) {
+          response.json().then((payload) => {
+              dispatch({
+                  type: GET_NEW_ACHIEVEMENTS,
+                  payload
+              });
+          });
+      }
+      callback(response);
   });
 
 export const getAllAchievements = dispatch =>
   Api.allAchivements().then((response) => {
-    if (response.ok) {
-      response.json().then((payload) => {
-        dispatch({
-          type: GET_ALL_ACHIEVEMENTS,
-          payload
-        });
-      });
-    }
-
+      if (response.ok) {
+          response.json().then((payload) => {
+              dispatch({
+                  type: GET_ALL_ACHIEVEMENTS,
+                  payload
+              });
+          });
+      }
   });
 
 
@@ -53,38 +52,33 @@ export const getAllAchievements = dispatch =>
 // ------------------------------------
 /* eslint-disable no-param-reassign */
 
-export function achievementsReducer(state = null, {type, payload}) {
-
-  if (type === GET_ACHIEVEMENTS) {
+export function achievementsReducer(state = null, { type, payload }) {
+    if (type === GET_ACHIEVEMENTS) {
     // return Object.assign([], state, {
     //   achievements: payload.achievements
     // })
-    return  payload.achievements;
+        return payload.achievements;
+    }
 
-  }
-
-  return state;
+    return state;
 }
-export function newAchievementsReducer(state = null, {type, payload}) {
-
-  if (type === GET_NEW_ACHIEVEMENTS) {
+export function newAchievementsReducer(state = null, { type, payload }) {
+    if (type === GET_NEW_ACHIEVEMENTS) {
     // return Object.assign([], state, {
     //   newAchievements: payload
     // })
-    return  payload;
-  }
+        return payload;
+    }
 
-  return state;
+    return state;
 }
-export function allAchievementsReducer(state = null, {type, payload}) {
-
-
-  if (type === GET_ALL_ACHIEVEMENTS) {
+export function allAchievementsReducer(state = null, { type, payload }) {
+    if (type === GET_ALL_ACHIEVEMENTS) {
     // return Object.assign([], state, {
     //   allAchievements: payload
     // })
-    return  payload;
-  }
-  return state;
+        return payload;
+    }
+    return state;
 }
 

@@ -6,7 +6,7 @@ export const GET_GAME_DETAILS = "GET_GAME_DETAILS";
 export const GET_GAME_RANKING = "GET_GAME_RANKING";
 export const GET_INCOMING_GAMES = "GET_INCOMING_GAMES";
 
-export const getGames = dispatch =>
+export const getGames = () => dispatch =>
     Api.games().then((response) => {
         if (response.ok) {
             response.json().then((gamesList) => {
@@ -69,6 +69,7 @@ export const getIncomingGames = filters => dispatch =>
 export default function gamesReducer(state = { gamesList: [], game: { name: "" }, gameRankingList: [], eventsList: [] }, { type, payload }) {
     if (type === GET_GAMES) {
         state = {
+            ...state,
             gamesList: payload.gamesList
         };
     } else if (type === GET_GAME_DETAILS) {
