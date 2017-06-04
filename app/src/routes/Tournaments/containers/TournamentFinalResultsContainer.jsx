@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getFinalResults } from "../../../store/tournament";
+import TournamentFinalResults from "../components/TournamentFinalResults";
 
 const propTypes = {
     finalResults: PropTypes.array,
@@ -21,10 +22,12 @@ const mapDispatchToProps = dispatch => ({
     }
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
     finalResults: state.tournament.finalResults,
     tournamentId: 1
 });
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 const initialState = {};
 
@@ -32,8 +35,6 @@ class TournamentFinalResultsContainer extends PureComponent {
 
     constructor(props) {
         super(props);
-        this.state = Object.assign({}, initialState);
-
         this.getFinalResults = this.getFinalResults.bind(this);
     }
 
@@ -52,12 +53,10 @@ class TournamentFinalResultsContainer extends PureComponent {
 
     render() {
         return (
-            <div>
-                <h1>Tournament Final Results</h1>
-                <ul><h5>
-                    {this.props.finalResults.map(result => <li key={result.id}>{result.place} {result.user.username} {result.points}</li>)}
-                </h5></ul>
-            </div>
+            <TournamentFinalResults
+                finalResults={this.props.finalResults}
+                tournamentId={this.props.tournamentId}
+            />
         );
     }
 
@@ -66,4 +65,4 @@ class TournamentFinalResultsContainer extends PureComponent {
 TournamentFinalResultsContainer.propTypes = propTypes;
 TournamentFinalResultsContainer.defaultProps = defaultProps;
 
-export default connect(mapStateToProps, mapDispatchToProps)(TournamentFinalResultsContainer);
+export default enhance(TournamentFinalResultsContainer);

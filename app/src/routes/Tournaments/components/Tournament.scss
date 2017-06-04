@@ -1,6 +1,12 @@
-.tournamentTypes {
+.tournaments {
     flex: 1 1 auto;
     align-self: stretch;
     display: flex;
     flex-direction: column;
+}
+
+.tournament-list {
+  width:95%;
+  margin:auto;
+  background: transparent;
 }

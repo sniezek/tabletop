@@ -1,10 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
-import RadioGroup from "react-mdl/lib/RadioGroup";
-import Radio from "react-mdl/lib/Radio";
 import { DialogContent } from "../../../../components/Dialog";
 import IconTextfield from "../../../../components/IconTextfield";
+import GameSelect from "../../../../components/GameSelect";
+import TypeSelect from "./TypeSelect.jsx";
+import PlayersCount from "./PlayersCount.jsx";
+import DateRange from "./DateRange.jsx";
 
 const propTypes = {
     startDate: PropTypes.string.isRequired,
@@ -12,17 +14,29 @@ const propTypes = {
     name: PropTypes.string.isRequired,
     setName: PropTypes.func.isRequired,
     setStartDate: PropTypes.func.isRequired,
-    setEndDate: PropTypes.func.isRequired
+    setEndDate: PropTypes.func.isRequired,
+    setGame: PropTypes.func.isRequired,
+    game: PropTypes.string,
+    setTournamentType: PropTypes.func.isRequired,
+    tournamentType: PropTypes.string,
+    minPlayers: PropTypes.string,
+    maxPlayers: PropTypes.string,
+    setMinPlayers: PropTypes.func.isRequired,
+    setMaxPlayers: PropTypes.func.isRequired
 };
 
 const defaultProps = {
-    name: ""
+    game: null,
+    tournamentType: null,
+    minPlayers: "0",
+    maxPlayers: "2"
 };
 
 const enhance = pure;
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate }) => (
+const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate, setEndDate, game, setGame, setTournamentType, tournamentType,
+minPlayers, setMinPlayers, maxPlayers, setMaxPlayers }) => (
     <DialogContent>
         <a tabIndex={0} className="create-event-dialog__focus-trap" />
         <IconTextfield
@@ -32,22 +46,28 @@ const SparringDialogContent = ({ setName, name, startDate, endDate, setStartDate
             onChange={setName}
             required
         />
+        <DateRange
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+        />
         <div className="create-event-dialog__group">
-            <IconTextfield
-                label="Start time"
-                icon="schedule"
-                value={startDate}
-                onChange={setStartDate}
-                required
+            <GameSelect
+                onChange={setGame}
+                value={game}
             />
-            <IconTextfield
-                label="Estimated end time"
-                icon="schedule"
-                value={endDate}
-                onChange={setEndDate}
-                required
+            <TypeSelect
+                onChange={setTournamentType}
+                value={tournamentType}
             />
         </div>
+        <PlayersCount
+            minPlayers={minPlayers}
+            maxPlayers={maxPlayers}
+            setMinPlayers={setMinPlayers}
+            setMaxPlayers={setMaxPlayers}
+        />
     </DialogContent>
 );
 

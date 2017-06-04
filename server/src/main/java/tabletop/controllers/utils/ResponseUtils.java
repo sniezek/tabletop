@@ -37,4 +37,7 @@ public class ResponseUtils {
     public static <T> ResponseEntity<T> forbidden() {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
+
+    private ResponseUtils() {
+    }
 }

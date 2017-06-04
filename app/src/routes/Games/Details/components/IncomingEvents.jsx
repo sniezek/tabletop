@@ -20,10 +20,10 @@ export const IncomingEvents = events => (
     <Grid>
         <Cell col={8} offsetDesktop={2}>
             { function () {
-                if (events.events != null) {
+                if (events.events.length !== 0) {
                     return (<EventsList events={events.events} />);
                 }
-                return (<div>To be implemented</div>);
+                return (<div>No upcoming events</div>);
             }.call(this)
             }
 

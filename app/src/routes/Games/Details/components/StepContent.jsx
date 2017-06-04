@@ -4,6 +4,7 @@ import pure from "recompose/pure";
 import DetailsStep from "../containers/GameDetailsContainer.jsx";
 import RankingStep from "../containers/GameRankingContainer";
 import IncomingEventsStep from "../containers/IncomingGamesContainer";
+import StatisticsStep from "../containers/StatisticsContainer";
 
 const propTypes = {
     router: PropTypes.object.isRequired,
@@ -22,11 +23,15 @@ const StepContent = ({ step, router }) => {
         );
     } else if (step === 1) {
         return (
-            <RankingStep router={router} />
+            <RankingStep router={router} page={1} />
         );
     } else if (step === 2) {
         return (
             <IncomingEventsStep router={router} />
+        );
+    } else if (step === 3) {
+        return (
+            <StatisticsStep router={router} />
         );
     }
 

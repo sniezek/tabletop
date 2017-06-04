@@ -14,27 +14,30 @@ import java.util.Set;
 public abstract class Match extends IdComparableEntity {
     @NotNull(message = "{match.startDate}")
     private Date startDate;
+
     @NotNull(message = "{match.endDate}")
     private Date endDate;
+
     @NotNull(message = "{match.users}")
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "tournament_users",
             joinColumns = @JoinColumn(name = "tournament_id"),
             inverseJoinColumns = @JoinColumn(name = "users_id"))
     private Set<User> users;
+
     @Enumerated(EnumType.STRING)
     private Game game;
+
     @NotNull(message = "{match.minPlayers.not_null}")
     @Range(min = 2L, message = "{match.minPlayers.min}")
     private Integer minPlayers;
+
     @NotNull(message = "{match.maxPlayers.not_null}")
     @Range(min = 2L, message = "{match.maxPlayers.min}")
     private Integer maxPlayers;
+
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
-    @ManyToOne
-    @JoinColumn(name = "creator_id", nullable = false)
-    private User creator;
 
     public Date getStartDate() {
         return startDate;
@@ -97,12 +100,4 @@ public abstract class Match extends IdComparableEntity {
     }
 
     public abstract String getGameName();
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
-    }
 }

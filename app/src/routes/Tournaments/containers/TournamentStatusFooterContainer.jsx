@@ -1,6 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {giveUp, nextRound} from "../../../store/tournament";
 import TournamentStatusFooter from "../components/TournamentStatusFooter";
 
 const propTypes = {
@@ -24,20 +25,40 @@ const mapStateToProps = ({user, tournament}) => ({
   isCurrentUserParticipant: tournament.isCurrentUserParticipant
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = dispatch => ({
+  nextRound: (id, callback) => {
+    dispatch(nextRound(id, callback));
+  },
+  giveUp: (id) => {
+    dispatch(giveUp(id));
+  }
+});
 
 class TournamentStatusFooterContainer extends PureComponent {
   constructor(props) {
     super(props);
+    this.nextRound = this.nextRound.bind(this);
+    this.giveUp = this.giveUp.bind(this);
+  }
+
+  nextRound() {
+    const tournamentId = this.props.tournamentId;
+    this.props.nextRound(tournamentId, ({ok}) => {
+    });
+  }
+
+  giveUp() {
+    const tournamentId = this.props.tournamentId;
+    this.props.giveUp(tournamentId);
   }
 
   render() {
     return <TournamentStatusFooter
       tournamentId={this.props.tournamentId}
       pairsLength={this.props.pairsLength}
-      nextRound={this.props.nextRound}
+      nextRound={this.nextRound}
       finishTournament={this.props.finishTournament}
-      giveUp={this.props.giveUp}
+      giveUp={this.giveUp}
       matchesFinished={this.props.matchesFinished}
       currentUser={this.props.currentUser}
       creator={this.props.creator}

@@ -8,12 +8,17 @@ import tabletop.controllers.utils.ResponseUtils;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.Location;
+import tabletop.domain.match.tournament.Tournament;
+import tabletop.domain.match.tournament.TournamentDetailsDTO;
 import tabletop.services.event.EventService;
 import tabletop.services.event.LocationService;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import static java.util.Objects.nonNull;
 
 @RestController
 @RequestMapping(value = "/events")
@@ -40,21 +45,34 @@ public class EventController {
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
+        return eventService.getEventById(id).map(ResponseEntity::ok).orElse(ResponseUtils.notFound());
+    }
+
+    @GetMapping("/getTournaments/{id}")
+    public ResponseEntity<List<TournamentDetailsDTO>> getEventTournaments(@PathVariable Long id) {
+        return eventService.getEventById(id)
+                .map(event -> ResponseEntity.ok(event.getTournaments().stream()
+                        .map(this::createTournamentDetailsDTO).collect(Collectors.toList())))
+                .orElse(ResponseUtils.notFound());
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updateEvent(@Valid @RequestBody Event event, BindingResult bindingResult, @PathVariable Long id) {
         Optional<Event> updatedEvent = eventService.getEventById(id);
-
         if (!updatedEvent.isPresent()) {
             return ResponseUtils.notFound();
         }
 
-        ControllerErrors errors = new ControllerErrors(bindingResult);
+        if (!validator.isUserEventOrganiser(updatedEvent.get())) {
+            return ResponseUtils.forbidden();
+        }
 
+        ControllerErrors errors = new ControllerErrors(bindingResult);
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
-
-        validator.validateUserIsOrganiser(updatedEvent.get());
 
         validateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
@@ -65,7 +83,6 @@ public class EventController {
     @PostMapping
     public ResponseEntity<?> createEvent(@Valid @RequestBody Event event, BindingResult bindingResult) {
         ControllerErrors errors = new ControllerErrors(bindingResult);
-
         if (errors.areErrors()) {
             return ResponseUtils.badRequest(errors);
         }
@@ -104,5 +121,13 @@ public class EventController {
 
     private boolean isNewLocation(Location location) {
         return location.getId() == null;
+    }
+
+
+    private TournamentDetailsDTO createTournamentDetailsDTO(Tournament tournament) {
+        return new TournamentDetailsDTO(
+                tournament.getId(),
+                tournament.getName(),
+                nonNull(tournament.getTournamentProcess()) && tournament.getTournamentProcess().isInitialized());
     }
 }

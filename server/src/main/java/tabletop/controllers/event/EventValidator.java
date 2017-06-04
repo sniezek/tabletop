@@ -13,11 +13,14 @@ import tabletop.domain.match.Sparring;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.user.User;
 import tabletop.services.UserService;
-import tabletop.utils.NotNullUtils;
 
 import java.util.Date;
 import java.util.Optional;
 import java.util.Set;
+
+import static java.util.Objects.nonNull;
+import static tabletop.utils.NotNullUtils.areAllNotNull;
+import static tabletop.utils.NotNullUtils.getNotNullCount;
 
 @Component
 class EventValidator extends ControllerValidator {
@@ -66,7 +69,7 @@ class EventValidator extends ControllerValidator {
     private void validateUserIsNotAssignedToCollidingMatches(User user, Set<Match> matches, ControllerErrors errors) {
         for (Match match : matches) {
             for (Match match2 : matches) {
-                if (match.getUsers().contains(user) && match2.getUsers().contains(user) && match2.getEndDate().after(match.getStartDate()) && match2.getStartDate().before(match.getEndDate())) {
+                if (!match.equals(match2) && match.getUsers().contains(user) && match2.getUsers().contains(user) && match2.getEndDate().after(match.getStartDate()) && match2.getStartDate().before(match.getEndDate())) {
                     errorHandler.addIncorrectRequestError(errors);
                     return;
                 }
@@ -88,7 +91,7 @@ class EventValidator extends ControllerValidator {
             if (!tournament.isRegisteredGame()) {
                 errorHandler.addError(errors, "tournament.unregistered_game");
             }
-            if (tournament.getResults() != null) {
+            if (tournament.isFinished()) {
                 errorHandler.addIncorrectRequestError(errors);
             }
         }
@@ -101,7 +104,7 @@ class EventValidator extends ControllerValidator {
     }
 
     void validateLocationFilters(Double lat, Double lng, Integer radius, ControllerErrors errors) {
-        long presentFiltersCount = NotNullUtils.getNotNullCount(lat, lng, radius);
+        long presentFiltersCount = getNotNullCount(lat, lng, radius);
 
         if (presentFiltersCount > 0 && (presentFiltersCount < 3 || lat < -90 || lat > 90 || lng < -180 || lat > 180 || radius < 0)) {
             errorHandler.addIncorrectRequestError(errors);
@@ -109,20 +112,18 @@ class EventValidator extends ControllerValidator {
     }
 
     void validateTypeFilter(String type, ControllerErrors errors) {
-        if (NotNullUtils.isNotNull(type) && !type.equals("tournament") && !type.equals("sparring")) {
+        if (nonNull(type) && !type.equals("tournament") && !type.equals("sparring")) {
             errorHandler.addIncorrectRequestError(errors);
         }
     }
 
     void validateDateFilters(Long startDateTimestamp, Long endDateTimestamp, ControllerErrors errors) {
-        if (NotNullUtils.areAllNotNull(startDateTimestamp, endDateTimestamp) && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
+        if (areAllNotNull(startDateTimestamp, endDateTimestamp) && new Date(startDateTimestamp).after(new Date(endDateTimestamp))) {
             errorHandler.addIncorrectRequestError(errors);
         }
     }
 
-    void validateUserIsOrganiser(Event event) {
-        if (!event.getOrganiser().equals(userService.getAuthenticatedUser().get())) {
-            errorHandler.accessDenied();
-        }
+    boolean isUserEventOrganiser(Event event) {
+        return event.getOrganiser().equals(userService.getAuthenticatedUser().get());
     }
 }

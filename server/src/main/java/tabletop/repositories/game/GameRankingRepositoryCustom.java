@@ -1,6 +1,7 @@
 package tabletop.repositories.game;
 
 import tabletop.controllers.game.GameRankingResponse;
+import tabletop.controllers.game.GameStatisticsResponse;
 import tabletop.domain.game.Game;
 import tabletop.domain.ranking.GameRanking;
 import tabletop.domain.user.User;
@@ -8,10 +9,11 @@ import tabletop.domain.user.User;
 import java.util.List;
 
 public interface GameRankingRepositoryCustom {
+    List<GameRanking> getUsersRankingsForGame(List<User> users, Game game);
 
-    void updateGameRanking(Game game, List<User> usersByResult);
+    List<GameRankingResponse> getTopUsers(Game game, int pageNum);
 
-    List<GameRanking> getRankingForGame(List<User> users, Game game);
+    GameStatisticsResponse getGameStatistics(Game game);
 
-    List<GameRankingResponse> getTopUsers(Game game);
+    Long getRankingSize(Game game);
 }

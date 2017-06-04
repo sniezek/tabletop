@@ -10,6 +10,9 @@ const initialState = {
     endDate: moment().minutes(30).format(format),
     gameType: "standard",
     name: "",
+    gameName: "",
+    game: null,
+    tournamentType: null,
     minPlayers: "0",
     maxPlayers: "2",
     users: []
@@ -40,18 +43,29 @@ class ListItemDialogContainer extends PureComponent {
         this.setGameType = this.setGameType.bind(this);
         this.setMinPlayers = this.setMinPlayers.bind(this);
         this.setMaxPlayers = this.setMaxPlayers.bind(this);
+        this.setGameName = this.setGameName.bind(this);
         this.save = this.save.bind(this);
+        this.setGame = this.setGame.bind(this);
+        this.setTournamentType = this.setTournamentType.bind(this);
     }
 
     componentWillReceiveProps({ type, model }) {
         if (type !== this.props.type || model !== this.props.model) {
             if (model) {
+                const gameType = model.gameName ? "custom" : "standard";
+
                 this.setState({
-                    ...model
+                    ...model,
+                    gameType,
+                    startDate: moment(model.startDate).format(format),
+                    endDate: moment(model.endDate).format(format),
+                    minPlayers: model.minPlayers.toString(),
+                    maxPlayers: model.maxPlayers.toString()
                 });
             } else {
                 this.setState({
-                    ...initialState
+                    ...initialState,
+                    __uid: Date.now()
                 });
             }
         }
@@ -105,26 +119,49 @@ class ListItemDialogContainer extends PureComponent {
         });
     }
 
+    setGameName({ target }) {
+        const gameName = target.value;
+
+        this.setState({
+            gameName
+        });
+    }
+
+    setGame({ value }) {
+        this.setState({
+            game: value
+        });
+    }
+
+    setTournamentType({ value }) {
+        this.setState({
+            tournamentType: value
+        });
+    }
+
     genericPayload() {
         const startDate = moment(this.state.startDate, format).unix() * 1000;
         const endDate = moment(this.state.endDate, format).unix() * 1000;
-        const users = this.state.users;
+        const minPlayers = parseInt(this.state.minPlayers, 10);
+        const maxPlayers = parseInt(this.state.maxPlayers, 10);
+        const { __uid, users } = this.state;
 
         return {
+            __uid,
             startDate,
             endDate,
-            users
+            users,
+            minPlayers,
+            maxPlayers
         };
     }
 
     sparringPayload() {
-        const { gameType, minPlayers, maxPlayers } = this.state;
+        const { game, gameType, gameName } = this.state;
         const payload = gameType === "standard" ? {
-            game: "CHESS"
+            game
         } : {
-            gameName: "Chess",
-            minPlayers: parseInt(minPlayers, 10),
-            maxPlayers: parseInt(maxPlayers, 10)
+            gameName
         };
 
         return {
@@ -134,13 +171,13 @@ class ListItemDialogContainer extends PureComponent {
     }
 
     tournamentPayload() {
-        const { name } = this.state;
-        const game = "CHESS";
+        const { game, name, tournamentType } = this.state;
 
         return {
             ...this.genericPayload(),
             name,
-            game
+            game,
+            type: tournamentType
         };
     }
 
@@ -166,6 +203,9 @@ class ListItemDialogContainer extends PureComponent {
                 setGameType={this.setGameType}
                 setMinPlayers={this.setMinPlayers}
                 setMaxPlayers={this.setMaxPlayers}
+                setGameName={this.setGameName}
+                setGame={this.setGame}
+                setTournamentType={this.setTournamentType}
             />
         );
     }

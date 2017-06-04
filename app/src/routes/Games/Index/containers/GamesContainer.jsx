@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { Card, CardTitle, CardText, CardActions, Grid, Cell } from "react-mdl/lib";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getGames } from "../../../../store/games";
 
 const propTypes = {
     gamesList: PropTypes.array
@@ -12,9 +11,7 @@ const defaultProps = {
     gamesList: []
 };
 
-const mapDispatchToProps = dispatch => ({
-    getGames: getGames(dispatch)
-});
+const mapDispatchToProps = {};
 
 const mapStateToProps = state => ({
     gamesList: state.games.gamesList
@@ -32,13 +29,25 @@ class GamesContainer extends PureComponent {
     }
 
     buildHrefLink(name) {
-        return `/games/${name}`;
+        let nameURL = name.replace(/ /g, "_");
+        nameURL = nameURL.replace(/[!@#$%^&*()+=:;'"><.,]/g, "");
+        return `/games/${nameURL}`;
     }
+
+    formatNumberOfPlayers(minPlayers, maxPlayers) {
+        if (minPlayers === maxPlayers) {
+            return maxPlayers;
+        } else if (maxPlayers === -1) {
+            return `${minPlayers}+`;
+        }
+        return `${minPlayers} - ${maxPlayers}`;
+    }
+
     render() {
         return (
             <div className="gamesList">
-                {this.props.gamesList.map(({ name, description, minPlayers, maxPlayers, imageUrl }) =>
-                    <Grid key={name} noSpacing style={{ margin: "10px auto" }}>
+                {this.props.gamesList.map(({ name, description, minPlayers, maxPlayers, imageUrl, displayName }) =>
+                    <Grid key={name} noSpacing style={{ margin: "10px auto", maxWidth: "1024px" }}>
                         <Cell col={3} tablet={2} phone={4} className="margin0">
                             <Card
                                 shadow={0}
@@ -54,11 +63,11 @@ class GamesContainer extends PureComponent {
                                 <div>
 
                                     <CardTitle className="gameListTitle">
-                                        {name}
+                                        {displayName}
                                     </CardTitle>
 
                                     <div className="gameSettings">
-                                        <span><i className="material-icons">group</i> {minPlayers} - {maxPlayers} </span>
+                                        <span><i className="material-icons">group</i>{ this.formatNumberOfPlayers(minPlayers, maxPlayers) }</span>
                                     </div>
 
                                     <CardText>

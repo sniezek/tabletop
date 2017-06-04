@@ -1,8 +1,24 @@
 import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import Api from "../../../../api";
 import CreateEventForm from "../components/CreateEventForm.jsx";
 
+const propTypes = {
+    user: PropTypes.object,
+    router: PropTypes.object.isRequired
+};
+
+const defaultProps = {
+    user: null
+};
+
 const steps = 3;
+
+const mapStateToProps = ({ user }) => ({ user });
+const mapDispatchToProps = {};
+
+const enhance = connect(mapStateToProps, mapDispatchToProps);
 
 class CreateEventFormContainer extends PureComponent {
     constructor(props) {
@@ -10,7 +26,7 @@ class CreateEventFormContainer extends PureComponent {
 
         this.state = {
             step: 0,
-            location: "",
+            location: null,
             name: "",
             description: "",
             sparrings: [],
@@ -20,6 +36,7 @@ class CreateEventFormContainer extends PureComponent {
             type: null
         };
 
+        this.geosuggest = null;
         this.prevStep = this.prevStep.bind(this);
         this.nextStep = this.nextStep.bind(this);
         this.setStep = this.setStep.bind(this);
@@ -36,6 +53,8 @@ class CreateEventFormContainer extends PureComponent {
         this.close = this.close.bind(this);
         this.toggleSparringParticipation = this.toggleSparringParticipation.bind(this);
         this.toggleTournamentParticipation = this.toggleTournamentParticipation.bind(this);
+        this.setRef = this.setRef.bind(this);
+        this.clearInput = this.clearInput.bind(this);
     }
 
     setDescription({ target }) {
@@ -54,9 +73,7 @@ class CreateEventFormContainer extends PureComponent {
         });
     }
 
-    setLocation({ target }) {
-        const location = target.value;
-
+    setLocation(location) {
         this.setState({
             location
         });
@@ -68,6 +85,10 @@ class CreateEventFormContainer extends PureComponent {
                 step
             });
         }
+    }
+
+    setRef(geosuggest) {
+        this.geosuggest = geosuggest;
     }
 
     close(value) {
@@ -108,6 +129,22 @@ class CreateEventFormContainer extends PureComponent {
         return data;
     }
 
+    filterUID(arr) {
+        return arr.map(({ __uid, ...rest }) => rest);
+    }
+
+    clearInput(value) {
+        const { location } = this.state;
+
+        if (location !== null && location.label !== value) {
+            this.geosuggest.clear();
+
+            this.setState({
+                location: null
+            });
+        }
+    }
+
     create() {
         const { loading } = this.state;
 
@@ -116,19 +153,27 @@ class CreateEventFormContainer extends PureComponent {
                 loading: true
             });
 
-            const { name, location, description, sparrings, tournaments } = this.state;
+            const { name, description, sparrings, tournaments, location } = this.state;
 
             const payload = {
                 name,
-                location,
+                location: {
+                    ...location.location,
+                    name: location.label
+                },
                 description,
-                sparrings,
-                tournaments
+                sparrings: this.filterUID(sparrings),
+                tournaments: this.filterUID(tournaments)
             };
 
-            Api.createEvent(payload).then(() => {
-                this.setState({
-                    loading: false
+            Api.createEvent(payload).then((response) => {
+                response.json().then(({ id }) => {
+                    this.setState({
+                        loading: false
+                    });
+
+                    const { router } = this.props;
+                    router.push(`/events/${id}`);
                 });
             });
         }
@@ -140,7 +185,7 @@ class CreateEventFormContainer extends PureComponent {
         const users = [];
 
         if (item.users.length === 0) {
-            users.push({});
+            users.push({ id: this.props.user.id });
         }
 
         data[index] = {
@@ -248,11 +293,16 @@ class CreateEventFormContainer extends PureComponent {
                 model={model}
                 type={type}
                 close={this.close}
-                toggleSparringPariticipation={this.toggleSparringParticipation}
+                toggleSparringParticipation={this.toggleSparringParticipation}
                 toggleTournamentParticipation={this.toggleTournamentParticipation}
+                clearInput={this.clearInput}
+                setRef={this.setRef}
             />
         );
     }
 }
 
-export default CreateEventFormContainer;
+CreateEventFormContainer.propTypes = propTypes;
+CreateEventFormContainer.defaultProps = defaultProps;
+
+export default enhance(CreateEventFormContainer);

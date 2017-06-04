@@ -7,33 +7,40 @@ import tabletop.domain.match.tournament.TournamentPlayerResult;
 import tabletop.domain.match.tournament.TournamentType;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
-import tabletop.repositories.TournamentFinalResultRepository;
+import tabletop.repositories.TournamentPlayerResultRepository;
 import tabletop.repositories.match.tournament.TournamentRepository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static java.util.Objects.nonNull;
 
 @Service
 public class TournamentService {
-
     private TournamentRepository tournamentRepository;
-    private TournamentFinalResultRepository tournamentFinalResultRepository;
+    private TournamentPlayerResultRepository tournamentPlayerResultRepository;
     private SwissTournamentService swissTournamentService;
+    private LadderTournamentService ladderTournamentService;
 
     public TournamentService(
             TournamentRepository tournamentRepository,
-            TournamentFinalResultRepository tournamentFinalResultRepository,
-            SwissTournamentService swissTournamentService
+            TournamentPlayerResultRepository tournamentPlayerResultRepository,
+            SwissTournamentService swissTournamentService,
+            LadderTournamentService ladderTournamentService
     ) {
         this.tournamentRepository = tournamentRepository;
-        this.tournamentFinalResultRepository = tournamentFinalResultRepository;
+        this.tournamentPlayerResultRepository = tournamentPlayerResultRepository;
         this.swissTournamentService = swissTournamentService;
+        this.ladderTournamentService = ladderTournamentService;
     }
 
     public Optional<Tournament> getTournamentById(Long tournamentId) {
         return tournamentRepository.findOneById(tournamentId);
     }
 
-    public void addTournament(Tournament tournament) {
+    public void saveTournament(Tournament tournament) {
         tournamentRepository.save(tournament);
     }
 
@@ -47,60 +54,83 @@ public class TournamentService {
         return tournamentRepository.findTournamentsByFinishedIsTrue();
     }
 
-    public Optional<Collection<TournamentPlayerResult>> getFinalResultsForTournament(Long tournamentId) {
-        Optional<Tournament> tournamentOptional = tournamentRepository.findOneById(tournamentId);
-
-        return tournamentOptional.map(tournament -> tournamentFinalResultRepository.findByTournamentOrderByPlace(tournament));
+    public Optional<Collection<TournamentPlayerResult>> getTournamentPlayerResults(Long tournamentId) {
+        return tournamentRepository.findOneById(tournamentId)
+                .map(tournament -> tournamentPlayerResultRepository.findByTournamentOrderByPlace(tournament));
 
     }
 
     public List<Pair<User>> getInitialRound(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.getInitialPairs(((SwissTournamentProcess) tournament.getTournamentProcess()));
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            return ladderTournamentService.getInitialPairs((SwissTournamentProcess) tournament.getTournamentProcess());
         }
+
         return Collections.emptyList();
     }
 
     public void setWinner(Tournament tournament, User winner) {
         if (tournament.getType() == TournamentType.SWISS) {
             swissTournamentService.setWinner(((SwissTournamentProcess) tournament.getTournamentProcess()), winner);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            ladderTournamentService.setWinner(((SwissTournamentProcess) tournament.getTournamentProcess()), winner);
         }
     }
 
-    public List<Pair<User>> getCurentState(Tournament tournament) {
+    public List<Pair<User>> getCurrentState(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
-            return swissTournamentService.getCurentState(((SwissTournamentProcess) tournament.getTournamentProcess()));
+            SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess();
+            return nonNull(process) ? swissTournamentService.getCurentState(process) : Collections.emptyList();
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess();
+            return nonNull(process) ? ladderTournamentService.getCurentState(process) : Collections.emptyList();
         }
+
         return Collections.emptyList();
     }
 
     public List<Pair<User>> getNextRound(Tournament tournament) {
         if (tournament.getType() == TournamentType.SWISS) {
-            SwissTournamentProcess swissTournamentProcess = (SwissTournamentProcess) tournament.getTournamentProcess();
+            SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess();
 
-            if (swissTournamentService.canBeFinished(swissTournamentProcess)) {
+            if (swissTournamentService.canBeFinished(process)) {
                 tournament.setFinished(true);
                 tournamentRepository.save(tournament);
             }
 
-            return swissTournamentService.getNextPair((swissTournamentProcess));
+            return swissTournamentService.getNextPair(process);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            SwissTournamentProcess process = (SwissTournamentProcess) tournament.getTournamentProcess(); // FIXME
+
+            if (ladderTournamentService.canBeFinished(process)) {
+                tournament.setFinished(true);
+                tournamentRepository.save(tournament);
+            }
+
+            return ladderTournamentService.getNextPair(process);
         }
+
         return Collections.emptyList();
     }
 
-    public void setFinalResults(Tournament tournament) {
+    public void saveResults(Tournament tournament) {
         List<TournamentPlayerResult> results = null;
+
         if (tournament.getType() == TournamentType.SWISS) {
-            results = swissTournamentService.getFinalResults(tournament);
+            results = swissTournamentService.getTournamentPlayerResults(tournament);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            results = ladderTournamentService.getTournamentPlayerResults(tournament);
         }
 
         if (results != null) {
-            for (TournamentPlayerResult finalResult : results) {
-                Optional<TournamentPlayerResult> tournamentFinalResult;
-                tournamentFinalResult = tournamentFinalResultRepository
-                        .findOneByUserAndTournament(finalResult.getUser(), finalResult.getTournament());
+            for (TournamentPlayerResult result : results) {
+                Optional<TournamentPlayerResult> tournamentFinalResult = tournamentPlayerResultRepository
+                        .findOneByUserAndTournament(result.getUser(), result.getTournament());
 
-                if (!tournamentFinalResult.isPresent()) tournamentFinalResultRepository.save(finalResult);
+                if (!tournamentFinalResult.isPresent()) {
+                    tournamentPlayerResultRepository.save(result);
+                }
             }
         }
     }
@@ -108,13 +138,18 @@ public class TournamentService {
     public void giveUp(Tournament tournament, User user) {
         if (tournament.getType() == TournamentType.SWISS) {
             swissTournamentService.giveUp(tournament, user);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            ladderTournamentService.giveUp(tournament, user);
         }
     }
 
     public boolean isUserAvailable(Tournament tournament, User user) {
         if (tournament.getType() == TournamentType.SWISS) {
             return swissTournamentService.isUserAvailable(tournament, user);
+        } else if (tournament.getType() == TournamentType.LADDER) {
+            return ladderTournamentService.isUserAvailable(tournament, user);
         }
+
         return false;
     }
 }

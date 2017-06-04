@@ -2,18 +2,18 @@ import Api from "../api";
 
 export const USER_LOGIN = "USER_LOGIN";
 export const USER_LOGOUT = "USER_LOGOUT";
-export const REMIND = "REMIND"
-export const RESET = "RESET"
-export const CHANGE = "CHANGE"
+export const REMIND = "REMIND";
+export const RESET = "RESET";
+export const CHANGE = "CHANGE";
 
 const dispatchLogin = (response, dispatch) =>
-    response.json().then(({ id,username, email }) => {
+    response.json().then(({ username, email, id }) => {
         dispatch({
             type: USER_LOGIN,
             payload: {
-                id,
                 username,
-                email
+                email,
+                id
             }
         });
     });
@@ -51,7 +51,9 @@ export const logout = callback => dispatch =>
 export const register = ({ username, password, email }, callback) => dispatch =>
     Api.register({ username, password, email }).then((response) => {
         if (response.ok) {
-            login({ username, password }, callback)(dispatch);
+            response.json().then(({ id }) => {
+                login({ username, password, id }, callback)(dispatch);
+            });
         } else {
             callback(response);
         }

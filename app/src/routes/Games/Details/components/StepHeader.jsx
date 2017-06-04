@@ -18,7 +18,8 @@ const StepHeader = ({ setStep, step }) => (
     >
         <Tab>Details</Tab>
         <Tab>Ranking</Tab>
-        <Tab>Incoming events</Tab>
+        <Tab>Upcoming events</Tab>
+        <Tab>Statistics</Tab>
     </Tabs>
 );
 

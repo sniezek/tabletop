@@ -3,6 +3,7 @@ package tabletop.domain.match.tournament;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
 import tabletop.domain.match.Match;
+import tabletop.domain.user.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -12,23 +13,24 @@ import java.util.List;
 public class Tournament extends Match {
     @NotEmpty(message = "{tournament.name}")
     private String name;
+
     @NotNull(message = "{tournament.type}")
     @Enumerated(EnumType.STRING)
     private TournamentType type;
-    private String results;
-
     private boolean finished;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
+    @JsonIgnore
     private TournamentProcess tournamentProcess;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @JsonIgnore
     private List<TournamentPlayerResult> tournamentPlayerResults;
 
-    public Tournament() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creator;
 
     public String getName() {
         return name;
@@ -44,14 +46,6 @@ public class Tournament extends Match {
 
     public void setType(TournamentType type) {
         this.type = type;
-    }
-
-    public String getResults() {
-        return results;
-    }
-
-    public void setResults(String results) {
-        this.results = results;
     }
 
     public boolean isFinished() {
@@ -76,6 +70,14 @@ public class Tournament extends Match {
 
     public void setTournamentPlayerResults(List<TournamentPlayerResult> tournamentPlayerResults) {
         this.tournamentPlayerResults = tournamentPlayerResults;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
     @Override

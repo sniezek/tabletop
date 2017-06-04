@@ -1,74 +1,53 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import TournamentFinalResultsContainer from "../containers/TournamentFinalResultsContainer";
-import TournamentStatus from "./TournamentStatus";
+import TournamentStatusContainer from "../containers/TournamentStatusContainer";
 
 
 const propTypes = {
-  tournamentId: PropTypes.number,
-  tournamentName: PropTypes.string,
-  pairs: PropTypes.arrayOf(PropTypes.shape({
-    host: PropTypes.object.isRequired,
-    guest: PropTypes.object.isRequired,
-    hostResult: PropTypes.number.isRequired,
-    guestResult: PropTypes.number.isRequired,
-    winner: PropTypes.number.isRequired
-  })),
-  setWinner: PropTypes.func.isRequired,
-  nextRound: PropTypes.func.isRequired,
-  finishTournament: PropTypes.func.isRequired,
-  initialRound: PropTypes.func.isRequired,
-  giveUp: PropTypes.func.isRequired,
-  displayFinalResults: PropTypes.bool.isRequired,
-  toggleFinalResults: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+    tournamentId: PropTypes.number,
+    finishTournament: PropTypes.func.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
 };
 
 class TournamentProcess extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.finishTournament = this.finishTournament.bind(this);
-    this.state = {
-      tournamentFinished: false
+    constructor(props) {
+        super(props);
+        this.finishTournament = this.finishTournament.bind(this);
+        this.state = {
+            tournamentFinished: false
+        };
+    }
+
+    finishTournament = () => {
+        this.props.finishTournament();
+        this.setState({
+            tournamentFinished: true
+        });
     };
-  }
 
-  finishTournament = () => {
-    this.props.finishTournament();
-    this.setState({
-      tournamentFinished: true
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        { this.state.tournamentFinished ? (
-          <TournamentFinalResultsContainer
-            tournamentId={this.props.tournamentId}
-          />
+    render() {
+        return (
+            <div>
+                { this.state.tournamentFinished ? (
+                    <TournamentFinalResultsContainer
+                        tournamentId={this.props.tournamentId}
+                    />
         ) : (
-          <TournamentStatus
-            tournamentId={this.props.tournamentId}
-            tournamentName={this.props.tournamentName}
-            pairs={this.props.pairs}
-            setWinner={this.props.setWinner}
-            initialRound={this.props.initialRound}
-            nextRound={this.props.nextRound}
-            finishTournament={this.finishTournament}
-            giveUp={this.props.giveUp}
-            displayFinalResults={this.props.displayFinalResults}
-            router={this.props.router}
-          />
+            <TournamentStatusContainer
+                tournamentId={this.props.tournamentId}
+                finishTournament={this.finishTournament}
+                router={this.props.router}
+            />
         )
         }
-      </div>
+            </div>
 
-    );
-  }
+        );
+    }
 }
 
 TournamentProcess.propTypes = propTypes;

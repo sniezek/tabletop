@@ -31,7 +31,7 @@ const defaultProps = {
 
 const enhance = pure;
 
-const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng, loadEvents, addNewEvent }) => (
+const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events, loggedIn, lat, lng, loadEvents, addNewEvent, goToEvent }) => (
     <View className="events">
         <EventsHeader
             mapView={mapView}
@@ -51,6 +51,7 @@ const Events = ({ mapView, toggleMapView, displayFilters, toggleFilters, events,
             lng={lng}
             events={events}
             mapView={mapView}
+            goToEvent={goToEvent}
         />
     </View>
 );

@@ -3,10 +3,10 @@ import CoreLayout from "../layouts/CoreLayout";
 import Home from "./Home";
 import { LoginRoute, LogoutRoute, RegisterRoute, RemindRoute, ResetRoute, ChangeRoute  } from "./Auth";
 import EventsRoute from "./Events";
-import { TournamentRoute, TournamentResultsRoute } from "./Tournaments";
+import TournamentRoute from "./Tournaments";
 import { GamesRoute, GameDetailsRoute } from "./Games/index";
-import { EditRoute, ProfileRoute} from "./User";
-import achievementsRoute from "./Archievments"
+import { EditRoute, ProfileRoute } from "./User";
+import achievementsRoute from "./Archievments";
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */

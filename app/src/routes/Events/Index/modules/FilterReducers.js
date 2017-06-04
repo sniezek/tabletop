@@ -22,7 +22,7 @@ export function locationReducer(state = { radius: 10, location: null }, { type, 
 
         if (payload !== null) {
             location = {
-                name: payload.label,
+                label: payload.label,
                 lat: payload.location.lat,
                 lng: payload.location.lng
             };
