@@ -37,7 +37,7 @@ const TournamentTypesList = ({ tournamentTypesList, redirectToDemo, router}) => 
                         {tournament.description}
                     </CardText>
                     <CardActions>
-                        <Button colored onClick={() => redirectToDemo(tournament.demoId)}>Start demo</Button>
+                        <Button disabled colored onClick={() => redirectToDemo(tournament.demoId)}>Start demo</Button>
                     </CardActions>
                 </Card>
             </section>
