@@ -51,8 +51,11 @@ public class EventController {
     }
 
     @GetMapping("/getTournaments/{id}")
-    public ResponseEntity<List<TournamentDetailsDTO>> getTournaments(@PathVariable Long id) {
-        return ResponseEntity.ok(eventService.getTournaments(id));
+    public ResponseEntity<List<TournamentDetailsDTO>> getEventTournaments(@PathVariable Long id) {
+        return eventService.getEventById(id)
+                .map(event -> ResponseEntity.ok(event.getTournaments().stream()
+                        .map(this::createTournamentDetailsDTO).collect(Collectors.toList())))
+                .orElse(ResponseUtils.notFound());
     }
 
     @PutMapping("/{id}")
@@ -90,11 +93,6 @@ public class EventController {
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(eventService.createEvent(event));
     }
 
-    @GetMapping("/getEventTournaments/{id}")
-    public ResponseEntity<List<TournamentDetailsDTO>> getEventTournaments(@PathVariable Long id) {
-        return eventService.getEventById(id).map(event -> ResponseEntity.ok(getEventTournaments(event))).orElse(ResponseUtils.notFound());
-    }
-
     private void validateEvent(Event event, ControllerErrors errors) {
         validator.validateMatches(event, errors);
         validator.validateSparringsGameInformation(event, errors);
@@ -125,9 +123,6 @@ public class EventController {
         return location.getId() == null;
     }
 
-    private List<TournamentDetailsDTO> getEventTournaments(Event event) {
-        return event.getTournaments().stream().map(this::createTournamentDetailsDTO).collect(Collectors.toList());
-    }
 
     private TournamentDetailsDTO createTournamentDetailsDTO(Tournament tournament) {
         return new TournamentDetailsDTO(
