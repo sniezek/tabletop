@@ -8,9 +8,7 @@ import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -19,6 +17,7 @@ public class SwissTournamentService extends GeneralTournamentService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwissTournamentService.class);
 
+    @Override
     public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
 
         shuffleUsers(swissTournamentProcess.getUsers());
@@ -56,6 +55,20 @@ public class SwissTournamentService extends GeneralTournamentService {
         }
 
         return pairs;
+    }
+
+    @Override
+    public List<Pair<User>> getCurentState(SwissTournamentProcess swissTournamentProcess) {
+        List<Pair<User>> state = new ArrayList<>();
+        Set<User> hosts = new HashSet<>();
+        swissTournamentProcess.getPlayerResults().forEach(result -> {
+            Optional<SwissPlayerResult> opponentResult = swissTournamentProcess.getResultByUser(result.getCurrentOpponent());
+            if (isPairToAdd(hosts, result, opponentResult)) {
+                state.add(getResultPair(result, opponentResult));
+                hosts.add(result.getId().getUser());
+            }
+        });
+        return state;
     }
 
     public boolean canBeFinished(SwissTournamentProcess swissTournamentProcess) {

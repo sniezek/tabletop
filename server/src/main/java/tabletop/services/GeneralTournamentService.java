@@ -11,7 +11,10 @@ import tabletop.domain.user.User;
 import java.util.*;
 
 @Service
-public class GeneralTournamentService {
+public abstract class GeneralTournamentService {
+
+    public abstract List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess);
+    public abstract List<Pair<User>> getCurentState(SwissTournamentProcess swissTournamentProcess);
 
     public List<Pair<User>> getInitialPairs(SwissTournamentProcess swissTournamentProcess) {
 
@@ -81,26 +84,13 @@ public class GeneralTournamentService {
         swissTournamentProcess.getResultByUser(loser).ifPresent(SwissPlayerResult::lose);
     }
 
-    public List<Pair<User>> getCurentState(SwissTournamentProcess swissTournamentProcess) {
-        List<Pair<User>> state = new ArrayList<>();
-        Set<User> hosts = new HashSet<>();
-        swissTournamentProcess.getPlayerResults().forEach(result -> {
-            Optional<SwissPlayerResult> opponentResult = swissTournamentProcess.getResultByUser(result.getCurrentOpponent());
-            if (isPairToAdd(hosts, result, opponentResult)) {
-                state.add(getResultPair(result, opponentResult));
-                hosts.add(result.getId().getUser());
-            }
-        });
-        return state;
-    }
-
-    private boolean isPairToAdd(Set<User> hosts, SwissPlayerResult result, Optional<SwissPlayerResult> opponentResult) {
+    protected boolean isPairToAdd(Set<User> hosts, SwissPlayerResult result, Optional<SwissPlayerResult> opponentResult) {
         return !hosts.contains(result.getCurrentOpponent())
                 && result.isAvailable() &&
                 opponentResult.map(SwissPlayerResult::isAvailable).orElse(false);
     }
 
-    private Pair<User> getResultPair(SwissPlayerResult result, Optional<SwissPlayerResult> opponentResult) {
+    protected Pair<User> getResultPair(SwissPlayerResult result, Optional<SwissPlayerResult> opponentResult) {
         return new Pair<>(
                 result.getId().getUser(),
                 result.getCurrentOpponent(),

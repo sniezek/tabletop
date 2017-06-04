@@ -136,8 +136,8 @@ public class TournamentController {
 
         List<Pair<User>> nextRound = tournamentService.getNextRound(tournament);
 
-//        tournamentService.saveTournament(tournament);
-//        saveResults(tournamentId);
+        tournamentService.saveTournament(tournament);
+        saveResults(tournamentId);
 
         return getOkResponseWithTournamentDetails(tournament, nextRound, tournamentService.isUserAvailable(tournament, userService.getAuthenticatedUser().get()));
     }
