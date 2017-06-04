@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
 import pure from "recompose/pure";
 import PropTypes from "prop-types";
-import { Table, TableHeader } from "react-mdl/lib";
+import { List, ListItem, ListItemContent, Card } from "react-mdl/lib";
+import "./TournamentFinalResults.scss";
+import "./Tournament.scss";
 
 
 const propTypes = {
@@ -25,46 +27,23 @@ class TournamentFinalResults extends PureComponent {
     }
 
     render() {
-        const results = Object.keys(this.props.finalResults)
-          .map(result => ({ place: result.place, user: result.user, points: result.points }));
         return (
-            <div>
-                <h1>Tournament Final Results</h1>
-                <ul><h5>
-                    {this.props.finalResults.map(result => <li key={result.id}>{result.place} {result.user.username} {result.points}</li>)}
-                </h5></ul>
-                {/*<Table*/}
-                    {/*sortable*/}
-                    {/*shadow={0}*/}
-                  {/*//   rows={[*/}
-                  {/*// { place: 1, user: "user name", points: 2 }*/}
-                  {/*//   ]}*/}
-                    {/*rows={results}*/}
-                {/*>*/}
-                    {/*<TableHeader*/}
-                        {/*numeric*/}
-                        {/*name="place"*/}
-                        {/*tooltip="The place for the user"*/}
-                    {/*>*/}
-                    {/*Place*/}
-                  {/*</TableHeader>*/}
-                    {/*<TableHeader*/}
-                        {/*name="user"*/}
-                        {/*sortFn={(a, b, isAsc) => (isAsc ? a : b).match(/\((.*)\)/)[1].localeCompare((isAsc ? b : a).match(/\((.*)\)/)[1])}*/}
-                        {/*tooltip="The user"*/}
-                    {/*>*/}
-                  {/*User*/}
-                {/*</TableHeader>*/}
-                    {/*<TableHeader*/}
-                        {/*numeric*/}
-                        {/*name="points"*/}
-                        {/*tooltip="Number of points earned by the user during the whole tournament"*/}
-                    {/*>*/}
-                  {/*Points*/}
-                {/*</TableHeader>*/}
-
-                {/*</Table>*/}
-
+            <div className="tournament-list">
+              <h1>Tournament Final Results</h1>
+              <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>
+                <List>
+                    {this.props.finalResults.map(result =>
+                        <ListItem twoLine key={result.id}>
+                            <h3 className="placeHeader">{result.place}</h3>
+                            <ListItemContent
+                                subtitle={`${result.points} points`}
+                            >
+                                {result.user.username}
+                            </ListItemContent>
+                        </ListItem>
+                )}
+                </List>
+              </Card>
             </div>
         );
     }
