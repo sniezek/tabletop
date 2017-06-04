@@ -8,7 +8,9 @@ import tabletop.domain.match.tournament.swiss.SwissPlayerResult;
 import tabletop.domain.match.tournament.swiss.SwissTournamentProcess;
 import tabletop.domain.user.User;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -59,5 +61,4 @@ public class SwissTournamentService extends GeneralTournamentService {
     public boolean canBeFinished(SwissTournamentProcess swissTournamentProcess) {
         return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size();
     }
-
 }

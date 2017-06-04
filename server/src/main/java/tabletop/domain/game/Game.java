@@ -14,7 +14,6 @@ import static tabletop.domain.match.tournament.TournamentType.SWISS;
 
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum Game {
-
     CHESS("Chess",
             ChessConstants.displayName,
             2,

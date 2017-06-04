@@ -5,7 +5,6 @@ import tabletop.domain.event.Location;
 import java.util.List;
 
 public class GameStatisticsResponse {
-
     private long sparringsCount;
     private long tournamentsCount;
     private long eventsCount;
