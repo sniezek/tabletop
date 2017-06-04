@@ -9,8 +9,7 @@ import java.util.Optional;
 
 
 public interface TournamentRepository extends JpaRepository<Tournament, Long>, QueryDslPredicateExecutor<Tournament> {
-
     Optional<Tournament> findOneById(Long id);
-    List<Tournament> findTournamentsByFinishedIsTrue();
 
+    List<Tournament> findTournamentsByFinishedIsTrue();
 }

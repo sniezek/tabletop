@@ -109,7 +109,7 @@ public class GeneralTournamentService {
                 opponentResult.map(SwissPlayerResult::getResult).orElse(0));
     }
 
-    public List<TournamentPlayerResult> getFinalResults(Tournament tournament) {
+    public List<TournamentPlayerResult> getTournamentPlayerResults(Tournament tournament) {
         List<TournamentPlayerResult> tournamentPlayerResultList = new LinkedList<>();
         List<SwissPlayerResult> playerResults = getPlayerResultsSortedByPoints((SwissTournamentProcess) tournament.getTournamentProcess());
 

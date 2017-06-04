@@ -6,9 +6,6 @@ import javax.persistence.Entity;
 public class Sparring extends Match {
     private String gameName;
 
-    public Sparring() {
-    }
-
     @Override
     public String getGameName() {
         return isRegisteredGame() ? getGame().getName() : gameName;

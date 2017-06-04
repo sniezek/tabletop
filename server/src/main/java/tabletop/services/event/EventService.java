@@ -2,22 +2,23 @@ package tabletop.services.event;
 
 import com.google.common.collect.Lists;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.QEvent;
 import tabletop.domain.game.Game;
-import tabletop.domain.match.tournament.Tournament;
-import tabletop.domain.match.tournament.TournamentDetailsDTO;
-import tabletop.domain.user.User;
 import tabletop.repositories.event.EventRepository;
 import tabletop.services.UserService;
-import tabletop.utils.NotNullUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.Objects.nonNull;
+import static tabletop.utils.NotNullUtils.areAllNotNull;
 
 @Service
 public class EventService {
@@ -32,7 +33,7 @@ public class EventService {
                                  Long startDateTimestamp, Long endDateTimestamp) {
         BooleanBuilder predicateBuilder = new BooleanBuilder();
 
-        if (NotNullUtils.isNotNull(games)) {
+        if (nonNull(games)) {
             BooleanBuilder gamesPredicateBuilder = new BooleanBuilder();
 
             List<String> gamesLowerCase = games.stream().map(String::toLowerCase).collect(Collectors.toList());
@@ -44,7 +45,7 @@ public class EventService {
             predicateBuilder.and(gamesPredicateBuilder);
         }
 
-        if (NotNullUtils.isNotNull(type)) {
+        if (nonNull(type)) {
             if (type.equals("tournament")) {
                 predicateBuilder.and(QEvent.event.tournaments.isNotEmpty());
             } else {
@@ -52,7 +53,7 @@ public class EventService {
             }
         }
 
-        if (NotNullUtils.isNotNull(startDateTimestamp)) {
+        if (nonNull(startDateTimestamp)) {
             Date startDate = new Date(startDateTimestamp);
 
             predicateBuilder.and(
@@ -60,7 +61,7 @@ public class EventService {
                             .or
                                     (QEvent.event.tournaments.any().startDate.goe(startDate)));
         }
-        if (NotNullUtils.isNotNull(endDateTimestamp)) {
+        if (nonNull(endDateTimestamp)) {
             Date endDate = new Date(endDateTimestamp);
 
             predicateBuilder.and(
@@ -71,11 +72,15 @@ public class EventService {
 
         List<Event> events = Lists.newArrayList(eventRepository.findAll(predicateBuilder));
 
-        if (NotNullUtils.areAllNotNull(lat, lng, radius)) {
+        if (areAllNotNull(lat, lng, radius)) {
             return events.stream().filter(event -> LocationService.isLocationWithinRadiusFromPoint(event.getLocation(), radius, lat, lng)).collect(Collectors.toList());
         }
 
         return events;
+    }
+
+    public Optional<Event> getEventById(Long id) {
+        return Optional.ofNullable(eventRepository.findOne(id));
     }
 
     public Event createEvent(Event event) {
@@ -93,33 +98,7 @@ public class EventService {
         return saveEvent(newEvent);
     }
 
-    public Event saveEvent(Event event) {
+    private Event saveEvent(Event event) {
         return eventRepository.save(event);
-    }
-
-    public Optional<Event> getEventById(Long id) {
-        return Optional.ofNullable(eventRepository.findOne(id));
-    }
-
-    public List<Event> getUserOrganisedGames() {
-        User user = userService.getAuthenticatedUser().get();
-        Predicate predicate = QEvent.event.organiser.eq(user);
-
-        return Lists.newArrayList(eventRepository.findAll(predicate));
-    }
-
-    public List<TournamentDetailsDTO> getTournaments(Long id) {
-        Event event = eventRepository.findOne(id);
-        return Objects.isNull(event) ? Collections.emptyList() :
-                event.getTournaments().stream()
-                        .map(this::createTournamentDetailsDTO)
-                        .collect(Collectors.toList());
-    }
-
-    private TournamentDetailsDTO createTournamentDetailsDTO(Tournament tournament) {
-        return new TournamentDetailsDTO(
-                tournament.getId(),
-                tournament.getName(),
-                Objects.nonNull(tournament.getTournamentProcess()) && tournament.getTournamentProcess().isInitialized());
     }
 }
