@@ -47,7 +47,7 @@ export const getTournament = ({ id }, callback) => dispatch =>
         callback(response);
     });
 
-export const getTournamentTypes = () => dispatch =>
+export const getTournamentTypes = (callback) => dispatch =>
   Api.tournamentTypes().then((response) => {
       if (response.ok) {
           response.json().then((tournamentTypesList) => {
@@ -59,6 +59,7 @@ export const getTournamentTypes = () => dispatch =>
               });
           });
       }
+      callback(response);
   });
 
 export const getFinishedTournaments = dispatch =>
@@ -176,6 +177,7 @@ export const giveUp = id => dispatch =>
 export const actions = {
     showTournament,
     getTournament,
+    getTournamentTypes,
     getFinalResults,
     nextRound,
     initialRound,
@@ -196,7 +198,7 @@ const initialState = {
     },
     isCurrentUserParticipant: false,
     tournaments: [],
-    tournamentId: -1
+    tournamentId: 0
 };
 
 export default function tournamentReducer(state = initialState, { type, payload }) {

@@ -8,12 +8,17 @@ const propTypes = {
     id: PropTypes.number.isRequired,
     loadDetails: PropTypes.func.isRequired,
     tournaments: PropTypes.array,
-    sparrings: PropTypes.array
+    sparrings: PropTypes.array,
+    user: PropTypes.object,
+    organiser: PropTypes.object,
+    router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
     tournaments: null,
-    sparrings: null
+    sparrings: null,
+    user: null,
+    organiser: null
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -31,8 +36,15 @@ class EventDetailsContainer extends PureComponent {
         super(props);
 
         this.state = {
-            users: null
+            users: null,
+            playersDialogOpened: false
         };
+
+        this.editEvent = this.editEvent.bind(this);
+        this.acceptPlayers = this.acceptPlayers.bind(this);
+        this.closePlayersDialog = this.closePlayersDialog.bind(this);
+        this.revokePlayer = this.revokePlayer.bind(this);
+        this.acceptPlayer = this.acceptPlayer.bind(this);
     }
 
     componentDidMount() {
@@ -61,11 +73,49 @@ class EventDetailsContainer extends PureComponent {
         }
     }
 
+    acceptPlayers() {
+        this.setState({
+            playersDialogOpened: true
+        });
+    }
+
+    editEvent() {
+        const { id, router } = this.props;
+
+        router.push(`/events/edit/${id}`);
+    }
+
+    acceptPlayer() {
+
+    }
+
+    revokePlayer() {
+
+    }
+
+    closePlayersDialog() {
+        this.setState({
+            playersDialogOpened: false
+        });
+    }
+
     render() {
+        const { user, organiser } = this.props;
+        const { playersDialogOpened } = this.state;
+        const isOrganiser = user && organiser && user.id === organiser.id;
+
         return (
             <EventDetails
                 {...this.props}
                 users={this.state.users}
+                isOrganiser={isOrganiser}
+                editEvent={this.editEvent}
+                acceptPlayers={this.acceptPlayers}
+                waitingCount={98}
+                playersDialogOpened={playersDialogOpened}
+                acceptPlayer={this.acceptPlayer}
+                revokePlayer={this.revokePlayer}
+                closePlayersDialog={this.closePlayersDialog}
             />
         );
     }

@@ -16,7 +16,6 @@ public class Tournament extends Match {
     @NotNull(message = "{tournament.type}")
     @Enumerated(EnumType.STRING)
     private TournamentType type;
-
     private boolean finished;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

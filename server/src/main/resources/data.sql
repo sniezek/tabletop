@@ -494,3 +494,4 @@ INSERT INTO sparring(id, end_date, end_status, game, max_players, min_players, s
 VALUES (11, '2017-06-21 22:00:00', 'INCORRECT', 'BATTLESHIP', 8, 4, '2017-06-21 18:00:00', 'Battleship');
 INSERT INTO event_sparrings(event_id, sparrings_id)
 VALUES (11, 11);
+

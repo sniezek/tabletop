@@ -37,4 +37,14 @@ body {
 
 .rms-wrapper {
     flex: 1 0 0%;
+    height: 67px;
+}
+
+.rms-text span {
+    padding: 16px 0 12px;
+}
+
+.rms-caret {
+    top: 20px;
+    right: 2px;
 }

@@ -5,12 +5,60 @@ dialog {
     }
 }
 
+dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
 .mdl-dialog {
     width: auto;
+    max-height: calc(100% - 64px);
     max-width: calc(100% - 64px);
 
     &__title {
         font-size: 24px;
         font-weight: 300;
     }
+
+    &__content {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
+
+::-webkit-scrollbar {
+    background-color: rgba(0, 0, 0, 0);
+    -webkit-border-radius: 10rem;
+}
+
+::-webkit-scrollbar:vertical {
+    width: 1rem;
+}
+
+::-webkit-scrollbar:horizontal {
+    height: 1rem;
+}
+
+::-webkit-scrollbar:hover {
+    background-color: rgba(0, 0, 0, 0.09);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 10rem;
+    background-clip: padding-box;
+    border: .2rem solid rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    min-height: 1rem;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    min-width: 1rem;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-border-radius: 10rem;
 }

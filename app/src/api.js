@@ -195,13 +195,15 @@ class Api {
 
     finishTournament(id) {
         return fetch(`${API_SERVER}/tournament/finish/${id}`, {
-            method: "POST"
+            method: "POST",
+            credentials: "include"
         });
     }
 
     getFinalResults(id) {
         return fetch(`${API_SERVER}/tournament/finalresults/${id}`, {
-            method: "GET"
+            method: "GET",
+            credentials: "include"
         });
     }
 
