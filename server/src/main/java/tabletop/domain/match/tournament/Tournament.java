@@ -13,6 +13,7 @@ import java.util.List;
 public class Tournament extends Match {
     @NotEmpty(message = "{tournament.name}")
     private String name;
+
     @NotNull(message = "{tournament.type}")
     @Enumerated(EnumType.STRING)
     private TournamentType type;
@@ -31,9 +32,6 @@ public class Tournament extends Match {
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
-
-    public Tournament() {
-    }
 
     public String getName() {
         return name;

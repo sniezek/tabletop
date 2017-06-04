@@ -1,24 +1,18 @@
 package tabletop.domain.ranking;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import tabletop.domain.IdComparableEntity;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userId", "gameName"})}
 )
-public class GameRanking {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @NotNull
+public class GameRanking extends IdComparableEntity {
     private Long userId;
-
-    @NotNull
     private String gameName;
-
     private Long points;
 
     public Long getUserId() {

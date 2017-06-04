@@ -211,7 +211,7 @@ class Api {
     }
 
     getFinalResults(id) {
-        return fetch(`${API_SERVER}/tournament/finalresults/${id}`, {
+        return fetch(`${API_SERVER}/tournament/results/${id}`, {
             method: "GET"
         });
     }

@@ -22,24 +22,26 @@ import java.util.Set;
 public class Event extends IdComparableEntity {
     @NotEmpty(message = "{event.name}")
     private String name;
+
     @NotNull(message = "{event.description}")
     private String description;
+
     @NotNull(message = "{event.location}")
     @ManyToOne
     private Location location;
+
     @Valid
     @NotNull(message = "{event.sparrings}")
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Sparring> sparrings;
+
     @Valid
     @NotNull(message = "{event.tournaments}")
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Tournament> tournaments;
+
     @ManyToOne
     private User organiser;
-
-    public Event() {
-    }
 
     public String getName() {
         return name;
@@ -96,10 +98,16 @@ public class Event extends IdComparableEntity {
     }
 
     public Date getStartDate() {
-        return getMatches().stream().map(Match::getStartDate).min(Date::compareTo).get();
+        return getMatches().stream()
+                .map(Match::getStartDate)
+                .min(Date::compareTo)
+                .get();
     }
 
     public Date getEndDate() {
-        return getMatches().stream().map(Match::getEndDate).max(Date::compareTo).get();
+        return getMatches().stream()
+                .map(Match::getEndDate)
+                .max(Date::compareTo)
+                .get();
     }
 }
