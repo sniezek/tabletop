@@ -8,11 +8,11 @@ import tabletop.domain.user.User;
 import java.util.Date;
 import java.util.Set;
 
-class TournamentDto extends MatchDto {
+class EventTournamentDto extends EventMatchDto {
     private final String name;
     private final TournamentType type;
 
-    TournamentDto(String name, TournamentType type, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers) {
+    EventTournamentDto(String name, TournamentType type, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers) {
         super(startDate, endDate, users, game, minPlayers, maxPlayers);
         this.name = name;
         this.type = type;

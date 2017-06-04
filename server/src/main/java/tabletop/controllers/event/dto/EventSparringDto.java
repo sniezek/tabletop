@@ -6,10 +6,10 @@ import tabletop.domain.user.User;
 import java.util.Date;
 import java.util.Set;
 
-class SparringDto extends MatchDto {
+class EventSparringDto extends EventMatchDto {
     private final String gameName;
 
-    SparringDto(String gameName, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers) {
+    EventSparringDto(String gameName, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers) {
         super(startDate, endDate, users, game, minPlayers, maxPlayers);
         this.gameName = gameName;
     }

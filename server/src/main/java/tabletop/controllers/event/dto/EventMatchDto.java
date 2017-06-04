@@ -7,7 +7,7 @@ import tabletop.domain.user.User;
 import java.util.Date;
 import java.util.Set;
 
-abstract class MatchDto {
+abstract class EventMatchDto {
     private final Date startDate;
     private final Date endDate;
     private final Set<User> users;
@@ -15,7 +15,7 @@ abstract class MatchDto {
     private final Integer minPlayers;
     private final Integer maxPlayers;
 
-    MatchDto(Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers) {
+    EventMatchDto(Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.users = users;
