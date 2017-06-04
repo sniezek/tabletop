@@ -6,12 +6,14 @@ import TournamentHeader from "../components/TournamentHeader";
 const propTypes = {
     router: PropTypes.object.isRequired,
     title: PropTypes.string,
-    tournamentTypesView: PropTypes.bool
+    tournamentTypesView: PropTypes.bool,
+    finishedTournamentsView: PropTypes.bool.isRequired
 };
 
 const defaultProps = {
     title: "Tournaments",
-    tournamentTypesView: false
+    tournamentTypesView: false,
+    finishedTournamentsView: false
 };
 
 const enhance = pure;
@@ -36,6 +38,7 @@ class TournamentHeaderContainer extends PureComponent {
             <TournamentHeader
                 title={this.props.title}
                 tournamentTypesView={this.props.tournamentTypesView}
+                finishedTournamentsView={this.props.finishedTournamentsView}
                 redirectToTournamentTypes={this.redirectToTournamentTypes}
                 redirectToTournaments={this.redirectToTournaments}
             />

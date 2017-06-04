@@ -5,6 +5,7 @@ import Button from "react-mdl/lib/Button";
 
 const propTypes = {
     tournamentTypesView: PropTypes.bool.isRequired,
+    finishedTournamentsView: PropTypes.bool.isRequired,
     redirectToTournamentTypes: PropTypes.func,
     redirectToTournaments: PropTypes.func
 };

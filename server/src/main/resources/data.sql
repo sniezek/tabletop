@@ -47,7 +47,7 @@ VALUES (13, 'Jan', '$2a$10$nnrqLHplDNisOTY1m1tHcuv6gCsULjyrVjNl9VpIZjDx/1pvQFLyO
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
 VALUES (1, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', false, 12);
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
-VALUES (2, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', false, 12);
+VALUES (2, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', true, 12);
 
 INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (1, 1, 1, 10, 1);

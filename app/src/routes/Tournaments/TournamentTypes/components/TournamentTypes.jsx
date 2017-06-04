@@ -20,7 +20,7 @@ const defaultProps = {
 
 const enhance = pure;
 
-const TournamentTypes = ({ router, tournamentTypesList, redirectToDemo, demoView, tournamentTypesView }) => (
+const TournamentTypes = ({ router, tournamentTypesList, redirectToDemo, tournamentTypesView }) => (
     <div className="tournaments">
         <TournamentHeaderContainer
             router={router}
