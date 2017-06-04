@@ -23,7 +23,7 @@ const FinishedTournamentsList = ({ router, finishedTournamentsList }) => (
                 {finishedTournamentsList.map(tournament =>
                     <ListItem key={tournament.id}>
                         <ListItemContent>
-                            {tournament.id} {tournament.name}
+                            {tournament.name}
                         </ListItemContent>
                     </ListItem>
           )}
