@@ -51,12 +51,17 @@ public class EventController {
         return eventService.getEventById(id).map(event -> ResponseEntity.ok(new EventInfoDto(event))).orElse(ResponseUtils.notFound());
     }
 
-    @GetMapping("/getTournaments/{id}")
-    public ResponseEntity<List<TournamentDetailsDTO>> getEventTournaments(@PathVariable Long id) {
-        return eventService.getEventById(id)
-                .map(event -> ResponseEntity.ok(event.getTournaments().stream()
-                        .map(this::createTournamentDetailsDTO).collect(Collectors.toList())))
-                .orElse(ResponseUtils.notFound());
+    @PostMapping
+    public ResponseEntity<?> createEvent(@Valid @RequestBody Event event, BindingResult bindingResult) {
+        ControllerErrors errors = new ControllerErrors(bindingResult);
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        validateEvent(event, errors);
+        validateAndHandleLocation(event, bindingResult, errors);
+
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(new EventInfoDto(eventService.createEvent(event)));
     }
 
     @PutMapping("/{id}")
@@ -81,17 +86,12 @@ public class EventController {
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(new EventInfoDto(eventService.updateEvent(id, event)));
     }
 
-    @PostMapping
-    public ResponseEntity<?> createEvent(@Valid @RequestBody Event event, BindingResult bindingResult) {
-        ControllerErrors errors = new ControllerErrors(bindingResult);
-        if (errors.areErrors()) {
-            return ResponseUtils.badRequest(errors);
-        }
-
-        validateEvent(event, errors);
-        validateAndHandleLocation(event, bindingResult, errors);
-
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(new EventInfoDto(eventService.createEvent(event)));
+    @GetMapping("/getTournaments/{id}")
+    public ResponseEntity<List<TournamentDetailsDTO>> getEventTournaments(@PathVariable Long id) {
+        return eventService.getEventById(id)
+                .map(event -> ResponseEntity.ok(event.getTournaments().stream()
+                        .map(this::createTournamentDetailsDTO).collect(Collectors.toList())))
+                .orElse(ResponseUtils.notFound());
     }
 
     private void validateEvent(Event event, ControllerErrors errors) {

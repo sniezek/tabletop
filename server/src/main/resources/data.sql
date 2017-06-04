@@ -7,6 +7,7 @@ DELETE FROM tournament;
 DELETE FROM swiss_tournament_process;
 DELETE FROM tournament_process;
 DELETE FROM game_ranking;
+DROP TABLE IF EXISTS event_tournaments;
 
 -- events
 DELETE FROM location;
