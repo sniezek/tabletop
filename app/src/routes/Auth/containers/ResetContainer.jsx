@@ -9,12 +9,16 @@ const propTypes = {
     changePassword: PropTypes.func.isRequired,
     token: PropTypes.string,
     password: PropTypes.string,
+    confirmPassword: PropTypes.string,
     id: PropTypes.string,
     router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
-    id: "",token:"", password:""
+    id: "",
+    token: "",
+    password: "",
+    confirmPassword: ""
 };
 
 const mapDispatchToProps = {
@@ -39,6 +43,7 @@ class ResetContainer extends PureComponent {
         this.changePassword = this.changePassword.bind(this);
         this.redirect = this.redirect.bind(this);
         this.setPassword = this.setPassword.bind(this);
+        this.setConfirmPassword = this.setConfirmPassword.bind(this);
     }
 
     componentWillReceiveProps({ user }) {
@@ -58,31 +63,60 @@ class ResetContainer extends PureComponent {
         });
     }
 
+    setConfirmPassword({ target }) {
+        this.setState({
+            confirmPassword: target.value
+        });
+    }
+
     changePassword() {
-        const { token, id, password } = this.state;
+        const { id, token, password, confirmPassword } = this.state;
 
         this.setState({
             loading: true
         });
 
-        this.props.changePassword({
-            id, password, token
-        }, ({ ok }) => {
-            if(ok) {
-                //text().then(text => console.log(text));
-                alert(" Your password has been changed ");
-                //this.redirect('/user/change');
-            }
-            else {
-                alert("Error encountered while checking token.");
-                this.redirect('/login');
-            }
+        if(password.length < 1) {
+            alert("Password can't be empty.");
             this.setState({
-                token: "",
-                id: 0,
                 loading: false
             });
-        });
+        } else if (!password.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/)) {
+            alert("Your password should be at least 8 characters long and contain at least 1 uppercase letter, 1 lowercase letter, 1 digit and one special character from !@#$%^&*");
+            this.setState({
+                loading:false
+            });
+        } else if(password===confirmPassword) {
+            this.props.changePassword({
+                id,
+                password,
+                token
+            }, ({ok}) => {
+                if (!ok) {
+                    this.setState({
+                        newPassword: "",
+                        confirmNewPassword: "",
+                        loading: false
+                    });
+                    alert("Error encountered while changing password.");
+                }
+                else {
+                    this.setState({
+                        newPassword: "",
+                        confirmNewPassword: "",
+                        loading: false
+                    });
+                    alert("Password successfully changed.");
+                }
+            });
+        } else {
+            alert("Entered passwords don't match.");
+            this.setState({
+                newPassword: "",
+                confirmNewPassword: "",
+                loading: false
+            });
+        }
     }
 
     reset() {
@@ -96,9 +130,7 @@ class ResetContainer extends PureComponent {
             token, id
         }, ({ ok }) => {
             if(ok) {
-                //text().then(text => console.log(text));
                 alert(" Proper token. Now you can change your password. ");
-                //this.redirect('/user/change');
             }
             else {
                 alert("Error encountered while checking token.");
@@ -112,7 +144,7 @@ class ResetContainer extends PureComponent {
 
 
     render() {
-        const { token, id, loading, password } = this.state;
+        const { token, id, loading, password, confirmPassword } = this.state;
 
         return (
             <Reset
@@ -120,7 +152,9 @@ class ResetContainer extends PureComponent {
                 id={id}
                 reset={this.reset}
                 password={password}
+                confirmPassword={confirmPassword}
                 setPassword={this.setPassword}
+                setConfirmPassword={this.setConfirmPassword}
                 changePassword = {this.changePassword}
                 token={token}
             />

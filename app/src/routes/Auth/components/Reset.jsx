@@ -11,17 +11,21 @@ const propTypes = {
     token: PropTypes.string,
     reset: PropTypes.func,
     password: PropTypes.string,
+    confirmPassword: PropTypes.string,
     changePassword: PropTypes.func,
     setPassword: PropTypes.func,
+    setConfirmPassword: PropTypes.func,
     id: PropTypes.number
 };
 
 const defaultProps = {
     loading: false,
-    password:"",
+    password: "",
+    confirmPassword: "",
     reset: () => {},
     changePassword: () => {},
-    setPassword: () => {}
+    setPassword: () => {},
+    setConfirmPassword: () => {}
 };
 
 const enhance = pure;
@@ -31,7 +35,7 @@ const bindActions = (reset,changePassword) => [{
     onClick: changePassword
 }];
 
-const Reset = ({ loading, id, reset, token, setPassword, changePassword, password }) => (
+const Reset = ({ loading, id, reset, token, setPassword, setConfirmPassword, changePassword, password, confirmPassword }) => (
     <CardForm
         title="Reset password"
         loading={loading}
@@ -42,10 +46,18 @@ const Reset = ({ loading, id, reset, token, setPassword, changePassword, passwor
             <div className="reset__form">
                 <IconTextfield
                     icon="lock"
-                    label="password"
+                    label="Password"
                     type="password"
                     value={password}
                     onChange={setPassword}
+                    required
+                />
+                <IconTextfield
+                    icon="lock"
+                    label="Confirm password"
+                    type="password"
+                    value={confirmPassword}
+                    onChange={setConfirmPassword}
                     required
                 />
             </div>
