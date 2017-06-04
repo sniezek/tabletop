@@ -22,6 +22,10 @@ public class ResponseUtils {
         return new ResponseEntity<>(entity, HttpStatus.CREATED);
     }
 
+    public static <T> ResponseEntity<T> edited(T entity) {
+        return new ResponseEntity<>(entity, HttpStatus.CREATED);
+    }
+
     public static ResponseEntity<String> conflict(String message) {
         return new ResponseEntity<>(message, HttpStatus.CONFLICT);
     }

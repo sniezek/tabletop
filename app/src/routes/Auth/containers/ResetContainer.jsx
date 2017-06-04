@@ -1,25 +1,27 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { reset } from "../../../store/auth";
+import { reset, changePassword } from "../../../store/auth";
 import Reset from "../components/Reset.jsx";
 
 const propTypes = {
     reset: PropTypes.func.isRequired,
+    changePassword: PropTypes.func.isRequired,
     token: PropTypes.string,
+    password: PropTypes.string,
     id: PropTypes.string,
     router: PropTypes.object.isRequired
 };
 
 const defaultProps = {
-    id: "",token:""
+    id: "",token:"", password:""
 };
 
 const mapDispatchToProps = {
-    reset
+    reset, changePassword
 };
 
-const mapStateToProps = ({ token, id }) => ({ token, id });
+const mapStateToProps = ({ token, id, password }) => ({ token, id, password });
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
@@ -34,7 +36,9 @@ class ResetContainer extends PureComponent {
         };
 
         this.reset = this.reset.bind(this);
+        this.changePassword = this.changePassword.bind(this);
         this.redirect = this.redirect.bind(this);
+        this.setPassword = this.setPassword.bind(this);
     }
 
     componentWillReceiveProps({ user }) {
@@ -48,6 +52,39 @@ class ResetContainer extends PureComponent {
         router.push({ pathname:path, state:{id: this.state.id, password: ""}});
     }
 
+    setPassword({ target }) {
+        this.setState({
+            password: target.value
+        });
+    }
+
+    changePassword() {
+        const { token, id, password } = this.state;
+
+        this.setState({
+            loading: true
+        });
+
+        this.props.changePassword({
+            id, password, token
+        }, ({ ok }) => {
+            if(ok) {
+                //text().then(text => console.log(text));
+                alert(" Your password has been changed ");
+                //this.redirect('/user/change');
+            }
+            else {
+                alert("Error encountered while checking token.");
+                this.redirect('/login');
+            }
+            this.setState({
+                token: "",
+                id: 0,
+                loading: false
+            });
+        });
+    }
+
     reset() {
         const { token, id } = this.state;
 
@@ -59,15 +96,15 @@ class ResetContainer extends PureComponent {
             token, id
         }, ({ ok }) => {
             if(ok) {
-                alert("Token validated. Your new password "+ok);
+                //text().then(text => console.log(text));
+                alert(" Proper token. Change your password ");
                 //this.redirect('/user/change');
             }
             else {
                 alert("Error encountered while checking token.");
+                this.redirect('/login');
             }
             this.setState({
-                token: "",
-                id: 0,
                 loading: false
             });
         });
@@ -75,13 +112,16 @@ class ResetContainer extends PureComponent {
 
 
     render() {
-        const { token, id, loading } = this.state;
+        const { token, id, loading, password } = this.state;
 
         return (
             <Reset
                 loading={loading}
                 id={id}
                 reset={this.reset}
+                password={password}
+                setPassword={this.setPassword}
+                changePassword = {this.changePassword}
                 token={token}
             />
         );

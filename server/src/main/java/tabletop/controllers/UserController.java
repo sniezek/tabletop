@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import tabletop.controllers.validation.errors.ControllerErrorsHandler;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.controllers.utils.ResponseUtils;
+import tabletop.domain.user.ResetPasswordEntity;
 import tabletop.domain.user.User;
 import tabletop.services.UserService;
 
@@ -74,7 +75,18 @@ public class UserController {
         }
         String response = userService.redirectToChange(token,id);
 
-        if (response != null) return ResponseUtils.reseted(response);
+        if (response == null) return ResponseUtils.reseted(response);
         else return ResponseUtils.notFound();
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/user/changepassword")
+    public ResponseEntity<?> changePassword(@RequestBody ResetPasswordEntity entity, ControllerErrors errors) {
+        if (errors.areErrors()) {
+            return ResponseUtils.badRequest(errors);
+        }
+
+        User edited = userService.checkAndChangePassword(entity);
+        return edited!=null?  ResponseUtils.reseted(edited):ResponseUtils.forbidden();
+
     }
 }

@@ -9,38 +9,42 @@ const propTypes = {
     loading: PropTypes.bool,
     token: PropTypes.string,
     reset: PropTypes.func,
+    password: PropTypes.string,
+    changePassword: PropTypes.func,
+    setPassword: PropTypes.func,
     id: PropTypes.number
 };
 
 const defaultProps = {
     loading: false,
-    token: "",
-    id: 0,
-    reset: () => {}
+    password:"",
+    reset: () => {},
+    changePassword: () => {},
+    setPassword: () => {}
 };
 
 const enhance = pure;
 
-const bindActions = (reset) => [{
+const bindActions = (reset,changePassword) => [{
     label: "Reset password",
-    onLoad: reset
+    onClick: changePassword
 }];
 
-const Reset = ({ loading, id, reset, token }) => (
+const Reset = ({ loading, id, reset, token, setPassword, changePassword, password }) => (
     <CardForm
         title="Reset password"
         loading={loading}
-        actions={bindActions(reset)}
+        actions={bindActions(reset, changePassword)}
         className="reset"
     >
         <div className="remind__content">
             <div className="remind__form">
                 <IconTextfield
-                    icon="email"
-                    label="ID"
-                    type="id"
-                    value={id}
-                    onChange={reset}
+                    icon="password"
+                    label="password"
+                    type="password"
+                    value={password}
+                    onChange={setPassword}
                 />
             </div>
         </div>

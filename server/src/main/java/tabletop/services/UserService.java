@@ -5,6 +5,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tabletop.domain.user.PasswordResetToken;
+import tabletop.domain.user.ResetPasswordEntity;
 import tabletop.domain.user.User;
 import tabletop.repositories.PasswordResetTokenRepository;
 import tabletop.repositories.UserRepository;
@@ -80,27 +81,36 @@ public class UserService {
         return passwordResetTokenRepository.save(token);
     }
 
+    public User checkAndChangePassword (ResetPasswordEntity entity) {
+        User user = userRepository.findOne(entity.getId());
+        PasswordResetToken token = passwordResetTokenRepository.findByUser(user);
+
+        if (checkToken(token, entity.getId())==null) {
+            user.setPassword(passwordEncoder.encode(entity.getPassword()));
+            passwordResetTokenRepository.delete(token);
+            return userRepository.save(user);
+        }
+        else return null;
+    }
+
     public String redirectToChange(String tokenId, Long id) {
         PasswordResetToken token = passwordResetTokenRepository.findByToken(tokenId);
         User user = userRepository.findOne(id);
+        return checkToken(token,id);
+    }
+
+    private String checkToken(PasswordResetToken token, Long id) {
         if (token != null) {
             if (token.getUser().getId()==id) {
                 if (token.getDate().after(new Date())) {
-                    passwordResetTokenRepository.delete(token);
-
-                    SecureRandom random = new SecureRandom();
-                    String pass = new BigInteger(130, random).toString(32);
-                    user.setPassword(passwordEncoder.encode(pass));
-                    userRepository.save(user);
-
-                    return pass;
+                    return null;
                 }
-                else return null;
+                else return "Token expired";
             }
-            else return null;
+            else return "Not proper id of user";
         }
         else {
-            return null;
+            return "Can`t find token with that id";
         }
 
     }

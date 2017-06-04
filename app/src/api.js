@@ -292,7 +292,7 @@ class Api {
         })
     }
 
-    changePassword({ password }) {
+    changePassword({ id, password, token }) {
 
         const headers = new Headers({
             "Content-Type": "application/json"
@@ -300,13 +300,14 @@ class Api {
 
         const body = JSON.stringify({
                     id,
-                    password
+                    password,
+                    token
                 });
 
         return fetch(`${API_SERVER}/user/changepassword`, {
             method: "POST",
-            credentials: "include",
             headers,
+            body
         })
     }
 

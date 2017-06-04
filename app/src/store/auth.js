@@ -19,12 +19,11 @@ const dispatchLogin = (response, dispatch) =>
     });
 
 const dispatchReset = (response, dispatch) =>
-    response.json().then(({ id,token }) => {
+    response.json().then(({ password }) => {
         dispatch({
             type: RESET,
             payload: {
-                token,
-                id
+                password
             }
         });
     });
@@ -69,8 +68,8 @@ export const remind = ({ email }, callback) => dispatch =>
         callback(response);
     });
 
-export const changePassword = ({ id, password }, callback) => dispatch =>
-    Api.changePassword({ id, password }).then((response) => {
+export const changePassword = ({ id, password, token }, callback) => dispatch =>
+    Api.changePassword({ id, password, token }).then((response) => {
         if (response.ok) {
             dispatch({
                 type: CHANGE
@@ -83,7 +82,7 @@ export const changePassword = ({ id, password }, callback) => dispatch =>
 export const reset = ({ token, id }, callback) => dispatch =>
     Api.reset({ token, id }).then((response) => {
         if (response.ok) {
-            dispatchReset(response,dispatch)
+            dispatch({type: RESET});
         }
 
         callback(response);
