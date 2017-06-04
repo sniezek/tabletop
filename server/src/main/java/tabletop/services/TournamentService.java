@@ -99,7 +99,7 @@ public class TournamentService {
         List<TournamentPlayerResult> results = null;
 
         if (tournament.getType() == TournamentType.SWISS) {
-            results = swissTournamentService.getFinalResults(tournament);
+            results = swissTournamentService.getTournamentPlayerResults(tournament);
         }
 
         if (results != null) {

@@ -145,7 +145,7 @@ public class SwissTournamentService {
         return swissTournamentProcess.getRounds() <= swissTournamentProcess.getPlayerResults().get(0).getUsersPlayed().size();
     }
 
-    public List<TournamentPlayerResult> getFinalResults(Tournament tournament) {
+    public List<TournamentPlayerResult> getTournamentPlayerResults(Tournament tournament) {
         List<TournamentPlayerResult> tournamentPlayerResultList = new LinkedList<>();
         List<SwissPlayerResult> playerResults = getPlayerResultsSortedByPoints((SwissTournamentProcess) tournament.getTournamentProcess());
 
