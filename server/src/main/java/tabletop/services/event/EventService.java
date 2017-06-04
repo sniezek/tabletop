@@ -92,6 +92,9 @@ public class EventService {
                 matchPlayers.add(organiser);
             }
         });
+        event.getTournaments().forEach(tournament -> {
+            tournament.setEvent(event);
+        });
 
         return saveEvent(event);
     }

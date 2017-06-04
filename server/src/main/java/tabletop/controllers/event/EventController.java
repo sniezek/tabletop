@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import tabletop.controllers.event.dto.EventInfoDto;
 import tabletop.controllers.utils.ResponseUtils;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
@@ -42,12 +43,12 @@ public class EventController {
         validator.validateTypeFilter(type, errors);
         validator.validateDateFilters(startDate, endDate, errors);
 
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate).stream().map(EventInfoDto::new).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Event> getEvent(@PathVariable Long id) {
-        return eventService.getEventById(id).map(ResponseEntity::ok).orElse(ResponseUtils.notFound());
+    public ResponseEntity<EventInfoDto> getEvent(@PathVariable Long id) {
+        return eventService.getEventById(id).map(event -> ResponseEntity.ok(new EventInfoDto(event))).orElse(ResponseUtils.notFound());
     }
 
     @GetMapping("/getTournaments/{id}")
@@ -77,7 +78,7 @@ public class EventController {
         validateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.updateEvent(id, event));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(new EventInfoDto(eventService.updateEvent(id, event)));
     }
 
     @PostMapping
@@ -90,7 +91,7 @@ public class EventController {
         validateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(eventService.createEvent(event));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(new EventInfoDto(eventService.createEvent(event)));
     }
 
     private void validateEvent(Event event, ControllerErrors errors) {
