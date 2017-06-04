@@ -7,13 +7,11 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.QEvent;
 import tabletop.domain.game.Game;
+import tabletop.domain.user.User;
 import tabletop.repositories.event.EventRepository;
 import tabletop.services.UserService;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -84,7 +82,16 @@ public class EventService {
     }
 
     public Event createEvent(Event event) {
-        event.setOrganiser(userService.getAuthenticatedUser().get());
+        User organiser = userService.getAuthenticatedUser().get();
+
+        event.setOrganiser(organiser);
+        event.getMatches().forEach(match -> {
+            Set<User> matchPlayers = match.getUsers();
+            if (matchPlayers.size() > 0) {
+                matchPlayers.clear();
+                matchPlayers.add(organiser);
+            }
+        });
 
         return saveEvent(event);
     }
