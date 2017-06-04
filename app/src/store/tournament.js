@@ -116,7 +116,8 @@ function dispatchTournamentStateAction(dispatch) {
             payload: {
                 pairs: tournament.pairs,
                 creator: tournament.creator,
-                isCurrentUserParticipant: tournament.participant
+                isCurrentUserParticipant: tournament.participant,
+                name: tournament.name
             }
         });
     };
@@ -198,7 +199,8 @@ const initialState = {
     },
     isCurrentUserParticipant: false,
     tournaments: [],
-    tournamentId: 0
+    tournamentId: 0,
+    name: ""
 };
 
 export default function tournamentReducer(state = initialState, { type, payload }) {
@@ -227,7 +229,8 @@ export default function tournamentReducer(state = initialState, { type, payload 
             ...state,
             pairs: payload.pairs,
             creator: payload.creator,
-            isCurrentUserParticipant: payload.isCurrentUserParticipant
+            isCurrentUserParticipant: payload.isCurrentUserParticipant,
+            name: payload.name
         };
     } else if (type === SHOW_TOURNAMENT) {
         state = {

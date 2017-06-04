@@ -192,6 +192,7 @@ public class TournamentController {
     private ResponseEntity<TournamentDTO> getOkResponseWithTournamentDetails(Tournament tournament, List<Pair<User>> nextRound, boolean isEnrolled, boolean isAvailable) {
         return ResponseEntity.ok(
                 new TournamentDTO(
+                        tournament.getName(),
                         tournament.getCreator(),
                         nextRound,
                         isEnrolled && isAvailable
