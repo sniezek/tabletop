@@ -76,7 +76,7 @@ public class UserController {
         String response = userService.redirectToChange(token,id);
 
         if (response == null) return ResponseUtils.reseted(response);
-        else return ResponseUtils.notFound();
+        else return ResponseUtils.conflict(response);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/user/changepassword")

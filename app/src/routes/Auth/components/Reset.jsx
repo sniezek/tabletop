@@ -4,6 +4,7 @@ import pure from "recompose/pure";
 import { Link } from "react-router";
 import CardForm from "../../../components/CardForm";
 import IconTextfield from "../../../components/IconTextfield";
+import "./Reset.scss";
 
 const propTypes = {
     loading: PropTypes.bool,
@@ -37,14 +38,15 @@ const Reset = ({ loading, id, reset, token, setPassword, changePassword, passwor
         actions={bindActions(reset, changePassword)}
         className="reset"
     >
-        <div className="remind__content">
-            <div className="remind__form">
+        <div className="reset__content">
+            <div className="reset__form">
                 <IconTextfield
-                    icon="password"
+                    icon="lock"
                     label="password"
                     type="password"
                     value={password}
                     onChange={setPassword}
+                    required
                 />
             </div>
         </div>

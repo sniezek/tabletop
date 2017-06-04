@@ -97,7 +97,7 @@ class ResetContainer extends PureComponent {
         }, ({ ok }) => {
             if(ok) {
                 //text().then(text => console.log(text));
-                alert(" Proper token. Change your password ");
+                alert(" Proper token. Now you can change your password. ");
                 //this.redirect('/user/change');
             }
             else {
