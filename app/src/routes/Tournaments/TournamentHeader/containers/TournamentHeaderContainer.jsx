@@ -6,6 +6,7 @@ import TournamentHeader from "../components/TournamentHeader";
 const propTypes = {
     router: PropTypes.object.isRequired,
     title: PropTypes.string,
+    tournamentView: PropTypes.bool.isRequired,
     tournamentTypesView: PropTypes.bool,
     finishedTournamentsView: PropTypes.bool.isRequired
 };
@@ -23,6 +24,7 @@ class TournamentHeaderContainer extends PureComponent {
         super(props);
         this.redirectToTournamentTypes = this.redirectToTournamentTypes.bind(this);
         this.redirectToTournaments = this.redirectToTournaments.bind(this);
+        this.redirectToFinishedTournaments = this.redirectToFinishedTournaments.bind(this);
     }
 
     redirectToTournamentTypes() {
@@ -33,14 +35,20 @@ class TournamentHeaderContainer extends PureComponent {
         this.props.router.push("/tournament");
     }
 
+    redirectToFinishedTournaments() {
+        this.props.router.push("/tournament/finished");
+    }
+
     render() {
         return (
             <TournamentHeader
                 title={this.props.title}
+                tournamentView={this.props.tournamentView}
                 tournamentTypesView={this.props.tournamentTypesView}
                 finishedTournamentsView={this.props.finishedTournamentsView}
                 redirectToTournamentTypes={this.redirectToTournamentTypes}
                 redirectToTournaments={this.redirectToTournaments}
+                redirectToFinishedTournaments={this.redirectToFinishedTournaments}
             />
         );
     }

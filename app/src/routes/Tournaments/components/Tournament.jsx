@@ -8,20 +8,23 @@ import TournamentProcessContainer from "../containers/TournamentProcessContainer
 
 const propTypes = {
     router: PropTypes.object.isRequired,
+    tournamentView: PropTypes.bool,
     tournamentTypesView: PropTypes.bool
 };
 
 const defaultProps = {
+    tournamentView: true,
     tournamentTypesView: false
 };
 
 const enhance = pure;
 
-const Tournament = ({ router, tournamentTypesView }) => (
+const Tournament = ({ router, tournamentView, tournamentTypesView }) => (
     <div className="tournaments">
         <TournamentHeaderContainer
             router={router}
             title="Tournament"
+            tournamentView={tournamentView}
             tournamentTypesView={tournamentTypesView}
         />
         <TournamentProcessContainer
