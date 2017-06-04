@@ -94,16 +94,16 @@ class ResetContainer extends PureComponent {
             }, ({ok}) => {
                 if (!ok) {
                     this.setState({
-                        newPassword: "",
-                        confirmNewPassword: "",
+                        password: "",
+                        confirmPassword: "",
                         loading: false
                     });
                     alert("Error encountered while changing password.");
                 }
                 else {
                     this.setState({
-                        newPassword: "",
-                        confirmNewPassword: "",
+                        password: "",
+                        confirmPassword: "",
                         loading: false
                     });
                     alert("Password successfully changed.");
@@ -112,8 +112,8 @@ class ResetContainer extends PureComponent {
         } else {
             alert("Entered passwords don't match.");
             this.setState({
-                newPassword: "",
-                confirmNewPassword: "",
+                password: "",
+                confirmPassword: "",
                 loading: false
             });
         }
