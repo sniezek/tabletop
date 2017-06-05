@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {getState, initialRound} from "../../../store/tournament";
+import {getState, initialRound, showTournament} from "../../../store/tournament";
 import TournamentStatus from "../components/TournamentStatus";
 
 const propTypes = {
@@ -15,7 +15,9 @@ const propTypes = {
     winner: PropTypes.number.isRequired
   })),
   finishTournament: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
+  showTournament: PropTypes.func.isRequired,
+  initialRound: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({tournament}) => ({
@@ -26,6 +28,12 @@ const mapStateToProps = ({tournament}) => ({
 const mapDispatchToProps = dispatch => ({
   getState: (id) => {
     dispatch(getState(id));
+  },
+  showTournament: (id) => {
+    dispatch(showTournament(id));
+  },
+  initialRound: (id) => {
+    dispatch(initialRound(id));
   }
 });
 
@@ -55,6 +63,8 @@ class TournamentStatusContainer extends PureComponent {
         tournamentId={this.props.tournamentId}
         finishTournament={this.props.finishTournament}
         router={this.props.router}
+        showTournament={this.props.showTournament}
+        initialRound={this.props.initialRound}
       />
     )
   }

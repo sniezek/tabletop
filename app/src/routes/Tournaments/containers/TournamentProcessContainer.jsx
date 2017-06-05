@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const mapStateToProps = ({tournament}) => ({
-  tournamentId: tournament.tournamentId
+  tournamentId: 3
 });
 
 const initialState = {};

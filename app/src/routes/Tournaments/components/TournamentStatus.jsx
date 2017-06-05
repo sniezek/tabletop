@@ -17,7 +17,9 @@ const propTypes = {
     winner: PropTypes.number.isRequired
   })),
   finishTournament: PropTypes.func.isRequired,
-  router: PropTypes.object.isRequired
+  router: PropTypes.object.isRequired,
+  showTournament: PropTypes.func.isRequired,
+  initialRound: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -26,6 +28,8 @@ class TournamentStatus extends PureComponent {
   constructor(props) {
     super(props);
     this.updateNextRoundButton = this.updateNextRoundButton.bind(this);
+    this.initialRound = this.initialRound.bind(this);
+    this.show = this.show.bind(this);
     this.state = {
       matchesFinished: this.props.pairs.filter(pair => pair.winner !== 0).length,
     };
@@ -35,6 +39,17 @@ class TournamentStatus extends PureComponent {
     this.setState({
       matchesFinished: nextProps.pairs.filter(pair => pair.winner !== 0).length
     });
+  }
+
+  initialRound() {
+    const tournamentId = 3;
+    this.props.initialRound(tournamentId);
+  }
+
+  show() {
+    this.props.showTournament(3);
+    const {router} = this.props;
+    router.push(`/tournament`);
   }
 
   updateNextRoundButton = () => {
@@ -84,6 +99,8 @@ class TournamentStatus extends PureComponent {
           matchesFinished={this.state.matchesFinished}
           router={this.props.router}
         />
+        <Button colored onClick={() => this.initialRound()}>Init</Button>
+        <Button colored onClick={() => this.show()}>Show</Button>
       </div>
     );
   }
