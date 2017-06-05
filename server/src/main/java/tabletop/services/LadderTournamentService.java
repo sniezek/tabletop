@@ -16,6 +16,7 @@ public class LadderTournamentService extends GeneralTournamentService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SwissTournamentService.class);
 
+    @Override
     public List<Pair<User>> getNextPair(SwissTournamentProcess swissTournamentProcess) {
         List<SwissPlayerResult> results = swissTournamentProcess.getPlayerResults().stream()
                 .filter(result -> result.getCurrentScore() == 1)
@@ -23,9 +24,9 @@ public class LadderTournamentService extends GeneralTournamentService {
 
         List<Pair<User>> pairs = new LinkedList<>();
 
-        for (int i = 0; i < results.size(); i+=2) {
+        for (int i = 0; i < results.size(); i += 2) {
             SwissPlayerResult reshost = results.get(i);
-            SwissPlayerResult resopponent = results.get(i+1);
+            SwissPlayerResult resopponent = results.get(i + 1);
             Pair<User> pair = new Pair<User>(reshost.getId().getUser(), resopponent.getId().getUser(), reshost.getResult(), resopponent.getResult());
             setInitialResult(reshost.getId().getUser(), resopponent);
             setInitialResult(resopponent.getId().getUser(), reshost);
@@ -42,11 +43,31 @@ public class LadderTournamentService extends GeneralTournamentService {
 
     }
 
+    @Override
+    public List<Pair<User>> getCurentState(SwissTournamentProcess swissTournamentProcess) {
+        List<Pair<User>> state = new ArrayList<>();
+        Set<User> hosts = new HashSet<>();
+        Optional<SwissPlayerResult> resultFromLastRound =
+                swissTournamentProcess.getPlayerResults()
+                        .stream()
+                        .max(Comparator.comparingInt(result -> result.getUsersPlayed().size()));
+        if(!resultFromLastRound.isPresent()){
+            return state;
+        }
+
+        swissTournamentProcess.getPlayerResults().stream()
+                .filter(swissPlayerResult -> resultFromLastRound.get().getUsersPlayed().size() == swissPlayerResult.getUsersPlayed().size())
+                .forEach(result -> {
+                    Optional<SwissPlayerResult> opponentResult = swissTournamentProcess.getResultByUser(result.getCurrentOpponent());
+                    if (isPairToAdd(hosts, result, opponentResult)) {
+                        state.add(getResultPair(result, opponentResult));
+                        hosts.add(result.getId().getUser());
+                    }
+                });
+        return state;
+    }
+
     public boolean canBeFinished(SwissTournamentProcess swissTournamentProcess) {
         return true; //TODO
     }
-
-
-
-
-    }
+}

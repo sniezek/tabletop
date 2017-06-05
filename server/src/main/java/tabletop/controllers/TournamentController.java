@@ -12,10 +12,7 @@ import tabletop.services.TournamentService;
 import tabletop.services.UserService;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/tournament")
@@ -34,8 +31,17 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/finished", method = RequestMethod.GET)
-    public ResponseEntity<Collection<Tournament>> getFinishedTournaments() {
-        return ResponseEntity.ok(tournamentService.getFinishedTournaments());
+    public ResponseEntity<Collection<TournamentEventDTO>> getFinishedTournaments() {
+        return getOkResponseWithTournamentsDetails(tournamentService.getFinishedTournaments());
+    }
+
+    private ResponseEntity<Collection<TournamentEventDTO>> getOkResponseWithTournamentsDetails(Collection<Tournament> tournaments) {
+        Collection<TournamentEventDTO> tournamentsDetails = new LinkedList<>();
+        for (Tournament tournament: tournaments) {
+            tournamentsDetails.add(new TournamentEventDTO(tournament, tournament.getEvent()));
+        }
+
+        return ResponseEntity.ok(tournamentsDetails);
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)
@@ -136,8 +142,8 @@ public class TournamentController {
 
         List<Pair<User>> nextRound = tournamentService.getNextRound(tournament);
 
-//        tournamentService.saveTournament(tournament);
-//        saveResults(tournamentId);
+        tournamentService.saveTournament(tournament);
+        saveResults(tournamentId);
 
         return getOkResponseWithTournamentDetails(tournament, nextRound, tournamentService.isUserAvailable(tournament, userService.getAuthenticatedUser().get()));
     }
@@ -192,6 +198,7 @@ public class TournamentController {
     private ResponseEntity<TournamentDTO> getOkResponseWithTournamentDetails(Tournament tournament, List<Pair<User>> nextRound, boolean isEnrolled, boolean isAvailable) {
         return ResponseEntity.ok(
                 new TournamentDTO(
+                        tournament.getName(),
                         tournament.getCreator(),
                         nextRound,
                         isEnrolled && isAvailable

@@ -62,7 +62,7 @@ export const getTournamentTypes = (callback) => dispatch =>
       callback(response);
   });
 
-export const getFinishedTournaments = dispatch =>
+export const getFinishedTournaments = (callback) => dispatch =>
   Api.finishedTournaments().then((response) => {
       if (response.ok) {
           response.json().then((finishedTournamentsList) => {
@@ -74,6 +74,7 @@ export const getFinishedTournaments = dispatch =>
               });
           });
       }
+      callback(response);
   });
 
 export const getFinalResults = (id, callback) => dispatch =>
@@ -116,7 +117,8 @@ function dispatchTournamentStateAction(dispatch) {
             payload: {
                 pairs: tournament.pairs,
                 creator: tournament.creator,
-                isCurrentUserParticipant: tournament.participant
+                isCurrentUserParticipant: tournament.participant,
+                name: tournament.name
             }
         });
     };
@@ -178,6 +180,7 @@ export const actions = {
     showTournament,
     getTournament,
     getTournamentTypes,
+    getFinishedTournaments,
     getFinalResults,
     nextRound,
     initialRound,
@@ -198,7 +201,8 @@ const initialState = {
     },
     isCurrentUserParticipant: false,
     tournaments: [],
-    tournamentId: 0
+    tournamentId: 0,
+    name: ""
 };
 
 export default function tournamentReducer(state = initialState, { type, payload }) {
@@ -227,7 +231,8 @@ export default function tournamentReducer(state = initialState, { type, payload 
             ...state,
             pairs: payload.pairs,
             creator: payload.creator,
-            isCurrentUserParticipant: payload.isCurrentUserParticipant
+            isCurrentUserParticipant: payload.isCurrentUserParticipant,
+            name: payload.name
         };
     } else if (type === SHOW_TOURNAMENT) {
         state = {

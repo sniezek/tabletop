@@ -20,7 +20,7 @@ const propTypes = {
 
 const mapStateToProps = ({tournament}) => ({
   pairs: tournament.pairs,
-  tournamentName: "MyTournament"
+  tournamentName: tournament.name
 });
 
 const mapDispatchToProps = dispatch => ({

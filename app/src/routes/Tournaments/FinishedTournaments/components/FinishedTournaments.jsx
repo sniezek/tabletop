@@ -3,41 +3,39 @@ import pure from "recompose/pure";
 import PropTypes from "prop-types";
 import "../../components/Tournament.scss";
 import TournamentHeaderContainer from "../../TournamentHeader/containers/TournamentHeaderContainer";
-import TournamentTypesContainer from "../containers/TournamentTypesContainer";
+import FinishedTournamentsContainer from "../containers/FinishedTournamentsContainer";
 
 const propTypes = {
     router: PropTypes.object.isRequired,
-    tournamentTypesList: PropTypes.array,
-    redirectToDemo: PropTypes.func,
+    finishedTournamentsList: PropTypes.array,
     tournamentView: PropTypes.bool
 };
 
 const defaultProps = {
-    tournamentTypesList: [],
-    redirectToDemo: () => {},
+    finishedTournamentsList: [],
     tournamentView: false
 };
 
 const enhance = pure;
 
-const TournamentTypes = ({ router, tournamentView, tournamentTypesList, redirectToDemo }) => (
+
+const FinishedTournaments = ({ router, tournamentView, finishedTournamentsList }) => (
     <div className="tournaments">
         <TournamentHeaderContainer
             router={router}
-            title="Tournament types"
+            title="Finished tournaments"
             tournamentView={tournamentView}
         />
-        <TournamentTypesContainer
+        <FinishedTournamentsContainer
+            finishedTournamentsList={finishedTournamentsList}
             router={router}
-            tournamentTypesList={tournamentTypesList}
-            redirectToDemo={redirectToDemo}
         />
     </div>
 );
 
 
-TournamentTypes.propTypes = propTypes;
-TournamentTypes.defaultProps = defaultProps;
+FinishedTournaments.propTypes = propTypes;
+FinishedTournaments.defaultProps = defaultProps;
 
-export default enhance(TournamentTypes);
+export default enhance(FinishedTournaments);
 
