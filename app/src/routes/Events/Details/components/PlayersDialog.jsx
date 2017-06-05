@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import Button from "react-mdl/lib/Button";
 import { Dialog, DialogTitle, DialogContent, DialogActions } from "../../../../components/Dialog";
-import AcceptPlayer from "./AcceptPlayer.jsx";
-import "./AcceptPlayers.scss";
+import Player from "./Player.jsx";
+import "./Players.scss";
 
 const propTypes = {
     open: PropTypes.bool.isRequired,
     close: PropTypes.func.isRequired,
-    accept: PropTypes.func.isRequired,
-    revoke: PropTypes.func.isRequired
+    title: PropTypes.string.isRequired
 };
 
 const enhance = pure;
@@ -18,21 +17,20 @@ const enhance = pure;
 const players = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
 /* eslint-disable jsx-a11y/anchor-has-content */
-const AcceptPlayersDialog = ({ open, close, accept, revoke }) => (
+const PlayersDialog = ({ open, close, title, ...rest }) => (
     <Dialog
         open={open}
-        className="accept-players"
+        className="players"
     >
-        <DialogTitle>Accept players</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-            <a tabIndex={0} className="accept-players__focus-trap" />
+            <a tabIndex={0} className="players__focus-trap" />
             {players.map(player => (
-                <AcceptPlayer
+                <Player
                     key={player}
                     username="pwolaq"
                     email="pawelwolakk@gmail.com"
-                    accept={accept}
-                    revoke={revoke}
+                    {...rest}
                 />
             ))}
         </DialogContent>
@@ -42,6 +40,6 @@ const AcceptPlayersDialog = ({ open, close, accept, revoke }) => (
     </Dialog>
 );
 
-AcceptPlayersDialog.propTypes = propTypes;
+PlayersDialog.propTypes = propTypes;
 
-export default enhance(AcceptPlayersDialog);
+export default enhance(PlayersDialog);
