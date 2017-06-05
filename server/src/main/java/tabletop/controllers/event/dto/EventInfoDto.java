@@ -22,8 +22,8 @@ public class EventInfoDto {
         this.name = event.getName();
         this.description = event.getDescription();
         this.location = event.getLocation();
-        this.sparrings = event.getSparrings().stream().map(sparring -> new EventSparringDto(sparring, user)).collect(Collectors.toList());
-        this.tournaments = event.getTournaments().stream().map(tournament -> new EventTournamentDto(tournament, user)).collect(Collectors.toList());
+        this.sparrings = event.getSparrings().stream().map(sparring -> new EventSparringDto(sparring, user, event.getOrganiser())).collect(Collectors.toList());
+        this.tournaments = event.getTournaments().stream().map(tournament -> new EventTournamentDto(tournament, user, event.getOrganiser())).collect(Collectors.toList());
         this.organiser = event.getOrganiser();
     }
 

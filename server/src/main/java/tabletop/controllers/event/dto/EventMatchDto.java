@@ -24,7 +24,7 @@ abstract class EventMatchDto {
     private final Set<User> pending;
     private final Set<User> discarded;
 
-    EventMatchDto(Long id, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers, Set<User> pending, Set<User> discarded, Optional<User> userOptional) {
+    EventMatchDto(Long id, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers, Set<User> pending, Set<User> discarded, Optional<User> userOptional, User organiser) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -34,8 +34,14 @@ abstract class EventMatchDto {
         this.maxPlayers = maxPlayers;
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            this.pending = FILTER_OUT_OTHER_USERS.apply(pending, user);
-            this.discarded = FILTER_OUT_OTHER_USERS.apply(discarded, user);
+
+            if (user.equals(organiser)) {
+                this.pending = pending;
+                this.discarded = discarded;
+            } else {
+                this.pending = FILTER_OUT_OTHER_USERS.apply(pending, user);
+                this.discarded = FILTER_OUT_OTHER_USERS.apply(discarded, user);
+            }
         } else {
             this.pending = new HashSet<>();
             this.discarded = new HashSet<>();

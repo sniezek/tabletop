@@ -12,8 +12,8 @@ class EventTournamentDto extends EventMatchDto {
     private final TournamentType type;
     private final Boolean finished;
 
-    EventTournamentDto(Tournament tournament, Optional<User> user) {
-        super(tournament.getId(), tournament.getStartDate(), tournament.getEndDate(), tournament.getUsers(), tournament.getGame(), tournament.getMinPlayers(), tournament.getMaxPlayers(), tournament.getPending(), tournament.getDiscarded(), user);
+    EventTournamentDto(Tournament tournament, Optional<User> user, User organiser) {
+        super(tournament.getId(), tournament.getStartDate(), tournament.getEndDate(), tournament.getUsers(), tournament.getGame(), tournament.getMinPlayers(), tournament.getMaxPlayers(), tournament.getPending(), tournament.getDiscarded(), user, organiser);
         this.name = tournament.getName();
         this.type = tournament.getType();
         this.finished = tournament.isFinished();
