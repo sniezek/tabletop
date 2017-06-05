@@ -1,0 +1,6 @@
+#FileLock
+#Mon Jun 05 00:01:24 CEST 2017
+hostName=Zoltar-Central
+id=15c75207adc93d724b11f07a0d0e5fa48e7f5774711
+method=file
+server=192.168.1.83\:65499

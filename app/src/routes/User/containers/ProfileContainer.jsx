@@ -17,7 +17,7 @@ const mapDispatchToProps = {};
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
-class ProfileContainer extends PureComponent {
+class ProfileContainer extends React.Component {
     render() {
         const { name, email } = this.props.user;
 
