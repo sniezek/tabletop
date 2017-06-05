@@ -37,7 +37,7 @@ public class Event extends IdComparableEntity {
 
     @Valid
     @NotNull(message = "{event.tournaments}")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "event")
     private Set<Tournament> tournaments;
 
     @ManyToOne
