@@ -1,6 +1,7 @@
 package tabletop.controllers.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -10,6 +11,7 @@ import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.Location;
 import tabletop.domain.match.Match;
+import tabletop.domain.match.MatchEndStatus;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentDetailsDTO;
 import tabletop.domain.user.User;
@@ -67,7 +69,7 @@ public class EventController {
             return ResponseUtils.badRequest(errors);
         }
 
-        validateEvent(event, errors);
+        validateCreateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(new EventInfoDto(eventService.createEvent(event)));
@@ -89,50 +91,60 @@ public class EventController {
             return ResponseUtils.badRequest(errors);
         }
 
-        validateEvent(event, errors);
+//        validateCreateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(new EventInfoDto(eventService.updateEvent(id, event)));
     }
 
-    @PostMapping("apply/{eventId}/sparring/{sparringId}")
+    @PostMapping("/apply/{eventId}/sparring/{sparringId}")
     public ResponseEntity<Boolean> applyForSparring(@PathVariable Long eventId, @PathVariable Long sparringId) {
         return applyForMatch(eventId, sparringId, Event::getSparrings);
     }
 
-    @PostMapping("apply/{eventId}/tournament/{tournamentId}")
+    @PostMapping("/apply/{eventId}/tournament/{tournamentId}")
     public ResponseEntity<Boolean> applyForTournament(@PathVariable Long eventId, @PathVariable Long tournamentId) {
         return applyForMatch(eventId, tournamentId, Event::getTournaments);
     }
 
-    @PostMapping("resign/{eventId}/sparring/{sparringId}")
-    public ResponseEntity resignFromSparring(@PathVariable Long eventId, @PathVariable Long sparringId) {
+    @PostMapping("/resign/{eventId}/sparring/{sparringId}")
+    public ResponseEntity<Boolean> resignFromSparring(@PathVariable Long eventId, @PathVariable Long sparringId) {
         return resignFromMatch(eventId, sparringId, Event::getSparrings);
     }
 
-    @PostMapping("resign/{eventId}/tournament/{tournamentId}")
-    public ResponseEntity resignFromTournament(@PathVariable Long eventId, @PathVariable Long tournamentId) {
+    @PostMapping("/resign/{eventId}/tournament/{tournamentId}")
+    public ResponseEntity<Boolean> resignFromTournament(@PathVariable Long eventId, @PathVariable Long tournamentId) {
         return resignFromMatch(eventId, tournamentId, Event::getTournaments);
     }
 
-    @PostMapping("accept/{eventId}/sparring/{sparringId}/{userId}")
-    public ResponseEntity acceptUserForSparring(@PathVariable Long eventId, @PathVariable Long sparringId, @PathVariable Long userId) {
+    @PostMapping("/accept/{eventId}/sparring/{sparringId}/{userId}")
+    public ResponseEntity<Boolean> acceptUserForSparring(@PathVariable Long eventId, @PathVariable Long sparringId, @PathVariable Long userId) {
         return acceptForMatch(eventId, sparringId, userId, Event::getSparrings);
     }
 
-    @PostMapping("accept/{eventId}/tournament/{tournamentId}/{userId}")
-    public ResponseEntity acceptUserForTournament(@PathVariable Long eventId, @PathVariable Long tournamentId, @PathVariable Long userId) {
+    @PostMapping("/accept/{eventId}/tournament/{tournamentId}/{userId}")
+    public ResponseEntity<Boolean> acceptUserForTournament(@PathVariable Long eventId, @PathVariable Long tournamentId, @PathVariable Long userId) {
         return acceptForMatch(eventId, tournamentId, userId, Event::getTournaments);
     }
 
-    @PostMapping("discard/{eventId}/sparring/{sparringId}/{userId}")
-    public ResponseEntity discardUserFromSparring(@PathVariable Long eventId, @PathVariable Long sparringId, @PathVariable Long userId) {
+    @PostMapping("/discard/{eventId}/sparring/{sparringId}/{userId}")
+    public ResponseEntity<Boolean> discardUserFromSparring(@PathVariable Long eventId, @PathVariable Long sparringId, @PathVariable Long userId) {
         return discardFromMatch(eventId, sparringId, userId, Event::getSparrings);
     }
 
-    @PostMapping("discard/{eventId}/tournament/{tournamentId}/{userId}")
-    public ResponseEntity discardUserFromTournament(@PathVariable Long eventId, @PathVariable Long tournamentId, @PathVariable Long userId) {
+    @PostMapping("/discard/{eventId}/tournament/{tournamentId}/{userId}")
+    public ResponseEntity<Boolean> discardUserFromTournament(@PathVariable Long eventId, @PathVariable Long tournamentId, @PathVariable Long userId) {
         return discardFromMatch(eventId, tournamentId, userId, Event::getTournaments);
+    }
+
+    @PostMapping("/status/{eventId}/sparring/{sparringId}")
+    public ResponseEntity setSparringMatchStatus(@PathVariable Long eventId, @PathVariable Long sparringId, @RequestBody MatchEndStatus status) {
+        return setMatchStatus(eventId, sparringId, status, Event::getSparrings);
+    }
+
+    @PostMapping("/status/{eventId}/tournament/{tournamentId}")
+    public ResponseEntity setTournamentMatchStatus(@PathVariable Long eventId, @PathVariable Long tournamentId, @RequestBody MatchEndStatus status) {
+        return setMatchStatus(eventId, tournamentId, status, Event::getTournaments);
     }
 
     @GetMapping("/getTournaments/{id}")
@@ -143,11 +155,10 @@ public class EventController {
                 .orElse(ResponseUtils.notFound());
     }
 
-    private void validateEvent(Event event, ControllerErrors errors) {
+    private void validateCreateEvent(Event event, ControllerErrors errors) {
         validator.validateMatches(event, errors);
         validator.validateSparringsGameInformation(event, errors);
         validator.validateTournaments(event, errors);
-        validator.validateOrganiserIsNotSet(event, errors);
     }
 
     private void validateAndHandleLocation(Event event, BindingResult bindingResult, ControllerErrors errors) {
@@ -217,6 +228,29 @@ public class EventController {
                         .findFirst()
                         .map(match -> ResponseEntity.ok(operation.apply(event, match, user)))
                         .orElseGet(ResponseUtils::notFound))
+                .orElseGet(ResponseUtils::notFound);
+    }
+
+    private ResponseEntity setMatchStatus(Long eventId, Long matchId, MatchEndStatus status, Function<Event, Set<? extends Match>> getEventMatches) {
+        Optional<Event> eventOptional = eventService.getEventById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseUtils.notFound();
+        }
+
+        Event event = eventOptional.get();
+
+        if (!validator.isUserEventOrganiser(event)) {
+            return ResponseUtils.forbidden();
+        }
+
+        return getEventMatches.apply(event).stream()
+                .filter(match -> matchId.equals(match.getId()))
+                .findFirst()
+                .map(match -> {
+                    match.setEndStatus(status);
+
+                    return new ResponseEntity<>(HttpStatus.OK);
+                })
                 .orElseGet(ResponseUtils::notFound);
     }
 

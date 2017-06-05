@@ -103,10 +103,16 @@ public class EventService {
     public Event updateEvent(Long id, Event newEvent) {
         Event oldEvent = getEventById(id).get();
 
-        newEvent.setId(id);
-        newEvent.setOrganiser(oldEvent.getOrganiser());
+//        newEvent.setId(id);
+//        newEvent.setOrganiser(oldEvent.getOrganiser());
+//
+//        return saveEvent(newEvent);
 
-        return saveEvent(newEvent);
+        oldEvent.setName(newEvent.getName());
+        oldEvent.setDescription(newEvent.getDescription());
+        oldEvent.setLocation(newEvent.getLocation());
+
+        return saveEvent(oldEvent);
     }
 
     public boolean applyForMatch(Event event, Match match) {
