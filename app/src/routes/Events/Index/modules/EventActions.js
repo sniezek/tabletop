@@ -1,8 +1,7 @@
 import Api from "../../../../api";
 import {
     SET_EVENTS,
-    SET_EVENT,
-    REMOVE_PENDING
+    SET_EVENT
 } from "./EventConstants";
 
 export const loadEvents = (filters = {}, callback = () => {}) => dispatch =>
@@ -36,20 +35,14 @@ export const loadEvent = (id, callback = () => {}) => dispatch =>
 export const acceptPlayer = ({ type, userId, matchId, eventId }) => dispatch =>
     Api.accept({ eventId, matchId, userId, type }).then((response) => {
         if (response.ok) {
-            dispatch({
-                type: REMOVE_PENDING,
-                payload: { type, userId, matchId, eventId }
-            });
+            //
         }
     });
 
 export const discardPlayer = ({ type, userId, matchId, eventId }) => dispatch =>
     Api.discard({ eventId, matchId, userId, type }).then((response) => {
         if (response.ok) {
-            dispatch({
-                type: REMOVE_PENDING,
-                payload: { type, userId, matchId, eventId }
-            });
+            //
         }
     });
 
@@ -61,7 +54,7 @@ export const addPlayer = ({ type, matchId, eventId }) => dispatch =>
     });
 
 export const removePlayer = ({ type, matchId, eventId }) => dispatch =>
-    Api.resign({ eventId, matchId, userId, type }).then((response) => {
+    Api.resign({ eventId, matchId, type }).then((response) => {
         if (response.ok) {
             //
         }

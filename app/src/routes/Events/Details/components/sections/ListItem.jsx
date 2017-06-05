@@ -19,7 +19,8 @@ const propTypes = {
     showPlayers: PropTypes.func.isRequired,
     id: PropTypes.number.isRequired,
     type: PropTypes.oneOf(["tournament", "sparring"]).isRequired,
-    users: PropTypes.array.isRequired
+    users: PropTypes.array.isRequired,
+    pending: PropTypes.array.isRequired
 };
 
 const defaultProps = {
@@ -32,7 +33,7 @@ const format = "DD MMM YYYY, h:mm A";
 const enhance = pure;
 
 const ListItem = ({ id, type, primary, secondary, minPlayers, maxPlayers, startDate, endDate, showPlayers, addPlayer, removePlayer, userId,
-users }) => (
+users, pending }) => (
     <div className="create-event-item">
         <div className="create-event-item__main">
             <div className="create-event-item__name">
@@ -49,7 +50,7 @@ users }) => (
             )}
         </div>
         <div className="create-event-item__actions">
-            {userId && (
+            {userId && !users.find(u => u.id === userId) && !pending.find(u => u.id === userId) && (
                 <Tooltip label="Add me to this match">
                     <Icon
                         name="person_add"
@@ -58,7 +59,7 @@ users }) => (
                     />
                 </Tooltip>
             )}
-            {userId && (
+            {userId && users.find(u => u.id === userId) && (
                 <Tooltip label="Remove me from this match">
                     <Icon
                         name="remove_circle_outline"
