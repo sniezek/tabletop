@@ -6,11 +6,13 @@ import CreateEventForm from "../components/CreateEventForm.jsx";
 
 const propTypes = {
     user: PropTypes.object,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    event: PropTypes.object
 };
 
 const defaultProps = {
-    user: null
+    user: null,
+    event: null
 };
 
 const steps = 3;
@@ -20,21 +22,39 @@ const mapDispatchToProps = {};
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
 
+const initialState = {
+    step: 0,
+    location: null,
+    name: "",
+    description: "",
+    sparrings: [],
+    tournaments: [],
+    loading: false,
+    model: null,
+    type: null
+};
+
 class CreateEventFormContainer extends PureComponent {
     constructor(props) {
         super(props);
 
-        this.state = {
-            step: 0,
-            location: null,
-            name: "",
-            description: "",
-            sparrings: [],
-            tournaments: [],
-            loading: false,
-            model: null,
-            type: null
-        };
+        if (props.event) {
+            const { lat, lng, name } = props.event.location;
+
+            this.state = {
+                ...initialState,
+                ...props.event,
+                location: {
+                    lat,
+                    lng,
+                    label: name
+                }
+            };
+        } else {
+            this.state = {
+                ...initialState
+            };
+        }
 
         this.geosuggest = null;
         this.prevStep = this.prevStep.bind(this);
@@ -154,6 +174,7 @@ class CreateEventFormContainer extends PureComponent {
             });
 
             const { name, description, sparrings, tournaments, location } = this.state;
+            const edit = !!this.props.event;
 
             const payload = {
                 name,
@@ -166,7 +187,16 @@ class CreateEventFormContainer extends PureComponent {
                 tournaments: this.filterUID(tournaments)
             };
 
-            Api.createEvent(payload).then((response) => {
+            let method;
+
+            if (edit) {
+                payload.id = this.props.event.id;
+                method = Api.editEvent;
+            } else {
+                method = Api.createEvent;
+            }
+
+            method.call(null, payload).then((response) => {
                 response.json().then(({ id }) => {
                     this.setState({
                         loading: false
@@ -297,6 +327,7 @@ class CreateEventFormContainer extends PureComponent {
                 toggleTournamentParticipation={this.toggleTournamentParticipation}
                 clearInput={this.clearInput}
                 setRef={this.setRef}
+                edit={!!this.props.event}
             />
         );
     }

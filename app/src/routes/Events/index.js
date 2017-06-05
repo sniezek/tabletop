@@ -36,5 +36,15 @@ export default store => ({
                 cb(null, EventDetailsView);
             }, "event-details");
         }
+    }, {
+        path: "/events/edit/:id",
+        getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+                const EditEventView = require("./EditEvent/components/EditEventView.jsx").default;
+                const { eventReducer } = require("./Index/modules/EventReducers");
+                injectReducer(store, { key: "event", reducer: eventReducer });
+                cb(null, EditEventView);
+            }, "edit-event");
+        }
     }]
 });

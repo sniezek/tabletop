@@ -34,13 +34,15 @@ abstract class EventMatchDto {
         this.maxPlayers = maxPlayers;
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-
-            if (user.equals(organiser)) {
-                this.pending = pending;
-                this.discarded = discarded;
-            } else {
+            if (pending != null) {
                 this.pending = FILTER_OUT_OTHER_USERS.apply(pending, user);
+            } else {
+                this.pending = new HashSet<>();
+            }
+            if (discarded != null) {
                 this.discarded = FILTER_OUT_OTHER_USERS.apply(discarded, user);
+            } else {
+                this.discarded = new HashSet<>();
             }
         } else {
             this.pending = new HashSet<>();

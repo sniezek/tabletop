@@ -1,4 +1,4 @@
-.accept-players {
+.players {
     max-width: 500px;
 
     &__focus-trap {
@@ -6,7 +6,7 @@
     }
 }
 
-.accept-player {
+.player {
     padding: 6px 0;
     height: auto;
     display: flex;
@@ -45,7 +45,7 @@
     }
 }
 
-.accept-player-cta {
+.player-cta {
     margin-left: 4px;
 
     &--accept {

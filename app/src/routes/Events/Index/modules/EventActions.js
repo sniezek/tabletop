@@ -32,6 +32,34 @@ export const loadEvent = (id, callback = () => {}) => dispatch =>
         callback(response);
     });
 
+export const acceptPlayer = ({ type, userId, matchId, eventId }) => dispatch =>
+    Api.accept({ eventId, matchId, userId, type }).then((response) => {
+        if (response.ok) {
+            //
+        }
+    });
+
+export const discardPlayer = ({ type, userId, matchId, eventId }) => dispatch =>
+    Api.discard({ eventId, matchId, userId, type }).then((response) => {
+        if (response.ok) {
+            //
+        }
+    });
+
+export const addPlayer = ({ type, matchId, eventId }) => dispatch =>
+    Api.apply({ eventId, matchId, type }).then((response) => {
+        if (response.ok) {
+            //
+        }
+    });
+
+export const removePlayer = ({ type, matchId, eventId }) => dispatch =>
+    Api.resign({ eventId, matchId, type }).then((response) => {
+        if (response.ok) {
+            //
+        }
+    });
+
 export const setEvent = event => ({
     type: SET_EVENT,
     payload: event

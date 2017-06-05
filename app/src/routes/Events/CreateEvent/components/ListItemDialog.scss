@@ -1,6 +1,10 @@
 .create-event-dialog {
     width: 500px;
 
+    .mdl-dialog__content {
+        overflow: visible;
+    }
+
     &__type {
         margin-bottom: 8px;
     }

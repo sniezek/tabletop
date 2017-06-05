@@ -22,18 +22,21 @@ const propTypes = {
     addSparring: PropTypes.func.isRequired,
     addTournament: PropTypes.func.isRequired,
     toggleSparringParticipation: PropTypes.func.isRequired,
-    toggleTournamentParticipation: PropTypes.func.isRequired
+    toggleTournamentParticipation: PropTypes.func.isRequired,
+    location: PropTypes.object
 };
 
 const defaultProps = {
     name: "",
-    description: ""
+    description: "",
+    location: null
 };
 
 const enhance = pure;
 
 const StepContent = ({ step, setLocation, setDescription, setName, name, description, sparrings, removeSparring, editSparring, tournaments,
- removeTournament, editTournament, addSparring, addTournament, toggleSparringParticipation, toggleTournamentParticipation, setRef, clearInput }) => {
+removeTournament, editTournament, addSparring, addTournament, toggleSparringParticipation, toggleTournamentParticipation, setRef, clearInput,
+location }) => {
     if (step === 0) {
         return (
             <DetailsStep
@@ -44,6 +47,7 @@ const StepContent = ({ step, setLocation, setDescription, setName, name, descrip
                 clearInput={clearInput}
                 name={name}
                 description={description}
+                location={location}
             />
         );
     } else if (step === 1) {

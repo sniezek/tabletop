@@ -29,6 +29,7 @@ class Api {
         this.remind = this.remind.bind(this);
         this.event = this.event.bind(this);
         this.reset = this.reset.bind(this);
+        this.editEvent = this.editEvent.bind(this);
     }
 
     achievements(userID) {
@@ -194,6 +195,21 @@ class Api {
         });
     }
 
+    editEvent(payload) {
+        const body = JSON.stringify(payload);
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/events/${payload.id}`, {
+            method: "PUT",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
     finishTournament(id) {
         return fetch(`${API_SERVER}/tournament/finish/${id}`, {
             method: "POST",
@@ -326,6 +342,34 @@ class Api {
     gameStats(name) {
         return fetch(`${API_SERVER}/gameStats/${name}`, {
             method: "GET",
+            credentials: "include"
+        });
+    }
+
+    apply({ eventId, type, matchId }) {
+        return fetch(`${API_SERVER}/events/apply/${eventId}/${type}/${matchId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
+    resign({ eventId, type, matchId }) {
+        return fetch(`${API_SERVER}/events/resign/${eventId}/${type}/${matchId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
+    accept({ eventId, type, matchId, userId }) {
+        return fetch(`${API_SERVER}/events/accept/${eventId}/${type}/${matchId}/${userId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
+    discard({ eventId, type, matchId, userId }) {
+        return fetch(`${API_SERVER}/events/discard/${eventId}/${type}/${matchId}/${userId}`, {
+            method: "POST",
             credentials: "include"
         });
     }

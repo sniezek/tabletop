@@ -11,7 +11,7 @@ const enhance = pure;
 
 const EventDetailsView = ({ router }) => (
     <EventDetailsContainer
-        id={parseInt(router.params.id, 10)}
+        eventId={parseInt(router.params.id, 10)}
         router={router}
     />
 );

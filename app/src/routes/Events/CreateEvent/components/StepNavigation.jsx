@@ -10,12 +10,13 @@ const propTypes = {
     steps: PropTypes.number.isRequired,
     create: PropTypes.func.isRequired,
     addSparring: PropTypes.func.isRequired,
-    addTournament: PropTypes.func.isRequired
+    addTournament: PropTypes.func.isRequired,
+    edit: PropTypes.bool.isRequired
 };
 
 const enhance = pure;
 
-const StepNavigation = ({ prevStep, nextStep, step, steps, create, addSparring, addTournament }) => (
+const StepNavigation = ({ prevStep, nextStep, step, steps, create, addSparring, addTournament, edit }) => (
     <div className="create-event__navigation">
         <div className="create-event__navigation-left">
             { step === 1 && (
@@ -30,7 +31,7 @@ const StepNavigation = ({ prevStep, nextStep, step, steps, create, addSparring, 
                 <Button onClick={prevStep}>Previous</Button>
             )}
             { step === steps - 1 ? (
-                <Button onClick={create} colored>Create</Button>
+                <Button onClick={create} colored>{edit ? "Save" : "Create"}</Button>
             ) : (
                 <Button onClick={nextStep} colored>Next</Button>
             )}
