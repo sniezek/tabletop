@@ -6,11 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tabletop.domain.user.User;
 import tabletop.repositories.UserRepository;
-import javax.mail.Session;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Transport;
+
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Optional;
@@ -24,6 +21,10 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public Optional<User> getUserById(Long id) {
+        return Optional.ofNullable(userRepository.findOne(id));
+    }
 
     public Optional<User> getUserByUsername(String username) {
         return Optional.ofNullable(userRepository.findByUsername(username));
@@ -56,12 +57,12 @@ public class UserService {
     }
 
     public User remindPassword(String email) {
-        String newemail = email.substring(email.indexOf(":")+2,email.length()-2);
+        String newemail = email.substring(email.indexOf(":") + 2, email.length() - 2);
         User user = userRepository.findByEmail(newemail);
         String password = UUID.randomUUID().toString();
 
         //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        sendEmailWithPassword(newemail,password);
+        sendEmailWithPassword(newemail, password);
         user.setPassword(passwordEncoder.encode(password));
 
         return userRepository.save(user);
@@ -89,8 +90,8 @@ public class UserService {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
-            message.addRecipient(Message.RecipientType.TO,new InternetAddress(email ,
-                    false) );
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email,
+                    false));
 
             message.setSubject("Remind password");
             message.setText("Here is your new generated password. Please change it,"

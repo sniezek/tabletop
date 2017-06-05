@@ -39,6 +39,12 @@ public abstract class Match extends IdComparableEntity {
     @Enumerated(EnumType.STRING)
     private MatchEndStatus endStatus;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<User> pending;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<User> discarded;
+
     public Date getStartDate() {
         return startDate;
     }
@@ -87,7 +93,7 @@ public abstract class Match extends IdComparableEntity {
         return minPlayers;
     }
 
-    public void setMinPlayers(int minPlayers) {
+    public void setMinPlayers(Integer minPlayers) {
         this.minPlayers = minPlayers;
     }
 
@@ -95,8 +101,24 @@ public abstract class Match extends IdComparableEntity {
         return maxPlayers;
     }
 
-    public void setMaxPlayers(int maxPlayers) {
+    public void setMaxPlayers(Integer maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public Set<User> getPending() {
+        return pending;
+    }
+
+    public void setPending(Set<User> pending) {
+        this.pending = pending;
+    }
+
+    public Set<User> getDiscarded() {
+        return discarded;
+    }
+
+    public void setDiscarded(Set<User> discarded) {
+        this.discarded = discarded;
     }
 
     public abstract String getGameName();

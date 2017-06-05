@@ -9,14 +9,21 @@ import tabletop.controllers.utils.ResponseUtils;
 import tabletop.controllers.validation.errors.ControllerErrors;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.Location;
+import tabletop.domain.match.Match;
 import tabletop.domain.match.tournament.Tournament;
 import tabletop.domain.match.tournament.TournamentDetailsDTO;
+import tabletop.domain.user.User;
+import tabletop.services.UserService;
 import tabletop.services.event.EventService;
 import tabletop.services.event.LocationService;
+import tabletop.utils.TriFunction;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
@@ -30,6 +37,8 @@ public class EventController {
     private EventService eventService;
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping
     public ResponseEntity<?> getEvents(
@@ -86,6 +95,46 @@ public class EventController {
         return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(new EventInfoDto(eventService.updateEvent(id, event)));
     }
 
+    @PostMapping("apply/{eventId}/sparring/{sparringId}")
+    public ResponseEntity<Boolean> applyForSparring(@PathVariable Long eventId, @PathVariable Long sparringId) {
+        return applyForMatch(eventId, sparringId, Event::getSparrings);
+    }
+
+    @PostMapping("apply/{eventId}/tournament/{tournamentId}")
+    public ResponseEntity<Boolean> applyForTournament(@PathVariable Long eventId, @PathVariable Long tournamentId) {
+        return applyForMatch(eventId, tournamentId, Event::getTournaments);
+    }
+
+    @PostMapping("resign/{eventId}/sparring/{sparringId}")
+    public ResponseEntity resignFromSparring(@PathVariable Long eventId, @PathVariable Long sparringId) {
+        return resignFromMatch(eventId, sparringId, Event::getSparrings);
+    }
+
+    @PostMapping("resign/{eventId}/tournament/{tournamentId}")
+    public ResponseEntity resignFromTournament(@PathVariable Long eventId, @PathVariable Long tournamentId) {
+        return resignFromMatch(eventId, tournamentId, Event::getTournaments);
+    }
+
+    @PostMapping("accept/{eventId}/sparring/{sparringId}/{userId}")
+    public ResponseEntity acceptUserForSparring(@PathVariable Long eventId, @PathVariable Long sparringId, @PathVariable Long userId) {
+        return acceptForMatch(eventId, sparringId, userId, Event::getSparrings);
+    }
+
+    @PostMapping("accept/{eventId}/tournament/{tournamentId}/{userId}")
+    public ResponseEntity acceptUserForTournament(@PathVariable Long eventId, @PathVariable Long tournamentId, @PathVariable Long userId) {
+        return acceptForMatch(eventId, tournamentId, userId, Event::getTournaments);
+    }
+
+    @PostMapping("discard/{eventId}/sparring/{sparringId}/{userId}")
+    public ResponseEntity discardUserFromSparring(@PathVariable Long eventId, @PathVariable Long sparringId, @PathVariable Long userId) {
+        return discardFromMatch(eventId, sparringId, userId, Event::getSparrings);
+    }
+
+    @PostMapping("discard/{eventId}/tournament/{tournamentId}/{userId}")
+    public ResponseEntity discardUserFromTournament(@PathVariable Long eventId, @PathVariable Long tournamentId, @PathVariable Long userId) {
+        return discardFromMatch(eventId, tournamentId, userId, Event::getTournaments);
+    }
+
     @GetMapping("/getTournaments/{id}")
     public ResponseEntity<List<TournamentDetailsDTO>> getEventTournaments(@PathVariable Long id) {
         return eventService.getEventById(id)
@@ -124,6 +173,52 @@ public class EventController {
         return location.getId() == null;
     }
 
+    private ResponseEntity<Boolean> applyForMatch(Long eventId, Long matchId, Function<Event, Set<? extends Match>> getEventMatches) {
+        return performUserMatchOperation(eventId, matchId, getEventMatches, (event, match) -> eventService.applyForMatch(event, match));
+    }
+
+    private ResponseEntity<Boolean> resignFromMatch(Long eventId, Long matchId, Function<Event, Set<? extends Match>> getEventMatches) {
+        return performUserMatchOperation(eventId, matchId, getEventMatches, (event, match) -> eventService.removeFromMatch(event, match));
+    }
+
+    private ResponseEntity<Boolean> performUserMatchOperation(Long eventId, Long matchId, Function<Event, Set<? extends Match>> getEventMatches, BiFunction<Event, Match, Boolean> operation) {
+        return eventService.getEventById(eventId)
+                .map(event -> getEventMatches.apply(event).stream()
+                        .filter(match -> matchId.equals(match.getId()))
+                        .findFirst()
+                        .map(match -> ResponseEntity.ok(operation.apply(event, match)))
+                        .orElseGet(ResponseUtils::notFound))
+                .orElseGet(ResponseUtils::notFound);
+    }
+
+    private ResponseEntity<Boolean> acceptForMatch(Long eventId, Long matchId, Long userId, Function<Event, Set<? extends Match>> getEventMatches) {
+        return performOrganiserMatchOperation(eventId, matchId, userId, getEventMatches, (event, match, user) -> eventService.acceptForMatch(event, match, user));
+    }
+
+    private ResponseEntity<Boolean> discardFromMatch(Long eventId, Long matchId, Long userId, Function<Event, Set<? extends Match>> getEventMatches) {
+        return performOrganiserMatchOperation(eventId, matchId, userId, getEventMatches, (event, match, user) -> eventService.discardFromMatch(event, match, user));
+    }
+
+    private ResponseEntity<Boolean> performOrganiserMatchOperation(Long eventId, Long matchId, Long userId, Function<Event, Set<? extends Match>> getEventMatches, TriFunction<Event, Match, User, Boolean> operation) {
+        Optional<Event> eventOptional = eventService.getEventById(eventId);
+        if (!eventOptional.isPresent()) {
+            return ResponseUtils.notFound();
+        }
+
+        Event event = eventOptional.get();
+
+        if (!validator.isUserEventOrganiser(event)) {
+            return ResponseUtils.forbidden();
+        }
+
+        return userService.getUserById(userId)
+                .map(user -> getEventMatches.apply(event).stream()
+                        .filter(match -> matchId.equals(match.getId()))
+                        .findFirst()
+                        .map(match -> ResponseEntity.ok(operation.apply(event, match, user)))
+                        .orElseGet(ResponseUtils::notFound))
+                .orElseGet(ResponseUtils::notFound);
+    }
 
     private TournamentDetailsDTO createTournamentDetailsDTO(Tournament tournament) {
         return new TournamentDetailsDTO(

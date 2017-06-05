@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EventInfoDto {
+    private final Long id;
     private final String name;
     private final String description;
     private final Location location;
@@ -16,16 +17,17 @@ public class EventInfoDto {
     private final User organiser;
 
     public EventInfoDto(Event event) {
+        this.id = event.getId();
         this.name = event.getName();
         this.description = event.getDescription();
         this.location = event.getLocation();
-        this.sparrings = event.getSparrings().stream()
-                .map(sparring -> new EventSparringDto(sparring.getGameName(), sparring.getStartDate(), sparring.getEndDate(), sparring.getUsers(), sparring.getGame(), sparring.getMinPlayers(), sparring.getMaxPlayers()))
-                .collect(Collectors.toList());
-        this.tournaments = event.getTournaments().stream()
-                .map(tournament -> new EventTournamentDto(tournament.getName(), tournament.getType(), tournament.getStartDate(), tournament.getEndDate(), tournament.getUsers(), tournament.getGame(), tournament.getMinPlayers(), tournament.getMaxPlayers()))
-                .collect(Collectors.toList());
+        this.sparrings = event.getSparrings().stream().map(EventSparringDto::new).collect(Collectors.toList());
+        this.tournaments = event.getTournaments().stream().map(EventTournamentDto::new).collect(Collectors.toList());
         this.organiser = event.getOrganiser();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
