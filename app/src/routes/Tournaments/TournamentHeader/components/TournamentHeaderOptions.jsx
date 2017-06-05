@@ -5,8 +5,6 @@ import Button from "react-mdl/lib/Button";
 
 const propTypes = {
     tournamentView: PropTypes.bool.isRequired,
-    tournamentTypesView: PropTypes.bool.isRequired,
-    finishedTournamentsView: PropTypes.bool.isRequired,
     redirectToTournamentTypes: PropTypes.func,
     redirectToTournaments: PropTypes.func,
     redirectToFinishedTournaments: PropTypes.func
@@ -20,7 +18,7 @@ const defaultProps = {
 
 const enhance = pure;
 
-const TournamentHeaderOptions = ({ tournamentView, tournamentTypesView, redirectToTournamentTypes, redirectToTournaments, redirectToFinishedTournaments }) => (
+const TournamentHeaderOptions = ({ tournamentView, redirectToTournamentTypes, redirectToTournaments, redirectToFinishedTournaments }) => (
     <div className="events-header__options">
         {tournamentView ? (
             <Button onClick={redirectToTournamentTypes}>Tournament types</Button>
