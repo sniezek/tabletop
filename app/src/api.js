@@ -176,7 +176,8 @@ class Api {
 
     event(id) {
         return fetch(`${API_SERVER}/events/${id}`, {
-            method: "GET"
+            method: "GET",
+            credentials: "include"
         });
     }
 
