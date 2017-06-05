@@ -46,7 +46,7 @@ VALUES (13, 'Jan', '$2a$10$nnrqLHplDNisOTY1m1tHcuv6gCsULjyrVjNl9VpIZjDx/1pvQFLyO
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
 VALUES (1, 'tournament1', '2016-12-16', '2016-12-18',  'CHESS', 2, 6, 'SWISS', false, 12);
 INSERT INTO tournament (id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id)
-VALUES (2, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', true, 12);
+VALUES (2, 'tournament2', '2017-05-10', '2017-05-16', 'CHESS', 2, 8, 'SWISS', false, 12);
 
 INSERT INTO tournament_player_result(id, tournament, user, points, place)
 VALUES (1, 1, 1, 10, 1);
@@ -177,7 +177,7 @@ INSERT INTO swiss_player_result(user_id, tournament_id, result, current_opponent
 VALUES (1, 3, 0, null, 0, TRUE );
 
 INSERT INTO tournament(id, name, start_date, end_date, game, min_players, max_players, type, finished, creator_id, event_id)
-VALUES (4, 'Chess Pro Tournament', '2017-05-30 20:30:00.0', '2017-05-30 22:00:00.0', 'CHESS', 2, 6, 'SWISS', false, 13, 1);
+VALUES (4, 'Chess Pro Tournament', '2017-05-30 20:30:00.0', '2017-05-30 22:00:00.0', 'CHESS', 2, 6, 'SWISS', true, 13, 1);
 
 INSERT INTO tournament_users(tournament_id, users_id)
 VALUES (4, 11);
