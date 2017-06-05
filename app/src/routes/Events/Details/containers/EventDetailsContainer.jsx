@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import EventDetails from "../components/EventDetails.jsx";
-import { loadEvent } from "../../Index/modules/EventActions";
+import { loadEvent, acceptPlayer, discardPlayer, removePlayer, addPlayer } from "../../Index/modules/EventActions";
 
 const propTypes = {
     id: PropTypes.number.isRequired,
@@ -11,7 +11,11 @@ const propTypes = {
     sparrings: PropTypes.array,
     user: PropTypes.object,
     organiser: PropTypes.object,
-    router: PropTypes.object.isRequired
+    router: PropTypes.object.isRequired,
+    acceptPlayer: PropTypes.func.isRequired,
+    discardPlayer: PropTypes.func.isRequired,
+    addPlayer: PropTypes.func.isRequired,
+    removePlayer: PropTypes.func.isRequired
 };
 
 const defaultProps = {
@@ -21,12 +25,34 @@ const defaultProps = {
     organiser: null
 };
 
+const mapSparring = ({ id, gameName, game }) => user => ({ ...user, match: { name: gameName || game, type: "sparring", id } });
+const mapTournament = ({ id, name }) => user => ({ ...user, match: { name, type: "tournament", id } });
+
+const mergePlayers = (sparrings, tournaments) => {
+    const spUsers = sparrings
+        ? sparrings.reduce(
+            (acc, sparring) => acc.concat(sparring.pending.map(mapSparring(sparring))),
+            []
+        ) : [];
+    const trUsers = tournaments
+        ? tournaments.reduce(
+            (acc, tournament) => acc.concat(tournament.pending.map(mapTournament(tournament)))
+            , []
+        ) : [];
+    return [...spUsers, ...trUsers];
+};
+
 const mapDispatchToProps = dispatch => ({
-    loadDetails: id => loadEvent(id)(dispatch)
+    loadDetails: id => loadEvent(id)(dispatch),
+    acceptPlayer: payload => acceptPlayer(payload)(dispatch),
+    discardPlayer: payload => discardPlayer(payload)(dispatch),
+    removePlayer: payload => removePlayer(payload)(dispatch),
+    addPlayer: payload => addPlayer(payload)(dispatch)
 });
 
-const mapStateToProps = ({ event }) => ({
-    ...event
+const mapStateToProps = ({ event, user }) => ({
+    ...event,
+    user
 });
 
 const enhance = connect(mapStateToProps, mapDispatchToProps);
@@ -45,6 +71,10 @@ class EventDetailsContainer extends PureComponent {
         this.closePlayersDialog = this.closePlayersDialog.bind(this);
         this.revokePlayer = this.revokePlayer.bind(this);
         this.acceptPlayer = this.acceptPlayer.bind(this);
+        this.addPlayer = this.addPlayer.bind(this);
+        this.removePlayer = this.removePlayer.bind(this);
+        this.showPlayers = this.showPlayers.bind(this);
+        this.closeMatchDialog = this.closeMatchDialog.bind(this);
     }
 
     componentDidMount() {
@@ -53,7 +83,7 @@ class EventDetailsContainer extends PureComponent {
         loadDetails(id);
     }
 
-    componentWillReceiveProps({ tournaments, sparrings }) {
+    componentWillReceiveProps({ tournaments, sparrings, id }) {
         if (this.props.tournaments !== tournaments || this.props.sparrings !== sparrings) {
             const _users = new Map();
 
@@ -71,6 +101,10 @@ class EventDetailsContainer extends PureComponent {
                 users
             });
         }
+
+        if (this.props.id !== id) {
+            this.props.loadDetails(id);
+        }
     }
 
     acceptPlayers() {
@@ -85,12 +119,24 @@ class EventDetailsContainer extends PureComponent {
         router.push(`/events/edit/${id}`);
     }
 
-    acceptPlayer() {
-
+    acceptPlayer(id, { id: matchId, type }) {
+        const eventId = this.props.id;
+        this.props.acceptPlayer({ type, userId: id, matchId, eventId });
     }
 
-    revokePlayer() {
+    revokePlayer(id, { id: matchId, type }) {
+        const eventId = this.props.id;
+        this.props.discardPlayer({ type, userId: id, matchId, eventId });
+    }
 
+    addPlayer({ type, matchId }) {
+        const eventId = this.props.id;
+        this.props.addPlayer({ type, matchId, eventId });
+    }
+
+    removePlayer({ type, matchId }) {
+        const eventId = this.props.id;
+        this.props.removePlayer({ type, matchId, eventId });
     }
 
     closePlayersDialog() {
@@ -99,10 +145,23 @@ class EventDetailsContainer extends PureComponent {
         });
     }
 
+    showPlayers(matchPlayers) {
+        this.setState({
+            matchPlayers
+        });
+    }
+
+    closeMatchDialog() {
+        this.setState({
+            matchPlayers: undefined
+        });
+    }
+
     render() {
         const { user, organiser } = this.props;
-        const { playersDialogOpened } = this.state;
-        const isOrganiser = user && organiser && user.id === organiser.id;
+        const { playersDialogOpened, matchPlayers } = this.state;
+        const isOrganiser = !!(user && organiser && user.id === organiser.id);
+        const list = mergePlayers(this.props.sparrings, this.props.tournaments);
 
         return (
             <EventDetails
@@ -111,11 +170,19 @@ class EventDetailsContainer extends PureComponent {
                 isOrganiser={isOrganiser}
                 editEvent={this.editEvent}
                 acceptPlayers={this.acceptPlayers}
-                waitingCount={98}
+                waitingCount={list.length}
                 playersDialogOpened={playersDialogOpened}
+                matchPlayers={matchPlayers}
+                matchDialogOpened={matchPlayers !== undefined}
+                closeMatchDialog={this.closeMatchDialog}
                 acceptPlayer={this.acceptPlayer}
                 revokePlayer={this.revokePlayer}
                 closePlayersDialog={this.closePlayersDialog}
+                acceptPlayersList={list}
+                addPlayer={this.addPlayer}
+                removePlayer={this.removePlayer}
+                showPlayers={this.showPlayers}
+                userId={user ? user.id : undefined}
             />
         );
     }

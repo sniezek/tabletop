@@ -312,6 +312,34 @@ class Api {
             credentials: "include"
         });
     }
+
+    apply({ eventId, type, matchId }) {
+        return fetch(`${API_SERVER}/events/apply/${eventId}/${type}/${matchId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
+    resign({ eventId, type, matchId }) {
+        return fetch(`${API_SERVER}/events/resign/${eventId}/${type}/${matchId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
+    accept({ eventId, type, matchId, userId }) {
+        return fetch(`${API_SERVER}/events/accept/${eventId}/${type}/${matchId}/${userId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
+
+    discard({ eventId, type, matchId, userId }) {
+        return fetch(`${API_SERVER}/events/discard/${eventId}/${type}/${matchId}/${userId}`, {
+            method: "POST",
+            credentials: "include"
+        });
+    }
 }
 
 export default new Api();

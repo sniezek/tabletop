@@ -23,7 +23,7 @@ const EventHeader = ({ name, isOrganiser, editEvent, acceptPlayers, waitingCount
     <ViewHeader
         title={name}
     >
-        {isOrganiser && (
+        {!isOrganiser && (
             <div>
                 <Button colored onClick={editEvent}>Edit event</Button>
                 {waitingCount > 0 && (

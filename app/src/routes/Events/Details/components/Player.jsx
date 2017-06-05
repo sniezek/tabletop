@@ -8,17 +8,20 @@ const propTypes = {
     username: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
     accept: PropTypes.func,
-    revoke: PropTypes.func
+    revoke: PropTypes.func,
+    id: PropTypes.number.isRequired,
+    match: PropTypes.object
 };
 
 const defaultProps = {
     accept: null,
-    revoke: null
+    revoke: null,
+    match: {}
 };
 
 const enhance = pure;
 
-const Player = ({ username, email, accept, revoke }) => (
+const Player = ({ id, username, email, accept, revoke, match }) => (
     <div className="player">
         <Gravatar
             email={email}
@@ -30,21 +33,23 @@ const Player = ({ username, email, accept, revoke }) => (
         />
         <div className="player__details">
             <span className="player__username">{username}</span>
-            <span className="player__event">62 Episodes</span>
+            {match.name && (
+                <span className="player__event">{match.name}</span>
+            )}
         </div>
         <div className="player__ctas">
             {accept && (
                 <IconButton
                     name="check"
                     className="player-cta player-cta--accept"
-                    onClick={() => accept()}
+                    onClick={() => accept(id, match)}
                 />
             )}
             {revoke && (
                 <IconButton
                     name="clear"
                     className="player-cta player-cta--revoke"
-                    onClick={() => revoke()}
+                    onClick={() => revoke(id, match)}
                 />
             )}
         </div>

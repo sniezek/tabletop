@@ -2,15 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import pure from "recompose/pure";
 import { View, ViewContent } from "../../../../components/View";
-import DetailsSection from "./DetailsSection.jsx";
 import Description from "./sections/Description.jsx";
 import Participants from "./sections/Participants.jsx";
 import Location from "./sections/Location.jsx";
 import EventHeader from "./EventHeader.jsx";
-import AcceptPlayersDialog from "./AcceptPlayersDialog.jsx";
+import PlayersDialog from "./PlayersDialog.jsx";
+import List from "./sections/List.jsx";
 import "./EventDetails.scss";
 
 const propTypes = {
+    userId: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
     users: PropTypes.array,
@@ -23,21 +24,35 @@ const propTypes = {
     playersDialogOpened: PropTypes.bool.isRequired,
     closePlayersDialog: PropTypes.func.isRequired,
     revokePlayer: PropTypes.func.isRequired,
-    acceptPlayer: PropTypes.func.isRequired
+    acceptPlayer: PropTypes.func.isRequired,
+    sparrings: PropTypes.array,
+    tournaments: PropTypes.array,
+    acceptPlayersList: PropTypes.array.isRequired,
+    addPlayer: PropTypes.func.isRequired,
+    removePlayer: PropTypes.func.isRequired,
+    showPlayers: PropTypes.func.isRequired,
+    matchPlayers: PropTypes.array,
+    matchDialogOpened: PropTypes.bool.isRequired,
+    closeMatchDialog: PropTypes.func.isRequired
 };
 
 const defaultProps = {
-    name: null,
-    description: null,
-    users: null,
-    location: null,
-    organiser: null
+    name: undefined,
+    description: undefined,
+    users: undefined,
+    location: undefined,
+    organiser: undefined,
+    sparrings: undefined,
+    tournaments: undefined,
+    userId: undefined,
+    matchPlayers: []
 };
 
 const enhance = pure;
 
-const EventDetails = ({ name, description, users, location, organiser, isOrganiser, editEvent, acceptPlayers, waitingCount,
-playersDialogOpened, closePlayersDialog, revokePlayer, acceptPlayer }) => (
+const EventDetails = ({ userId, name, description, users, location, organiser, isOrganiser, editEvent, acceptPlayers, waitingCount,
+playersDialogOpened, closePlayersDialog, revokePlayer, acceptPlayer, sparrings, tournaments, acceptPlayersList, addPlayer, removePlayer,
+showPlayers, matchPlayers, matchDialogOpened, closeMatchDialog }) => (
     <View className="event">
         <EventHeader
             name={name}
@@ -53,13 +68,23 @@ playersDialogOpened, closePlayersDialog, revokePlayer, acceptPlayer }) => (
                         <Description
                             content={description}
                         />
-                        <DetailsSection
+                        <List
                             title="Tournaments"
-                            loading
+                            type="tournament"
+                            events={tournaments}
+                            userId={userId}
+                            addPlayer={addPlayer}
+                            removePlayer={removePlayer}
+                            showPlayers={showPlayers}
                         />
-                        <DetailsSection
+                        <List
                             title="Sparrings"
-                            loading
+                            type="sparring"
+                            events={sparrings}
+                            userId={userId}
+                            addPlayer={addPlayer}
+                            removePlayer={removePlayer}
+                            showPlayers={showPlayers}
                         />
                     </main>
                     <aside className="event__sidebar">
@@ -73,11 +98,19 @@ playersDialogOpened, closePlayersDialog, revokePlayer, acceptPlayer }) => (
                     </aside>
                 </div>
             </div>
-            <AcceptPlayersDialog
+            <PlayersDialog
                 open={playersDialogOpened}
                 close={closePlayersDialog}
                 revoke={revokePlayer}
                 accept={acceptPlayer}
+                players={acceptPlayersList}
+                title="Accept players"
+            />
+            <PlayersDialog
+                open={matchDialogOpened}
+                close={closeMatchDialog}
+                players={matchPlayers}
+                title="Participants"
             />
         </ViewContent>
     </View>
