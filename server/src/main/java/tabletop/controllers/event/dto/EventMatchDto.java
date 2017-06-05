@@ -35,7 +35,7 @@ abstract class EventMatchDto {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             this.pending = FILTER_OUT_OTHER_USERS.apply(pending, user);
-            this.discarded = FILTER_OUT_OTHER_USERS.apply(pending, user);
+            this.discarded = FILTER_OUT_OTHER_USERS.apply(discarded, user);
         } else {
             this.pending = new HashSet<>();
             this.discarded = new HashSet<>();
