@@ -1,12 +1,15 @@
 package tabletop.controllers.event.dto;
 
 import tabletop.domain.match.Sparring;
+import tabletop.domain.user.User;
+
+import java.util.Optional;
 
 class EventSparringDto extends EventMatchDto {
     private final String gameName;
 
-    EventSparringDto(Sparring sparring) {
-        super(sparring.getId(), sparring.getStartDate(), sparring.getEndDate(), sparring.getUsers(), sparring.getGame(), sparring.getMinPlayers(), sparring.getMaxPlayers(), sparring.getPending(), sparring.getDiscarded());
+    EventSparringDto(Sparring sparring, Optional<User> user) {
+        super(sparring.getId(), sparring.getStartDate(), sparring.getEndDate(), sparring.getUsers(), sparring.getGame(), sparring.getMinPlayers(), sparring.getMaxPlayers(), sparring.getPending(), sparring.getDiscarded(), user);
         this.gameName = sparring.getGameName();
     }
 
