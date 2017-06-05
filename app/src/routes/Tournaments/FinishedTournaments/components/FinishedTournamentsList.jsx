@@ -21,7 +21,7 @@ const FinishedTournamentsList = ({ router, finishedTournamentsList }) => (
         <Card shadow={1} style={{ width: "1000px", margin: "auto" }}>
             <List>
                 {finishedTournamentsList.map(tournament =>
-                    <ListItem key={tournament.id}>
+                    <ListItem key={tournament.tournamentId}>
                         <ListItemContent>
                             {tournament.tournamentName} - {tournament.eventName}
                         </ListItemContent>

@@ -8,29 +8,23 @@ import FinishedTournamentsContainer from "../containers/FinishedTournamentsConta
 const propTypes = {
     router: PropTypes.object.isRequired,
     finishedTournamentsList: PropTypes.array,
-    tournamentView: PropTypes.bool,
-    tournamentTypesView: PropTypes.bool,
-    finishedTournamentsView: PropTypes.bool
+    tournamentView: PropTypes.bool
 };
 
 const defaultProps = {
     finishedTournamentsList: [],
-    tournamentView: false,
-    tournamentTypesView: false,
-    finishedTournamentsView: true
+    tournamentView: false
 };
 
 const enhance = pure;
 
 
-const FinishedTournaments = ({ router, tournamentView, tournamentTypesView, finishedTournamentsView, finishedTournamentsList }) => (
+const FinishedTournaments = ({ router, tournamentView, finishedTournamentsList }) => (
     <div className="tournaments">
         <TournamentHeaderContainer
             router={router}
             title="Finished tournaments"
             tournamentView={tournamentView}
-            tournamentTypesView={tournamentTypesView}
-            finishedTournamentsView={finishedTournamentsView}
         />
         <FinishedTournamentsContainer
             finishedTournamentsList={finishedTournamentsList}

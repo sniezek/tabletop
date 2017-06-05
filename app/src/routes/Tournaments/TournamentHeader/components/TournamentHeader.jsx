@@ -7,8 +7,6 @@ import TournamentHeaderOptions from "./TournamentHeaderOptions";
 const propTypes = {
     title: PropTypes.string,
     tournamentView: PropTypes.bool.isRequired,
-    tournamentTypesView: PropTypes.bool,
-    finishedTournamentsView: PropTypes.bool,
     redirectToTournamentTypes: PropTypes.func,
     redirectToTournaments: PropTypes.func,
     redirectToFinishedTournaments: PropTypes.func
@@ -16,8 +14,6 @@ const propTypes = {
 
 const defaultProps = {
     title: "Tournaments",
-    tournamentTypesView: false,
-    finishedTournamentsView: false,
     redirectToTournamentTypes: () => {},
     redirectToTournaments: () => {},
     redirectToFinishedTournaments: () => {}
@@ -25,14 +21,12 @@ const defaultProps = {
 
 const enhance = pure;
 
-const TournamentHeader = ({ title, tournamentView, tournamentTypesView, finishedTournamentsView, redirectToTournamentTypes, redirectToTournaments, redirectToFinishedTournaments }) => (
+const TournamentHeader = ({ title, tournamentView, redirectToTournamentTypes, redirectToTournaments, redirectToFinishedTournaments }) => (
     <ViewHeader
         title={title}
     >
         <TournamentHeaderOptions
             tournamentView={tournamentView}
-            tournamentTypesView={tournamentTypesView}
-            finishedTournamentsView={finishedTournamentsView}
             redirectToTournamentTypes={redirectToTournamentTypes}
             redirectToTournaments={redirectToTournaments}
             redirectToFinishedTournaments={redirectToFinishedTournaments}
