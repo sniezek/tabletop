@@ -39,18 +39,18 @@ trait Magic {
   }
 
   def createSchemaIfNotExists(insert: () => Future[Unit]): Future[Unit] = {
-    db.run(MTable.getTables).flatMap(tables =>
-      if (tables.isEmpty) {
-        db.run(allSchemas.create).andThen {
-          case Success(_) => {
-            insert()
-            println("Schema created \n")
-          }
+    db.run(MTable.getTables).flatMap(tables => {
+      db.run(allSchemas.drop)
+      db.run(allSchemas.create).andThen {
+        case Success(_) => {
+          insert()
+          println("Schema created \n")
         }
-      } else {
-        println("Schema already exists\n")
-        Future.successful()
+        case Failure(_) => {
+          println("Dupa123 \n")
+        }
       }
+    }
     )
   }
 }

@@ -40,4 +40,7 @@ object AchivementsFields {
   val SparringLooser = "SparringLooser"
   val Tournament3rdPlace = "Tr3rd"
   val Login = "Login"
+  val NeverLoseTournament = "NeverLoseTournament"
+  val Games = "Games"
+
 }

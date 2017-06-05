@@ -8,7 +8,7 @@ class H2Data extends DatabaseSchema with InitialData with Magic {
   val db = Database.forConfig("h2")
   val dao = new Dao(db)
 
-  def run: Unit = {
+  def run(): Unit = {
     val future = createSchemaIfNotExists(insertInitialData)
     Await.ready(future, Duration.Inf)
   }

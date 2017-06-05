@@ -64,5 +64,35 @@ trait MySqlMagic {
     Future.successful(1)
   }
 
+  def getTournamentsWithoutDefeat(player: UserRow): Future[Int] = {
+    val query = "" //TODO:
+
+    Future.successful(0)
+  }
+
+  def getGames(): Future[Seq[Option[String]]] = {
+    val query = GameRanking
+      .map(_.gameName)
+      .groupBy(x => x)
+      .map(_._1)
+      .result
+
+    db.run(query)
+  }
+
+  def getRankingForEachGame(): Future[Seq[(Option[Long], Option[String], Option[Long])]] = {
+    val w = for {
+      c <- GameRanking
+    } yield (c.points, c.gameName, c.userId)
+
+    val q = w
+      .sortBy(_._1.desc.nullsLast)
+      .filter(_._2 === "Talisman")
+      .result
+
+    db.run(q)
+  }
+
+
 
 }
