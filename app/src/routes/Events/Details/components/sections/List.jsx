@@ -23,7 +23,8 @@ const List = ({ events, title, ...rest }) => (
         {events && events.map(event => (
             <ListItem
                 key={event.id}
-                primary={event.gameName}
+                primary={event.gameName || event.name || event.game}
+                secondary={event.name ? event.game : undefined}
                 {...event}
                 {...rest}
             />

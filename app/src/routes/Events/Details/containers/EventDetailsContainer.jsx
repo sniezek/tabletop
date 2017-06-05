@@ -5,7 +5,7 @@ import EventDetails from "../components/EventDetails.jsx";
 import { loadEvent, acceptPlayer, discardPlayer, removePlayer, addPlayer } from "../../Index/modules/EventActions";
 
 const propTypes = {
-    id: PropTypes.number.isRequired,
+    eventId: PropTypes.number.isRequired,
     loadDetails: PropTypes.func.isRequired,
     tournaments: PropTypes.array,
     sparrings: PropTypes.array,
@@ -78,12 +78,12 @@ class EventDetailsContainer extends PureComponent {
     }
 
     componentDidMount() {
-        const { loadDetails, id } = this.props;
+        const { loadDetails, eventId } = this.props;
 
-        loadDetails(id);
+        loadDetails(eventId);
     }
 
-    componentWillReceiveProps({ tournaments, sparrings, id }) {
+    componentWillReceiveProps({ tournaments, sparrings, eventId }) {
         if (this.props.tournaments !== tournaments || this.props.sparrings !== sparrings) {
             const _users = new Map();
 
@@ -102,8 +102,8 @@ class EventDetailsContainer extends PureComponent {
             });
         }
 
-        if (this.props.id !== id) {
-            this.props.loadDetails(id);
+        if (this.props.eventId !== eventId) {
+            this.props.loadDetails(eventId);
         }
     }
 
@@ -114,28 +114,28 @@ class EventDetailsContainer extends PureComponent {
     }
 
     editEvent() {
-        const { id, router } = this.props;
+        const { eventId, router } = this.props;
 
-        router.push(`/events/edit/${id}`);
+        router.push(`/events/edit/${eventId}`);
     }
 
     acceptPlayer(id, { id: matchId, type }) {
-        const eventId = this.props.id;
+        const eventId = this.props.eventId;
         this.props.acceptPlayer({ type, userId: id, matchId, eventId });
     }
 
     revokePlayer(id, { id: matchId, type }) {
-        const eventId = this.props.id;
+        const eventId = this.props.eventId;
         this.props.discardPlayer({ type, userId: id, matchId, eventId });
     }
 
     addPlayer({ type, matchId }) {
-        const eventId = this.props.id;
+        const eventId = this.props.eventId;
         this.props.addPlayer({ type, matchId, eventId });
     }
 
     removePlayer({ type, matchId }) {
-        const eventId = this.props.id;
+        const eventId = this.props.eventId;
         this.props.removePlayer({ type, matchId, eventId });
     }
 
