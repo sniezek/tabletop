@@ -17,6 +17,14 @@ export default store => ({
             }, "tournament-types");
         }
     }, {
+        path: "/tournament/finished",
+        getComponent(nextState, cb) {
+            require.ensure([], (require) => {
+                const FinishedTournaments = require("./FinishedTournaments/components/FinishedTournaments").default;
+                cb(null, FinishedTournaments);
+            }, "tournament-finished");
+        }
+    }, {
         path: "/tournament/demo/:id",
         getComponent(nextState, cb) {
             require.ensure([], (require) => {

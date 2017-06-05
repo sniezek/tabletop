@@ -4,25 +4,32 @@ import pure from "recompose/pure";
 import Button from "react-mdl/lib/Button";
 
 const propTypes = {
+    tournamentView: PropTypes.bool.isRequired,
     tournamentTypesView: PropTypes.bool.isRequired,
+    finishedTournamentsView: PropTypes.bool.isRequired,
     redirectToTournamentTypes: PropTypes.func,
-    redirectToTournaments: PropTypes.func
+    redirectToTournaments: PropTypes.func,
+    redirectToFinishedTournaments: PropTypes.func
 };
 
 const defaultProps = {
     redirectToTournamentTypes: () => {},
-    redirectToTournaments: () => {}
+    redirectToTournaments: () => {},
+    redirectToFinishedTournaments: () => {}
 };
 
 const enhance = pure;
 
-const TournamentHeaderOptions = ({ tournamentTypesView, redirectToTournamentTypes, redirectToTournaments }) => (
+const TournamentHeaderOptions = ({ tournamentView, tournamentTypesView, redirectToTournamentTypes, redirectToTournaments, redirectToFinishedTournaments }) => (
     <div className="events-header__options">
-        {tournamentTypesView ? (
-            <Button onClick={redirectToTournaments}>Back to tournaments</Button>
+        {tournamentView ? (
+            <Button onClick={redirectToTournamentTypes}>Tournament types</Button>
       ) : (
-          <Button onClick={redirectToTournamentTypes}>Tournament types</Button>
+          <Button onClick={redirectToTournaments}>Back to tournament</Button>
       )}
+        {tournamentView ? (
+            <Button onClick={redirectToFinishedTournaments}>Finished tournaments</Button>
+      ) : (<div />)}
     </div>
 );
 
@@ -30,5 +37,3 @@ TournamentHeaderOptions.propTypes = propTypes;
 TournamentHeaderOptions.defaultProps = defaultProps;
 
 export default enhance(TournamentHeaderOptions);
-
-

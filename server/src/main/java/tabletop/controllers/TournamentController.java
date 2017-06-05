@@ -12,10 +12,7 @@ import tabletop.services.TournamentService;
 import tabletop.services.UserService;
 
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/tournament")
@@ -34,8 +31,17 @@ public class TournamentController {
     }
 
     @RequestMapping(value = "/finished", method = RequestMethod.GET)
-    public ResponseEntity<Collection<Tournament>> getFinishedTournaments() {
-        return ResponseEntity.ok(tournamentService.getFinishedTournaments());
+    public ResponseEntity<Collection<TournamentEventDTO>> getFinishedTournaments() {
+        return getOkResponseWithTournamentsDetails(tournamentService.getFinishedTournaments());
+    }
+
+    private ResponseEntity<Collection<TournamentEventDTO>> getOkResponseWithTournamentsDetails(Collection<Tournament> tournaments) {
+        Collection<TournamentEventDTO> tournamentsDetails = new LinkedList<>();
+        for (Tournament tournament: tournaments) {
+            tournamentsDetails.add(new TournamentEventDTO(tournament, tournament.getEvent()));
+        }
+
+        return ResponseEntity.ok(tournamentsDetails);
     }
 
     @RequestMapping(value = "/show/{id}", method = RequestMethod.GET)

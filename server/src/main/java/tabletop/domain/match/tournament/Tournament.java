@@ -1,7 +1,7 @@
 package tabletop.domain.match.tournament;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.validator.constraints.NotEmpty;
+import tabletop.domain.event.Event;
 import tabletop.domain.match.Match;
 import tabletop.domain.user.User;
 
@@ -21,16 +21,18 @@ public class Tournament extends Match {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
-    @JsonIgnore
     private TournamentProcess tournamentProcess;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JsonIgnore
     private List<TournamentPlayerResult> tournamentPlayerResults;
 
     @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creator;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
     public String getName() {
         return name;
@@ -78,6 +80,14 @@ public class Tournament extends Match {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     @Override
