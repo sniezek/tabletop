@@ -5,6 +5,7 @@ import tabletop.domain.event.Location;
 import tabletop.domain.user.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class EventInfoDto {
@@ -16,13 +17,13 @@ public class EventInfoDto {
     private final List<EventTournamentDto> tournaments;
     private final User organiser;
 
-    public EventInfoDto(Event event) {
+    public EventInfoDto(Event event, Optional<User> user) {
         this.id = event.getId();
         this.name = event.getName();
         this.description = event.getDescription();
         this.location = event.getLocation();
-        this.sparrings = event.getSparrings().stream().map(EventSparringDto::new).collect(Collectors.toList());
-        this.tournaments = event.getTournaments().stream().map(EventTournamentDto::new).collect(Collectors.toList());
+        this.sparrings = event.getSparrings().stream().map(sparring -> new EventSparringDto(sparring, user)).collect(Collectors.toList());
+        this.tournaments = event.getTournaments().stream().map(tournament -> new EventTournamentDto(tournament, user)).collect(Collectors.toList());
         this.organiser = event.getOrganiser();
     }
 

@@ -5,9 +5,15 @@ import tabletop.domain.game.Game;
 import tabletop.domain.user.User;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
+import java.util.stream.Collectors;
 
 abstract class EventMatchDto {
+    private static final BiFunction<Set<User>, User, Set<User>> FILTER_OUT_OTHER_USERS = (users, user) -> users.stream().filter(u -> u.equals(user)).collect(Collectors.toSet());
+
     private final Long id;
     private final Date startDate;
     private final Date endDate;
@@ -18,7 +24,7 @@ abstract class EventMatchDto {
     private final Set<User> pending;
     private final Set<User> discarded;
 
-    EventMatchDto(Long id, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers, Set<User> pending, Set<User> discarded) {
+    EventMatchDto(Long id, Date startDate, Date endDate, Set<User> users, Game game, Integer minPlayers, Integer maxPlayers, Set<User> pending, Set<User> discarded, Optional<User> userOptional) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -26,8 +32,14 @@ abstract class EventMatchDto {
         this.game = game;
         this.minPlayers = minPlayers;
         this.maxPlayers = maxPlayers;
-        this.pending = pending;
-        this.discarded = discarded;
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            this.pending = FILTER_OUT_OTHER_USERS.apply(pending, user);
+            this.discarded = FILTER_OUT_OTHER_USERS.apply(discarded, user);
+        } else {
+            this.pending = new HashSet<>();
+            this.discarded = new HashSet<>();
+        }
     }
 
     public Long getId() {

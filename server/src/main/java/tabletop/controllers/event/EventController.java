@@ -54,12 +54,12 @@ public class EventController {
         validator.validateTypeFilter(type, errors);
         validator.validateDateFilters(startDate, endDate, errors);
 
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate).stream().map(EventInfoDto::new).collect(Collectors.toList()));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(eventService.getEvents(lat, lng, radius, games, type, startDate, endDate).stream().map(event -> new EventInfoDto(event, userService.getAuthenticatedUser())).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EventInfoDto> getEvent(@PathVariable Long id) {
-        return eventService.getEventById(id).map(event -> ResponseEntity.ok(new EventInfoDto(event))).orElse(ResponseUtils.notFound());
+        return eventService.getEventById(id).map(event -> ResponseEntity.ok(new EventInfoDto(event, userService.getAuthenticatedUser()))).orElse(ResponseUtils.notFound());
     }
 
     @PostMapping
@@ -72,7 +72,7 @@ public class EventController {
         validateCreateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(new EventInfoDto(eventService.createEvent(event)));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseUtils.created(new EventInfoDto(eventService.createEvent(event), userService.getAuthenticatedUser()));
     }
 
     @PutMapping("/{id}")
@@ -94,7 +94,7 @@ public class EventController {
 //        validateCreateEvent(event, errors);
         validateAndHandleLocation(event, bindingResult, errors);
 
-        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(new EventInfoDto(eventService.updateEvent(id, event)));
+        return errors.areErrors() ? ResponseUtils.badRequest(errors) : ResponseEntity.ok(new EventInfoDto(eventService.updateEvent(id, event), userService.getAuthenticatedUser()));
     }
 
     @PostMapping("/apply/{eventId}/sparring/{sparringId}")
