@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import tabletop.domain.event.Event;
 import tabletop.domain.event.QEvent;
 import tabletop.domain.game.Game;
+import tabletop.domain.match.Match;
 import tabletop.domain.user.User;
 import tabletop.repositories.event.EventRepository;
 import tabletop.services.UserService;
@@ -102,10 +103,97 @@ public class EventService {
     public Event updateEvent(Long id, Event newEvent) {
         Event oldEvent = getEventById(id).get();
 
-        newEvent.setId(id);
-        newEvent.setOrganiser(oldEvent.getOrganiser());
+//        newEvent.setId(id);
+//        newEvent.setOrganiser(oldEvent.getOrganiser());
+//
+//        return saveEvent(newEvent);
 
-        return saveEvent(newEvent);
+        oldEvent.setName(newEvent.getName());
+        oldEvent.setDescription(newEvent.getDescription());
+        oldEvent.setLocation(newEvent.getLocation());
+
+        return saveEvent(oldEvent);
+    }
+
+    public boolean applyForMatch(Event event, Match match) {
+        User user = userService.getAuthenticatedUser().get();
+
+        if (match.getDiscarded().contains(user) || match.getPending().contains(user)) {
+            return false;
+        }
+
+        for (Match match2 : event.getMatches()) {
+            if (!match.equals(match2) && match.getUsers().contains(user) && match2.getUsers().contains(user) && match2.getEndDate().after(match.getStartDate()) && match2.getStartDate().before(match.getEndDate())) {
+                return false;
+            }
+        }
+
+        match.getPending().add(user);
+        eventRepository.save(event);
+
+        return true;
+    }
+
+    public boolean removeFromMatch(Event event, Match match) {
+        User user = userService.getAuthenticatedUser().get();
+
+        if (match.getPending().contains(user)) {
+            removeFromMatch(match.getPending(), event, user);
+
+            return true;
+        }
+
+        if (match.getUsers().contains(user)) {
+            removeFromMatch(match.getUsers(), event, user);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void removeFromMatch(Set<User> setToRemoveUserFrom, Event event, User user) {
+        setToRemoveUserFrom.remove(user);
+        eventRepository.save(event);
+    }
+
+    public boolean acceptForMatch(Event event, Match match, User user) {
+        if (match.getPending().contains(user)) {
+            acceptForMatch(match.getPending(), event, match, user);
+
+            return true;
+        }
+
+        if (match.getDiscarded().contains(user)) {
+            acceptForMatch(match.getDiscarded(), event, match, user);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void acceptForMatch(Set<User> setToRemoveUserFrom, Event event, Match match, User user) {
+        setToRemoveUserFrom.remove(user);
+        match.getUsers().add(user);
+
+        eventRepository.save(event);
+    }
+
+    public boolean discardFromMatch(Event event, Match match, User user) {
+        if (match.getPending().contains(user)) {
+            removeFromMatch(match.getPending(), event, user);
+
+            return true;
+        }
+
+        if (match.getUsers().contains(user)) {
+            removeFromMatch(match.getUsers(), event, user);
+
+            return true;
+        }
+
+        return false;
     }
 
     private Event saveEvent(Event event) {

@@ -9,16 +9,11 @@ import tabletop.domain.user.ResetPasswordEntity;
 import tabletop.domain.user.User;
 import tabletop.repositories.PasswordResetTokenRepository;
 import tabletop.repositories.UserRepository;
-import javax.mail.Session;
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Transport;
+
+import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.*;
-import java.security.SecureRandom;
-import java.math.BigInteger;
 
 @Service
 public class UserService {
@@ -30,6 +25,10 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public Optional<User> getUserById(Long id) {
+        return Optional.ofNullable(userRepository.findOne(id));
+    }
 
     public Optional<User> getUserByUsername(String username) {
         return Optional.ofNullable(userRepository.findByUsername(username));
@@ -112,7 +111,6 @@ public class UserService {
         else {
             return "Can`t find token with that id";
         }
-
     }
 
     private void sendEmailWithPassword(String email, String token, Long userid) {
@@ -137,8 +135,8 @@ public class UserService {
 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
-            message.addRecipient(Message.RecipientType.TO,new InternetAddress(email ,
-                    false) );
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(email,
+                    false));
 
             message.setSubject("Remind password");
             message.setText("Here is link where you can change your password. Please change it,"

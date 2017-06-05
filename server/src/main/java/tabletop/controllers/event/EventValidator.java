@@ -97,12 +97,6 @@ class EventValidator extends ControllerValidator {
         }
     }
 
-    void validateOrganiserIsNotSet(Event event, ControllerErrors errors) {
-        if (event.getOrganiser() != null) {
-            errorHandler.addError(errors, "request.incorrect");
-        }
-    }
-
     void validateLocationFilters(Double lat, Double lng, Integer radius, ControllerErrors errors) {
         long presentFiltersCount = getNotNullCount(lat, lng, radius);
 
