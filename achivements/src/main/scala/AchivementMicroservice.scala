@@ -90,7 +90,7 @@ trait Service extends Protocols {
                   getSimpleAchivement(achi, player, mySqlData.getTournamentsWithoutDefeat)
                 }
                 case AchivementsFields.Games => {
-                  getGamesAchivemet(achi, player, mySqlData.getGameAchivement)
+                  getGamesAchivement(achi, player, mySqlData.getGameAchivement)
                 }
               }
             }
@@ -102,7 +102,15 @@ trait Service extends Protocols {
     }
   }
 
-  def getGamesAchivement(achi: Achivement, player: UserRow, gameFunction: ())
+  def getGamesAchivement(achi: Achivement, player: UserRow, gameFunction: (UserRow, String) => Int): Unit = {
+    val place = gameFunction(player, achi.helper)
+    println(place)
+    if (Conditions.map(achi.conditions)(place, achi.minVal)) {
+      println(achi.name)
+      achivementResult ++= List(Achiv(achi.name, achi.description, achi.url))
+    }
+  }
+
   def getWinAchivement(achi: Achivement, player: UserRow, winFunction: (UserRow, Int) => Future[Int], place: Int = 1): Unit = {
     getAchivement(achi, player, place, winFunction = Some(winFunction))
   }

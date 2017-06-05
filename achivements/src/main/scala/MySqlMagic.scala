@@ -93,6 +93,31 @@ trait MySqlMagic {
     db.run(q)
   }
 
+  def getGameAchivement(player: UserRow, gameName: String): Int = {
+    import scala.concurrent.ExecutionContext.Implicits.global
+    var i: Int = 0
+    for (row <- getGameAchivement(gameName)) {
+      for (elem <- row) {
+        i += 1
+        if (elem._3.get == player.id) {
+          return i
+        }
+      }
+    }
+    0
+  }
 
 
+  def getGameAchivement(gameName: String): Future[Seq[(Option[Long], Option[String], Option[Long])]] = {
+    val w = for {
+      c <- GameRanking
+    } yield (c.points, c.gameName, c.userId)
+
+    val query = w
+      .sortBy(_._1.desc.nullsLast)
+      .filter(_._2 === gameName)
+      .result
+
+    db.run(query)
+  }
 }

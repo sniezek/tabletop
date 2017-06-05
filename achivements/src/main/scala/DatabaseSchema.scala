@@ -33,7 +33,9 @@ trait DatabaseSchema {
 
     def field = column[String]("FIELD")
 
-    def * = (id.?, name, description, condition, minVal, hidden, url, field) <> (Achivement.tupled, Achivement.unapply)
+    def helper = column[String]("HELPER")
+
+    def * = (id.?, name, description, condition, minVal, hidden, url, field, helper) <> (Achivement.tupled, Achivement.unapply)
   }
 
   val achivements = TableQuery[Achivements]

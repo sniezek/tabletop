@@ -65,45 +65,45 @@ trait InitialData {
       achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win 100 tournaments wihout any defeat", minVal = 100, name = "Never lose x100", field = AchivementsFields.NeverLoseTournament, url = ""),
       achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Win 1000 tournaments wihout any defeat", minVal = 1000, name = "Never lose x1000", field = AchivementsFields.NeverLoseTournament, url = ""),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Battleship ranking", minVal = 1, name = "Battleship Master", field = AchivementsFields.Games, url = "", helper = "Battleship"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Battleship ranking", minVal = 2, name = "Battleship First Officer", field = AchivementsFields.Games, url = "", helper = "Battleship"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Battleship ranking", minVal = 3, name = "Battleship Navigator", field = AchivementsFields.Games, url = "", helper = "Battleship"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Battleship ranking", minVal = 1, name = "Battleship Master", field = AchivementsFields.Games, url = "", helper = "Battleship"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Battleship ranking", minVal = 2, name = "Battleship First Officer", field = AchivementsFields.Games, url = "", helper = "Battleship"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Battleship ranking", minVal = 3, name = "Battleship Navigator", field = AchivementsFields.Games, url = "", helper = "Battleship"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Checkers ranking", minVal = 1, name = "Checkers Master", field = AchivementsFields.Games, url = "", helper = "Checkers"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Checkers ranking", minVal = 2, name = "Checkers First Officer", field = AchivementsFields.Games, url = "", helper = "Checkers"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Checkers ranking", minVal = 3, name = "Checkers Navigator", field = AchivementsFields.Games, url = "", helper = "Checkers"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Checkers ranking", minVal = 1, name = "Checkers Master", field = AchivementsFields.Games, url = "", helper = "Checkers"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Checkers ranking", minVal = 2, name = "Checkers First Officer", field = AchivementsFields.Games, url = "", helper = "Checkers"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Checkers ranking", minVal = 3, name = "Checkers Navigator", field = AchivementsFields.Games, url = "", helper = "Checkers"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Chess ranking", minVal = 1, name = "Chess Master", field = AchivementsFields.Games, url = "", helper = "Chess"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Chess ranking", minVal = 2, name = "Chess First Officer", field = AchivementsFields.Games, url = "", helper = "Chess"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Chess ranking", minVal = 3, name = "Chess Navigator", field = AchivementsFields.Games, url = "", helper = "Chess"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Chess ranking", minVal = 1, name = "Chess Master", field = AchivementsFields.Games, url = "", helper = "Chess"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Chess ranking", minVal = 2, name = "Chess First Officer", field = AchivementsFields.Games, url = "", helper = "Chess"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Chess ranking", minVal = 3, name = "Chess Navigator", field = AchivementsFields.Games, url = "", helper = "Chess"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Go ranking", minVal = 1, name = "Go Master", field = AchivementsFields.Games, url = "", helper = "Go"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Go ranking", minVal = 2, name = "Go First Officer", field = AchivementsFields.Games, url = "", helper = "Go"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Go ranking", minVal = 3, name = "Go Navigator", field = AchivementsFields.Games, url = "", helper = "Go"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Go ranking", minVal = 1, name = "Go Master", field = AchivementsFields.Games, url = "", helper = "Go"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Go ranking", minVal = 2, name = "Go First Officer", field = AchivementsFields.Games, url = "", helper = "Go"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Go ranking", minVal = 3, name = "Go Navigator", field = AchivementsFields.Games, url = "", helper = "Go"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Magic ranking", minVal = 1, name = "Magic Master", field = AchivementsFields.Games, url = "", helper = "Magic"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Magic ranking", minVal = 2, name = "Magic First Officer", field = AchivementsFields.Games, url = "", helper = "Magic"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Magic ranking", minVal = 3, name = "Magic Navigator", field = AchivementsFields.Games, url = "", helper = "Magic"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Magic ranking", minVal = 1, name = "Magic Master", field = AchivementsFields.Games, url = "", helper = "Magic"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Magic ranking", minVal = 2, name = "Magic First Officer", field = AchivementsFields.Games, url = "", helper = "Magic"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Magic ranking", minVal = 3, name = "Magic Navigator", field = AchivementsFields.Games, url = "", helper = "Magic"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Mahjong ranking", minVal = 1, name = "Mahjong Master", field = AchivementsFields.Games, url = "", helper = "Mahjong"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Mahjong ranking", minVal = 2, name = "Mahjong First Officer", field = AchivementsFields.Games, url = "", helper = "Mahjong"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Mahjong ranking", minVal = 3, name = "Mahjong Navigator", field = AchivementsFields.Games, url = "", helper = "Mahjong"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Mahjong ranking", minVal = 1, name = "Mahjong Master", field = AchivementsFields.Games, url = "", helper = "Mahjong"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Mahjong ranking", minVal = 2, name = "Mahjong First Officer", field = AchivementsFields.Games, url = "", helper = "Mahjong"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Mahjong ranking", minVal = 3, name = "Mahjong Navigator", field = AchivementsFields.Games, url = "", helper = "Mahjong"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Monopoly ranking", minVal = 1, name = "Monopoly Master", field = AchivementsFields.Games, url = "", helper = "Monopoly"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Monopoly ranking", minVal = 2, name = "Monopoly First Officer", field = AchivementsFields.Games, url = "", helper = "Monopoly"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Monopoly ranking", minVal = 3, name = "Monopoly Navigator", field = AchivementsFields.Games, url = "", helper = "Monopoly"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Monopoly ranking", minVal = 1, name = "Monopoly Master", field = AchivementsFields.Games, url = "", helper = "Monopoly"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Monopoly ranking", minVal = 2, name = "Monopoly First Officer", field = AchivementsFields.Games, url = "", helper = "Monopoly"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Monopoly ranking", minVal = 3, name = "Monopoly Navigator", field = AchivementsFields.Games, url = "", helper = "Monopoly"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Risk ranking", minVal = 1, name = "Risk Master", field = AchivementsFields.Games, url = "", helper = "Risk"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Risk ranking", minVal = 2, name = "Risk First Officer", field = AchivementsFields.Games, url = "", helper = "Risk"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Risk ranking", minVal = 3, name = "Risk Navigator", field = AchivementsFields.Games, url = "", helper = "Risk"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Risk ranking", minVal = 1, name = "Risk Master", field = AchivementsFields.Games, url = "", helper = "Risk"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Risk ranking", minVal = 2, name = "Risk First Officer", field = AchivementsFields.Games, url = "", helper = "Risk"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Risk ranking", minVal = 3, name = "Risk Navigator", field = AchivementsFields.Games, url = "", helper = "Risk"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Scrabble ranking", minVal = 1, name = "Scrabble Master", field = AchivementsFields.Games, url = "", helper = "Scrabble"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Scrabble ranking", minVal = 2, name = "Scrabble First Officer", field = AchivementsFields.Games, url = "", helper = "Scrabble"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Scrabble ranking", minVal = 3, name = "Scrabble Navigator", field = AchivementsFields.Games, url = "", helper = "Scrabble"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Scrabble ranking", minVal = 1, name = "Scrabble Master", field = AchivementsFields.Games, url = "", helper = "Scrabble"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Scrabble ranking", minVal = 2, name = "Scrabble First Officer", field = AchivementsFields.Games, url = "", helper = "Scrabble"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Scrabble ranking", minVal = 3, name = "Scrabble Navigator", field = AchivementsFields.Games, url = "", helper = "Scrabble"),
 
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 1st place in Talisman ranking", minVal = 1, name = "Talisman Master", field = AchivementsFields.Games, url = "", helper = "Talisman"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 2nd place in Talisman ranking", minVal = 2, name = "Talisman First Officer", field = AchivementsFields.Games, url = "", helper = "Talisman"),
-      achivements += Achivement(conditions = Conditions.GreaterAndEquals, description = "Have 3rd place in Talisman ranking", minVal = 3, name = "Talisman Navigator", field = AchivementsFields.Games, url = "", helper = "Talisman")
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 1st place in Talisman ranking", minVal = 1, name = "Talisman Master", field = AchivementsFields.Games, url = "", helper = "Talisman"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 2nd place in Talisman ranking", minVal = 2, name = "Talisman First Officer", field = AchivementsFields.Games, url = "", helper = "Talisman"),
+      achivements += Achivement(conditions = Conditions.Equals, description = "Have 3rd place in Talisman ranking", minVal = 3, name = "Talisman Navigator", field = AchivementsFields.Games, url = "", helper = "Talisman")
 
 
     )
