@@ -138,13 +138,13 @@ public class EventController {
     }
 
     @PostMapping("/status/{eventId}/sparring/{sparringId}")
-    public ResponseEntity setSparringMatchStatus(@PathVariable Long eventId, @PathVariable Long sparringId, @RequestBody MatchEndStatus status) {
-        return setMatchStatus(eventId, sparringId, status, Event::getSparrings);
+    public ResponseEntity setSparringMatchStatus(@PathVariable Long eventId, @PathVariable Long sparringId, @RequestBody String status) {
+        return setMatchStatus(eventId, sparringId, MatchEndStatus.valueOf(status), Event::getSparrings);
     }
 
     @PostMapping("/status/{eventId}/tournament/{tournamentId}")
-    public ResponseEntity setTournamentMatchStatus(@PathVariable Long eventId, @PathVariable Long tournamentId, @RequestBody MatchEndStatus status) {
-        return setMatchStatus(eventId, tournamentId, status, Event::getTournaments);
+    public ResponseEntity setTournamentMatchStatus(@PathVariable Long eventId, @PathVariable Long tournamentId, @RequestBody String status) {
+        return setMatchStatus(eventId, tournamentId, MatchEndStatus.valueOf(status), Event::getTournaments);
     }
 
     @GetMapping("/getTournaments/{id}")
