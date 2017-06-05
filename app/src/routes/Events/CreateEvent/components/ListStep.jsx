@@ -67,7 +67,7 @@ const ListStep = ({ data, edit, remove, label, add, toggle, games, types }) => (
             <ListItem
                 {...item}
                 {...itemProps(games, types, item)}
-                key={item.__uid}
+                key={item.__uid || item.id}
                 edit={() => edit(item)}
                 remove={() => remove(item)}
                 toggle={() => toggle(item)}

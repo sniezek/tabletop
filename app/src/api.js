@@ -28,6 +28,7 @@ class Api {
         this.allAchivements = this.allAchivements.bind(this);
         this.remind = this.remind.bind(this);
         this.event = this.event.bind(this);
+        this.editEvent = this.editEvent.bind(this);
     }
 
     achievements(userID) {
@@ -187,6 +188,21 @@ class Api {
 
         return fetch(`${API_SERVER}/events`, {
             method: "POST",
+            credentials: "include",
+            headers,
+            body
+        });
+    }
+
+    editEvent(payload) {
+        const body = JSON.stringify(payload);
+
+        const headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        return fetch(`${API_SERVER}/events/${payload.id}`, {
+            method: "PUT",
             credentials: "include",
             headers,
             body

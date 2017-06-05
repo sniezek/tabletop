@@ -19,7 +19,8 @@ const propTypes = {
     addTournament: PropTypes.func.isRequired,
     model: PropTypes.object,
     type: PropTypes.string,
-    close: PropTypes.func.isRequired
+    close: PropTypes.func.isRequired,
+    edit: PropTypes.bool.isRequired
 };
 
 /* eslint-disable react/prop-types */
@@ -30,7 +31,7 @@ const enhance = compose(
     withLoader
 );
 
-const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, addSparring, addTournament, model, type, close, ...rest }) => (
+const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, addSparring, addTournament, model, type, close, edit, ...rest }) => (
     <div className="create-event__content mdl-shadow--2dp">
         <StepHeader
             setStep={setStep}
@@ -50,6 +51,7 @@ const CreateEventForm = ({ prevStep, nextStep, setStep, step, steps, create, add
             create={create}
             addSparring={addSparring}
             addTournament={addTournament}
+            edit={edit}
         />
         <ListItemDialogContainer
             model={model}
