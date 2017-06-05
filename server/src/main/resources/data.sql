@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS event_tournaments;
+DROP TABLE IF EXISTS tournament;
 DELETE FROM tournament_player_result;
 DELETE FROM tournament_users;
 DELETE FROM swiss_users_played;
